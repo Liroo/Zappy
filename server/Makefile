@@ -14,7 +14,8 @@ SRC_GENDIR := src/
 OBJ_GENDIR := $(OBJ_DIR)src/
 
 SRC_GEN = \
-	main.c
+	main.c \
+	debug.c
 
 OBJ_GEN = $(addprefix $(OBJ_GENDIR), $(SRC_GEN:.c=.o))
 
@@ -37,13 +38,13 @@ include $(MK_DIR)colors.mk $(MK_DIR)defs.mk
 # Rules
 
 all:
-	@make --no-print-directory $(NAME_BIN)
+	@make --no-print-directory $(NAME_BIN) DEBUG='-DDEBUG=0'
 
 intro:
 	@$(PRINTF) "$(YELLOW_R) ---- SERVER ---- $(CLEAR)\n"
 # debug: FLAGS += -DDEBUG -g
 debug: fclean
-	@make --no-print-directory $(NAME_BIN) DEBUG='-DDEBUG -g'
+	@make --no-print-directory $(NAME_BIN) DEBUG='-DDEBUG=1 -g'
 
 $(OBJ_GENDIR)%.o: $(SRC_GENDIR)%.c
 	@mkdir -p $(dir $@)

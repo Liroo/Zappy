@@ -5,7 +5,7 @@
 ## Login   <pierre@epitech.net>
 ## 
 ## Started on  Sat May 27 06:30:42 2017 Pierre Monge
-## Last update Tue Jun 13 06:46:43 2017 Pierre Monge
+## Last update Tue Jun 13 11:10:21 2017 Pierre Monge
 ##
 
 PROJECT := IRC
@@ -31,8 +31,8 @@ $(CLIENT_BIN):
 	@$(CP) $(CLIENT)/$(CLIENT_BIN) .
 
 debug:
-	@make --no-print-directory -C $(SERVER_BIN) debug
-	@make --no-print-directory -C $(CLIENT_BIN) debug
+	@make --no-print-directory -C $(SERVER) debug
+	@make --no-print-directory -C $(CLIENT) debug
 	@$(CP) $(SERVER)/$(SERVER_BIN) .
 	@$(CP) $(CLIENT)/$(CLIENT_BIN) .
 
@@ -48,4 +48,4 @@ fclean:
 
 re: fclean all
 
-.PHONY: debug
+.PHONY: $(SERVER_BIN) $(CLIENT_BIN) debug clean fclean re

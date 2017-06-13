@@ -5,11 +5,15 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 05:20:34 2017 Pierre Monge
-** Last update Tue Jun 13 06:28:22 2017 Pierre Monge
+** Last update Tue Jun 13 11:22:47 2017 Pierre Monge
 */
 
-int	main(int argc __attribute__((unused)),
-	     char *argv[] __attribute__((unused)))
+#include "debug.h"
+
+int	main(int argc,
+	     char *argv[])
 {
+  PRINT_DEBUG("%d\n", argc);
+  PRINT_DEBUG_ARRAY(argv, argc);
   return (0);
 }
