@@ -35,6 +35,8 @@
 *.i*86
 *.x86_64
 *.hex
+zappy_ai
+zappy_server
 
 # Debug files
 *.dSYM/
