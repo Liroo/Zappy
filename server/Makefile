@@ -15,7 +15,8 @@ OBJ_GENDIR := $(OBJ_DIR)src/
 
 SRC_GEN = \
 	main.c \
-	debug.c
+	debug.c \
+	list.c
 
 OBJ_GEN = $(addprefix $(OBJ_GENDIR), $(SRC_GEN:.c=.o))
 

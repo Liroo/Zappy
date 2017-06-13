@@ -5,10 +5,16 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 05:20:34 2017 Pierre Monge
-** Last update Tue Jun 13 11:22:47 2017 Pierre Monge
+** Last update Tue Jun 13 21:35:34 2017 Pierre Monge
 */
 
 #include "debug.h"
+
+/*
+** Note: This is to remove, this is an introduction to struct.h
+** and to be sure it will compile, I let this here -- Pierre
+*/
+#include "struct.h"
 
 int	main(int argc,
 	     char *argv[])
