@@ -5,13 +5,15 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Thu Jun 15 06:04:43 2017 Pierre Monge
+** Last update Thu Jun 15 23:21:25 2017 Pierre Monge
 */
 
 #ifndef H_H
 # define H_H
 
 # include <time.h>
+
+#include "struct.h"
 
 # define MAX_CONNECTIONS 10240
 
@@ -51,6 +53,10 @@ extern int	fd_select(time_t delay);
 extern int	sig_set(char to_handle);
 extern void	sig_handler(int sig);
 
-
+/*
+** packet
+*/
+void	queue_packet(t_player *player, char *format, ...);
+void	send_queued_packet(t_player *player);
 
 #endif /* !H_H */

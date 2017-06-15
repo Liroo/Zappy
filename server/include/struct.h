@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 12:00:23 2017 Pierre Monge
-** Last update Thu Jun 15 05:52:43 2017 Pierre Monge
+** Last update Thu Jun 15 22:23:10 2017 Pierre Monge
 */
 
 #ifndef STRUCT_H
@@ -69,6 +69,7 @@ struct		s_player
   t_inventory	inventory;
   t_list_head	list;
 
+  t_list_head	w_packet;
   t_net_info	net_info;
 };
 
