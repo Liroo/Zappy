@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 12:00:23 2017 Pierre Monge
-** Last update Thu Jun 15 05:52:43 2017 Pierre Monge
+** Last update Fri Jun 16 00:39:21 2017 guicha_t
 */
 
 #ifndef STRUCT_H
@@ -64,7 +64,7 @@ struct		s_player
   int		pos_x;
   int		pos_y;
   int		direction;
-
+  
   unsigned char	elevation;
   t_inventory	inventory;
   t_list_head	list;

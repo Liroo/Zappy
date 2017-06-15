@@ -5,13 +5,15 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Thu Jun 15 06:04:43 2017 Pierre Monge
+** Last update Fri Jun 16 01:26:31 2017 guicha_t
 */
 
 #ifndef H_H
 # define H_H
 
 # include <time.h>
+
+#include "struct.h"
 
 # define MAX_CONNECTIONS 10240
 
@@ -51,6 +53,9 @@ extern int	fd_select(time_t delay);
 extern int	sig_set(char to_handle);
 extern void	sig_handler(int sig);
 
-
+/*
+** read fd
+*/
+extern int	read_on_fd(t_player *ply);
 
 #endif /* !H_H */

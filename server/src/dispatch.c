@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 04:14:35 2017 Pierre Monge
-** Last update Thu Jun 15 06:29:27 2017 Pierre Monge
+** Last update Fri Jun 16 01:26:55 2017 guicha_t
 */
 
 #include <sys/select.h>
@@ -85,7 +85,7 @@ static int	fd_dispatch(int num, fd_set read_fds, fd_set write_fds)
 	  continue;
 	}
       if (event_flags | FD_SELECT_READ)
-	(void)1; // Here we have to read on fd
+	read_on_fd(fde->data); // Here we have to read on fd */
       if (event_flags | FD_SELECT_WRITE)
 	(void)1; // Here we have to write on fd
       fd++;

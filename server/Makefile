@@ -23,6 +23,7 @@ SRC_GEN = \
 	\
 	socket.c \
 	bsd.c \
+	r_packet.c \
 	dispatch.c
 
 OBJ_GEN = $(addprefix $(OBJ_GENDIR), $(SRC_GEN:.c=.o))
