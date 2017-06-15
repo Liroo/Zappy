@@ -24,6 +24,7 @@ SRC_GEN = \
 	socket.c \
 	bsd.c \
 	r_packet.c \
+	w_packet.c \
 	dispatch.c
 
 OBJ_GEN = $(addprefix $(OBJ_GENDIR), $(SRC_GEN:.c=.o))
@@ -35,6 +36,7 @@ INCDIRS := -I./include
 CC = gcc
 
 FLAGS = -W -Werror -Wextra -Wall
+FLAGS += -D_GNU_SOURCE
 # if debug is activated
 FLAGS += $(DEBUG)
 

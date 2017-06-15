@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 01:26:48 2017 Pierre Monge
-** Last update Thu Jun 15 13:46:51 2017 guicha_t
+** Last update Fri Jun 16 01:32:43 2017 guicha_t
 */
 
 #include <stdlib.h>
@@ -65,5 +65,7 @@ void		add_connection(int fd)
   memset(pl, 0, sizeof(t_player));
   pl->net_info.fd = fd;
   list_add_tail(&pl->list, &game.connection_queue);
+  list_init(&pl->w_packet);
   fd_set_select(fd, FD_SELECT_READ, pl);
+  queue_packet(pl, "WELCOME\n");
 }

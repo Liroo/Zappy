@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Fri Jun 16 01:26:31 2017 guicha_t
+** Last update Fri Jun 16 01:35:02 2017 guicha_t
 */
 
 #ifndef H_H
@@ -57,5 +57,11 @@ extern void	sig_handler(int sig);
 ** read fd
 */
 extern int	read_on_fd(t_player *ply);
+
+/*
+** packet
+*/
+void	queue_packet(t_player *player, char *format, ...);
+void	send_queued_packet(t_player *player);
 
 #endif /* !H_H */

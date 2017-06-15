@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 12:00:23 2017 Pierre Monge
-** Last update Fri Jun 16 00:39:21 2017 guicha_t
+** Last update Fri Jun 16 01:34:18 2017 guicha_t
 */
 
 #ifndef STRUCT_H
@@ -35,7 +35,6 @@ struct		s_net_info
 {
   int		fd;
   int		port;
-  // here we should set read and write stuff
 };
 
 struct		s_inventory
@@ -69,6 +68,7 @@ struct		s_player
   t_inventory	inventory;
   t_list_head	list;
 
+  t_list_head	w_packet;
   t_net_info	net_info;
 };
 

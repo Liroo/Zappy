@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 21:39:03 2017 Pierre Monge
-** Last update Tue Jun 13 21:39:13 2017 Pierre Monge
+** Last update Fri Jun 16 00:10:45 2017 Pierre Monge
 */
 
 #include "list.h"
@@ -33,5 +33,5 @@ t_list_head	*list_del(t_list_head *prev,
 {
   next->prev = prev;
   prev->next = next;
-  return (prev);
+  return (next);
 }

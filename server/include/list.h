@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 21:38:49 2017 Pierre Monge
-** Last update Tue Jun 13 21:39:12 2017 Pierre Monge
+** Last update Fri Jun 16 00:38:42 2017 Pierre Monge
 */
 
 #ifndef LIST_H
