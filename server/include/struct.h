@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 12:00:23 2017 Pierre Monge
-** Last update Tue Jun 13 21:35:39 2017 Pierre Monge
+** Last update Thu Jun 15 05:52:43 2017 Pierre Monge
 */
 
 #ifndef STRUCT_H
@@ -29,6 +29,14 @@ typedef struct	s_player	t_player;
 typedef struct	s_team		t_team;
 typedef struct	s_inventory	t_inventory;
 typedef struct	s_game		t_game;
+typedef struct	s_net_info	t_net_info;
+
+struct		s_net_info
+{
+  int		fd;
+  int		port;
+  // here we should set read and write stuff
+};
 
 struct		s_inventory
 {
@@ -39,6 +47,11 @@ struct		s_inventory
   unsigned int 	phiras;
   unsigned int 	thystame;
   unsigned int	food;
+
+  /*
+  ** if inventory is in reality a case of the map
+  */
+  unsigned int	player;
 };
 
 struct		s_tiles
@@ -50,10 +63,13 @@ struct		s_player
 {
   int		pos_x;
   int		pos_y;
+  int		direction;
 
   unsigned char	elevation;
   t_inventory	inventory;
   t_list_head	list;
+
+  t_net_info	net_info;
 };
 
 struct		s_team
@@ -65,6 +81,8 @@ struct		s_team
   t_list_head	list;
 };
 
+# include "event.h"
+
 struct		s_game
 {
   unsigned int	map_size_x;
@@ -74,6 +92,12 @@ struct		s_game
   t_list_head	teams;
   unsigned int	nb_client_max;
   int		time;
+
+  t_list_head	connection_queue;
+  t_net_info	net_info;
+  int		sig_handled;
 };
+
+extern t_game	game;
 
 #endif /* !STRUCT_H */
