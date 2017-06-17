@@ -5,13 +5,14 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 03:40:33 2017 Pierre Monge
-** Last update Thu Jun 15 05:56:23 2017 Pierre Monge
+** Last update Sat Jun 17 00:29:25 2017 Pierre Monge
 */
 
 #ifndef EVENT_H
 # define EVENT_H
 
 # define EVENT char
+# define FD_SELECT_NO_EVENT 0x0
 # define FD_SELECT_READ 0x1
 # define FD_SELECT_WRITE 0x2
 

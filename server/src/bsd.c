@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 01:26:48 2017 Pierre Monge
-** Last update Fri Jun 16 01:32:43 2017 guicha_t
+** Last update Sat Jun 17 05:24:32 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -16,6 +16,7 @@
 #include "event.h"
 #include "debug.h"
 #include "fdlist.h"
+#include "packet.h"
 
 int	inetport(int port)
 {
@@ -63,6 +64,12 @@ void		add_connection(int fd)
       return ;
     }
   memset(pl, 0, sizeof(t_player));
+  if (!(pl->r_packet.block = malloc(PACKET_SIZE_DFL + 1)))
+    {
+      free(pl);
+      socket_close(fd);
+      return ;
+    }
   pl->net_info.fd = fd;
   list_add_tail(&pl->list, &game.connection_queue);
   list_init(&pl->w_packet);

@@ -20,12 +20,16 @@ SRC_GEN = \
 	\
 	list.c \
 	fdlist.c \
+	delete.c \
 	\
 	socket.c \
 	bsd.c \
 	r_packet.c \
 	w_packet.c \
-	dispatch.c
+	dispatch.c \
+	event.c \
+	\
+	command.c
 
 OBJ_GEN = $(addprefix $(OBJ_GENDIR), $(SRC_GEN:.c=.o))
 
@@ -60,7 +64,7 @@ debug: fclean
 $(OBJ_GENDIR)%.o: $(SRC_GENDIR)%.c
 	@mkdir -p $(dir $@)
 	@$(CC) -o $@ -c $< $(CFLAGS) $(ERRLOG)
-	@$(PRINTF) "$(GREEN_R) $(ECHO) $(CLEAR) $<\n"
+	@$(PRINTF) "$(GREEN_R) $(ECHO) $(CLEAR)\t$<\n"
 
 $(NAME_BIN): intro $(OBJ_GEN)
 	@$(CC) -o $(NAME_BIN) $(OBJ_GEN) $(CFLAGS)

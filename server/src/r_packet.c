@@ -1,116 +1,78 @@
 /*
 ** r_packet.c for Project-Master in /home/guicha/tek2/PSU_2016_zappy/server/src
-** 
+**
 ** Made by guicha_t
 ** Login   <thomas.guichard@epitech.eu>
-** 
+**
 ** Started on  Thu Jun 15 22:22:38 2017 guicha_t
-** Last update Fri Jun 16 01:30:14 2017 guicha_t
+** Last update Sat Jun 17 04:58:57 2017 Pierre Monge
 */
 
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <string.h>
 #include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "h.h"
 #include "fdlist.h"
 #include "event.h"
-#include "debug.h"
 #include "struct.h"
-#include "stdlib.h"
-#include "stdio.h"
 #include "command.h"
+#include "packet.h"
 
-int	cmd_advance()
+/*
+** personal implementation of strtok
+** used to split packet block with '\n'
+** -- optimised to our usage
+*/
+static void	split_raw_packet(t_packet *s_packet, t_packet *packet)
 {
-  return (0);
-}
-
-static t_token	get_token(char *buf, char *buf_token)
-{
-  t_token	token;
-  static int	offset;
   char		*next_token;
 
-  next_token = NULL;
-  if (buf_token)
-    offset = 0;
-  bzero(&token, sizeof(t_token));
-  if ((next_token = memchr(buf, '\n', 4096)))
-    token.is_over = 1;
+  next_token = memchr(packet->block, '\n', packet->size);
+  s_packet->block = packet->block + s_packet->offset;
   if (next_token)
-    *((char*)next_token) = 0;
-  token.token = buf + offset;
-  offset = next_token - buf + 1;
-  return (token);
-}
-
-static t_command	*get_command()
-{
-  static t_command	cmd_entry[MAX_COMMAND_SIZE] =
     {
-      { "Advance", &cmd_advance},
-      /* { "Right", &cmd_right }, */
-      /* { "Left", &cmd_left }, */
-      /* { "See", &cmd_see }, */
-      /* { "Inventory", &cmd_inventory }, */
-      /* { "Broadcast", &cmd_broadcast }, */
-      /* { "Connect_nbr", &cmd_connect_nbr }, */
-      /* { "Fork", &cmd_fork }, */
-      /* { "Eject", &cmd_eject }, */
-      /* { "Take_object", &cmd_take_object }, */
-      /* { "Set_object", &cmd_set_object }, */
-      /* { "Incantation", &cmd_incantation } */
-    };
-  
-  return (cmd_entry);
-}
-
-void		check_cmd_exist(t_token *token, t_player *ply)
-{
-  t_command	*command_list;
-  int		i;
-  
-  i = 0;
-  printf("%s\n", token->token);
-  command_list = get_command();
-  while (i < MAX_COMMAND_SIZE)
-    {
-      if (strcasecmp(token->token, command_list[i].title) == 0)
-	{
-	  dprintf(ply->net_info.fd, "Successfully\r\n");
-	  // Add to player's queue (Token + *func)
-	  break;
-	}
-      i++;
+      s_packet->size = next_token - &packet->block[s_packet->offset] - 1;
+      s_packet->offset = next_token - packet->block + 1;
+      *next_token = 0;
     }
-  dprintf(ply->net_info.fd, "Cmd unknown\r\n");
+  if (!next_token)
+    {
+      packet->offset = &packet->block[packet->size]
+	- &packet->block[s_packet->offset];
+      memmove(packet->block, s_packet->block, s_packet->size);
+      s_packet->offset = -1;
+    }
 }
 
-int		read_on_fd(t_player *ply)
+int		recv_packet(t_player *player)
 {
-  char		buf[4096];
-  t_token	token;
-  int		len_not_over;
+  t_packet	s_packet;
+  t_packet	*packet;
+  int		ret;
 
-  memset(buf, 0, 4096);
-  if (recv(ply->net_info.fd, buf, 4096, 0) == -1)
-    write(1, "recv error\n", 11);
-  token = get_token(buf, buf);
-  while (1)
+  packet = &player->r_packet;
+  memset(&s_packet, 0, sizeof(t_packet));
+  if ((ret = recv(player->net_info.fd, &packet->block[packet->offset],
+			    PACKET_SIZE_DFL - packet->offset, 0)) < 0)
+    return (perror("recv"), -1);
+  if (ret == 0)
+    return (1);
+  packet->size += ret;
+  while (s_packet.offset < packet->size)
     {
-      if (!token.token)
+      split_raw_packet(&s_packet, packet);
+      if (!s_packet.block)
 	break;
-      if (!token.is_over)
-	{
-	  len_not_over = strlen(token.token);
-	  memmove(buf, token.token, len_not_over);
-	  return (0);
-	}
+      if (s_packet.offset == -1)
+	return (0);
       else
-	check_cmd_exist(&token, ply);
-      token = get_token(buf, NULL);
+	convert_packet_to_command(s_packet, player);
     }
+  packet->size = packet->offset = 0;
+  memset(packet->block, 0, PACKET_SIZE_DFL);
   return (0);
 }

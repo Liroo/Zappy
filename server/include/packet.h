@@ -5,13 +5,15 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 22:17:36 2017 Pierre Monge
-** Last update Thu Jun 15 23:19:56 2017 Pierre Monge
+** Last update Fri Jun 16 17:04:09 2017 Pierre Monge
 */
 
 #ifndef PACKET_H
 # define PACKET_H
 
 #include "list.h"
+
+# define PACKET_SIZE_DFL 4096
 
 typedef struct	s_packet
 {

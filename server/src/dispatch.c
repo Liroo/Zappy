@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 04:14:35 2017 Pierre Monge
-** Last update Fri Jun 16 01:33:26 2017 guicha_t
+** Last update Fri Jun 16 20:38:47 2017 Pierre Monge
 */
 
 #include <sys/select.h>
@@ -55,18 +55,6 @@ void	fd_refresh(int fd)
     fdset.highest_fd--;
 }
 
-static EVENT	get_event_flags(int fd, fd_set read_fds, fd_set write_fds)
-{
-  EVENT		event_flags;
-
-  event_flags = 0;
-  if (FD_ISSET(fd, &read_fds))
-    event_flags |= FD_SELECT_READ;
-  if (FD_ISSET(fd, &write_fds))
-    event_flags |= FD_SELECT_WRITE;
-  return (event_flags);
-}
-
 static int	fd_dispatch(int num, fd_set read_fds, fd_set write_fds)
 {
   t_fd_entry	*fde;
@@ -77,6 +65,7 @@ static int	fd_dispatch(int num, fd_set read_fds, fd_set write_fds)
   fd = 0;
   while (fd <= fdset.highest_fd && num > 0)
     {
+      event_flags = 0;
       fde = &fd_entry[fd];
       if ((!fde->is_open) ||
 	  !(event_flags = get_event_flags(fd, read_fds, write_fds)))
@@ -84,10 +73,10 @@ static int	fd_dispatch(int num, fd_set read_fds, fd_set write_fds)
 	  fd++;
 	  continue;
 	}
-      if (event_flags | FD_SELECT_READ)
-	read_on_fd(fde->data);
-      if (event_flags | FD_SELECT_WRITE)
-	send_queued_packet(fde->data);
+      if (event_flags & FD_SELECT_READ)
+	read_event(fde->data);
+      if (event_flags & FD_SELECT_WRITE)
+	write_event(fde->data);
       fd++;
       num--;
     }

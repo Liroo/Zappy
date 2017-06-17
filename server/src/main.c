@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 05:20:34 2017 Pierre Monge
-** Last update Thu Jun 15 06:24:28 2017 Pierre Monge
+** Last update Fri Jun 16 03:48:07 2017 Pierre Monge
 */
 
 #include <string.h>
@@ -30,9 +30,12 @@ static void	  close_game_server()
 static void	loop_game_server()
 {
   while (!game.sig_handled)
-    // time pass to fd_select is to determine depends on binary option -t
-    if (fd_select(10000) == -1)
-      break;
+    {
+      // time pass to fd_select is to determine depends on binary option -t
+      if (fd_select(10000) == -1)
+	break;
+      // here we should process client (execute commands depends on time etc..)
+    }
 }
 
 static int	init_game_server(int argc, char *argv[])

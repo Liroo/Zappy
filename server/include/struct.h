@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 12:00:23 2017 Pierre Monge
-** Last update Fri Jun 16 01:34:18 2017 guicha_t
+** Last update Sat Jun 17 05:15:19 2017 Pierre Monge
 */
 
 #ifndef STRUCT_H
@@ -58,18 +58,25 @@ struct		s_tiles
   t_inventory	inventory;
 };
 
-struct		s_player
-{
-  int		pos_x;
-  int		pos_y;
-  int		direction;
-  
-  unsigned char	elevation;
-  t_inventory	inventory;
-  t_list_head	list;
+# include "command.h"
+# define COMMAND_QUEUE_SIZE 10
+# include "packet.h"
 
-  t_list_head	w_packet;
-  t_net_info	net_info;
+struct			s_player
+{
+  int			pos_x;
+  int			pos_y;
+  int			direction;
+
+  unsigned char		elevation;
+  t_inventory		inventory;
+  t_list_head		list;
+
+  int			command_in_queue;
+  t_command_queue	command_queue[COMMAND_QUEUE_SIZE];
+  t_packet		r_packet;
+  t_list_head		w_packet;
+  t_net_info		net_info;
 };
 
 struct		s_team

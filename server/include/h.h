@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Fri Jun 16 01:35:02 2017 guicha_t
+** Last update Sat Jun 17 05:19:08 2017 Pierre Monge
 */
 
 #ifndef H_H
@@ -14,6 +14,7 @@
 # include <time.h>
 
 #include "struct.h"
+#include "event.h"
 
 # define MAX_CONNECTIONS 10240
 
@@ -47,6 +48,10 @@ extern void	fd_set_select(int fd, int flag, void *data);
 extern void	fd_refresh(int fd);
 extern int	fd_select(time_t delay);
 
+extern EVENT	get_event_flags(int fd, fd_set read_fds, fd_set write_fds);
+extern void	read_event(t_player *player);
+extern void	write_event(t_player *player);
+
 /*
 ** signal
 */
@@ -54,14 +59,21 @@ extern int	sig_set(char to_handle);
 extern void	sig_handler(int sig);
 
 /*
-** read fd
-*/
-extern int	read_on_fd(t_player *ply);
-
-/*
 ** packet
 */
-void	queue_packet(t_player *player, char *format, ...);
-void	send_queued_packet(t_player *player);
+extern int	recv_packet(t_player *player);
+extern void	queue_packet(t_player *player, char *format, ...);
+extern void	send_queued_packet(t_player *player);
+
+/*
+** Command
+*/
+void			convert_packet_to_command(t_packet packet,
+						  t_player *player);
+
+/*
+** Free class
+*/
+void	delete_player(t_player *player);
 
 #endif /* !H_H */
