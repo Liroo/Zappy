@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 12:00:23 2017 Pierre Monge
-** Last update Sat Jun 17 05:15:19 2017 Pierre Monge
+** Last update Sun Jun 18 04:22:24 2017 Thomas
 */
 
 #ifndef STRUCT_H
@@ -83,6 +83,7 @@ struct		s_team
 {
   t_list_head	players;
 
+  char		*name;
   int		size;
   int		empty_slot;
   t_list_head	list;
