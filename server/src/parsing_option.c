@@ -5,7 +5,7 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Fri Jun 16 14:59:23 2017 Thomas
-** Last update Sun Jun 18 04:25:24 2017 Thomas
+** Last update Mon Jun 19 16:49:16 2017 Pierre Monge
 */
 
 #include "option.h"
@@ -87,19 +87,17 @@ t_game	*parse_option(int ac, char *av[], t_game *game)
   int	c;
   int	i;
   int	check;
-  char	*cmp;
 
-  cmp = strdup("cfnpxy");
   if (!av[1] || (av[1] && strcmp(av[1], "-help") == 0)
-      || check_params(av, cmp) == 0)
+      || check_params(av, RAW_SHORT_OPTION) == 0)
     return (help_func());
-  while ((c = getopt(ac, av, "p:x:y:n:c:f:")) != -1)
+  while ((c = getopt(ac, av, GETOPT_SHORT_OPTION)) != -1)
     {
       i = 0;
       check = 0;
-      while (cmp && cmp[i])
+      while (RAW_SHORT_OPTION[i])
 	{
-	  if (cmp[i] == c)
+	  if (RAW_SHORT_OPTION[i] == c)
 	    check = choose_option(game, i, ac, av);
 	  i++;
 	}
@@ -108,5 +106,5 @@ t_game	*parse_option(int ac, char *av[], t_game *game)
     }
   if (game->nb_client_max != 0 && check_order_option(ac, av) == 0)
     c_opt(game, ac, av);
-  return (free(cmp), game);
+  return (game);
 }

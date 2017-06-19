@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 05:20:34 2017 Pierre Monge
-** Last update Fri Jun 16 03:48:07 2017 Pierre Monge
+** Last update Mon Jun 19 16:46:29 2017 Pierre Monge
 */
 
 #include <string.h>
@@ -13,6 +13,7 @@
 #include "debug.h"
 #include "h.h"
 #include "list.h"
+#include "option.h"
 
 /*
 ** Note: This is to remove, this is an introduction to struct.h
@@ -51,6 +52,7 @@ static int	init_game_server(int argc, char *argv[])
   (&game)->net_info.port = 1024;
   (void)argc;
   (void)argv;
+  parse_option(argc, argv, &game);
 
   if ((game.net_info.fd = inetport(game.net_info.port)) == -1)
     return (-1);

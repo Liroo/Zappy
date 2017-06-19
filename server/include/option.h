@@ -5,7 +5,7 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Tue Jun 13 22:46:11 2017 Thomas
-** Last update Sun Jun 18 04:24:25 2017 Thomas
+** Last update Mon Jun 19 16:49:49 2017 Pierre Monge
 */
 
 #ifndef OPTION_H
@@ -16,6 +16,9 @@
 # include <stdio.h>
 # include <unistd.h>
 # include "struct.h"
+
+# define RAW_SHORT_OPTION "cfnpxy"
+# define GETOPT_SHORT_OPTION "p:x:y:n:c:f:"
 
 t_game	*parse_option(int ac, char *av[], t_game *game);
 void	c_opt(t_game *game, int ac, char *av[]);

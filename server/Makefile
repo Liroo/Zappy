@@ -67,19 +67,19 @@ debug: fclean
 $(OBJ_GENDIR)%.o: $(SRC_GENDIR)%.c
 	@mkdir -p $(dir $@)
 	@$(CC) -o $@ -c $< $(CFLAGS) $(ERRLOG)
-	@$(PRINTF) "$(GREEN_R) $(ECHO) $(CLEAR)\t$<\n"
+	@$(PRINTF) "$(GREEN_R)$(ECHO) $(CLEAR)\t$<\n"
 
 $(NAME_BIN): intro $(OBJ_GEN)
 	@$(CC) -o $(NAME_BIN) $(OBJ_GEN) $(CFLAGS)
-	@$(PRINTF) "$(GREEN_R) Done $(CLEAR)\n"
+	@$(PRINTF) "$(GREEN_R)Done $(CLEAR)\n"
 
 clean:
 	@$(RM) $(OBJ_DIR)
-	@$(PRINTF) "$(RED_R) Cleaning...$(CLEAR) \n"
+	@$(PRINTF) "$(RED_R)Cleaning...$(CLEAR) \n"
 
 fclean:	clean
 	@$(RM) $(NAME_BIN)
-	@$(PRINTF) "$(RED_R) Dusting...$(CLEAR) \n"
+	@$(PRINTF) "$(RED_R)Dusting...$(CLEAR) \n"
 
 re: fclean all
 
