@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 05:20:34 2017 Pierre Monge
-** Last update Mon Jun 19 16:49:55 2017 Thomas
+** Last update Mon Jun 19 17:44:05 2017 Thomas
 */
 
 #include <string.h>
@@ -46,11 +46,8 @@ static int	init_game_server(int argc, char *argv[])
   list_init(&game.teams);
   list_init(&game.connection_queue);
   sig_set(1);
-
-  // hard encoded port
-  // we need to parse option to know things like this
-  parse_option(argc, argv, &game);
-
+  if (!parse_option(argc, argv, &game))
+    return (-1);
   if ((game.net_info.fd = inetport(game.net_info.port)) == -1)
     return (-1);
   return (0);
