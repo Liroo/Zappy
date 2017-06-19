@@ -5,12 +5,17 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Fri Jun 16 14:59:23 2017 Thomas
-** Last update Sun Jun 18 04:25:24 2017 Thomas
+** Last update Mon Jun 19 17:36:37 2017 Thomas
 */
 
+#include <unistd.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include "h.h"
 #include "option.h"
 
-int	check_order_option(int ac, char *av[])
+static int	check_order_option(int ac, char *av[])
 {
   int	c;
 
@@ -25,28 +30,19 @@ int	check_order_option(int ac, char *av[])
   return (1);
 }
 
-int	choose_option(t_game *game, int c, int ac, char *av[])
+static int	choose_option(t_game *game, int c, int ac, char *av[])
 {
-  void	(*p[6])(t_game *game, int ac, char *av[]);
-
+  static t_option	option_list[6] = {
+    c_opt, f_opt, n_opt, p_opt, x_opt, y_opt
+  };
   if (optarg && optarg[0] != '-')
-    {
-      p[0] = &c_opt;
-      p[1] = &f_opt;
-      p[2] = &n_opt;
-      p[3] = NULL;
-      p[4] = &x_opt;
-      p[5] = &y_opt;
-      if (c == 3)
-	return (1);
-      p[c](game, ac, av);
-    }
+    option_list[c](game, ac, av);
   else
     optind--;
   return (1);
 }
 
-int	check_params(char *av[], char *cmp)
+static int	check_params(char *av[], char *cmp)
 {
   int	i;
   int	j;
@@ -75,7 +71,7 @@ int	check_params(char *av[], char *cmp)
   return (1);
 }
 
-void	*help_func()
+static void	*help_func()
 {
   printf("USAGE: ./zappy_server -p port -x width -y height");
   printf(" -n name1 name2 ... -c clientsNb -f freq\n");

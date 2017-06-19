@@ -5,10 +5,20 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Tue Jun 13 22:53:02 2017 Thomas
-** Last update Fri Jun 16 15:17:20 2017 Thomas
+** Last update Mon Jun 19 17:37:54 2017 Thomas
 */
 
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
 #include "option.h"
+
+void		p_opt(t_game *game, int ac, char *av[])
+{
+  (void)ac;
+  (void)av;
+  game->net_info.port = atoi(optarg);
+}
 
 void		c_opt(t_game *game, int ac, char *av[])
 {

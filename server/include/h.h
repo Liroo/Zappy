@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Sat Jun 17 05:19:08 2017 Pierre Monge
+** Last update Mon Jun 19 17:32:06 2017 Thomas
 */
 
 #ifndef H_H
@@ -68,12 +68,23 @@ extern void	send_queued_packet(t_player *player);
 /*
 ** Command
 */
-void			convert_packet_to_command(t_packet packet,
+extern void			convert_packet_to_command(t_packet packet,
 						  t_player *player);
 
 /*
 ** Free class
 */
-void	delete_player(t_player *player);
+extern void	delete_player(t_player *player);
+
+/*
+** Option
+*/
+extern t_game	*parse_option(int ac, char *av[], t_game *game);
+extern void	c_opt(t_game *game, int ac, char *av[]);
+extern void	f_opt(t_game *game, int ac, char *av[]);
+extern void	n_opt(t_game *game, int ac, char *av[]);
+extern void	p_opt(t_game *game, int ac, char *av[]);
+extern void	x_opt(t_game *game, int ac, char *av[]);
+extern void	y_opt(t_game *game, int ac, char *av[]);
 
 #endif /* !H_H */
