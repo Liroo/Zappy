@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Tue Jun 20 02:25:33 2017 Pierre Monge
+** Last update Tue Jun 20 02:56:05 2017 Pierre Monge
 */
 
 #ifndef H_H
@@ -76,6 +76,7 @@ extern void			convert_packet_to_command(t_packet packet,
 */
 extern void	delete_player(t_player *player);
 extern void	delete_teams();
+extern void	delete_game();
 
 
 /*

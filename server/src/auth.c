@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Mon Jun 19 22:15:36 2017 Pierre Monge
-** Last update Tue Jun 20 02:18:52 2017 Pierre Monge
+** Last update Tue Jun 20 02:58:44 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -29,7 +29,7 @@ static void	register_player_in_team(t_player *player,
 	      team->name);
   srand(time(NULL));
   list_del(player->list.prev, player->list.next);
-  list_add_tail(&player->list, &team->list);
+  list_add_tail(&player->list, &team->players);
   player->elevation = 1;
   player->pos_x = rand() % game.map_size_x;
   player->pos_y = rand() % game.map_size_y;
@@ -37,8 +37,8 @@ static void	register_player_in_team(t_player *player,
   player->is_logged = 1;
   player->team = team;
   team->empty_slot -= 1;
-  queue_packet(player, "%d\n%d %d\n", team->empty_slot,
-	       player->pos_x, player->pos_y);
+  queue_packet(player, "%d\n", team->empty_slot);
+  queue_packet(player, "%d %d\n", player->pos_x, player->pos_y);
 }
 
 void		auth_player(t_packet packet, t_player *player)
