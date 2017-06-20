@@ -21,6 +21,7 @@ SRC_GEN = \
 	list.c \
 	fdlist.c \
 	delete.c \
+	map.c \
 	\
 	socket.c \
 	bsd.c \

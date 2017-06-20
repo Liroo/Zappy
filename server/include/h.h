@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Tue Jun 20 02:56:05 2017 Pierre Monge
+** Last update Tue Jun 20 22:44:06 2017 Pierre Monge
 */
 
 #ifndef H_H
@@ -94,5 +94,11 @@ extern void	y_opt(t_game *game, int ac, char *av[]);
 ** Auth
 */
 extern void	auth_player(t_packet packet, t_player *player);
+
+/*
+** Map
+*/
+extern void	insert_objects_in_map(int offset, int nb);
+extern int	generate_map();
 
 #endif /* !H_H */

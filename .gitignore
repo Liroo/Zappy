@@ -36,6 +36,7 @@
 *.x86_64
 *.hex
 zappy_ai
+zappy_client
 zappy_server
 
 # Debug files

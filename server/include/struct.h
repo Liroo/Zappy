@@ -5,24 +5,13 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 12:00:23 2017 Pierre Monge
-** Last update Tue Jun 20 00:37:28 2017 Pierre Monge
+** Last update Tue Jun 20 22:38:52 2017 Pierre Monge
 */
 
 #ifndef STRUCT_H
 # define STRUCT_H
 
 # include "list.h"
-
-typedef enum	e_stone
-  {
-    LINEMATE,
-    DERAUMERE,
-    SIBUR,
-    MENDIANE,
-    PHIRAS,
-    THYSTAME,
-    UNKNOWN = -1
-  }		t_stone;
 
 typedef struct	s_tiles		t_tiles;
 typedef struct	s_player	t_player;
@@ -52,6 +41,23 @@ struct		s_inventory
   */
   unsigned int	player;
 };
+
+# define LINEMATE_OFFSET offsetof(t_inventory, linemate)
+# define MIN_LINEMATE_PER_TEAM 54 + (54 / 2)
+# define DERAUMERE_OFFSET offsetof(t_inventory, deraumere)
+# define MIN_DERAUMERE_PER_TEAM 48 + (48 / 2)
+# define SIBUR_OFFSET offsetof(t_inventory, sibur)
+# define MIN_SIBUR_PER_TEAM 60 + (60 / 2)
+# define MENDIANE_OFFSET offsetof(t_inventory, mendiane)
+# define MIN_MENDIANE_PER_TEAM 30 + (30 / 2)
+# define PHIRAS_OFFSET offsetof(t_inventory, phiras)
+# define MIN_PHIRAS_PER_TEAM 36 + (36 / 2)
+# define THYSTAME_OFFSET offsetof(t_inventory, thystame)
+# define MIN_THYSTAME_PER_TEAM 6 + (6 / 2)
+# define FOOD_OFFSET offsetof(t_inventory, food)
+# define PLAYER_OFFSET offsetof(t_inventory, player)
+# define INSERT_OBJECT(inventory, offset) *(((char *)inventory) + offset) += 1
+# define REMOVE_OBJECT(inventory, offset) *(((char *)inventory) + offset) -= 1
 
 struct		s_tiles
 {

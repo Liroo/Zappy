@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sat Jun 17 00:26:45 2017 Pierre Monge
-** Last update Tue Jun 20 02:56:26 2017 Pierre Monge
+** Last update Tue Jun 20 22:53:32 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -90,6 +90,7 @@ void		delete_game()
 {
   t_list_head	*pos;
   t_list_head	*next;
+  int		i;
 
   PRINT_DEBUG("Deleting game...\n");
   pos = list_get_first(&game.connection_queue);
@@ -99,4 +100,8 @@ void		delete_game()
       delete_player(list_entry(pos, t_player, list));
       pos = next;
     }
+  i = 0;
+  while (i < (int)game.map_size_y)
+    free(game.map[i++]);
+  free(game.map);
 }

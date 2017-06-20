@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 05:20:34 2017 Pierre Monge
-** Last update Tue Jun 20 02:54:16 2017 Pierre Monge
+** Last update Tue Jun 20 22:43:48 2017 Pierre Monge
 */
 
 #include <string.h>
@@ -52,6 +52,8 @@ static int	init_game_server(int argc, char *argv[])
   if (!parse_option(argc, argv, &game))
     return (-1);
   game.net_info.port = 1024;
+  if (generate_map() == -1)
+    return (-1);
   if ((game.net_info.fd = inetport(game.net_info.port)) == -1)
     return (-1);
   return (0);
