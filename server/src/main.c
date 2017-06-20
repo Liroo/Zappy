@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 05:20:34 2017 Pierre Monge
-** Last update Mon Jun 19 17:44:05 2017 Thomas
+** Last update Tue Jun 20 02:28:55 2017 Pierre Monge
 */
 
 #include <string.h>
@@ -26,6 +26,8 @@ t_game	game;
 static void	  close_game_server()
 {
   sig_set(0);
+  delete_teams();
+  // delete map here
 }
 
 static void	loop_game_server()
@@ -48,6 +50,7 @@ static int	init_game_server(int argc, char *argv[])
   sig_set(1);
   if (!parse_option(argc, argv, &game))
     return (-1);
+  game.net_info.port = 1024;
   if ((game.net_info.fd = inetport(game.net_info.port)) == -1)
     return (-1);
   return (0);

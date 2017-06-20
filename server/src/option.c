@@ -5,20 +5,16 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Tue Jun 13 22:53:02 2017 Thomas
-** Last update Mon Jun 19 17:37:54 2017 Thomas
+** Last update Tue Jun 20 02:35:40 2017 Pierre Monge
 */
 
-#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-#include "option.h"
+#include <stdlib.h>
 
-void		p_opt(t_game *game, int ac, char *av[])
-{
-  (void)ac;
-  (void)av;
-  game->net_info.port = atoi(optarg);
-}
+#include "list.h"
+#include "struct.h"
+#include "option.h"
 
 void		c_opt(t_game *game, int ac, char *av[])
 {
@@ -37,6 +33,7 @@ void		c_opt(t_game *game, int ac, char *av[])
     {
       tmp = list_entry(pos, t_team, list);
       tmp->size = game->nb_client_max;
+      tmp->empty_slot = game->nb_client_max;
       pos = pos->next;
     }
 }
@@ -57,6 +54,7 @@ void		n_opt(t_game *game, int ac, char *av[])
     return;
   memset(tmp, 0, sizeof(t_team));
   tmp->name = strdup(optarg);
+  list_init(&tmp->players);
   list_add_tail(&tmp->list, &game->teams);
   while (optind < ac && *av[optind] != '-')
     {
@@ -64,6 +62,7 @@ void		n_opt(t_game *game, int ac, char *av[])
 	return;
       memset(new, 0, sizeof(t_team));
       new->name = strdup(av[optind]);
+      list_init(&new->players);
       list_add_tail(&new->list, &game->teams);
       optind++;
     }

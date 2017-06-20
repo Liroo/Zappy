@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Fri Jun 16 20:34:58 2017 Pierre Monge
-** Last update Sat Jun 17 00:42:46 2017 Pierre Monge
+** Last update Mon Jun 19 22:10:40 2017 Pierre Monge
 */
 
 #include "h.h"
@@ -30,7 +30,6 @@ void	read_event(t_player *player)
       delete_player(player);
       return ;
     }
-  // here proccess player commands
 }
 
 void	write_event(t_player *player)

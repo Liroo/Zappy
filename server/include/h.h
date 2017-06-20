@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Mon Jun 19 17:32:06 2017 Thomas
+** Last update Tue Jun 20 02:25:33 2017 Pierre Monge
 */
 
 #ifndef H_H
@@ -75,6 +75,8 @@ extern void			convert_packet_to_command(t_packet packet,
 ** Free class
 */
 extern void	delete_player(t_player *player);
+extern void	delete_teams();
+
 
 /*
 ** Option
@@ -86,5 +88,10 @@ extern void	n_opt(t_game *game, int ac, char *av[]);
 extern void	p_opt(t_game *game, int ac, char *av[]);
 extern void	x_opt(t_game *game, int ac, char *av[]);
 extern void	y_opt(t_game *game, int ac, char *av[]);
+
+/*
+** Auth
+*/
+extern void	auth_player(t_packet packet, t_player *player);
 
 #endif /* !H_H */

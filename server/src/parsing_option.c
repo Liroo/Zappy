@@ -5,7 +5,7 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Fri Jun 16 14:59:23 2017 Thomas
-** Last update Mon Jun 19 17:40:39 2017 Thomas
+** Last update Tue Jun 20 00:50:04 2017 Pierre Monge
 */
 
 #include <unistd.h>
@@ -33,7 +33,7 @@ static int	check_order_option(int ac, char *av[])
 static int	choose_option(t_game *game, int c, int ac, char *av[])
 {
   static t_option	option_list[6] = {
-    c_opt, f_opt, n_opt, p_opt, x_opt, y_opt
+    c_opt, f_opt, n_opt, NULL, x_opt, y_opt
   };
   if (optarg && optarg[0] != '-')
     option_list[c](game, ac, av);

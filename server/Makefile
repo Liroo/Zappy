@@ -28,6 +28,7 @@ SRC_GEN = \
 	w_packet.c \
 	dispatch.c \
 	event.c \
+	auth.c \
 	\
 	command.c \
 	\

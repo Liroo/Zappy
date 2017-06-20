@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sat Jun 17 00:26:45 2017 Pierre Monge
-** Last update Sat Jun 17 05:18:04 2017 Pierre Monge
+** Last update Tue Jun 20 02:28:22 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -15,6 +15,14 @@
 #include "h.h"
 #include "list.h"
 #include "debug.h"
+
+static void	delete_registered_player(t_player *player)
+{
+  if (!player->team)
+    return ;
+  player->team->empty_slot += 1;
+  // game.map[player->pos_y][player->pox_x].player -= 1;
+}
 
 void		delete_player(t_player *player)
 {
@@ -40,6 +48,37 @@ void		delete_player(t_player *player)
       list_del(pos->prev, next);
       pos = next;
     }
-  // here we should remove player from the map -- Pierre
+  delete_registered_player(player);
   free(player);
+}
+
+static void		delete_team(t_team *team)
+{
+  t_list_head	*pos;
+  t_list_head	*next;
+
+  if (team->name)
+    free(team->name);
+  pos = list_get_first(&team->players);
+  while (pos != &team->players)
+    {
+      next = pos->next;
+      delete_player(list_entry(pos, t_player, list));
+      pos = next;
+    }
+  free(team);
+}
+
+void		delete_teams()
+{
+  t_list_head	*pos;
+  t_list_head	*next;
+
+  pos = list_get_first(&game.teams);
+  while (pos != &game.teams)
+    {
+      next = pos->next;
+      delete_team(list_entry(pos, t_team, list));
+      pos = next;
+    }
 }

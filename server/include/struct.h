@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 12:00:23 2017 Pierre Monge
-** Last update Sun Jun 18 04:22:24 2017 Thomas
+** Last update Tue Jun 20 00:37:28 2017 Pierre Monge
 */
 
 #ifndef STRUCT_H
@@ -64,6 +64,8 @@ struct		s_tiles
 
 struct			s_player
 {
+  char			is_logged;
+
   int			pos_x;
   int			pos_y;
   int			direction;
@@ -71,6 +73,7 @@ struct			s_player
   unsigned char		elevation;
   t_inventory		inventory;
   t_list_head		list;
+  t_team		*team;
 
   int			command_in_queue;
   t_command_queue	command_queue[COMMAND_QUEUE_SIZE];

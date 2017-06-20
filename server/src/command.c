@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sat Jun 17 04:55:41 2017 Pierre Monge
-** Last update Sat Jun 17 05:25:22 2017 Pierre Monge
+** Last update Tue Jun 20 00:57:00 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -14,6 +14,7 @@
 
 #include "struct.h"
 #include "debug.h"
+#include "h.h"
 
 static t_command	*get_command_list()
 {
@@ -36,14 +37,13 @@ static t_command	*get_command_list()
   return (command_list);
 }
 
-void			convert_packet_to_command(t_packet packet,
-						  t_player *player)
+static void		queue_command(t_packet packet,
+				      t_player *player)
 {
   t_command		*command_list;
   int			i;
   t_command_queue	*command_queue;
 
-  PRINT_DEBUG("fd: %d received packet:\n%s\n", player->net_info.fd, packet.block);
   i = 0;
   command_list = get_command_list();
   while (i < MAX_COMMAND_SIZE)
@@ -64,4 +64,14 @@ void			convert_packet_to_command(t_packet packet,
 	}
       i++;
     }
+}
+
+void			convert_packet_to_command(t_packet packet,
+						  t_player *player)
+{
+  PRINT_DEBUG("fd: %d received packet:\n%s\n", player->net_info.fd, packet.block);
+  if (player->is_logged)
+    queue_command(packet, player);
+  else
+    auth_player(packet, player);
 }
