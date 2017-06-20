@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 05:20:34 2017 Pierre Monge
-** Last update Tue Jun 20 22:43:48 2017 Pierre Monge
+** Last update Tue Jun 20 23:04:00 2017 Pierre Monge
 */
 
 #include <string.h>
@@ -28,7 +28,6 @@ static void	  close_game_server()
   sig_set(0);
   delete_teams();
   delete_game();
-  // delete map here
 }
 
 static void	loop_game_server()

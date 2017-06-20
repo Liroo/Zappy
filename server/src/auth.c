@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Mon Jun 19 22:15:36 2017 Pierre Monge
-** Last update Tue Jun 20 02:58:44 2017 Pierre Monge
+** Last update Tue Jun 20 23:06:20 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -33,7 +33,7 @@ static void	register_player_in_team(t_player *player,
   player->elevation = 1;
   player->pos_x = rand() % game.map_size_x;
   player->pos_y = rand() % game.map_size_y;
-  // game.map[player->pos_y][player->pox_x].player += 1;
+  INSERT_OBJECT(&(game.map[player->pos_y][player->pos_x]), PLAYER_OFFSET);
   player->is_logged = 1;
   player->team = team;
   team->empty_slot -= 1;

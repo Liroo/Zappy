@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 21:50:17 2017 Pierre Monge
-** Last update Thu Jun 15 06:02:18 2017 Pierre Monge
+** Last update Tue Jun 20 23:04:12 2017 Pierre Monge
 */
 
 #include <netdb.h>
@@ -54,7 +54,6 @@ int			zappy_socket()
 
 int	socket_close(int fd)
 {
-  // does we need a shutdown of fd ?
   if (close(fd) == -1)
     {
       perror("socket_close");

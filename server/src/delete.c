@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sat Jun 17 00:26:45 2017 Pierre Monge
-** Last update Tue Jun 20 22:53:32 2017 Pierre Monge
+** Last update Tue Jun 20 23:06:22 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -21,7 +21,7 @@ static void	delete_registered_player(t_player *player)
   if (!player->team)
     return ;
   player->team->empty_slot += 1;
-  // game.map[player->pos_y][player->pox_x].player -= 1;
+  REMOVE_OBJECT(&(game.map[player->pos_y][player->pos_x]), PLAYER_OFFSET);
 }
 
 void		delete_player(t_player *player)
