@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 15:17:59 2017 Pierre Monge
-** Last update Fri Jun 16 00:26:18 2017 Pierre Monge
+** Last update Wed Jun 21 06:04:01 2017 Pierre Monge
 */
 
 #include <stdarg.h>
@@ -17,8 +17,10 @@
 #include "struct.h"
 #include "packet.h"
 #include "debug.h"
+#include "fdlist.h"
 
-void		queue_packet(t_player *player, char *format, ...)
+void		queue_packet(t_player *player, char dead_packet,
+			     char *format, ...)
 {
   va_list	va;
   t_packet	*packet;
@@ -30,6 +32,7 @@ void		queue_packet(t_player *player, char *format, ...)
       return ;
     }
   memset(packet, 0, sizeof(t_packet));
+  packet->dead_packet = dead_packet;
   va_start(va, format);
   packet->size = vasprintf(&packet->block, format, va);
   va_end(va);
@@ -59,6 +62,11 @@ int	send_single_packet(int fd, t_packet *packet)
       return (w_ret);
     }
   packet->offset = w_ret;
+  if (packet->dead_packet == DEAD_PACKET)
+    {
+      delete_player(fd_entry[fd].data);
+      return (-1);
+    }
   return (w_ret);
 }
 

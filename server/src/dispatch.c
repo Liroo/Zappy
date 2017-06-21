@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 04:14:35 2017 Pierre Monge
-** Last update Fri Jun 16 20:38:47 2017 Pierre Monge
+** Last update Wed Jun 21 04:34:57 2017 Pierre Monge
 */
 
 #include <sys/select.h>
@@ -83,9 +83,8 @@ static int	fd_dispatch(int num, fd_set read_fds, fd_set write_fds)
   return (0);
 }
 
-int			fd_select(time_t delay)
+int			fd_select(struct timespec *duration)
 {
-  struct timespec	to;
   int			num;
   fd_set		cpy_read_fds;
   fd_set		cpy_write_fds;
@@ -93,12 +92,9 @@ int			fd_select(time_t delay)
 
   memcpy(&cpy_read_fds, &fdset.read_fds, sizeof(fd_set));
   memcpy(&cpy_write_fds, &fdset.write_fds, sizeof(fd_set));
-  memset(&to, 0, sizeof(struct timeval));
-  to.tv_sec = delay / 1000;
-  to.tv_nsec = (delay % 1000) * 1000 * 1000;
   sigemptyset(&emptyset);
   num = pselect(fdset.highest_fd + 1,
-    &cpy_read_fds, &cpy_write_fds, NULL, &to,
+    &cpy_read_fds, &cpy_write_fds, NULL, duration,
     &emptyset);
   if (num < 0)
     return (perror("select"), -1);

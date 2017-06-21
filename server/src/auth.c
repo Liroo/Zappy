@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Mon Jun 19 22:15:36 2017 Pierre Monge
-** Last update Tue Jun 20 23:06:20 2017 Pierre Monge
+** Last update Wed Jun 21 06:02:02 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -22,7 +22,7 @@ static void	register_player_in_team(t_player *player,
 {
   if (team->empty_slot <= 0)
     {
-      queue_packet(player, "ko\n");
+      queue_packet(player, SIMPLE_PACKET, RPL_KO);
       return ;
     }
   PRINT_DEBUG("Player %d added to the team %s\n", player->net_info.fd,
@@ -37,8 +37,8 @@ static void	register_player_in_team(t_player *player,
   player->is_logged = 1;
   player->team = team;
   team->empty_slot -= 1;
-  queue_packet(player, "%d\n", team->empty_slot);
-  queue_packet(player, "%d %d\n", player->pos_x, player->pos_y);
+  queue_packet(player, SIMPLE_PACKET, "%d\n", team->empty_slot);
+  queue_packet(player, SIMPLE_PACKET, "%d %d\n", player->pos_x, player->pos_y);
 }
 
 void		auth_player(t_packet packet, t_player *player)
@@ -59,5 +59,5 @@ void		auth_player(t_packet packet, t_player *player)
 	}
       pos = pos->next;
     }
-  queue_packet(player, "ko\n");
+  queue_packet(player, SIMPLE_PACKET, RPL_KO);
 }

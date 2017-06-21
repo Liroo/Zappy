@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Tue Jun 20 22:44:06 2017 Pierre Monge
+** Last update Wed Jun 21 06:08:44 2017 Pierre Monge
 */
 
 #ifndef H_H
@@ -46,7 +46,7 @@ extern int	fd_accept(int sockfd);
 */
 extern void	fd_set_select(int fd, int flag, void *data);
 extern void	fd_refresh(int fd);
-extern int	fd_select(time_t delay);
+extern int	fd_select(struct timespec *duration);
 
 extern EVENT	get_event_flags(int fd, fd_set read_fds, fd_set write_fds);
 extern void	read_event(t_player *player);
@@ -62,7 +62,8 @@ extern void	sig_handler(int sig);
 ** packet
 */
 extern int	recv_packet(t_player *player);
-extern void	queue_packet(t_player *player, char *format, ...);
+extern void	queue_packet(t_player *player, char dead_packet,
+			     char *format, ...);
 extern void	send_queued_packet(t_player *player);
 
 /*
@@ -100,5 +101,19 @@ extern void	auth_player(t_packet packet, t_player *player);
 */
 extern void	insert_objects_in_map(int offset, int nb);
 extern int	generate_map();
+
+/*
+** Chrono
+*/
+extern void	queue_chrono(int duration_s, void *data, char event_type);
+extern void	insert_chrono_queue(t_chrono_queue *chrono);
+extern void	create_chrono(t_chrono_queue *chrono, int duration_s,
+			      void *data, char event_type);
+extern int	diff_time(t_chrono_queue *c1, t_chrono_queue *c2);
+
+/*
+** Process
+*/
+extern void	process_chrono_event();
 
 #endif /* !H_H */

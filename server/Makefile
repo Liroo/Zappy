@@ -22,6 +22,7 @@ SRC_GEN = \
 	fdlist.c \
 	delete.c \
 	map.c \
+	chrono.c \
 	\
 	socket.c \
 	bsd.c \
@@ -32,6 +33,7 @@ SRC_GEN = \
 	auth.c \
 	\
 	command.c \
+	process.c \
 	\
 	parsing_option.c \
 	option.c

@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sat Jun 17 00:26:45 2017 Pierre Monge
-** Last update Tue Jun 20 23:06:22 2017 Pierre Monge
+** Last update Wed Jun 21 05:56:26 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -15,6 +15,7 @@
 #include "list.h"
 #include "debug.h"
 #include "struct.h"
+#include "chrono.h"
 
 static void	delete_registered_player(t_player *player)
 {
@@ -98,6 +99,13 @@ void		delete_game()
     {
       next = pos->next;
       delete_player(list_entry(pos, t_player, list));
+      pos = next;
+    }
+  pos = list_get_first(&game.chrono_queue);
+  while (pos != &game.chrono_queue)
+    {
+      next = pos->next;
+      free(list_entry(pos, t_chrono_queue, list));
       pos = next;
     }
   i = 0;

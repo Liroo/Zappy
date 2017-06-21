@@ -5,7 +5,7 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Tue Jun 13 22:53:02 2017 Thomas
-** Last update Tue Jun 20 02:35:40 2017 Pierre Monge
+** Last update Wed Jun 21 02:04:18 2017 Pierre Monge
 */
 
 #include <unistd.h>
@@ -42,7 +42,7 @@ void	f_opt(t_game *game, int ac, char *av[])
 {
   (void)ac;
   (void)av;
-  game->time = atoi(optarg);
+  game->freq = atoi(optarg);
 }
 
 void		n_opt(t_game *game, int ac, char *av[])
