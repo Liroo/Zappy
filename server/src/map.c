@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 20 22:09:29 2017 Pierre Monge
-** Last update Tue Jun 20 23:01:02 2017 Pierre Monge
+** Last update Wed Jun 21 04:17:10 2017 Pierre Monge
 */
 
 #include <time.h>
@@ -14,6 +14,7 @@
 #include <string.h>
 
 #include "struct.h"
+#include "game.h"
 
 void	insert_objects_in_map(int offset, int nb)
 {

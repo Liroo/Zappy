@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 12:00:23 2017 Pierre Monge
-** Last update Tue Jun 20 22:38:52 2017 Pierre Monge
+** Last update Wed Jun 21 04:16:54 2017 Pierre Monge
 */
 
 #ifndef STRUCT_H
@@ -43,17 +43,11 @@ struct		s_inventory
 };
 
 # define LINEMATE_OFFSET offsetof(t_inventory, linemate)
-# define MIN_LINEMATE_PER_TEAM 54 + (54 / 2)
 # define DERAUMERE_OFFSET offsetof(t_inventory, deraumere)
-# define MIN_DERAUMERE_PER_TEAM 48 + (48 / 2)
 # define SIBUR_OFFSET offsetof(t_inventory, sibur)
-# define MIN_SIBUR_PER_TEAM 60 + (60 / 2)
 # define MENDIANE_OFFSET offsetof(t_inventory, mendiane)
-# define MIN_MENDIANE_PER_TEAM 30 + (30 / 2)
 # define PHIRAS_OFFSET offsetof(t_inventory, phiras)
-# define MIN_PHIRAS_PER_TEAM 36 + (36 / 2)
 # define THYSTAME_OFFSET offsetof(t_inventory, thystame)
-# define MIN_THYSTAME_PER_TEAM 6 + (6 / 2)
 # define FOOD_OFFSET offsetof(t_inventory, food)
 # define PLAYER_OFFSET offsetof(t_inventory, player)
 # define INSERT_OBJECT(inventory, offset) *(((char *)inventory) + offset) += 1
@@ -65,8 +59,8 @@ struct		s_tiles
 };
 
 # include "command.h"
-# define COMMAND_QUEUE_SIZE 10
 # include "packet.h"
+# include "game.h"
 
 struct			s_player
 {
@@ -99,20 +93,22 @@ struct		s_team
 };
 
 # include "event.h"
+# include "chrono.h"
 
-struct		s_game
+struct			s_game
 {
-  unsigned int	map_size_x;
-  unsigned int	map_size_y;
-  t_inventory	**map;
+  unsigned int		map_size_x;
+  unsigned int		map_size_y;
+  t_inventory		**map;
+  t_list_head		chrono_queue;
 
-  t_list_head	teams;
-  unsigned int	nb_client_max;
-  int		time;
+  t_list_head		teams;
+  unsigned int		nb_client_max;
+  int			freq;
 
-  t_list_head	connection_queue;
-  t_net_info	net_info;
-  int		sig_handled;
+  t_list_head		connection_queue;
+  t_net_info		net_info;
+  int			sig_handled;
 };
 
 extern t_game	game;

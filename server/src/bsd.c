@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 01:26:48 2017 Pierre Monge
-** Last update Tue Jun 20 23:52:47 2017 guicha_t
+** Last update Wed Jun 21 21:52:23 2017 guicha_t
 */
 
 #include <stdlib.h>
@@ -87,5 +87,6 @@ void		add_connection(int fd)
   list_add_tail(&pl->list, &game.connection_queue);
   list_init(&pl->w_packet);
   fd_set_select(fd, FD_SELECT_READ, pl);
-  queue_packet(pl, "WELCOME\n");
+  queue_packet(pl, SIMPLE_PACKET, RPL_WELCOME);
+  queue_chrono(LIFETIME_WITHOUT_FOOD, pl, EVENT_LIFETIME);
 }

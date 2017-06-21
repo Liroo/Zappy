@@ -5,21 +5,18 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 05:20:34 2017 Pierre Monge
-** Last update Tue Jun 20 23:04:00 2017 Pierre Monge
+** Last update Wed Jun 21 06:09:37 2017 Pierre Monge
 */
 
+#include <time.h>
 #include <string.h>
 
 #include "debug.h"
 #include "h.h"
 #include "list.h"
 #include "option.h"
-
-/*
-** Note: This is to remove, this is an introduction to struct.h
-** and to be sure it will compile, I let this here -- Pierre
-*/
 #include "struct.h"
+#include "chrono.h"
 
 t_game	game;
 
@@ -30,14 +27,21 @@ static void	  close_game_server()
   delete_game();
 }
 
-static void	loop_game_server()
+static void		loop_game_server()
 {
+  struct timespec	*next_chrono;
+
+  next_chrono = NULL;
   while (!game.sig_handled)
     {
-      // time pass to fd_select is to determine depends on binary option -t
-      if (fd_select(10000) == -1)
+      process_chrono_event();
+      next_chrono = NULL;
+      if (game.chrono_queue.next != &game.chrono_queue)
+	next_chrono = (struct timespec *)
+	  (&((t_chrono_queue *)list_entry(game.chrono_queue.next,
+					  t_chrono_queue, list))->duration);
+      if (fd_select(next_chrono) == -1)
 	break;
-      // here we should process client (execute commands depends on time etc..)
     }
 }
 
@@ -47,6 +51,7 @@ static int	init_game_server(int argc, char *argv[])
   fdset.highest_fd = -1;
   list_init(&game.teams);
   list_init(&game.connection_queue);
+  list_init(&game.chrono_queue);
   sig_set(1);
   if (!parse_option(argc, argv, &game))
     return (-1);

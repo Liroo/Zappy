@@ -22,6 +22,7 @@ SRC_GEN = \
 	fdlist.c \
 	delete.c \
 	map.c \
+	chrono.c \
 	\
 	socket.c \
 	bsd.c \
@@ -39,6 +40,7 @@ SRC_GEN = \
 	cmds/extraction_rcs.c \
 	cmds/cmd_connect_nbr.c \
 	cmds/cmd_inventory.c \
+	process.c \
 	\
 	parsing_option.c \
 	option.c
