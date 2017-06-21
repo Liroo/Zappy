@@ -32,6 +32,13 @@ SRC_GEN = \
 	auth.c \
 	\
 	command.c \
+	cmds/cmd_forward.c \
+	cmds/cmd_left.c \
+	cmds/cmd_right.c \
+	cmds/cmd_take.c \
+	cmds/extraction_rcs.c \
+	cmds/cmd_connect_nbr.c \
+	cmds/cmd_inventory.c \
 	\
 	parsing_option.c \
 	option.c

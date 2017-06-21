@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Tue Jun 20 22:44:06 2017 Pierre Monge
+** Last update Wed Jun 21 05:07:50 2017 guicha_t
 */
 
 #ifndef H_H
@@ -70,6 +70,25 @@ extern void	send_queued_packet(t_player *player);
 */
 extern void			convert_packet_to_command(t_packet packet,
 						  t_player *player);
+
+/*
+** Unit cmds
+*/
+extern int	cmd_forward(t_player *p, char *token);
+extern int	cmd_left(t_player *p, char *token);
+extern int	cmd_right(t_player *p, char *token);
+extern int	cmd_take(t_player *p, char *token);
+extern int	cmd_connect_nbr(t_player *p, char *token);
+extern int	cmd_inventory(t_player *p, char *token);
+
+/*
+** Extraction
+*/
+extern void	extract_sibur(t_player *p);
+extern void	extract_mendiane(t_player *p);
+extern void	extract_phiras(t_player *p);
+extern void	extract_thystame(t_player *p);
+extern void	extract_food(t_player *p);
 
 /*
 ** Free class
