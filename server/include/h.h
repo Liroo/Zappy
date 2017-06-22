@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Wed Jun 21 21:52:06 2017 guicha_t
+** Last update Thu Jun 22 00:51:38 2017 guicha_t
 */
 
 #ifndef H_H
@@ -81,15 +81,9 @@ extern int	cmd_right(t_player *p, char *token);
 extern int	cmd_take(t_player *p, char *token);
 extern int	cmd_connect_nbr(t_player *p, char *token);
 extern int	cmd_inventory(t_player *p, char *token);
-
-/*
-** Extraction
-*/
-extern void	extract_sibur(t_player *p);
-extern void	extract_mendiane(t_player *p);
-extern void	extract_phiras(t_player *p);
-extern void	extract_thystame(t_player *p);
-extern void	extract_food(t_player *p);
+extern int	cmd_set(t_player *p, char *token);
+extern char	*parse_param(char *token);
+extern char	*epur_str(char *str);
 
 /*
 ** Free class

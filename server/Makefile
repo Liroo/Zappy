@@ -37,9 +37,11 @@ SRC_GEN = \
 	cmds/cmd_left.c \
 	cmds/cmd_right.c \
 	cmds/cmd_take.c \
-	cmds/extraction_rcs.c \
 	cmds/cmd_connect_nbr.c \
 	cmds/cmd_inventory.c \
+	cmds/cmd_set.c \
+	cmds/epur_str.c \
+	cmds/parse_param.c \
 	process.c \
 	\
 	parsing_option.c \
