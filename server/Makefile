@@ -22,18 +22,24 @@ SRC_GEN = \
 	fdlist.c \
 	delete.c \
 	map.c \
-	chrono.c \
+	chrono/chrono.c \
+	chrono/c_operator.c \
+	chrono/c_delete.c \
 	\
 	socket.c \
 	bsd.c \
 	r_packet.c \
 	w_packet.c \
 	dispatch.c \
-	event.c \
+	fdevent.c \
 	auth.c \
 	\
 	command.c \
 	process.c \
+	\
+	event/command.c \
+	event/lifetime.c \
+	event/timeout.c \
 	\
 	parsing_option.c \
 	option.c

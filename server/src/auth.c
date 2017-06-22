@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Mon Jun 19 22:15:36 2017 Pierre Monge
-** Last update Wed Jun 21 06:02:02 2017 Pierre Monge
+** Last update Fri Jun 23 01:10:00 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -36,9 +36,12 @@ static void	register_player_in_team(t_player *player,
   INSERT_OBJECT(&(game.map[player->pos_y][player->pos_x]), PLAYER_OFFSET);
   player->is_logged = 1;
   player->team = team;
+  player->inventory.food = 10;
   team->empty_slot -= 1;
   queue_packet(player, SIMPLE_PACKET, "%d\n", team->empty_slot);
   queue_packet(player, SIMPLE_PACKET, "%d %d\n", player->pos_x, player->pos_y);
+  delete_chrono_player(player);
+  queue_chrono(LIFETIME_WITHOUT_FOOD, player, C_EVENT_LIFETIME);
 }
 
 void		auth_player(t_packet packet, t_player *player)

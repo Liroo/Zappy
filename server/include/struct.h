@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 12:00:23 2017 Pierre Monge
-** Last update Wed Jun 21 04:16:54 2017 Pierre Monge
+** Last update Fri Jun 23 00:39:36 2017 Pierre Monge
 */
 
 #ifndef STRUCT_H
@@ -77,6 +77,7 @@ struct			s_player
 
   int			command_in_queue;
   t_command_queue	command_queue[COMMAND_QUEUE_SIZE];
+  int			command_is_running;
   t_packet		r_packet;
   t_list_head		w_packet;
   t_net_info		net_info;

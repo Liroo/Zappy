@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Wed Jun 21 04:15:36 2017 Pierre Monge
-** Last update Wed Jun 21 05:50:40 2017 Pierre Monge
+** Last update Fri Jun 23 00:58:42 2017 Pierre Monge
 */
 
 #ifndef GAME_H
@@ -19,12 +19,15 @@
 # define MIN_THYSTAME_PER_TEAM 6 + (6 / 2)
 
 # define COMMAND_QUEUE_SIZE 10
+# define AUTH_TIMEOUT(f) 10 * f
 
 # define LIFETIME_WITHOUT_FOOD 126
 
 # define RPL_OK "ok\n"
 # define RPL_KO "ko\n"
 
+# define RPL_TIMEOUT "timeout\n"
 # define RPL_WELCOME "WELCOME\n"
+# define RPL_DEAD "dead\n"
 
 #endif /* !GAME_H */
