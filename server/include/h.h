@@ -5,7 +5,11 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
+<<<<<<< HEAD
 ** Last update Thu Jun 22 00:51:38 2017 guicha_t
+=======
+** Last update Thu Jun 22 05:58:44 2017 Thomas
+>>>>>>> 087164f39b909b1e960e880ba322c18fdee53457
 */
 
 #ifndef H_H
@@ -73,6 +77,7 @@ extern void			convert_packet_to_command(t_packet packet,
 						  t_player *player);
 
 /*
+<<<<<<< HEAD
 ** Unit cmds
 */
 extern int	cmd_forward(t_player *p, char *token);
@@ -84,6 +89,14 @@ extern int	cmd_inventory(t_player *p, char *token);
 extern int	cmd_set(t_player *p, char *token);
 extern char	*parse_param(char *token);
 extern char	*epur_str(char *str);
+=======
+** Units cmds
+*/
+extern int	cmd_look(t_player *p, char *token);
+extern void	print_tiles(t_player *p, int x, int y);
+extern void	send_vertical_look(t_player *p, int range, int begin_direction, int dir_y);
+extern void	send_horizontal_look(t_player *p, int range, int begin_direction, int dir_x);
+>>>>>>> 087164f39b909b1e960e880ba322c18fdee53457
 
 /*
 ** Free class
