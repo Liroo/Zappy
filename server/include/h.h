@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Wed Jun 21 06:08:44 2017 Pierre Monge
+** Last update Thu Jun 22 05:58:44 2017 Thomas
 */
 
 #ifndef H_H
@@ -71,6 +71,14 @@ extern void	send_queued_packet(t_player *player);
 */
 extern void			convert_packet_to_command(t_packet packet,
 						  t_player *player);
+
+/*
+** Units cmds
+*/
+extern int	cmd_look(t_player *p, char *token);
+extern void	print_tiles(t_player *p, int x, int y);
+extern void	send_vertical_look(t_player *p, int range, int begin_direction, int dir_y);
+extern void	send_horizontal_look(t_player *p, int range, int begin_direction, int dir_x);
 
 /*
 ** Free class

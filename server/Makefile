@@ -36,7 +36,11 @@ SRC_GEN = \
 	process.c \
 	\
 	parsing_option.c \
-	option.c
+	option.c \
+	name_option.c \
+	\
+	look.c \
+	print_tiles.c
 
 OBJ_GEN = $(addprefix $(OBJ_GENDIR), $(SRC_GEN:.c=.o))
 
