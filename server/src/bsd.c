@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 01:26:48 2017 Pierre Monge
-** Last update Thu Jun 22 21:37:05 2017 Pierre Monge
+** Last update Fri Jun 23 01:19:21 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -17,6 +17,8 @@
 #include "debug.h"
 #include "fdlist.h"
 #include "packet.h"
+
+#include <stdio.h>
 
 int	inetport(int port)
 {
@@ -53,6 +55,16 @@ void	accept_connection(int sock_fd)
   add_connection(fd);
 }
 
+int		init_rand_direction()
+{
+  int		dir;
+
+  dir = 0;
+  srand(time(NULL));
+  dir = rand() % 4;
+  return (dir);
+}
+
 void		add_connection(int fd)
 {
   t_player	*pl;
@@ -71,6 +83,7 @@ void		add_connection(int fd)
       return ;
     }
   pl->net_info.fd = fd;
+  pl->direction = init_rand_direction();
   list_add_tail(&pl->list, &game.connection_queue);
   list_init(&pl->w_packet);
   fd_set_select(fd, FD_SELECT_READ, pl);

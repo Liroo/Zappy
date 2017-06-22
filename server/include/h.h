@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Fri Jun 23 01:04:22 2017 Pierre Monge
+** Last update Fri Jun 23 01:19:40 2017 Pierre Monge
 */
 
 #ifndef H_H
@@ -72,6 +72,24 @@ extern void	clear_packet(t_packet *packet);
 */
 extern void	convert_packet_to_command(t_packet packet,
 						  t_player *player);
+
+/*
+<<<<<<< HEAD
+** Unit cmds
+*/
+extern int	cmd_forward(t_player *p, char *token);
+extern int	cmd_left(t_player *p, char *token);
+extern int	cmd_right(t_player *p, char *token);
+extern int	cmd_take(t_player *p, char *token);
+extern int	cmd_connect_nbr(t_player *p, char *token);
+extern int	cmd_inventory(t_player *p, char *token);
+extern int	cmd_set(t_player *p, char *token);
+extern char	*parse_param(char *token);
+extern char	*epur_str(char *str);
+extern int	cmd_look(t_player *p, char *token);
+extern void	print_tiles(t_player *p, int x, int y);
+extern void	send_vertical_look(t_player *p, int range, int begin_direction, int dir_y);
+extern void	send_horizontal_look(t_player *p, int range, int begin_direction, int dir_x);
 
 /*
 ** Free class

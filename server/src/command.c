@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sat Jun 17 04:55:41 2017 Pierre Monge
-** Last update Tue Jun 20 00:57:00 2017 Pierre Monge
+** Last update Thu Jun 22 00:51:16 2017 guicha_t
 */
 
 #include <stdlib.h>
@@ -20,17 +20,17 @@ static t_command	*get_command_list()
 {
   static t_command	command_list[MAX_COMMAND_SIZE] =
     {
-      { "Forward", 7, NULL},
-      { "Right", 5, NULL },
-      { "Left", 4, NULL },
+      { "Forward", 7, &cmd_forward },
+      { "Right", 5, &cmd_right },
+      { "Left", 4, &cmd_left },
       { "Look", 4, NULL },
-      { "Inventory", 9, NULL },
-      { "Broadcast", 8, NULL },
-      { "Connect_nbr", 11, NULL },
+      { "Inventory", 9, &cmd_inventory },
+      { "Broadcast", 9, NULL },
+      { "Connect_nbr", 11, &cmd_connect_nbr },
       { "Fork", 4, NULL },
       { "Eject", 5, NULL },
-      { "Take", 4, NULL },
-      { "Set", 3, NULL },
+      { "Take", 4, &cmd_take },
+      { "Set", 3, &cmd_set },
       { "Incantation", 11, NULL }
     };
 
@@ -59,6 +59,10 @@ static void		queue_command(t_packet packet,
 	  if (!(command_queue->command = strdup(packet.block)))
 	    return ;
 	  command_queue->exec = command_list[i].exec;
+	  //
+	  /* command_list[i].exec(player, "lol\n"); */
+	    
+	  //
 	  player->command_in_queue++;
 	  break;
 	}

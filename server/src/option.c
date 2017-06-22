@@ -5,12 +5,11 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Tue Jun 13 22:53:02 2017 Thomas
-** Last update Wed Jun 21 02:04:18 2017 Pierre Monge
+** Last update Thu Jun 22 05:57:23 2017 Thomas
 */
 
-#include <unistd.h>
-#include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "list.h"
 #include "struct.h"
@@ -45,27 +44,11 @@ void	f_opt(t_game *game, int ac, char *av[])
   game->freq = atoi(optarg);
 }
 
-void		n_opt(t_game *game, int ac, char *av[])
+void	p_opt(t_game *game, int ac, char *av[])
 {
-  t_team	*tmp;
-  t_team	*new;
-
-  if ((tmp = malloc(sizeof(t_team))) == NULL)
-    return;
-  memset(tmp, 0, sizeof(t_team));
-  tmp->name = strdup(optarg);
-  list_init(&tmp->players);
-  list_add_tail(&tmp->list, &game->teams);
-  while (optind < ac && *av[optind] != '-')
-    {
-      if ((new = malloc(sizeof(t_team))) == NULL)
-	return;
-      memset(new, 0, sizeof(t_team));
-      new->name = strdup(av[optind]);
-      list_init(&new->players);
-      list_add_tail(&new->list, &game->teams);
-      optind++;
-    }
+  (void)ac;
+  (void)av;
+  game->net_info.port = atoi(optarg);
 }
 
 void	x_opt(t_game *game, int ac, char *av[])

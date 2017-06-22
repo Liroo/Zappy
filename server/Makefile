@@ -35,6 +35,15 @@ SRC_GEN = \
 	auth.c \
 	\
 	command.c \
+	cmds/cmd_forward.c \
+	cmds/cmd_left.c \
+	cmds/cmd_right.c \
+	cmds/cmd_take.c \
+	cmds/cmd_connect_nbr.c \
+	cmds/cmd_inventory.c \
+	cmds/cmd_set.c \
+	cmds/epur_str.c \
+	cmds/parse_param.c \
 	process.c \
 	\
 	event/command.c \
@@ -42,7 +51,11 @@ SRC_GEN = \
 	event/timeout.c \
 	\
 	parsing_option.c \
-	option.c
+	option.c \
+	name_option.c \
+	\
+	look.c \
+	print_tiles.c
 
 OBJ_GEN = $(addprefix $(OBJ_GENDIR), $(SRC_GEN:.c=.o))
 
