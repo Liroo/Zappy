@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Thu Jun 22 07:01:19 2017 guicha_t
-** Last update Fri Jun 23 03:17:14 2017 guicha_t
+** Last update Fri Jun 23 03:48:40 2017 guicha_t
 */
 
 #include "debug.h"
@@ -48,6 +48,6 @@ int	cmd_broadcast(t_player *p, char *token)
       find_player_broadcast(p, team, token);
       pos = pos->next;
     }
-
+  p->command_is_running = 1;
   return (0);
 }

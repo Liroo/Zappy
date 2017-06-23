@@ -1,7 +1,0 @@
-all:
-		print Ok ou Ko sur certaines cmd.
-		finir les cmd dans le plus grand des calmes.
-		implémenter le temps dans chaque cmd. (Queue time).
-		
-
-

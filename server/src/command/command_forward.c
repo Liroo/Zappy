@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Tue Jun 20 23:05:54 2017 guicha_t
-** Last update Wed Jun 21 01:02:09 2017 guicha_t
+** Last update Fri Jun 23 03:49:39 2017 guicha_t
 */
 
 #include "debug.h"
@@ -48,5 +48,6 @@ int		cmd_forward(t_player *p, char *token)
   ++game.map[p->pos_x][p->pos_x].player;
   PRINT_DEBUG("New pos: [%d][%d]\n", p->pos_x, p->pos_y);
   PRINT_DEBUG("Forward ok!\n");
+  p->command_is_running = 1;
   return (0);
 }

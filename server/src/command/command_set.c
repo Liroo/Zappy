@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Thu Jun 22 00:49:52 2017 guicha_t
-** Last update Fri Jun 23 03:17:57 2017 guicha_t
+** Last update Fri Jun 23 03:50:49 2017 guicha_t
 */
 
 #include <string.h>
@@ -54,5 +54,6 @@ int		cmd_set(t_player *p, char *token)
     queue_packet(p, SIMPLE_PACKET, RPL_KO);
   free(clean_token);
   free(rsc);
+  p->command_is_running = 1;
   return (0);
 }
