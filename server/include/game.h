@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Wed Jun 21 04:15:36 2017 Pierre Monge
-** Last update Fri Jun 23 03:34:36 2017 guicha_t
+** Last update Fri Jun 23 16:12:23 2017 guicha_t
 */
 
 #ifndef GAME_H
@@ -31,6 +31,18 @@
 # define AUTH_TIMEOUT(f) 10 * f
 
 # define LIFETIME_WITHOUT_FOOD 126
+
+# define CHRONO_FORWARD	7
+# define CHRONO_RIGHT 7
+# define CHRONO_LEFT 7
+# define CHRONO_LOOK 7
+# define CHRONO_INVENTORY 1
+# define CHRONO_BROADCAST 7
+# define CHRONO_FORK 42
+# define CHRONO_EJECT 7
+# define CHRONO_TAKE 7
+# define CHRONO_SET 7
+# define CHRONO_INCANTATION 300
 
 # define RPL_OK "ok\n"
 # define RPL_KO "ko\n"

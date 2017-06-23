@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Thu Jun 22 00:49:52 2017 guicha_t
-** Last update Fri Jun 23 03:50:49 2017 guicha_t
+** Last update Fri Jun 23 16:28:20 2017 guicha_t
 */
 
 #include <string.h>
@@ -13,6 +13,8 @@
 #include <stdio.h>
 
 #include "packet.h"
+#include "game.h"
+#include "chrono.h"
 #include "debug.h"
 #include "h.h"
 #include "struct.h"
@@ -55,5 +57,6 @@ int		cmd_set(t_player *p, char *token)
   free(clean_token);
   free(rsc);
   p->command_is_running = 1;
+  queue_chrono(CHRONO_SET, p, C_EVENT_COMMAND);
   return (0);
 }

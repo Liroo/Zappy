@@ -5,11 +5,13 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Wed Jun 21 02:43:02 2017 guicha_t
-** Last update Fri Jun 23 03:50:00 2017 guicha_t
+** Last update Fri Jun 23 16:27:46 2017 guicha_t
 */
 
 #include "h.h"
 #include "struct.h"
+#include "game.h"
+#include "chrono.h"
 #include "debug.h"
 
 int	cmd_inventory(t_player *p, char *token)
@@ -27,5 +29,6 @@ int	cmd_inventory(t_player *p, char *token)
 	       p->inventory.phiras,
 	       p->inventory.thystame);
   p->command_is_running = 1;
+  queue_chrono(CHRONO_INVENTORY, p, C_EVENT_COMMAND);
   return (0);
 }

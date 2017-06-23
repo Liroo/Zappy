@@ -5,12 +5,15 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Thu Jun 22 07:01:19 2017 guicha_t
-** Last update Fri Jun 23 03:48:40 2017 guicha_t
+** Last update Fri Jun 23 16:38:49 2017 guicha_t
 */
 
 #include "debug.h"
+#include "game.h"
+#include "chrono.h"
 #include "struct.h"
 #include "h.h"
+#include "packet.h"
 
 void	find_player_broadcast(t_player *send, t_team *team, char *t)
 {
@@ -48,6 +51,8 @@ int	cmd_broadcast(t_player *p, char *token)
       find_player_broadcast(p, team, token);
       pos = pos->next;
     }
+  queue_packet(p, SIMPLE_PACKET, RPL_OK);
   p->command_is_running = 1;
+  queue_chrono(CHRONO_BROADCAST, p, C_EVENT_COMMAND);
   return (0);
 }
