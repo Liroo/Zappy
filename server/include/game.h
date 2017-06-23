@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Wed Jun 21 04:15:36 2017 Pierre Monge
-** Last update Wed Jun 21 05:50:40 2017 Pierre Monge
+** Last update Fri Jun 23 03:05:34 2017 guicha_t
 */
 
 #ifndef GAME_H
@@ -17,6 +17,15 @@
 # define MIN_MENDIANE_PER_TEAM 30 + (30 / 2)
 # define MIN_PHIRAS_PER_TEAM 36 + (36 / 2)
 # define MIN_THYSTAME_PER_TEAM 6 + (6 / 2)
+
+# define N	1
+# define NW	2
+# define W	3
+# define SW	4
+# define S	5
+# define SE	6
+# define E	7
+# define NE	8
 
 # define COMMAND_QUEUE_SIZE 10
 

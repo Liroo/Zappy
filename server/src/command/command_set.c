@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Thu Jun 22 00:49:52 2017 guicha_t
-** Last update Thu Jun 22 06:05:25 2017 guicha_t
+** Last update Fri Jun 23 03:17:57 2017 guicha_t
 */
 
 #include <string.h>
@@ -17,7 +17,7 @@
 #include "h.h"
 #include "struct.h"
 
-void    deposit_on_tile(t_player *p, int offset)
+void		deposit_on_tile(t_player *p, int offset)
 {
   if (*(((char *)&p->inventory) + offset) <= 0)
     queue_packet(p, SIMPLE_PACKET, RPL_KO);
@@ -29,12 +29,12 @@ void    deposit_on_tile(t_player *p, int offset)
     }
 }
 
-int     cmd_set(t_player *p, char *token)
+int		cmd_set(t_player *p, char *token)
 {
   char          *rsc;
   char          *clean_token;
 
-  clean_token = epur_str(token);
+  clean_token = strepur(token);
   rsc = parse_param(clean_token);
   if (strcasecmp(rsc, "linemate") == 0)
     deposit_on_tile(p, LINEMATE_OFFSET);

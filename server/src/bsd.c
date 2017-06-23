@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 01:26:48 2017 Pierre Monge
-** Last update Wed Jun 21 21:52:23 2017 guicha_t
+** Last update Fri Jun 23 02:55:59 2017 guicha_t
 */
 
 #include <stdlib.h>
@@ -51,7 +51,7 @@ void	accept_connection(int sock_fd)
   int	fd;
 
   if ((fd = fd_accept(sock_fd)) == -1)
-    return;
+    return ;
   add_connection(fd);
 }
 

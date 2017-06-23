@@ -1,8 +1,3 @@
-
-cmd_take:
-		normer avec offset.
-		catch le param sans être trop dégeu.
-
 all:
 		print Ok ou Ko sur certaines cmd.
 		finir les cmd dans le plus grand des calmes.

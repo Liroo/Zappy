@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sat Jun 17 04:55:41 2017 Pierre Monge
-** Last update Thu Jun 22 00:51:16 2017 guicha_t
+** Last update Fri Jun 23 02:56:53 2017 guicha_t
 */
 
 #include <stdlib.h>
@@ -25,7 +25,7 @@ static t_command	*get_command_list()
       { "Left", 4, &cmd_left },
       { "Look", 4, NULL },
       { "Inventory", 9, &cmd_inventory },
-      { "Broadcast", 9, NULL },
+      { "Broadcast", 9, &cmd_broadcast },
       { "Connect_nbr", 11, &cmd_connect_nbr },
       { "Fork", 4, NULL },
       { "Eject", 5, NULL },
@@ -59,10 +59,6 @@ static void		queue_command(t_packet packet,
 	  if (!(command_queue->command = strdup(packet.block)))
 	    return ;
 	  command_queue->exec = command_list[i].exec;
-	  //
-	  /* command_list[i].exec(player, "lol\n"); */
-	    
-	  //
 	  player->command_in_queue++;
 	  break;
 	}
@@ -73,7 +69,8 @@ static void		queue_command(t_packet packet,
 void			convert_packet_to_command(t_packet packet,
 						  t_player *player)
 {
-  PRINT_DEBUG("fd: %d received packet:\n%s\n", player->net_info.fd, packet.block);
+  PRINT_DEBUG("fd: %d received packet:\n%s\n",
+	      player->net_info.fd, packet.block);
   if (player->is_logged)
     queue_command(packet, player);
   else

@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Wed Jun 21 02:09:58 2017 guicha_t
-** Last update Thu Jun 22 06:04:07 2017 guicha_t
+** Last update Fri Jun 23 03:18:11 2017 guicha_t
 */
 
 #include <string.h>
@@ -33,8 +33,8 @@ int	cmd_take(t_player *p, char *token)
 {
   char		*rsc;
   char		*clean_token;
-  
-  clean_token = epur_str(token);
+
+  clean_token = strepur(token);
   rsc = parse_param(clean_token);
   if (strcasecmp(rsc, "linemate") == 0)
     extract(p, LINEMATE_OFFSET);

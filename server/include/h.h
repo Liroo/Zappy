@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Thu Jun 22 06:16:17 2017 guicha_t
+** Last update Fri Jun 23 03:15:42 2017 guicha_t
 */
 
 #ifndef H_H
@@ -73,7 +73,6 @@ extern void			convert_packet_to_command(t_packet packet,
 						  t_player *player);
 
 /*
-<<<<<<< HEAD
 ** Unit cmds
 */
 extern int	cmd_forward(t_player *p, char *token);
@@ -84,11 +83,20 @@ extern int	cmd_connect_nbr(t_player *p, char *token);
 extern int	cmd_inventory(t_player *p, char *token);
 extern int	cmd_set(t_player *p, char *token);
 extern char	*parse_param(char *token);
-extern char	*epur_str(char *str);
+extern char	*strepur(char *str);
 extern int	cmd_look(t_player *p, char *token);
 extern void	print_tiles(t_player *p, int x, int y);
 extern void	send_vertical_look(t_player *p, int range, int begin_direction, int dir_y);
 extern void	send_horizontal_look(t_player *p, int range, int begin_direction, int dir_x);
+extern int	cmd_broadcast(t_player *p, char *token);
+extern int	algorithme_vector(t_player *p_send, t_player *p_dest);
+extern int	get_config_vector(int x, int y, int xmax, int ymax);
+extern int	get_dir_config_one(int x, int y);
+extern int	get_dir_config_two(int x, int ymax, int send_y, int dest_y);
+extern int	get_dir_config_three(int xmax, int y, int sendx, int destx);
+extern int	get_dir_config_four(int x, int y, t_player *s, t_player *d);
+extern int	get_diff_max_y(t_player *send, t_player *dest);
+extern int	get_diff_max_x(t_player *send, t_player *dest);
 
 /*
 ** Free class

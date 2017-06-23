@@ -5,7 +5,7 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Thu Jun 22 05:41:03 2017 Thomas
-** Last update Thu Jun 22 05:57:37 2017 Thomas
+** Last update Fri Jun 23 02:57:10 2017 guicha_t
 */
 
 #include <stdlib.h>
@@ -22,7 +22,7 @@ void		n_opt(t_game *game, int ac, char *av[])
   t_team	*new;
 
   if ((tmp = malloc(sizeof(t_team))) == NULL)
-    return;
+    return ;
   memset(tmp, 0, sizeof(t_team));
   tmp->name = strdup(optarg);
   list_init(&tmp->players);
@@ -30,7 +30,7 @@ void		n_opt(t_game *game, int ac, char *av[])
   while (optind < ac && *av[optind] != '-')
     {
       if ((new = malloc(sizeof(t_team))) == NULL)
-	return;
+	return ;
       memset(new, 0, sizeof(t_team));
       new->name = strdup(av[optind]);
       list_init(&new->players);

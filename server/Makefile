@@ -33,15 +33,19 @@ SRC_GEN = \
 	auth.c \
 	\
 	command.c \
-	cmds/cmd_forward.c \
-	cmds/cmd_left.c \
-	cmds/cmd_right.c \
-	cmds/cmd_take.c \
-	cmds/cmd_connect_nbr.c \
-	cmds/cmd_inventory.c \
-	cmds/cmd_set.c \
-	cmds/epur_str.c \
-	cmds/parse_param.c \
+	command/command_forward.c \
+	command/command_left.c \
+	command/command_right.c \
+	command/command_take.c \
+	command/command_connect_nbr.c \
+	command/command_inventory.c \
+	command/command_set.c \
+	command/strepur.c \
+	command/parse.c \
+	command/command_broadcast.c \
+	command/algorithme_vector.c \
+	command/config_algorithme.c \
+	command/get_max_value.c \
 	process.c \
 	\
 	parsing_option.c \
