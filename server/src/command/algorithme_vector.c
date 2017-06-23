@@ -5,9 +5,10 @@
 ** Login   <thomas.guichard@epitech.eu>
 **
 ** Started on  Thu Jun 22 21:43:46 2017 guicha_t
-** Last update Fri Jun 23 03:58:21 2017 Pierre Monge
+** Last update Fri Jun 23 20:07:18 2017 guicha_t
 */
 
+#include "debug.h"
 #include "struct.h"
 #include "game.h"
 #include "h.h"
@@ -46,13 +47,13 @@ int	check_same_diagonal(t_player *p_send, t_player *p_dest)
   diff_x = p_send->pos_x - p_dest->pos_x;
   diff_y = p_send->pos_y - p_dest->pos_y;
   if (diff_x > 0 && diff_x == diff_y)
-    return (SW);
-  else if (diff_x > 0 && diff_x == -diff_y)
-    return (NW);
-  else if (diff_x < 0 && diff_x == diff_y)
     return (NE);
-  else if (diff_x < 0 && diff_x == -diff_y)
+  else if (diff_x > 0 && diff_x == -diff_y)
     return (SE);
+  else if (diff_x < 0 && diff_x == diff_y)
+    return (SW);
+  else if (diff_x < 0 && diff_x == -diff_y)
+    return (NW);
   return (0);
 }
 
@@ -93,5 +94,6 @@ int	algorithme_vector(t_player *p_send, t_player *p_dest)
     dir = check_same_diagonal(p_send, p_dest);
   if (dir == 0)
     dir = harmless_vector(p_send, p_dest);
+  PRINT_DEBUG("Broadcast Dir : %d\n", dir);
   return (dir);
 }
