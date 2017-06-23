@@ -5,7 +5,7 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Fri Jun 16 14:59:23 2017 Thomas
-** Last update Thu Jun 22 05:42:32 2017 Thomas
+** Last update Thu Jun 22 22:43:53 2017 Thomas
 */
 
 #include <unistd.h>
@@ -36,7 +36,10 @@ static int	choose_option(t_game *game, int c, int ac, char *av[])
     c_opt, f_opt, n_opt, p_opt, x_opt, y_opt
   };
   if (optarg && optarg[0] != '-')
-    option_list[c](game, ac, av);
+    {
+      if (option_list[c](game, ac, av) == 0)
+	return (0);
+    }
   else
     optind--;
   return (1);
@@ -74,7 +77,14 @@ static int	check_params(char *av[], char *cmp)
 static void	*help_func()
 {
   printf("USAGE: ./zappy_server -p port -x width -y height");
-  printf(" -n name1 name2 ... -c clientsNb -f freq\n");
+  printf(" -n name1 name2 ... -c clientsNb -f freq\n\n");
+  printf("\tport\t\tis the port number\n");
+  printf("\twidth\t\tis the width of the world\n");
+  printf("\theight\t\tis the height of the world\n");
+  printf("\tnameX\t\tis the name of the team X\n");
+  printf("\tclientsNb\tis the number of authorized clients per team\n");
+  printf("\tfreq\t\tis the reciprocal of");
+  printf(" time unit for execution of actions\n\n");
   return (NULL);
 }
 
@@ -84,7 +94,8 @@ t_game	*parse_option(int ac, char *av[], t_game *game)
   int	i;
   int	check;
 
-  if (!av[1] || (av[1] && strcmp(av[1], "-help") == 0)
+  init_opt(game);
+  if ((av[1] && strcmp(av[1], "-help") == 0)
       || check_params(av, RAW_SHORT_OPTION) == 0)
     return (help_func());
   while ((c = getopt(ac, av, GETOPT_SHORT_OPTION)) != -1)

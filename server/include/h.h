@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Thu Jun 22 06:16:17 2017 guicha_t
+** Last update Fri Jun 23 01:30:19 2017 Thomas
 */
 
 #ifndef H_H
@@ -73,7 +73,6 @@ extern void			convert_packet_to_command(t_packet packet,
 						  t_player *player);
 
 /*
-<<<<<<< HEAD
 ** Unit cmds
 */
 extern int	cmd_forward(t_player *p, char *token);
@@ -89,6 +88,7 @@ extern int	cmd_look(t_player *p, char *token);
 extern void	print_tiles(t_player *p, int x, int y);
 extern void	send_vertical_look(t_player *p, int range, int begin_direction, int dir_y);
 extern void	send_horizontal_look(t_player *p, int range, int begin_direction, int dir_x);
+extern int	cmd_eject(t_player *p, char *token);
 
 /*
 ** Free class
@@ -102,12 +102,13 @@ extern void	delete_game();
 ** Option
 */
 extern t_game	*parse_option(int ac, char *av[], t_game *game);
-extern void	c_opt(t_game *game, int ac, char *av[]);
-extern void	f_opt(t_game *game, int ac, char *av[]);
-extern void	n_opt(t_game *game, int ac, char *av[]);
-extern void	p_opt(t_game *game, int ac, char *av[]);
-extern void	x_opt(t_game *game, int ac, char *av[]);
-extern void	y_opt(t_game *game, int ac, char *av[]);
+extern void	init_opt(t_game *game);
+extern int	c_opt(t_game *game, int ac, char *av[]);
+extern int	f_opt(t_game *game, int ac, char *av[]);
+extern int	n_opt(t_game *game, int ac, char *av[]);
+extern int	p_opt(t_game *game, int ac, char *av[]);
+extern int	x_opt(t_game *game, int ac, char *av[]);
+extern int	y_opt(t_game *game, int ac, char *av[]);
 
 /*
 ** Auth

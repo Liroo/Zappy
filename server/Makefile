@@ -49,7 +49,8 @@ SRC_GEN = \
 	name_option.c \
 	\
 	look.c \
-	print_tiles.c
+	print_tiles.c \
+	eject.c
 
 OBJ_GEN = $(addprefix $(OBJ_GENDIR), $(SRC_GEN:.c=.o))
 
