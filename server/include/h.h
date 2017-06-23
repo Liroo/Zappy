@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Fri Jun 23 01:19:40 2017 Pierre Monge
+** Last update Fri Jun 23 02:35:39 2017 Pierre Monge
 */
 
 #ifndef H_H
@@ -147,6 +147,7 @@ extern t_chrono_event_func	*get_chrono_event_func_list();
 ** Process
 */
 extern void	process_chrono_event();
+extern void	process_command();
 
 /*
 ** Event
