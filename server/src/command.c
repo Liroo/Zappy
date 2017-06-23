@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sat Jun 17 04:55:41 2017 Pierre Monge
-** Last update Fri Jun 23 17:04:46 2017 guicha_t
+** Last update Sat Jun 24 00:00:06 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -73,7 +73,7 @@ void			convert_packet_to_command(t_packet packet,
 	      player->net_info.fd, packet.block);
   if (packet.block[packet.size] == '\r')
     packet.block[packet.size] = 0;
-  if (player->is_logged)
+  if (player->auth_status == AUTH)
     queue_command(packet, player);
   else
     auth_player(packet, player);

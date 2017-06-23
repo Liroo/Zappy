@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 10:38:17 2017 Pierre Monge
-** Last update Tue Jun 13 12:15:06 2017 Pierre Monge
+** Last update Sat Jun 24 01:49:14 2017 Pierre Monge
 */
 
 #ifndef DEBUG_H
@@ -29,17 +29,5 @@ void	debug(const char * restrict format, ...);
 # define PRINT_DEBUG(format, ...) debug(DEBUG_PREFIX_SIZE""format,	\
 					__PRETTY_FUNCTION__,		\
 					##__VA_ARGS__)
-
-/*
-** debug_array - debug function to print string array
-**
-** fname: completed by the macro PRINT_DEBUG_ARRAY, this is the first thing
-** the function will print
-** sarray: array of char* to print
-** len: len of sarray
-*/
-void	debug_array(const char *fname, char * const *sarray, size_t len);
-# define PRINT_DEBUG_ARRAY(sarray, len) debug_array(__PRETTY_FUNCTION__, \
-						    sarray, len)
 
 #endif /* !DEBUG_H */

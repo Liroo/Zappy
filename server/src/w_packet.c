@@ -5,13 +5,14 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 15:17:59 2017 Pierre Monge
-** Last update Fri Jun 23 01:17:03 2017 Pierre Monge
+** Last update Sat Jun 24 00:21:05 2017 Pierre Monge
 */
 
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdarg.h>
 
 #include "h.h"
 #include "struct.h"
@@ -46,12 +47,39 @@ void		queue_packet(t_player *player, char dead_packet,
   fd_set_select(player->net_info.fd, FD_SELECT_READ | FD_SELECT_WRITE, player);
 }
 
-int	send_single_packet(int fd, t_packet *packet)
+void		queue_packet_va(t_player *player, char dead_packet,
+				char *format, va_list va)
 {
-  int	w_ret;
+  t_packet	*packet;
 
-  PRINT_DEBUG("sending packet to fd: %d container:\n%s", fd,
-	      &packet->block[packet->offset]);
+  if (!(packet = malloc(sizeof(t_packet))))
+    {
+      PRINT_DEBUG("packet lost for fd: %d\n", player->net_info.fd);
+      perror("malloc");
+      return ;
+    }
+  memset(packet, 0, sizeof(t_packet));
+  packet->dead_packet = dead_packet;
+  packet->size = vasprintf(&packet->block, format, va);
+  if (packet->size == -1)
+    {
+      PRINT_DEBUG("packet lost for fd: %d\n", player->net_info.fd);
+      free(packet);
+      return ;
+    }
+  list_add_tail(&packet->list, &player->w_packet);
+  fd_set_select(player->net_info.fd, FD_SELECT_READ | FD_SELECT_WRITE, player);
+}
+
+int		send_single_packet(int fd, t_packet *packet)
+{
+  int		w_ret;
+  t_player	*player;
+
+  player = fd_entry[fd].data;
+  if (player->client_type == PLAYER)
+    PRINT_DEBUG("sending packet to fd: %d container:\n%s", fd,
+		&packet->block[packet->offset]);
   w_ret = send(fd,
 	       &packet->block[packet->offset],
 	       packet->size - packet->offset,

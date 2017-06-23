@@ -5,13 +5,14 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 05:20:34 2017 Pierre Monge
-** Last update Fri Jun 23 02:35:24 2017 Pierre Monge
+** Last update Sat Jun 24 01:25:11 2017 Pierre Monge
 */
 
 #include <time.h>
 #include <string.h>
 
 #include "debug.h"
+#include "log.h"
 #include "h.h"
 #include "list.h"
 #include "option.h"
@@ -53,6 +54,8 @@ static int	init_game_server(int argc, char *argv[])
   list_init(&game.teams);
   list_init(&game.connection_queue);
   list_init(&game.chrono_queue);
+  list_init(&game.admins);
+  list_init(&game.spectators);
   sig_set(1);
   if (!parse_option(argc, argv, &game))
     return (-1);
@@ -61,14 +64,13 @@ static int	init_game_server(int argc, char *argv[])
     return (-1);
   if ((game.net_info.fd = inetport(game.net_info.port)) == -1)
     return (-1);
+  PRINT_LOG("Plannet Trantor was created on sector %d\n", game.net_info.port);
   return (0);
 }
 
 int	main(int argc,
 	     char *argv[])
 {
-  PRINT_DEBUG("%d\n", argc);
-  PRINT_DEBUG_ARRAY(argv, argc);
   if (init_game_server(argc, argv) == -1)
     return (84);
   loop_game_server();
