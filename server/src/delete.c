@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sat Jun 17 00:26:45 2017 Pierre Monge
-** Last update Wed Jun 21 05:56:26 2017 Pierre Monge
+** Last update Fri Jun 23 02:55:54 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -43,13 +43,12 @@ void		delete_player(t_player *player)
   while (pos != &player->w_packet)
     {
       next = pos->next;
-      if (((t_packet *)container_of(pos, t_packet, list))->block)
-	free(((t_packet *)container_of(pos, t_packet, list))->block);
-      free((void *)(container_of(pos, t_packet, list)));
       list_del(pos->prev, next);
+      clear_packet(container_of(pos, t_packet, list));
       pos = next;
     }
   delete_registered_player(player);
+  delete_chrono_player(player);
   free(player);
 }
 
