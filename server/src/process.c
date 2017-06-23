@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Wed Jun 21 04:30:29 2017 Pierre Monge
-** Last update Fri Jun 23 02:49:39 2017 Pierre Monge
+** Last update Fri Jun 23 04:10:11 2017 Pierre Monge
 */
 
 #include <time.h>
@@ -75,11 +75,11 @@ void		process_command()
     {
       team_next = team_pos->next;
       team = list_entry(team_pos, t_team, list);
-      player_pos = &team->players;
+      player_pos = list_get_first(&team->players);
       while (player_pos != &team->players)
 	{
 	  player_next = player_pos->next;
-	  process_player(list_entry(player_next, t_player, list));
+	  process_player(list_entry(player_pos, t_player, list));
 	  player_pos = player_next;
 	}
       team_pos = team_next;

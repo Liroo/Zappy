@@ -1,11 +1,11 @@
 /*
 ** algorithme_vector.c for Project-Master in /home/guicha/tek2/Zappy/server/src/cmds
-** 
+**
 ** Made by guicha_t
 ** Login   <thomas.guichard@epitech.eu>
-** 
+**
 ** Started on  Thu Jun 22 21:43:46 2017 guicha_t
-** Last update Fri Jun 23 03:16:37 2017 guicha_t
+** Last update Fri Jun 23 03:58:21 2017 Pierre Monge
 */
 
 #include "struct.h"
@@ -78,7 +78,7 @@ int	harmless_vector(t_player *send, t_player *dest)
   else if (config == 3)
     dir = get_dir_config_three(diff_max_x, diff_y,
 			       send->pos_x, dest->pos_x);
-  else if (config == 4)
+  else
     dir = get_dir_config_four(diff_max_x, diff_max_y,
 			      send, dest);
   return (dir);

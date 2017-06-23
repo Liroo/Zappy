@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sat Jun 17 04:55:41 2017 Pierre Monge
-** Last update Fri Jun 23 02:56:53 2017 guicha_t
+** Last update Fri Jun 23 04:01:48 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -55,7 +55,7 @@ static void		queue_command(t_packet packet,
 	{
 	  if (player->command_in_queue >= COMMAND_QUEUE_SIZE)
 	    return ;
-	  command_queue = &player->command_queue[player->command_in_queue + 1];
+	  command_queue = &player->command_queue[player->command_in_queue];
 	  if (!(command_queue->command = strdup(packet.block)))
 	    return ;
 	  command_queue->exec = command_list[i].exec;
