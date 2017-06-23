@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sat Jun 17 04:55:41 2017 Pierre Monge
-** Last update Fri Jun 23 04:01:48 2017 Pierre Monge
+** Last update Fri Jun 23 17:04:46 2017 guicha_t
 */
 
 #include <stdlib.h>
@@ -71,6 +71,8 @@ void			convert_packet_to_command(t_packet packet,
 {
   PRINT_DEBUG("fd: %d received packet:\n%s\n",
 	      player->net_info.fd, packet.block);
+  if (packet.block[packet.size] == '\r')
+    packet.block[packet.size] = 0;
   if (player->is_logged)
     queue_command(packet, player);
   else
