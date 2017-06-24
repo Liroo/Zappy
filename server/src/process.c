@@ -5,12 +5,13 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Wed Jun 21 04:30:29 2017 Pierre Monge
-** Last update Fri Jun 23 04:10:11 2017 Pierre Monge
+** Last update Sat Jun 24 20:48:13 2017 Pierre Monge
 */
 
 #include <time.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "struct.h"
 #include "list.h"
@@ -53,13 +54,15 @@ static void	process_player(t_player *player)
   if (player->command_is_running || player->command_in_queue <= 0)
     return ;
   (*player->command_queue).exec(player, (*player->command_queue).command);
-  player->command_in_queue -= 1;
+  free((*player->command_queue).command);
+  (*player->command_queue).command = NULL;
   i = 0;
   while (i < player->command_in_queue)
     {
       player->command_queue[i] = player->command_queue[i + 1];
       i++;
     }
+  player->command_in_queue -= 1;
 }
 
 void		process_command()

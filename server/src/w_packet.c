@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 15:17:59 2017 Pierre Monge
-** Last update Sat Jun 24 03:14:19 2017 Pierre Monge
+** Last update Sat Jun 24 20:39:03 2017 Pierre Monge
 */
 
 #include <stdarg.h>
@@ -91,10 +91,7 @@ int		send_single_packet(int fd, t_packet *packet)
     }
   packet->offset = w_ret;
   if (packet->dead_packet == DEAD_PACKET)
-    {
-      delete_player(fd_entry[fd].data);
-      return (-1);
-    }
+    return (-1);
   return (w_ret);
 }
 
