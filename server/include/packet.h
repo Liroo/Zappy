@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 22:17:36 2017 Pierre Monge
-** Last update Wed Jun 21 06:06:22 2017 Pierre Monge
+** Last update Sat Jun 24 03:16:03 2017 Pierre Monge
 */
 
 #ifndef PACKET_H
@@ -17,6 +17,11 @@
 
 # define SIMPLE_PACKET 0
 # define DEAD_PACKET 1
+
+# include <sys/socket.h>
+# ifndef MSG_NOSIGNAL
+#  define MSG_NOSIGNAL 0
+# endif
 
 typedef struct	s_packet
 {
