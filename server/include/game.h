@@ -5,11 +5,16 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Wed Jun 21 04:15:36 2017 Pierre Monge
-** Last update Fri Jun 23 16:12:23 2017 guicha_t
+** Last update Fri Jun 23 23:48:20 2017 Pierre Monge
 */
 
 #ifndef GAME_H
 # define GAME_H
+
+# define ADMIN_TEAM "admin"
+# define ADMIN_TEAM_PASSWD "admin"
+# define SPECTATOR_TEAM "spectator"
+# define SPECTATOR_TEAM_PASSWD "spectator"
 
 # define MIN_LINEMATE_PER_TEAM 54 + (54 / 2)
 # define MIN_DERAUMERE_PER_TEAM 48 + (48 / 2)
@@ -49,6 +54,8 @@
 
 # define RPL_TIMEOUT "timeout\n"
 # define RPL_WELCOME "WELCOME\n"
+# define RPL_PASSWD "Require password\n"
+# define RPL_WRONG_PASSWD "Wrong password\n"
 # define RPL_DEAD "dead\n"
 
 #endif /* !GAME_H */

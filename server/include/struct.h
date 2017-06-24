@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 12:00:23 2017 Pierre Monge
-** Last update Fri Jun 23 00:39:36 2017 Pierre Monge
+** Last update Fri Jun 23 23:53:52 2017 Pierre Monge
 */
 
 #ifndef STRUCT_H
@@ -62,16 +62,32 @@ struct		s_tiles
 # include "packet.h"
 # include "game.h"
 
+typedef enum	e_auth_status
+  {
+    NO_AUTH,
+    REQUIRE_PASSWORD_ADMIN,
+    REQUIRE_PASSWORD_SPECTATOR,
+    AUTH
+  }		t_auth_status;
+
+typedef enum	e_client_type
+  {
+    PLAYER,
+    SPECTATOR,
+    ADMIN
+  }		t_client_type;
+
 struct			s_player
 {
-  char			is_logged;
+  t_auth_status	        auth_status;
+  t_client_type		client_type;
 
   int			pos_x;
   int			pos_y;
   int			direction;
-
   unsigned char		elevation;
   t_inventory		inventory;
+
   t_list_head		list;
   t_team		*team;
 
@@ -104,6 +120,9 @@ struct			s_game
   t_list_head		chrono_queue;
 
   t_list_head		teams;
+  t_list_head		admins;
+  t_list_head		spectators;
+
   unsigned int		nb_client_max;
   int			freq;
 

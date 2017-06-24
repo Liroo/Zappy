@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Fri Jun 23 02:57:54 2017 guicha_t
-** Last update Fri Jun 23 03:05:56 2017 guicha_t
+** Last update Fri Jun 23 23:15:09 2017 guicha_t
 */
 
 #include "game.h"
@@ -52,16 +52,16 @@ int	get_dir_config_one(int x, int y)
   if (positive_x > positive_y)
     {
       if (x > 0)
-	return (W);
-      else
 	return (E);
+      else
+	return (W);
     }
   else
     {
       if (y > 0)
-	return (S);
-      else
 	return (N);
+      else
+	return (S);
     }
 }
 

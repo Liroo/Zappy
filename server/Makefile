@@ -17,6 +17,7 @@ SRC_GEN = \
 	main.c \
 	debug.c \
 	sig.c \
+	log.c \
 	\
 	list.c \
 	fdlist.c \

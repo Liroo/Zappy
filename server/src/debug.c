@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 10:38:05 2017 Pierre Monge
-** Last update Tue Jun 13 11:26:52 2017 Pierre Monge
+** Last update Sat Jun 24 00:50:29 2017 Pierre Monge
 */
 
 #include <stdarg.h>
@@ -15,27 +15,31 @@
 #include <stddef.h>
 
 #include "debug.h"
+#include "list.h"
+#include "struct.h"
+#include "h.h"
 
 void		debug(const char * restrict format, ...)
 {
   va_list	va;
+  va_list	va_cpy;
+  t_list_head	*pos;
 
   if (!DEBUG)
     return ;
+  pos = list_get_first(&game.admins);
   va_start(va, format);
-  vfprintf(stderr, format, va);
-  va_end(va);
-}
-
-void	debug_array(const char *fname, char * const *sarray, size_t len)
-{
-  if (!DEBUG)
-    return ;
-  fprintf(stderr, DEBUG_RED"%s:"DEBUG_CLEAR, fname);
-  while (len)
+  va_copy(va_cpy, va);
+  vfprintf(stderr, format, va_cpy);
+  if (!game.sig_handled)
     {
-      fprintf(stderr, " %s", *sarray++);
-      len--;
+      while (pos != &game.admins)
+	{
+	  va_copy(va_cpy, va);
+	  queue_packet_va(list_entry(pos, t_player, list), SIMPLE_PACKET,
+			  (char *)format, va_cpy);
+	  pos = pos->next;
+	}
     }
-  fprintf(stderr, "\n");
+  va_end(va);
 }

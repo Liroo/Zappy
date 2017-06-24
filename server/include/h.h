@@ -5,12 +5,13 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Fri Jun 23 22:20:21 2017 Thomas
+** Last update Sat Jun 24 02:54:32 2017 Thomas
 */
 
 #ifndef H_H
 # define H_H
 
+# include <stdarg.h>
 # include <time.h>
 
 #include "struct.h"
@@ -64,6 +65,8 @@ extern void	sig_handler(int sig);
 extern int	recv_packet(t_player *player);
 extern void	queue_packet(t_player *player, char dead_packet,
 			     char *format, ...);
+extern void	queue_packet_va(t_player *player, char dead_packet,
+			     char *format, va_list va);
 extern void	send_queued_packet(t_player *player);
 extern void	clear_packet(t_packet *packet);
 
