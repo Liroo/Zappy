@@ -5,8 +5,11 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Thu Jun 22 07:01:19 2017 guicha_t
-** Last update Sat Jun 24 00:41:04 2017 guicha_t
+** Last update Sat Jun 24 20:09:04 2017 guicha_t
 */
+
+#include <stdlib.h>
+#include <string.h>
 
 #include "debug.h"
 #include "game.h"
@@ -19,10 +22,9 @@ int	convert_dir_about_dest(int pdir, int dir)
 {
   int	real_dir;
 
-  PRINT_DEBUG("dir %d\n", dir);
   real_dir = 0;
   if (pdir == 0)
-    real_dir = pdir;
+    real_dir = dir;
   else if (pdir == 1)
     {
       real_dir = dir + 2;
@@ -38,19 +40,41 @@ int	convert_dir_about_dest(int pdir, int dir)
   else if (pdir == 3)
     {
       real_dir = dir + 6;
-      if (dir > 8)
+      if (real_dir > 8)
 	real_dir = real_dir - 8;
     }
-  /* PRINT_DEBUG("real dir %d\n", real_dir); */
+  PRINT_DEBUG("real dir %d\n", real_dir);
   return (real_dir);
 }
 
-void	send_broadcast_message(t_player *p, char *token, int dir)
+void	send_broadcast_message(t_player *p, char *msg, int dir)
 {
   int	new_dir;
 
   new_dir = convert_dir_about_dest(p->direction, dir);
-  queue_packet(p, SIMPLE_PACKET, "message %d, %s\n", new_dir, token);
+  queue_packet(p, SIMPLE_PACKET, "message %d, %s\n", new_dir, msg);
+}
+
+char	*get_only_message_from_token(char *token)
+{
+  char	*msg;
+  int	it;
+  int	im;
+
+  it = 0;
+  im = 0;
+  msg = malloc(sizeof(char) * strlen(token));
+  memset(msg, '\0', strlen(token));
+  while (token[it] != ' ' && token[it] != '\0')
+    it++;
+  it++;
+  while (token[it] != '\0')
+    {
+      msg[im] = token[it];
+      it++;
+      im++;
+    }
+  return (msg);
 }
 
 void	find_player_broadcast(t_player *send, t_team *team, char *t)
@@ -58,22 +82,23 @@ void	find_player_broadcast(t_player *send, t_team *team, char *t)
   t_list_head	*head_p;
   t_list_head	*pos_p;
   t_player	*tmp_p;
+  char		*msg;
   int		dir;
 
   head_p = &team->players;
   pos_p = list_get_first(head_p);
+  msg = get_only_message_from_token(t);
   while (pos_p != head_p)
     {
       tmp_p = list_entry(pos_p, t_player, list);
       if (tmp_p != send)
 	{
 	  dir = algorithme_vector(send, tmp_p);
-	  send_broadcast_message(tmp_p, t, dir);
-	  // ecrire dans player avec la dir en fonction
-	  // de la dir player + le texte.
+	  send_broadcast_message(tmp_p, msg, dir);
 	}
       pos_p = pos_p->next;
     }
+  free(msg);
 }
 
 int	cmd_broadcast(t_player *p, char *token)

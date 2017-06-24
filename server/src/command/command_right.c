@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Wed Jun 21 01:12:18 2017 guicha_t
-** Last update Fri Jun 23 16:38:02 2017 guicha_t
+** Last update Sat Jun 24 19:21:13 2017 guicha_t
 */
 
 #include "h.h"
@@ -18,9 +18,11 @@
 int	cmd_right(t_player *p, char *token)
 {
   (void)token;
+  PRINT_DEBUG("Right Last Dir: %d\n", p->direction);
   ++p->direction;
   if (p->direction > 3)
     p->direction = 0;
+  PRINT_DEBUG("Right New Dir: %d\n", p->direction);
   queue_packet(p, SIMPLE_PACKET, RPL_OK);
   p->command_is_running = 1;
   queue_chrono(CHRONO_RIGHT, p, C_EVENT_COMMAND);
