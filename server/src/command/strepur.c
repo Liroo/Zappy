@@ -5,14 +5,14 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Wed Jun 21 23:18:03 2017 guicha_t
-** Last update Wed Jun 21 23:29:56 2017 guicha_t
+** Last update Fri Jun 23 03:14:38 2017 guicha_t
 */
 
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 
-char	*epur_str(char *str)
+char	*strepur(char *str)
 {
   char  *epur;
   int   i;

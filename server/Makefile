@@ -22,35 +22,44 @@ SRC_GEN = \
 	fdlist.c \
 	delete.c \
 	map.c \
-	chrono.c \
+	chrono/chrono.c \
+	chrono/c_operator.c \
+	chrono/c_delete.c \
 	\
 	socket.c \
 	bsd.c \
 	r_packet.c \
 	w_packet.c \
 	dispatch.c \
-	event.c \
+	fdevent.c \
 	auth.c \
 	\
 	command.c \
-	cmds/cmd_forward.c \
-	cmds/cmd_left.c \
-	cmds/cmd_right.c \
-	cmds/cmd_take.c \
-	cmds/cmd_connect_nbr.c \
-	cmds/cmd_inventory.c \
-	cmds/cmd_set.c \
-	cmds/epur_str.c \
-	cmds/parse_param.c \
+	command/command_forward.c \
+	command/command_left.c \
+	command/command_right.c \
+	command/command_take.c \
+	command/command_connect_nbr.c \
+	command/command_inventory.c \
+	command/command_set.c \
+	command/strepur.c \
+	command/parse.c \
+	command/command_broadcast.c \
+	command/algorithme_vector.c \
+	command/config_algorithme.c \
+	command/get_max_value.c \
+	command/command_look.c \
+	command/print_tiles.c \
+	command/command_eject.c \
 	process.c \
+	\
+	event/command.c \
+	event/lifetime.c \
+	event/timeout.c \
 	\
 	parsing_option.c \
 	option.c \
 	name_option.c \
-	\
-	look.c \
-	print_tiles.c \
-	eject.c
 
 OBJ_GEN = $(addprefix $(OBJ_GENDIR), $(SRC_GEN:.c=.o))
 
@@ -58,7 +67,7 @@ OBJ_GEN = $(addprefix $(OBJ_GENDIR), $(SRC_GEN:.c=.o))
 
 INCDIRS := -I./include
 
-CC = gcc
+CC = gcc -g
 
 FLAGS = -W -Werror -Wextra -Wall
 FLAGS += -D_GNU_SOURCE

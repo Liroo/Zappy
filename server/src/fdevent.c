@@ -1,11 +1,11 @@
 /*
-** event.c for event in /Users/pierre/Epitech/PSU/Zappy/server
+** fdevent.c for fdevent in /Users/pierre/Epitech/PSU/Zappy/server
 **
 ** Made by Pierre Monge
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Fri Jun 16 20:34:58 2017 Pierre Monge
-** Last update Mon Jun 19 22:10:40 2017 Pierre Monge
+** Last update Thu Jun 22 22:11:01 2017 Pierre Monge
 */
 
 #include "h.h"

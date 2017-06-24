@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Wed Jun 21 02:09:58 2017 guicha_t
-** Last update Thu Jun 22 06:04:07 2017 guicha_t
+** Last update Fri Jun 23 16:28:13 2017 guicha_t
 */
 
 #include <string.h>
@@ -13,6 +13,8 @@
 #include <stdio.h>
 
 #include "debug.h"
+#include "game.h"
+#include "chrono.h"
 #include "h.h"
 #include "struct.h"
 #include "packet.h"
@@ -33,8 +35,8 @@ int	cmd_take(t_player *p, char *token)
 {
   char		*rsc;
   char		*clean_token;
-  
-  clean_token = epur_str(token);
+
+  clean_token = strepur(token);
   rsc = parse_param(clean_token);
   if (strcasecmp(rsc, "linemate") == 0)
     extract(p, LINEMATE_OFFSET);
@@ -54,5 +56,7 @@ int	cmd_take(t_player *p, char *token)
     queue_packet(p, SIMPLE_PACKET, RPL_KO);
   free(clean_token);
   free(rsc);
+  p->command_is_running = 1;
+  queue_chrono(CHRONO_TAKE, p, C_EVENT_COMMAND);
   return (0);
 }

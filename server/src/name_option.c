@@ -5,7 +5,7 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Thu Jun 22 05:41:03 2017 Thomas
-** Last update Fri Jun 23 01:47:38 2017 Thomas
+** Last update Sat Jun 24 02:41:16 2017 Thomas
 */
 
 #include <stdlib.h>
@@ -24,9 +24,13 @@ static int	check_name(char *f_team, int ac, char *av[], int index)
 
   save = index;
   cmp_it = index;
+  if (optarg && (strcmp("admin", optarg) == 0 ||
+		 strcmp("spectator", optarg) == 0))
+    return (0);
   while (index < ac && *av[index] != '-')
     {
-      if (strcmp(f_team, av[index]) == 0)
+      if (strcmp(f_team, av[index]) == 0 || strcmp("admin", av[index]) == 0 ||
+	  strcmp("spectator", av[index]) == 0)
 	return (0);
       while (cmp_it < ac && *av[cmp_it] != '-')
 	{
@@ -55,9 +59,10 @@ static void	create_default_team(t_game *game, char *av[])
 
   (void)av;
   if ((new = malloc(sizeof(t_team))) == NULL)
-    return;
+    return ;
   memset(new, 0, sizeof(t_team));
-  new->name = strdup("Trantorien");
+  new->name = strdup("Trantorian");
+  list_init(&new->players);
   new->size = game->nb_client_max;
   new->empty_slot = game->nb_client_max;
   list_add_tail(&new->list, &game->teams);
@@ -69,16 +74,16 @@ int		c_opt(t_game *game, int ac, char *av[])
   t_list_head	*pos;
   t_team	*tmp;
 
-  game->nb_client_max = atoi(optarg);
+  if (optarg)
+    game->nb_client_max = atoi(optarg);
   if (game->nb_client_max < 1)
     {
       printf("\n-c option only accepts integer value");
       printf(" greater or equal to 1\n\n");
       return (0);
     }
-  if (list_empty(&game->teams) != 0)
-    return (1);
-  else if (list_empty(&game->teams) != 0 && optind >= ac)
+  head = &game->teams;
+  if (list_empty(head) != 0 && ac == -1)
     create_default_team(game, av);
   head = &game->teams;
   pos = list_get_first(head);

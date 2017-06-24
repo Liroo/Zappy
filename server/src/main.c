@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 05:20:34 2017 Pierre Monge
-** Last update Wed Jun 21 06:09:37 2017 Pierre Monge
+** Last update Sat Jun 24 02:48:25 2017 Thomas
 */
 
 #include <time.h>
@@ -40,6 +40,7 @@ static void		loop_game_server()
 	next_chrono = (struct timespec *)
 	  (&((t_chrono_queue *)list_entry(game.chrono_queue.next,
 					  t_chrono_queue, list))->duration);
+      process_command();
       if (fd_select(next_chrono) == -1)
 	break;
     }
@@ -55,7 +56,6 @@ static int	init_game_server(int argc, char *argv[])
   sig_set(1);
   if (!parse_option(argc, argv, &game))
     return (-1);
-  game.net_info.port = 1024;
   if (generate_map() == -1)
     return (-1);
   if ((game.net_info.fd = inetport(game.net_info.port)) == -1)

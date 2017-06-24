@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Wed Jun 21 02:31:05 2017 guicha_t
-** Last update Thu Jun 22 06:11:40 2017 guicha_t
+** Last update Fri Jun 23 03:49:10 2017 guicha_t
 */
 
 #include "debug.h"
@@ -16,5 +16,6 @@ int	cmd_connect_nbr(t_player *p, char *token)
 {
   (void)token;
   queue_packet(p, SIMPLE_PACKET, "%d\n", p->team->empty_slot);
+  p->command_is_running = 1;
   return (0);
 }

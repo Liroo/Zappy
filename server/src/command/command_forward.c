@@ -5,11 +5,15 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Tue Jun 20 23:05:54 2017 guicha_t
-** Last update Wed Jun 21 01:02:09 2017 guicha_t
+** Last update Fri Jun 23 16:38:11 2017 guicha_t
 */
 
+#include "h.h"
 #include "debug.h"
+#include "game.h"
 #include "struct.h"
+#include  "chrono.h"
+#include "packet.h"
 
 void		pos_about_direction(t_player *p)
 {
@@ -48,5 +52,8 @@ int		cmd_forward(t_player *p, char *token)
   ++game.map[p->pos_x][p->pos_x].player;
   PRINT_DEBUG("New pos: [%d][%d]\n", p->pos_x, p->pos_y);
   PRINT_DEBUG("Forward ok!\n");
+  queue_packet(p, SIMPLE_PACKET, RPL_OK);
+  p->command_is_running = 1;
+  queue_chrono(CHRONO_FORWARD, p, C_EVENT_COMMAND);
   return (0);
 }

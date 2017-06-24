@@ -5,7 +5,7 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Fri Jun 23 01:28:13 2017 Thomas
-** Last update Fri Jun 23 02:10:23 2017 Thomas
+** Last update Sat Jun 24 02:28:42 2017 Thomas
 */
 
 #include "struct.h"
@@ -66,7 +66,7 @@ static void	find_player(t_player *p, t_team	*team)
   while (pos_p != head_p)
     {
       tmp_p = list_entry(pos_p, t_player, list);
-      if (tmp_p->pos_x == p->pos_x && tmp_p->pos_y == p->pos_y)
+      if (tmp_p->pos_x != p->pos_x && tmp_p->pos_y != p->pos_y)
 	eject_player(tmp_p);
       pos_p = pos_p->next;
     }
@@ -92,5 +92,6 @@ int	cmd_eject(t_player *p, char *token)
       find_player(p, tmp);
       pos = pos->next;
     }
+  queue_packet(p, SIMPLE_PACKET, RPL_OK);
   return (0);
 }

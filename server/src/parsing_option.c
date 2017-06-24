@@ -5,7 +5,7 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Fri Jun 16 14:59:23 2017 Thomas
-** Last update Thu Jun 22 22:43:53 2017 Thomas
+** Last update Sat Jun 24 02:41:42 2017 Thomas
 */
 
 #include <unistd.h>
@@ -14,21 +14,6 @@
 #include <stdlib.h>
 #include "h.h"
 #include "option.h"
-
-static int	check_order_option(int ac, char *av[])
-{
-  int	c;
-
-  optind = 0;
-  while ((c = getopt(ac, av, "p:x:y:n:c:f:")) != -1)
-    {
-      if (c == 'c')
-	return (0);
-      else if (c == 'n')
-	return (1);
-    }
-  return (1);
-}
 
 static int	choose_option(t_game *game, int c, int ac, char *av[])
 {
@@ -81,7 +66,7 @@ static void	*help_func()
   printf("\tport\t\tis the port number\n");
   printf("\twidth\t\tis the width of the world\n");
   printf("\theight\t\tis the height of the world\n");
-  printf("\tnameX\t\tis the name of the team X\n");
+  printf("\tnameX\t\tis the name of the team X (default: Trantorian)\n");
   printf("\tclientsNb\tis the number of authorized clients per team\n");
   printf("\tfreq\t\tis the reciprocal of");
   printf(" time unit for execution of actions\n\n");
@@ -111,7 +96,8 @@ t_game	*parse_option(int ac, char *av[], t_game *game)
       if (check == 0)
 	return (help_func());
     }
-  if (game->nb_client_max != 0 && check_order_option(ac, av) == 0)
-    c_opt(game, ac, av);
+  check = -1;
+  if (game->nb_client_max != 0)
+    c_opt(game, check, av);
   return (game);
 }

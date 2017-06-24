@@ -5,10 +5,15 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Wed Jun 21 22:49:06 2017 Thomas
-** Last update Thu Jun 22 05:55:54 2017 Thomas
+** Last update Sat Jun 24 02:17:44 2017 Thomas
 */
 
+#include <stdio.h>
+
 #include "struct.h"
+#include "chrono.h"
+#include "game.h"
+#include "debug.h"
 #include "h.h"
 
 static int	get_range_per_elevation(t_player *p)
@@ -71,5 +76,7 @@ int	cmd_look(t_player *p, char *token)
       i++;
     }
   queue_packet(p, SIMPLE_PACKET, "]\n");
+  p->command_is_running = 1;
+  queue_chrono(CHRONO_LOOK, p, C_EVENT_COMMAND);
   return (0);
 }
