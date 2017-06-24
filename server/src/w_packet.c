@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 15:17:59 2017 Pierre Monge
-** Last update Sat Jun 24 00:21:05 2017 Pierre Monge
+** Last update Sat Jun 24 02:22:32 2017 Pierre Monge
 */
 
 #include <stdarg.h>
@@ -83,7 +83,7 @@ int		send_single_packet(int fd, t_packet *packet)
   w_ret = send(fd,
 	       &packet->block[packet->offset],
 	       packet->size - packet->offset,
-	       0);
+	       MSG_NOSIGNAL);
   if (w_ret < 0)
     {
       perror("send");
@@ -123,7 +123,7 @@ void		send_queued_packet(t_player *player)
     {
       container = list_entry(packet, t_packet, list);
       if ((w_len = send_single_packet(player->net_info.fd, container)) < 0)
-	return ;
+	return (void)delete_player(player);
       if (w_len < container->size)
 	break;
       next = list_del(packet->prev, packet->next);
