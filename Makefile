@@ -5,15 +5,15 @@
 ## Login   <pierre@epitech.net>
 ## 
 ## Started on  Sat May 27 06:30:42 2017 Pierre Monge
-## Last update Fri Jun 16 21:08:51 2017 andre
+## Last update Sun Jun 25 21:55:08 2017 andre
 ##
 
 PROJECT := IRC
 
 SERVER = ./server
 SERVER_BIN = zappy_server
-CLIENT = ./client
-CLIENT_BIN = zappy_client
+CLIENT = ./ai
+CLIENT_BIN = zappy_ai
 
 CP = cp
 RM = rm -f

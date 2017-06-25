@@ -5,16 +5,16 @@
 ## Login   <andre@epitech.net>
 ## 
 ## Started on  Sat Jun 17 03:25:08 2017 andre
-## Last update Sat Jun 17 03:28:24 2017 andre
+## Last update Sun Jun 25 21:21:32 2017 andre
 ##
 
-PROJECT = client
+PROJECT = ai
 
 OBJ_DIR = obj/
 
 # General behavior of arcade
 
-NAME_BIN = zappy_client
+NAME_BIN = zappy_ai
 
 SRC_GENDIR = src/
 OBJ_GENDIR = $(OBJ_DIR)src/
@@ -28,8 +28,6 @@ OBJ_GEN = $(addprefix $(OBJ_GENDIR), $(SRC_GEN:.cpp=.o))
 
 INCDIRS := $(addprefix -I,$(shell find $(SRC_GENDIR) -type d -print)) -I./include/
 CXX = g++
-# LDFLAGS = -ldl -L./shared_lib -lDirectoryReader -L./shared_lib -lComponents
-# LDFLAGS += -Wl,-rpath,$(shell pwd)/shared_lib
 FLAGS = -W -Werror -Wextra -Wall
 FLAGS += -std=c++14
 FLAGS += $(DEBUG)

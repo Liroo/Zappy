@@ -5,7 +5,7 @@
 // Login   <andre@epitech.net>
 //
 // Started on  Sat Jun 17 03:26:14 2017 andre
-// Last update Sat Jun 17 03:35:25 2017 andre
+// Last update Sun Jun 25 21:54:20 2017 andre
 //
 
 # include <stdio.h>
@@ -14,9 +14,9 @@
 # include <netinet/in.h>
 # include <arpa/inet.h>
 # include <string.h>
-# include "param.h"
+# include "ConnectClient.h"
 
-int	add_server_to_client(t_param param)
+int	ConnectClient::add_server_to_client(ConnectClient::t_param param)
 {
   int	fd;
   struct sockaddr_in	sin;
@@ -38,7 +38,7 @@ int	add_server_to_client(t_param param)
   return (fd);
 }
 
-int	servtoclient(int fd)
+int	ConnectClient::servtoclient(int fd)
 {
   char	repserv[2000];
 
@@ -52,7 +52,7 @@ int	servtoclient(int fd)
   return (0);
 }
 
-int	clienttoserv(int fd)
+int	ConnectClient::clienttoserv(int fd)
 {
   char	message[1000];
   char	final[1000];
@@ -78,7 +78,7 @@ int	clienttoserv(int fd)
   return (0);
 }
 
-int	my_loop(fd_set fd_read, struct timeval tv, int fd)
+int	ConnectClient::my_loop(fd_set fd_read, struct timeval tv, int fd)
 {
   int	rd;
 
@@ -107,7 +107,7 @@ int	my_loop(fd_set fd_read, struct timeval tv, int fd)
   return (0);
 }
 
-void	usagedisp()
+void	ConnectClient::usagedisp()
 {
   printf("USAGE: ./zappy_client -p port -n name -h machine\n");
   printf("\tport\tis the port number\n");
@@ -115,7 +115,7 @@ void	usagedisp()
   printf("\tmachine\tis the name of the machine; localhost by default\n");
 }
 
-int	check_param(int ac, char **av, t_param *param)
+int	ConnectClient::check_param(int ac, char **av, t_param *param)
 {
   if ((ac != 5 && ac != 7) || strcmp(av[1], "-p") != 0
       || strcmp(av[3], "-n") != 0)
@@ -136,7 +136,7 @@ int	check_param(int ac, char **av, t_param *param)
   return (0);
 }
 
-int			connectClient(int ac, char **av)
+int			ConnectClient::myConnect(int ac, char **av)
 {
   fd_set		fd_read;
   struct timeval	tv;
@@ -154,3 +154,7 @@ int			connectClient(int ac, char **av)
   close(fd);
   return (0);
 }
+
+ConnectClient::ConnectClient() {}
+
+ConnectClient::~ConnectClient() {}
