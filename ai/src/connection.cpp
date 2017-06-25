@@ -5,7 +5,7 @@
 // Login   <andre@epitech.net>
 //
 // Started on  Sat Jun 17 03:26:14 2017 andre
-// Last update Sun Jun 25 21:54:20 2017 andre
+// Last update Mon Jun 26 01:29:17 2017 andre
 //
 
 # include <stdio.h>
@@ -14,27 +14,28 @@
 # include <netinet/in.h>
 # include <arpa/inet.h>
 # include <string.h>
+# include <iostream>
 # include "ConnectClient.h"
 
-int	ConnectClient::add_server_to_client(ConnectClient::t_param param)
+int	ConnectClient::add_server_to_client()
 {
   int	fd;
   struct sockaddr_in	sin;
 
   if ((fd = socket(AF_INET, SOCK_STREAM, 0)) == -1)
     {
-      printf("Server connection error\n");
+      std::cout << "Server connection error" << std::endl;
       return (1);
     }
-  sin.sin_addr.s_addr = inet_addr(param.machine);
+  sin.sin_addr.s_addr = inet_addr(machine);
   sin.sin_family = AF_INET;
-  sin.sin_port = htons(param.port);
+  sin.sin_port = htons(port);
   if (connect(fd, (struct sockaddr*)&sin, sizeof(sin)))
     {
-      printf("Server connection error\n");
+      std::cout << "Server connection error" << std::endl;
       return (1);
     }
-  write(1, "Connected...\n", strlen("Connected...\n"));
+  std::cout << "Connected..." << std::endl;
   return (fd);
 }
 
@@ -45,10 +46,10 @@ int	ConnectClient::servtoclient(int fd)
   bzero(repserv, 2000);
   if (recv(fd, repserv, 2000, 0) < 0)
     {
-      printf("Error message reception\n");
+      std::cout << "Error message reception" << std::endl;
       return (1);
     }
-  printf("%s", repserv);
+  printf("%s", repserv); // Pour debug, a enlever sinon
   return (0);
 }
 
@@ -74,7 +75,7 @@ int	ConnectClient::clienttoserv(int fd)
     final[y++] = message[i++];
   final[y] = message[i];
   if (send(fd, final, strlen(final), 0) < 0)
-    return (printf("Message sending error\n"), 1);
+    return (std::cout << "Message sending error" << std::endl, 1);
   return (0);
 }
 
@@ -90,7 +91,7 @@ int	ConnectClient::my_loop(fd_set fd_read, struct timeval tv, int fd)
       FD_SET(0, &fd_read);
       if (select(fd + 1, &fd_read, NULL, NULL, &tv) < 0)
 	{
-	  printf("Select error\n");
+	  std::cout << "Select error" << std::endl;
 	  return (1);
 	}
       else if (fd != 0 && FD_ISSET(fd, &fd_read))
@@ -109,13 +110,13 @@ int	ConnectClient::my_loop(fd_set fd_read, struct timeval tv, int fd)
 
 void	ConnectClient::usagedisp()
 {
-  printf("USAGE: ./zappy_client -p port -n name -h machine\n");
-  printf("\tport\tis the port number\n");
-  printf("\tname\tis the name of the team\n");
-  printf("\tmachine\tis the name of the machine; localhost by default\n");
+  std::cout << "USAGE: ./zappy_client -p port -n name -h machine" << std::endl <<
+    "\tport\tis the port number" << std::endl << "\tname\tis the name of the team" <<
+    std::endl << "\tmachine\tis the name of the machine; localhost by default"
+	    << std::endl;
 }
 
-int	ConnectClient::check_param(int ac, char **av, t_param *param)
+int	ConnectClient::check_param(int ac, char **av)
 {
   if ((ac != 5 && ac != 7) || strcmp(av[1], "-p") != 0
       || strcmp(av[3], "-n") != 0)
@@ -123,16 +124,16 @@ int	ConnectClient::check_param(int ac, char **av, t_param *param)
   if (ac == 7)
     if (strcmp(av[5], "-h") != 0)
       return(usagedisp(), 1);
-  param->port = atoi(av[2]);
-  if ((param->name = (char*)malloc(strlen(av[4]))) == NULL)
+  port = atoi(av[2]);
+  if ((name = (char*)malloc(strlen(av[4]))) == NULL)
     return (1);
-  strcpy(param->name, av[4]);
-  if ((param->machine = (char*)malloc(10 + strlen(av[6]))) == NULL)
+  strcpy(name, av[4]);
+  if ((machine = (char*)malloc(10 + strlen(av[6]))) == NULL)
     return (1);
   if (ac == 5)
-    strcpy(param->machine, "127.0.0.1");
+    strcpy(machine, "127.0.0.1");
   else
-    strcpy(param->machine, av[6]);
+    strcpy(machine, av[6]);
   return (0);
 }
 
@@ -141,11 +142,10 @@ int			ConnectClient::myConnect(int ac, char **av)
   fd_set		fd_read;
   struct timeval	tv;
   int			fd;
-  t_param		param;
 
-  if (check_param(ac, av, &param) == 1)
+  if (check_param(ac, av) == 1)
     return (0);
-  if ((fd = add_server_to_client(param)) == 1)
+  if ((fd = add_server_to_client()) == 1)
     return (1);
   tv.tv_sec = 1;
   tv.tv_usec = 0;

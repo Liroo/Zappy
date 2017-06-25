@@ -10,20 +10,17 @@ public:
   ~ConnectClient();
 
 private:
-  typedef struct	s_param
-  {
-    int		port;
-    char	*name;
-    char	*machine;
-  }			t_param;
+  int	port;
+  char	*name;
+  char	*machine;
 
 private:
-  int	check_param(int, char**, t_param*);
+  int	check_param(int, char**);
   void	usagedisp();
   int	my_loop(fd_set, struct timeval, int);
   int	clienttoserv(int);
   int	servtoclient(int);
-  int	add_server_to_client(t_param);
+  int	add_server_to_client();
 
 
 public:
