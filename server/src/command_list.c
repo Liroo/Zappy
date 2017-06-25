@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sun Jun 25 00:41:14 2017 Pierre Monge
-** Last update Sun Jun 25 01:38:23 2017 Pierre Monge
+** Last update Sun Jun 25 20:01:26 2017 Thomas
 */
 
 #include "command.h"
@@ -19,12 +19,12 @@ t_command	*get_command_list_player()
       { "Forward", 7, &cmd_forward },
       { "Right", 5, &cmd_right },
       { "Left", 4, &cmd_left },
-      { "Look", 4, NULL },
+      { "Look", 4, &cmd_look },
       { "Inventory", 9, NULL },
       { "Broadcast", 9, NULL },
       { "Connect_nbr", 11, &cmd_connect_nbr },
       { "Fork", 4, NULL },
-      { "Eject", 5, NULL },
+      { "Eject", 5, &cmd_eject },
       { "Take", 4, NULL },
       { "Set", 3, NULL },
       { "Incantation", 11, NULL },

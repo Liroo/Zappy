@@ -5,7 +5,7 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Thu Jun 22 05:41:03 2017 Thomas
-** Last update Sat Jun 24 02:41:16 2017 Thomas
+** Last update Sun Jun 25 20:02:53 2017 Thomas
 */
 
 #include <stdlib.h>
@@ -34,7 +34,7 @@ static int	check_name(char *f_team, int ac, char *av[], int index)
 	return (0);
       while (cmp_it < ac && *av[cmp_it] != '-')
 	{
-	  if (strcmp(av[cmp_it], av[index]) == 0)
+	  if (cmp_it != index && strcmp(av[cmp_it], av[index]) == 0)
 	    return (0);
 	  cmp_it++;
 	}
