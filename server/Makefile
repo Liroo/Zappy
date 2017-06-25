@@ -18,14 +18,7 @@ SRC_GEN = \
 	debug.c \
 	sig.c \
 	log.c \
-	\
-	list.c \
-	fdlist.c \
-	delete.c \
-	map.c \
-	chrono/chrono.c \
-	chrono/c_operator.c \
-	chrono/c_delete.c \
+	exit.c \
 	\
 	socket.c \
 	bsd.c \
@@ -35,32 +28,47 @@ SRC_GEN = \
 	fdevent.c \
 	auth.c \
 	\
-	command.c \
-	command/command_forward.c \
-	command/command_left.c \
-	command/command_right.c \
-	command/command_take.c \
-	command/command_connect_nbr.c \
-	command/command_inventory.c \
-	command/command_set.c \
-	command/strepur.c \
-	command/parse.c \
-	command/command_broadcast.c \
-	command/algorithme_vector.c \
-	command/config_algorithme.c \
-	command/get_max_value.c \
-	command/command_look.c \
-	command/print_tiles.c \
-	command/command_eject.c \
-	process.c \
-	\
-	event/command.c \
-	event/lifetime.c \
-	event/timeout.c \
+	list.c \
+	fdlist.c \
+	map.c \
 	\
 	parsing_option.c \
 	option.c \
 	name_option.c \
+	\
+	chrono/chrono.c \
+	chrono/c_operator.c \
+	chrono/c_delete.c \
+	\
+	delete/d_client.c \
+	delete/d_team.c \
+	delete/d_game.c \
+	\
+	event/e_command.c \
+	event/e_lifetime.c \
+	event/e_timeout.c \
+	\
+	command.c \
+	command_list.c \
+	process.c \
+	\
+	command/command_forward.c \
+	command/command_left.c \
+	command/command_right.c \
+	command/command_connect_nbr.c
+
+	# command/command_inventory.c \
+	# command/command_set.c \
+	# command/command_take.c \
+	# command/strepur.c \
+	# command/parse.c \
+	# command/command_broadcast.c \
+	# command/algorithme_vector.c \
+	# command/config_algorithme.c \
+	# command/get_max_value.c \
+	# command/command_look.c \
+	# command/print_tiles.c \
+	# command/command_eject.c
 
 OBJ_GEN = $(addprefix $(OBJ_GENDIR), $(SRC_GEN:.c=.o))
 

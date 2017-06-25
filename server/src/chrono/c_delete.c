@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 22 22:27:44 2017 Pierre Monge
-** Last update Fri Jun 23 01:01:33 2017 Pierre Monge
+** Last update Sat Jun 24 23:18:52 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -14,7 +14,7 @@
 #include "struct.h"
 #include "chrono.h"
 
-void			delete_chrono_player(t_player *player)
+void			delete_chrono_client(t_client *client)
 {
   t_list_head		*pos;
   t_list_head		*next;
@@ -25,7 +25,7 @@ void			delete_chrono_player(t_player *player)
     {
       next = pos->next;
       chrono = list_entry(pos, t_chrono_queue, list);
-      if (chrono->data == (void *)player)
+      if (chrono->data == (void *)client)
 	{
 	  list_del(pos->prev, pos->next);
 	  free(chrono);

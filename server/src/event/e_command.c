@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 22 22:20:11 2017 Pierre Monge
-** Last update Fri Jun 23 00:43:10 2017 Pierre Monge
+** Last update Sat Jun 24 23:54:29 2017 Pierre Monge
 */
 
 #include "struct.h"
@@ -13,8 +13,10 @@
 
 void		event_command(void *data)
 {
+  t_client	*client;
   t_player	*player;
 
-  player = (t_player *)data;
+  client = data;
+  player = client->data;
   player->command_is_running = 0;
 }

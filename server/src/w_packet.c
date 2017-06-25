@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 15:17:59 2017 Pierre Monge
-** Last update Sat Jun 24 20:39:03 2017 Pierre Monge
+** Last update Sun Jun 25 02:14:48 2017 Pierre Monge
 */
 
 #include <stdarg.h>
@@ -20,7 +20,7 @@
 #include "debug.h"
 #include "fdlist.h"
 
-void		queue_packet(t_player *player, char dead_packet,
+void		queue_packet(t_client *client, char dead_packet,
 			     char *format, ...)
 {
   va_list	va;
@@ -28,9 +28,9 @@ void		queue_packet(t_player *player, char dead_packet,
 
   if (!(packet = malloc(sizeof(t_packet))))
     {
-      PRINT_DEBUG("packet lost for fd: %d\n", player->net_info.fd);
+      PRINT_DEBUG("packet lost for fd: %d\n", client->net_info.fd);
       perror("malloc");
-      return ;
+      return (void)zappy_exit();
     }
   memset(packet, 0, sizeof(t_packet));
   packet->dead_packet = dead_packet;
@@ -39,45 +39,45 @@ void		queue_packet(t_player *player, char dead_packet,
   va_end(va);
   if (packet->size == -1)
     {
-      PRINT_DEBUG("packet lost for fd: %d\n", player->net_info.fd);
+      PRINT_DEBUG("packet lost for fd: %d\n", client->net_info.fd);
       free(packet);
       return ;
     }
-  list_add_tail(&packet->list, &player->w_packet);
-  fd_set_select(player->net_info.fd, FD_SELECT_READ | FD_SELECT_WRITE, player);
+  list_add_tail(&packet->list, &client->w_packet);
+  fd_set_select(client->net_info.fd, FD_SELECT_READ | FD_SELECT_WRITE, client);
 }
 
-void		queue_packet_va(t_player *player, char dead_packet,
+void		queue_packet_va(t_client *client, char dead_packet,
 				char *format, va_list va)
 {
   t_packet	*packet;
 
   if (!(packet = malloc(sizeof(t_packet))))
     {
-      PRINT_DEBUG("packet lost for fd: %d\n", player->net_info.fd);
+      PRINT_DEBUG("packet lost for fd: %d\n", client->net_info.fd);
       perror("malloc");
-      return ;
+      return (void)zappy_exit();
     }
   memset(packet, 0, sizeof(t_packet));
   packet->dead_packet = dead_packet;
   packet->size = vasprintf(&packet->block, format, va);
   if (packet->size == -1)
     {
-      PRINT_DEBUG("packet lost for fd: %d\n", player->net_info.fd);
+      PRINT_DEBUG("packet lost for fd: %d\n", client->net_info.fd);
       free(packet);
       return ;
     }
-  list_add_tail(&packet->list, &player->w_packet);
-  fd_set_select(player->net_info.fd, FD_SELECT_READ | FD_SELECT_WRITE, player);
+  list_add_tail(&packet->list, &client->w_packet);
+  fd_set_select(client->net_info.fd, FD_SELECT_READ | FD_SELECT_WRITE, client);
 }
 
 int		send_single_packet(int fd, t_packet *packet)
 {
   int		w_ret;
-  t_player	*player;
+  t_client	*client;
 
-  player = fd_entry[fd].data;
-  if (player->client_type == PLAYER)
+  client = fd_entry[fd].data;
+  if (client->client_type == PLAYER)
     PRINT_DEBUG("sending packet to fd: %d container:\n%s", fd,
 		&packet->block[packet->offset]);
   w_ret = send(fd,
@@ -102,31 +102,33 @@ void	clear_packet(t_packet *packet)
   free(packet);
 }
 
-void		send_queued_packet(t_player *player)
+int		send_queued_packet(t_client *client)
 {
   t_packet	*container;
   t_list_head	*packet;
   t_list_head	*next;
   int		w_len;
 
-  if (list_empty(&player->w_packet))
+  if (list_empty(&client->w_packet))
     {
-      fd_set_select(player->net_info.fd, FD_SELECT_READ, player);
-      return ;
+      fd_set_select(client->net_info.fd, FD_SELECT_READ, client);
+      return (0);
     }
-  packet = list_get_first(&player->w_packet);
+  packet = list_get_first(&client->w_packet);
   w_len = 0;
-  while (packet != &player->w_packet)
+  while (packet != &client->w_packet)
     {
       container = list_entry(packet, t_packet, list);
-      if ((w_len = send_single_packet(player->net_info.fd, container)) < 0)
-	return (void)delete_player(player);
+      if ((w_len = send_single_packet(client->net_info.fd, container)) < 0)
+	return (-1);
       if (w_len < container->size)
 	break;
       next = list_del(packet->prev, packet->next);
       clear_packet(container);
       packet = next;
     }
-  if (list_empty(&player->w_packet))
-    fd_set_select(player->net_info.fd, FD_SELECT_READ, player);
+  if (list_empty(&client->w_packet))
+    fd_set_select(client->net_info.fd, FD_SELECT_READ, client);
+  return (0);
+  // Function more than 26 lines
 }

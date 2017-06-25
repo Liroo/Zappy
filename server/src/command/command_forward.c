@@ -1,11 +1,11 @@
 /*
 ** cmds_movement.c for Project-Master in /home/guicha/tek2/Zappy/server/src
-** 
+**
 ** Made by guicha_t
 ** Login   <thomas.guichard@epitech.eu>
-** 
+**
 ** Started on  Tue Jun 20 23:05:54 2017 guicha_t
-** Last update Fri Jun 23 16:38:11 2017 guicha_t
+** Last update Sun Jun 25 01:33:02 2017 Pierre Monge
 */
 
 #include "h.h"
@@ -43,17 +43,20 @@ void		pos_about_direction(t_player *p)
     }
 }
 
-int		cmd_forward(t_player *p, char *token)
+int		cmd_forward(t_client *client, char *token)
 {
+  t_player	*player;
+
+  player = client->data;
   (void)token;
-  --game.map[p->pos_x][p->pos_y].player;
-  PRINT_DEBUG("Last pos: [%d][%d]\n", p->pos_x, p->pos_y);
-  pos_about_direction(p);
-  ++game.map[p->pos_x][p->pos_x].player;
-  PRINT_DEBUG("New pos: [%d][%d]\n", p->pos_x, p->pos_y);
+  --game.map[player->pos_x][player->pos_y].player;
+  PRINT_DEBUG("Last pos: [%d][%d]\n", player->pos_x, player->pos_y);
+  pos_about_direction(player);
+  ++game.map[player->pos_x][player->pos_y].player;
+  PRINT_DEBUG("New pos: [%d][%d]\n", player->pos_x, player->pos_y);
   PRINT_DEBUG("Forward ok!\n");
-  queue_packet(p, SIMPLE_PACKET, RPL_OK);
-  p->command_is_running = 1;
-  queue_chrono(CHRONO_FORWARD, p, C_EVENT_COMMAND);
+  queue_packet(client, SIMPLE_PACKET, RPL_OK);
+  player->command_is_running = 1;
+  queue_chrono(CHRONO_FORWARD, client, C_EVENT_COMMAND);
   return (0);
 }

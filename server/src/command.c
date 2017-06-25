@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sat Jun 17 04:55:41 2017 Pierre Monge
-** Last update Sat Jun 24 02:54:13 2017 Thomas
+** Last update Sun Jun 25 02:16:12 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -16,65 +16,68 @@
 #include "debug.h"
 #include "h.h"
 
-static t_command	*get_command_list()
+static int		queue_command(t_packet packet,
+				      t_command_queue *command_queue,
+				      int *command_in_queue,
+				      t_command *command_list)
 {
-  static t_command	command_list[MAX_COMMAND_SIZE] =
-    {
-      { "Forward", 7, &cmd_forward },
-      { "Right", 5, &cmd_right },
-      { "Left", 4, &cmd_left },
-      { "Look", 4, &cmd_look },
-      { "Inventory", 9, &cmd_inventory },
-      { "Broadcast", 9, &cmd_broadcast },
-      { "Connect_nbr", 11, &cmd_connect_nbr },
-      { "Fork", 4, NULL },
-      { "Eject", 5, &cmd_eject },
-      { "Take", 4, &cmd_take },
-      { "Set", 3, &cmd_set },
-      { "Incantation", 11, NULL }
-    };
-
-  return (command_list);
-}
-
-static void		queue_command(t_packet packet,
-				      t_player *player)
-{
-  t_command		*command_list;
   int			i;
-  t_command_queue	*command_queue;
+  t_command_queue	*new_command;
 
   i = 0;
-  command_list = get_command_list();
-  while (i < MAX_COMMAND_SIZE)
+  while (command_list[i].title)
     {
       while (*packet.block && *packet.block == ' ')
 	packet.block++;
       if (strncasecmp(packet.block, command_list[i].title,
 		      command_list[i].title_len) == 0)
 	{
-	  if (player->command_in_queue >= COMMAND_QUEUE_SIZE)
-	    return ;
-	  command_queue = &player->command_queue[player->command_in_queue];
-	  if (!(command_queue->command = strdup(packet.block)))
-	    return ;
-	  command_queue->exec = command_list[i].exec;
-	  player->command_in_queue++;
-	  break;
+	  if (*command_in_queue >= COMMAND_QUEUE_SIZE)
+	    return (-1);
+	  new_command = &(command_queue[(*command_in_queue)]);
+	  if (!(new_command->command = strdup(packet.block)))
+	    return zappy_exit();
+	  new_command->exec = command_list[i].exec;
+	  (*command_in_queue)++;
+	  return (0);
 	}
       i++;
     }
+  return (-1);
 }
 
-void			convert_packet_to_command(t_packet packet,
-						  t_player *player)
+void		queue_command_player(t_packet packet, t_client *client)
 {
-  PRINT_DEBUG("fd: %d received packet:\n%s\n",
-	      player->net_info.fd, packet.block);
-  if (packet.block[packet.size] == '\r')
-    packet.block[packet.size] = 0;
-  if (player->auth_status == AUTH)
-    queue_command(packet, player);
-  else
-    auth_player(packet, player);
+  t_command	*command_list;
+  t_player	*player;
+
+  player = client->data;
+  command_list = get_command_list_player();
+  if (queue_command(packet, (t_command_queue *)player->command_queue,
+		    &player->command_in_queue, command_list) == -1)
+    {
+      queue_packet(client, SIMPLE_PACKET, RPL_KO);
+      return ;
+    }
+}
+
+void	queue_command_spectator(t_packet packet, t_client *client)
+{
+  (void)packet;
+  queue_packet(client, SIMPLE_PACKET, RPL_KO);
+}
+
+void	queue_command_admin(t_packet packet, t_client *client)
+{
+  t_command	*command_list;
+  t_admin	*admin;
+
+  admin = client->data;
+  command_list = get_command_list_admin();
+  if (queue_command(packet, (t_command_queue *)admin->command_queue,
+		    &admin->command_in_queue, command_list) == -1)
+    {
+      queue_packet(client, SIMPLE_PACKET, RPL_KO);
+      return ;
+    }
 }

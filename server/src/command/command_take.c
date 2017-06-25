@@ -1,11 +1,11 @@
 /*
 ** cmd_take.c for Project-Master in /home/guicha/tek2/Zappy/server/src/cmds
-** 
+**
 ** Made by guicha_t
 ** Login   <thomas.guichard@epitech.eu>
-** 
+**
 ** Started on  Wed Jun 21 02:09:58 2017 guicha_t
-** Last update Fri Jun 23 16:28:13 2017 guicha_t
+** Last update Sun Jun 25 01:37:15 2017 Pierre Monge
 */
 
 #include <string.h>

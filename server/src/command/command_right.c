@@ -1,11 +1,11 @@
 /*
 ** cmd_right.c for Project-Master in /home/guicha/tek2/Zappy/server/src/cmds
-** 
+**
 ** Made by guicha_t
 ** Login   <thomas.guichard@epitech.eu>
-** 
+**
 ** Started on  Wed Jun 21 01:12:18 2017 guicha_t
-** Last update Sat Jun 24 19:21:13 2017 guicha_t
+** Last update Sun Jun 25 01:34:09 2017 Pierre Monge
 */
 
 #include "h.h"
@@ -15,16 +15,19 @@
 #include "struct.h"
 #include "packet.h"
 
-int	cmd_right(t_player *p, char *token)
+int		cmd_right(t_client *client, char *token)
 {
+  t_player	*player;
+
+  player = client->data;
   (void)token;
-  PRINT_DEBUG("Right Last Dir: %d\n", p->direction);
-  ++p->direction;
-  if (p->direction > 3)
-    p->direction = 0;
-  PRINT_DEBUG("Right New Dir: %d\n", p->direction);
-  queue_packet(p, SIMPLE_PACKET, RPL_OK);
-  p->command_is_running = 1;
-  queue_chrono(CHRONO_RIGHT, p, C_EVENT_COMMAND);
+  PRINT_DEBUG("Right Last Dir: %d\n", player->direction);
+  ++player->direction;
+  if (player->direction > 3)
+    player->direction = 0;
+  PRINT_DEBUG("Right New Dir: %d\n", player->direction);
+  queue_packet(client, SIMPLE_PACKET, RPL_OK);
+  player->command_is_running = 1;
+  queue_chrono(CHRONO_RIGHT, client, C_EVENT_COMMAND);
   return (0);
 }

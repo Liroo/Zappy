@@ -5,11 +5,12 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 05:20:34 2017 Pierre Monge
-** Last update Sat Jun 24 02:53:52 2017 Thomas
+** Last update Sun Jun 25 02:07:05 2017 Pierre Monge
 */
 
 #include <time.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "debug.h"
 #include "log.h"
@@ -24,7 +25,6 @@ t_game	game;
 static void	  close_game_server()
 {
   sig_set(0);
-  delete_teams();
   delete_game();
 }
 

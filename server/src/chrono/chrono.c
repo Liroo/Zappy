@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Wed Jun 21 00:04:42 2017 Pierre Monge
-** Last update Thu Jun 22 22:48:13 2017 Pierre Monge
+** Last update Sun Jun 25 02:18:17 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -62,7 +62,7 @@ void			queue_chrono(int duration_s, void *data, char event_type)
   t_chrono_queue	*chrono;
 
   if (!(chrono = malloc(sizeof(t_chrono_queue))))
-    return ;
+    return (void)zappy_exit();
   memset(chrono, 0, sizeof(t_chrono_queue));
   create_chrono(chrono, duration_s, data, event_type);
   insert_chrono_queue(chrono);

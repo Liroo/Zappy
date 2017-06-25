@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 12:00:23 2017 Pierre Monge
-** Last update Fri Jun 23 23:53:52 2017 Pierre Monge
+** Last update Sun Jun 25 01:22:39 2017 Pierre Monge
 */
 
 #ifndef STRUCT_H
@@ -14,11 +14,13 @@
 # include "list.h"
 
 typedef struct	s_tiles		t_tiles;
-typedef struct	s_player	t_player;
 typedef struct	s_team		t_team;
 typedef struct	s_inventory	t_inventory;
 typedef struct	s_game		t_game;
 typedef struct	s_net_info	t_net_info;
+typedef struct	s_client	t_client;
+typedef struct	s_player	t_player;
+typedef struct	s_admin		t_admin;
 
 struct		s_net_info
 {
@@ -79,24 +81,39 @@ typedef enum	e_client_type
 
 struct			s_player
 {
-  t_auth_status	        auth_status;
-  t_client_type		client_type;
-
   int			pos_x;
   int			pos_y;
   int			direction;
   unsigned char		elevation;
   t_inventory		inventory;
 
-  t_list_head		list;
   t_team		*team;
 
   int			command_in_queue;
   t_command_queue	command_queue[COMMAND_QUEUE_SIZE];
   int			command_is_running;
+};
+
+struct			s_admin
+{
+  int			command_in_queue;
+  t_command_queue	command_queue[COMMAND_QUEUE_SIZE];
+};
+
+typedef void		(*t_process_packet)(t_packet packet, t_client *client);
+
+struct			s_client
+{
+  t_auth_status		auth_status;
+  t_client_type		client_type;
+  t_list_head		list;
+
   t_packet		r_packet;
+  t_process_packet	process_r_packet;
   t_list_head		w_packet;
   t_net_info		net_info;
+
+  void			*data;
 };
 
 struct		s_team

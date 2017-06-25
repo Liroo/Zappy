@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 10:38:05 2017 Pierre Monge
-** Last update Sat Jun 24 00:50:29 2017 Pierre Monge
+** Last update Sat Jun 24 23:57:11 2017 Pierre Monge
 */
 
 #include <stdarg.h>
@@ -36,7 +36,7 @@ void		debug(const char * restrict format, ...)
       while (pos != &game.admins)
 	{
 	  va_copy(va_cpy, va);
-	  queue_packet_va(list_entry(pos, t_player, list), SIMPLE_PACKET,
+	  queue_packet_va(list_entry(pos, t_client, list), SIMPLE_PACKET,
 			  (char *)format, va_cpy);
 	  pos = pos->next;
 	}

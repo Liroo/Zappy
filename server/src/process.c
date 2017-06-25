@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Wed Jun 21 04:30:29 2017 Pierre Monge
-** Last update Sat Jun 24 20:48:13 2017 Pierre Monge
+** Last update Sun Jun 25 02:17:37 2017 Pierre Monge
 */
 
 #include <time.h>
@@ -47,44 +47,78 @@ void			process_chrono_event()
     }
 }
 
-static void	process_player(t_player *player)
+static void	process_player(t_client *client)
 {
-  int		i;
+   int		i;
+   t_player	*player;
 
-  if (player->command_is_running || player->command_in_queue <= 0)
-    return ;
-  (*player->command_queue).exec(player, (*player->command_queue).command);
-  free((*player->command_queue).command);
-  (*player->command_queue).command = NULL;
-  i = 0;
-  while (i < player->command_in_queue)
+   player = client->data;
+   if (player->command_is_running || player->command_in_queue <= 0)
+     return ;
+   if ((*player->command_queue).exec)
+     (*player->command_queue).exec(client, (*player->command_queue).command);
+   free((*player->command_queue).command);
+   (*player->command_queue).command = NULL;
+   i = 0;
+   while (i < player->command_in_queue)
+     {
+       player->command_queue[i] = player->command_queue[i + 1];
+       i++;
+     }
+   player->command_in_queue -= 1;
+}
+
+static void	process_admin(t_client *client)
+{
+   int		i;
+   t_admin	*admin;
+
+   admin = client->data;
+   if ((*admin->command_queue).exec)
+     (*admin->command_queue).exec(client, (*admin->command_queue).command);
+   free((*admin->command_queue).command);
+   (*admin->command_queue).command = NULL;
+   i = 0;
+   while (i < admin->command_in_queue)
+     {
+       admin->command_queue[i] = admin->command_queue[i + 1];
+       i++;
+     }
+   admin->command_in_queue -= 1;
+}
+
+static void	process_client_list(t_list_head *head)
+{
+  t_list_head	*pos;
+  t_list_head	*next;
+  t_client	*client;
+
+  pos = list_get_first(head);
+  while (pos != head)
     {
-      player->command_queue[i] = player->command_queue[i + 1];
-      i++;
+      next = pos->next;
+      client = list_entry(pos, t_client, list);
+      if (client->client_type == ADMIN)
+	process_admin(client);
+      else if (client->client_type == PLAYER)
+	process_player(client);
+      pos = next;
     }
-  player->command_in_queue -= 1;
 }
 
 void		process_command()
 {
   t_list_head	*team_pos;
   t_list_head	*team_next;
-  t_list_head	*player_pos;
-  t_list_head	*player_next;
   t_team	*team;
 
+  process_client_list(&game.admins);
   team_pos = list_get_first(&game.teams);
   while (team_pos != &game.teams)
     {
       team_next = team_pos->next;
       team = list_entry(team_pos, t_team, list);
-      player_pos = list_get_first(&team->players);
-      while (player_pos != &team->players)
-	{
-	  player_next = player_pos->next;
-	  process_player(list_entry(player_pos, t_player, list));
-	  player_pos = player_next;
-	}
+      process_client_list(&team->players);
       team_pos = team_next;
     }
 }

@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 22 22:20:46 2017 Pierre Monge
-** Last update Fri Jun 23 00:50:49 2017 Pierre Monge
+** Last update Sun Jun 25 01:39:38 2017 Pierre Monge
 */
 
 #include "struct.h"
@@ -15,9 +15,9 @@
 
 void		event_timeout(void *data)
 {
-  t_player	*player;
+  t_client	*client;
 
-  player = (t_player *)data;
-  PRINT_DEBUG("Player %d timeout\n", player->net_info.fd);
-  queue_packet(player, DEAD_PACKET, RPL_TIMEOUT);
+  client = data;
+  PRINT_DEBUG("Client %d timeout\n", client->net_info.fd);
+  queue_packet(data, DEAD_PACKET, RPL_TIMEOUT);
 }

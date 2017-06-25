@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Fri Jun 23 23:09:22 2017 Pierre Monge
-** Last update Sat Jun 24 01:25:21 2017 Pierre Monge
+** Last update Sat Jun 24 23:57:30 2017 Pierre Monge
 */
 
 #include <stdio.h>
@@ -28,7 +28,7 @@ static void	print_log_list(t_list_head *head,
   while (pos != head)
     {
       va_copy(va_cpy, va);
-      queue_packet_va(list_entry(pos, t_player, list), SIMPLE_PACKET,
+      queue_packet_va(list_entry(pos, t_client, list), SIMPLE_PACKET,
 		      (char *)format, va_cpy);
       pos = pos->next;
     }
@@ -44,7 +44,7 @@ void	print_log(const char * restrict format, ...)
 
   time(&now);
   tm_info = localtime(&now);
-  strftime(f_time, 26, LOG_GREEN"%H:%M"LOG_CLEAR, tm_info);
+  strftime(f_time, 26, LOG_GREEN"%H:%M.%S"LOG_CLEAR, tm_info);
   va_start(va, format);
   va_copy(va_cpy, va);
   fprintf(stderr, "[%s]: ", f_time);

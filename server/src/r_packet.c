@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 **
 ** Started on  Thu Jun 15 22:22:38 2017 guicha_t
-** Last update Sat Jun 17 04:58:57 2017 Pierre Monge
+** Last update Sat Jun 24 23:32:42 2017 Pierre Monge
 */
 
 #include <sys/types.h>
@@ -21,6 +21,14 @@
 #include "struct.h"
 #include "command.h"
 #include "packet.h"
+
+static void	process_packet(t_packet packet, t_client *client)
+{
+  if (packet.block[packet.size] == '\r')
+    packet.block[packet.size] = 0;
+  if (client->process_r_packet)
+    client->process_r_packet(packet, client);
+}
 
 /*
 ** personal implementation of strtok
@@ -48,15 +56,15 @@ static void	split_raw_packet(t_packet *s_packet, t_packet *packet)
     }
 }
 
-int		recv_packet(t_player *player)
+int		recv_packet(t_client *client)
 {
   t_packet	s_packet;
   t_packet	*packet;
   int		ret;
 
-  packet = &player->r_packet;
+  packet = &client->r_packet;
   memset(&s_packet, 0, sizeof(t_packet));
-  if ((ret = recv(player->net_info.fd, &packet->block[packet->offset],
+  if ((ret = recv(client->net_info.fd, &packet->block[packet->offset],
 			    PACKET_SIZE_DFL - packet->offset, 0)) < 0)
     return (perror("recv"), -1);
   if (ret == 0)
@@ -70,7 +78,7 @@ int		recv_packet(t_player *player)
       if (s_packet.offset == -1)
 	return (0);
       else
-	convert_packet_to_command(s_packet, player);
+	process_packet(s_packet, client);
     }
   packet->size = packet->offset = 0;
   memset(packet->block, 0, PACKET_SIZE_DFL);

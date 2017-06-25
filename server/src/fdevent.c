@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Fri Jun 16 20:34:58 2017 Pierre Monge
-** Last update Thu Jun 22 22:11:01 2017 Pierre Monge
+** Last update Sun Jun 25 00:27:58 2017 Pierre Monge
 */
 
 #include "h.h"
@@ -23,16 +23,20 @@ EVENT	get_event_flags(int fd, fd_set read_fds, fd_set write_fds)
   return (event_flags);
 }
 
-void	read_event(t_player *player)
+void	read_event(t_client *client)
 {
-  if (recv_packet(player) != 0)
+  if (recv_packet(client) != 0)
     {
-      delete_player(player);
+      delete_client(client);
       return ;
     }
 }
 
-void	write_event(t_player *player)
+void	write_event(t_client *client)
 {
-  send_queued_packet(player);
+  if (send_queued_packet(client) != 0)
+    {
+      delete_client(client);
+      return ;
+    }
 }

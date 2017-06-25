@@ -5,27 +5,32 @@
 ** Login   <thomas.guichard@epitech.eu>
 **
 ** Started on  Thu Jun 15 23:05:33 2017 guicha_t
-** Last update Sat Jun 17 05:22:00 2017 Pierre Monge
+** Last update Sun Jun 25 01:24:31 2017 Pierre Monge
 */
 
 #ifndef _COMMAND_H
 # define _COMMAND_H
 
-# define MAX_COMMAND_SIZE	12
+# define MAX_COMMAND_SIZE_PLAYER 12
+# define MAX_COMMAND_SIZE_ADMIN 0
 
-typedef int	(*t_command_func)(t_player *player, char *command);
+typedef struct s_command	t_command;
+typedef struct s_command_queue	t_command_queue;
+typedef struct s_client		t_client;
 
-typedef struct		s_command
+typedef int	(*t_command_func)(t_client *client, char *command);
+
+struct			s_command
 {
   char			*title;
   int			title_len;
   t_command_func	exec;
-}			t_command;
+};
 
-typedef struct		s_command_queue
+struct			s_command_queue
 {
   char			*command;
   t_command_func	exec;
-}			t_command_queue;
+};
 
 #endif /* _COMMAND_H */

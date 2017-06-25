@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Sat Jun 24 02:54:32 2017 Thomas
+** Last update Sun Jun 25 02:15:51 2017 Pierre Monge
 */
 
 #ifndef H_H
@@ -50,8 +50,8 @@ extern void	fd_refresh(int fd);
 extern int	fd_select(struct timespec *duration);
 
 extern EVENT	get_event_flags(int fd, fd_set read_fds, fd_set write_fds);
-extern void	read_event(t_player *player);
-extern void	write_event(t_player *player);
+extern void	read_event(t_client *client);
+extern void	write_event(t_client *client);
 
 /*
 ** signal
@@ -62,38 +62,44 @@ extern void	sig_handler(int sig);
 /*
 ** packet
 */
-extern int	recv_packet(t_player *player);
-extern void	queue_packet(t_player *player, char dead_packet,
+extern int	recv_packet(t_client *client);
+extern void	queue_packet(t_client *client, char dead_packet,
 			     char *format, ...);
-extern void	queue_packet_va(t_player *player, char dead_packet,
+extern void	queue_packet_va(t_client *client, char dead_packet,
 			     char *format, va_list va);
-extern void	send_queued_packet(t_player *player);
+extern int	send_queued_packet(t_client *client);
 extern void	clear_packet(t_packet *packet);
 
 /*
 ** Command
 */
-extern void	convert_packet_to_command(t_packet packet,
-						  t_player *player);
+extern void		queue_command_player(t_packet packet, t_client *client);
+extern void		queue_command_spectator(t_packet packet, t_client *client);
+extern void		queue_command_admin(t_packet packet, t_client *client);
+extern t_command	*get_command_list_player();
+extern t_command	*get_command_list_admin();
 
 /*
 ** Unit cmds
 */
-extern int	cmd_forward(t_player *p, char *token);
-extern int	cmd_left(t_player *p, char *token);
-extern int	cmd_right(t_player *p, char *token);
-extern int	cmd_take(t_player *p, char *token);
-extern int	cmd_connect_nbr(t_player *p, char *token);
-extern int	cmd_inventory(t_player *p, char *token);
-extern int	cmd_set(t_player *p, char *token);
+extern int	cmd_forward(t_client *client, char *token);
+extern int	cmd_left(t_client *client, char *token);
+extern int	cmd_right(t_client *client, char *token);
+extern int	cmd_take(t_client *client, char *token);
+extern int	cmd_connect_nbr(t_client *client, char *token);
+extern int	cmd_inventory(t_client *client, char *token);
+extern int	cmd_set(t_client *client, char *token);
+extern int	cmd_look(t_client *client, char *token);
+extern int	cmd_eject(t_client *client, char *token);
+extern int	cmd_broadcast(t_client *client, char *token);
+
 extern char	*parse_param(char *token);
 extern char	*strepur(char *str);
-extern int	cmd_look(t_player *p, char *token);
 extern void	print_tiles(t_player *p, int x, int y);
-extern void	send_vertical_look(t_player *p, int range, int begin_direction, int dir_y);
-extern void	send_horizontal_look(t_player *p, int range, int begin_direction, int dir_x);
-extern int	cmd_eject(t_player *p, char *token);
-extern int	cmd_broadcast(t_player *p, char *token);
+extern void	send_vertical_look(t_player *p, int range,
+				   int begin_direction, int dir_y);
+extern void	send_horizontal_look(t_player *p, int range,
+				     int begin_direction, int dir_x);
 extern int	algorithme_vector(t_player *p_send, t_player *p_dest);
 extern int	get_config_vector(int x, int y, int xmax, int ymax);
 extern int	get_dir_config_one(int x, int y);
@@ -106,9 +112,9 @@ extern int	get_diff_max_x(t_player *send, t_player *dest);
 /*
 ** Free class
 */
-extern void	delete_player(t_player *player);
-extern void	delete_teams();
 extern void	delete_game();
+extern void	delete_team(t_team *team);
+extern void	delete_client(t_client *client);
 
 
 /*
@@ -126,7 +132,7 @@ extern int	y_opt(t_game *game, int ac, char *av[]);
 /*
 ** Auth
 */
-extern void	auth_player(t_packet packet, t_player *player);
+extern void	auth_client(t_packet packet, t_client *client);
 
 /*
 ** Map
@@ -152,7 +158,7 @@ extern struct timespec		add_time(struct timespec ts1,
 					 struct timespec ts2);
 extern struct timespec		sub_time(struct timespec ts1,
 					 struct timespec ts2);
-extern void			delete_chrono_player(t_player *player);
+extern void			delete_chrono_client(t_client *client);
 extern void			delete_chrono(t_chrono_queue *chrono);
 extern t_chrono_event_func	*get_chrono_event_func_list();
 
@@ -168,5 +174,10 @@ extern void	process_command();
 extern void	event_command(void *data);
 extern void	event_lifetime(void *data);
 extern void	event_timeout(void *data);
+
+/*
+** Exit
+*/
+extern int	zappy_exit();
 
 #endif /* !H_H */
