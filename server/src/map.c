@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 20 22:09:29 2017 Pierre Monge
-** Last update Wed Jun 21 04:17:10 2017 Pierre Monge
+** Last update Sun Jun 25 23:17:10 2017 Pierre Monge
 */
 
 #include <time.h>
@@ -28,7 +28,7 @@ void	insert_objects_in_map(int offset, int nb)
     {
       y = rand() % game.map_size_y;
       x = rand() % game.map_size_x;
-      INSERT_OBJECT(&(game.map[y][x]),
+      INSERT_OBJECT(&(game.map[x][y]),
 		    offset);
       nb--;
     }
@@ -61,13 +61,13 @@ int	generate_map()
   int	i;
 
   i = 0;
-  if (!(game.map = malloc(sizeof(t_inventory *) * game.map_size_y)))
+  if (!(game.map = malloc(sizeof(t_inventory *) * game.map_size_x)))
     return (perror("malloc"), -1);
-  while (i < (int)game.map_size_y)
+  while (i < (int)game.map_size_x)
     {
-      if (!(game.map[i] = malloc(sizeof(t_inventory) * game.map_size_x)))
+      if (!(game.map[i] = malloc(sizeof(t_inventory) * game.map_size_y)))
 	return (perror("malloc"), -1);
-      memset(game.map[i], 0, sizeof(t_inventory) * game.map_size_x);
+      memset(game.map[i], 0, sizeof(t_inventory) * game.map_size_y);
       i++;
     }
   spawn_stone();

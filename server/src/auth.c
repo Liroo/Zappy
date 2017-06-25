@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Mon Jun 19 22:15:36 2017 Pierre Monge
-** Last update Sun Jun 25 02:12:58 2017 Pierre Monge
+** Last update Sun Jun 25 23:17:28 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -28,7 +28,7 @@ static t_player	*make_player(t_team *team)
   player->pos_x = rand() % game.map_size_x;
   player->pos_y = rand() % game.map_size_y;
   player->direction = rand() % 4;
-  INSERT_OBJECT(&(game.map[player->pos_y][player->pos_x]), PLAYER_OFFSET);
+  INSERT_OBJECT(&(game.map[player->pos_x][player->pos_y]), PLAYER_OFFSET);
   player->team = team;
   player->inventory.food = 10;
   team->empty_slot -= 1;
