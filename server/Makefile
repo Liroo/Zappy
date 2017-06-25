@@ -55,7 +55,10 @@ SRC_GEN = \
 	command/command_forward.c \
 	command/command_left.c \
 	command/command_right.c \
-	command/command_connect_nbr.c
+	command/command_connect_nbr.c \
+	command/command_look.c \
+	command/print_tiles.c \
+	command/command_eject.c
 
 	# command/command_inventory.c \
 	# command/command_set.c \
@@ -66,9 +69,6 @@ SRC_GEN = \
 	# command/algorithme_vector.c \
 	# command/config_algorithme.c \
 	# command/get_max_value.c \
-	# command/command_look.c \
-	# command/print_tiles.c \
-	# command/command_eject.c
 
 OBJ_GEN = $(addprefix $(OBJ_GENDIR), $(SRC_GEN:.c=.o))
 

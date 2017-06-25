@@ -5,7 +5,7 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Wed Jun 21 22:49:06 2017 Thomas
-** Last update Sat Jun 24 02:17:44 2017 Thomas
+** Last update Mon Jun 26 00:34:36 2017 Thomas
 */
 
 #include <stdio.h>
@@ -33,50 +33,57 @@ static int	get_range_per_elevation(t_player *p)
 static void	get_directional_position(t_player *p, int *x, int *y)
 {
   if (p->direction == 0)
-    *y = -1;
+    *y = 1;
   else if (p->direction == 1)
     *x = 1;
   else if (p->direction == 2)
-    *y = 1;
+    *y = -1;
   else
     *x = -1;
 }
 
-static void	get_tiles_line_object(t_player *p, int dir_x, int dir_y, int range)
+static void	get_tiles_line_object(t_client *client, int dir_x,
+				      int dir_y, int range)
 {
   int		begin_direction;
+  t_player	*p;
 
+  p = client->data;
+  printf("%d\n", p->direction);
   if (p->direction == 0 || p->direction == 1)
     begin_direction = -1;
   else
     begin_direction = 1;
   if (dir_x == 0)
-    send_vertical_look(p, range, begin_direction, dir_y);
+    send_vertical_look(client, range, begin_direction, dir_y);
   else if (dir_y == 0)
-    send_horizontal_look(p, range, begin_direction, dir_x);
+    send_horizontal_look(client, range, begin_direction, dir_x);
 }
 
-int	cmd_look(t_player *p, char *token)
+int	cmd_look(t_client *client, char *token)
 {
+  t_player	*p;
   int		range;
   int		dir_x;
   int		dir_y;
   int		i;
 
   (void)token;
+  p = client->data;
   i = 0;
   dir_x = 0;
   dir_y = 0;
+  printf("p x y: %d %d\n", p->pos_x, p->pos_y);
   range = get_range_per_elevation(p);
   get_directional_position(p, &dir_x, &dir_y);
-  queue_packet(p, SIMPLE_PACKET, "[");
+  queue_packet(client, SIMPLE_PACKET, "[");
   while (i <= range)
     {
-      get_tiles_line_object(p, dir_x * i, dir_y * i, i);
+      get_tiles_line_object(client, dir_x * i, dir_y * i, i);
       i++;
     }
-  queue_packet(p, SIMPLE_PACKET, "]\n");
+  queue_packet(client, SIMPLE_PACKET, "]\n");
   p->command_is_running = 1;
-  queue_chrono(CHRONO_LOOK, p, C_EVENT_COMMAND);
+  queue_chrono(CHRONO_LOOK, client, C_EVENT_COMMAND);
   return (0);
 }
