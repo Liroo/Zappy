@@ -5,7 +5,7 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Wed Jun 21 22:49:06 2017 Thomas
-** Last update Mon Jun 26 00:34:36 2017 Thomas
+** Last update Mon Jun 26 02:26:47 2017 Thomas
 */
 
 #include <stdio.h>
@@ -49,7 +49,7 @@ static void	get_tiles_line_object(t_client *client, int dir_x,
   t_player	*p;
 
   p = client->data;
-  printf("%d\n", p->direction);
+  /* printf("%d\n", p->direction); */
   if (p->direction == 0 || p->direction == 1)
     begin_direction = -1;
   else
@@ -73,7 +73,7 @@ int	cmd_look(t_client *client, char *token)
   i = 0;
   dir_x = 0;
   dir_y = 0;
-  printf("p x y: %d %d\n", p->pos_x, p->pos_y);
+  /* printf("p x y: %d %d\n", p->pos_x, p->pos_y); */
   range = get_range_per_elevation(p);
   get_directional_position(p, &dir_x, &dir_y);
   queue_packet(client, SIMPLE_PACKET, "[");
