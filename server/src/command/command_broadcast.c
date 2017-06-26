@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Thu Jun 22 07:01:19 2017 guicha_t
-** Last update Sat Jun 24 20:09:04 2017 guicha_t
+** Last update Mon Jun 26 00:13:29 2017 guicha_t
 */
 
 #include <stdlib.h>
@@ -47,12 +47,14 @@ int	convert_dir_about_dest(int pdir, int dir)
   return (real_dir);
 }
 
-void	send_broadcast_message(t_player *p, char *msg, int dir)
+void	send_broadcast_message(t_client *c, char *msg, int dir)
 {
-  int	new_dir;
+  int		new_dir;
+  t_player	*p;
 
+  p = c->data;
   new_dir = convert_dir_about_dest(p->direction, dir);
-  queue_packet(p, SIMPLE_PACKET, "message %d, %s\n", new_dir, msg);
+  queue_packet(c, SIMPLE_PACKET, "message %d, %s\n", new_dir, msg);
 }
 
 char	*get_only_message_from_token(char *token)
@@ -77,23 +79,27 @@ char	*get_only_message_from_token(char *token)
   return (msg);
 }
 
-void	find_player_broadcast(t_player *send, t_team *team, char *t)
+void	find_player_broadcast(t_client *send, t_team *team, char *t)
 {
   t_list_head	*head_p;
   t_list_head	*pos_p;
-  t_player	*tmp_p;
+  t_client	*tmp_p;
+  t_player	*pdest;
+  t_player	*psend;
   char		*msg;
   int		dir;
 
   head_p = &team->players;
   pos_p = list_get_first(head_p);
+  psend = send->data;
   msg = get_only_message_from_token(t);
   while (pos_p != head_p)
     {
-      tmp_p = list_entry(pos_p, t_player, list);
+      tmp_p = list_entry(pos_p, t_client, list);
+      pdest = tmp_p->data;
       if (tmp_p != send)
 	{
-	  dir = algorithme_vector(send, tmp_p);
+	  dir = algorithme_vector(psend, pdest);
 	  send_broadcast_message(tmp_p, msg, dir);
 	}
       pos_p = pos_p->next;
@@ -101,22 +107,24 @@ void	find_player_broadcast(t_player *send, t_team *team, char *t)
   free(msg);
 }
 
-int	cmd_broadcast(t_player *p, char *token)
+int	cmd_broadcast(t_client *client, char *token)
 {
   t_list_head	*head;
   t_list_head	*pos;
   t_team	*team;
+  t_player	*psend;
 
+  psend = client->data;
   head = &game.teams;
   pos = list_get_first(head);
   while (pos != head)
     {
       team = list_entry(pos, t_team, list);
-      find_player_broadcast(p, team, token);
+      find_player_broadcast(client, team, token);
       pos = pos->next;
     }
-  queue_packet(p, SIMPLE_PACKET, RPL_OK);
-  p->command_is_running = 1;
-  queue_chrono(CHRONO_BROADCAST, p, C_EVENT_COMMAND);
+  queue_packet(client, SIMPLE_PACKET, RPL_OK);
+  psend->command_is_running = 1;
+  queue_chrono(CHRONO_BROADCAST, client, C_EVENT_COMMAND);
   return (0);
 }
