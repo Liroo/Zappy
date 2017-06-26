@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 **
 ** Started on  Thu Jun 15 22:22:38 2017 guicha_t
-** Last update Sat Jun 24 23:32:42 2017 Pierre Monge
+** Last update Mon Jun 26 17:19:39 2017 Pierre Monge
 */
 
 #include <sys/types.h>
@@ -21,6 +21,7 @@
 #include "struct.h"
 #include "command.h"
 #include "packet.h"
+#include "debug.h"
 
 static void	process_packet(t_packet packet, t_client *client)
 {
@@ -67,7 +68,7 @@ int		recv_packet(t_client *client)
   if ((ret = recv(client->net_info.fd, &packet->block[packet->offset],
 			    PACKET_SIZE_DFL - packet->offset, 0)) < 0)
     return (perror("recv"), -1);
-  if (ret == 0)
+  if (ret == 0 && list_empty(&client->w_packet))
     return (1);
   packet->size += ret;
   while (s_packet.offset < packet->size)

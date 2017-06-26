@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Fri Jun 16 20:34:58 2017 Pierre Monge
-** Last update Sun Jun 25 00:27:58 2017 Pierre Monge
+** Last update Mon Jun 26 17:11:30 2017 Pierre Monge
 */
 
 #include "h.h"
@@ -25,6 +25,8 @@ EVENT	get_event_flags(int fd, fd_set read_fds, fd_set write_fds)
 
 void	read_event(t_client *client)
 {
+  if (!client)
+    return ;
   if (recv_packet(client) != 0)
     {
       delete_client(client);
@@ -34,6 +36,8 @@ void	read_event(t_client *client)
 
 void	write_event(t_client *client)
 {
+  if (!client)
+    return ;
   if (send_queued_packet(client) != 0)
     {
       delete_client(client);
