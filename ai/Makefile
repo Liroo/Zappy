@@ -1,9 +1,9 @@
 ##
 ## Makefile for  in /home/andre/reseau/Zappy/client
-## 
+##
 ## Made by andre
 ## Login   <andre@epitech.net>
-## 
+##
 ## Started on  Sat Jun 17 03:25:08 2017 andre
 ## Last update Sun Jun 25 21:21:32 2017 andre
 ##
@@ -20,7 +20,9 @@ SRC_GENDIR = src/
 OBJ_GENDIR = $(OBJ_DIR)src/
 
 SRC_GEN = main.cpp \
-	connection.cpp
+	ConnectClient.cpp \
+	Ai.cpp \
+	Inventory.cpp
 
 OBJ_GEN = $(addprefix $(OBJ_GENDIR), $(SRC_GEN:.cpp=.o))
 

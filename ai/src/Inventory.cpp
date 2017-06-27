@@ -10,6 +10,6 @@
 
 # include "Inventory.h"
 
-Inventory::Inventory() : linemate(0), deraumere(0), sibur(0), mendiane(0), phiras(0), int thystame(0) {}
+Inventory::Inventory() : linemate(0), deraumere(0), sibur(0), mendiane(0), phiras(0), thystame(0) {}
 
 Inventory::~Inventory() {}
