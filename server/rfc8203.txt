@@ -1,0 +1,156 @@
+Network Working Grou					            M. Pierre Monge
+                                     			Department of Zappy Project
+     		       					                  June 2017
+
+
+                             Zappy Spectator Protocol
+
+ Status of this memo:
+
+    This RFC specified the connection as a spectator to the Zappy server. This is
+    under edition of Pierre Monge and will be improved by Lucas Onillon and Zappy
+    group project team.
+
+ 1. INTRODUCTION
+
+    The spectator protocol for Zappy provide a way to connect as zappy server then
+    to know how to interpret info it send to the spectator. The spectator is used
+    basicly to interpret the actual infos of the server players, it can be
+    graphical or not.
+
+ 2. OVERVIEW
+
+   This is a connection based application on TCP. A server listens for TCP
+   connections on TCP port 1024 (decimal). Once a connection is established, the
+   server reads a line of data which specifies the connection of interest. As this
+   RFC specified the protocol of spectator only, we are not gonna explain the other
+   clients.
+   The server may then either shut the connection down or it may continue to
+   read/respond to multiple queries.
+
+ 3. CONNECTION REQUEST
+
+   Connection request is the first request to send to the server. Once the server
+   is up and the spectator want to connect to receive informations, the spectator
+   should send "spectator\n" to the socket of the server through TCP. If the server
+   respond well, it will ask you for a password. Spectator should be treated as non
+   exhausting that the password is also "spectator\n".
+
+ Note:
+
+   1) There is no commands handled by the server from the Spectator clients. This
+      is why there is not complicated password. Anyway, the spectator will know all
+      of the informations of the actual party. This is why we do not considere a
+      spectator as a client.
+
+ 4. RESPONSE FORMAT
+
+    The server will send to spectators simple text response of the form:
+
+    	<id> [<fd player> || <team name>] [<info>]
+
+    where:
+	- id is the actual id of such information, this could be a command id
+    executed by a client or just an information.
+    	- fd || team is the fd player's OR the team of such the team
+    concerned by the info.
+    	- info is extended infos of concerned id.
+
+ Note on response format:
+
+   1) The response format is padded of 511 char and os following by a "\n".
+      Which give a 512 char response size each time an info is given to the
+      spectator.
+
+ 5. RESPONSE IDS
+
+    01 - <x> <y>
+
+       Size of the board game.
+       This is send at connection.
+
+    02 - <team name> [<fd>...]
+
+       Description of a team and player fds in the team.
+       This is send at connetion and each time player join a team.
+
+    03 - <fd player> <x> <y> <direction> <inventory>
+
+       Inventory of such a player concerned by fd.
+       x and y is the actual position of player.
+       The direction of the player is set as 0, 1, 2 or 3. Where 0 is NORTH, 1 is
+       EST, 2 is SOUTH and 3 is WEST.
+       The inventory is formated as
+
+       [linemate <nb>, deraumere <nb>, sibur <nb>, mendiane <nb>, phiras <nb>,
+                    	       		       	     	  thystame <nb>, food <nb>]
+
+       This is end at connection.
+       This could be send each time a player eat.
+
+    04 - <x> <y> <inventory>
+
+       Inventory of such a tile. This is formated as player inventory.
+       This is send at connection.
+
+    05 - <fd player> <x> <y>
+
+       Forward command. Player move to x, y position.
+       This is send each time player forward.
+
+    06 - <fd player> <direction>
+
+       Right command. Player turn to direction side.
+       This is send each time player turn right.
+
+    07 - <fd player> <direction>
+
+       Left command. Player turn to direction side.
+       This is send each time player turn left.
+
+    08 - <fd player>
+
+       See command.
+       This is send each time player open his eyes...
+
+    09 - <fd player>
+
+       Inventory command.
+       This is send each time player look in his bag...
+
+    10 - <fd player> <text part>
+
+       Broadcast command. The text send as info is potentially padded that the
+       final message is 512 char.
+       This is send each time player broadcast a message.
+
+    11 - <fd player>
+
+       Eject command. Eject command should generate 03 responses of player concerned by	       eject that you can update player positions.
+       This is send each time player eject people.
+
+
+    12 - <fd player>
+
+       Dead notification.
+       This is send once the player is dead.
+
+    13 - <fd player> <object>
+
+       Take command. Object is the litteral string of the object taken.
+       This is send each time player take an object.
+
+    14 - <fd player> <object>
+
+       Set command. Object is the litteral string of the object set.
+       This is send each time player set an object on the ground.
+
+
+Author's Address
+
+       Pierre Monge
+       France
+       85 rue du Jardin Public, Bordeaux 33000
+
+       Phone: (33) 618-543548
+       EMail: pierre.monge@epitech.eu
