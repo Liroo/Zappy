@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 **
 ** Started on  Wed Jun 21 02:09:58 2017 guicha_t
-** Last update Mon Jun 26 00:02:03 2017 guicha_t
+** Last update Tue Jun 27 21:29:16 2017 guicha_t
 */
 
 #include <string.h>
@@ -31,15 +31,8 @@ void	extract(t_player *p, t_client *client, int offset)
     }
 }
 
-int	cmd_take(t_client *client, char *token)
+void	take_picking(char *rsc, t_client *client, t_player *p)
 {
-  char		*rsc;
-  char		*clean_token;
-  t_player	*p;
-
-  p = client->data;
-  clean_token = strepur(token);
-  rsc = parse_param(clean_token);
   if (strcasecmp(rsc, "linemate") == 0)
     extract(p, client, LINEMATE_OFFSET);
   else if (strcasecmp(rsc, "deraumere") == 0)
@@ -56,6 +49,18 @@ int	cmd_take(t_client *client, char *token)
     extract(p, client, FOOD_OFFSET);
   else
     queue_packet(client, SIMPLE_PACKET, RPL_KO);
+}
+
+int	cmd_take(t_client *client, char *token)
+{
+  char		*rsc;
+  char		*clean_token;
+  t_player	*p;
+
+  p = client->data;
+  clean_token = strepur(token);
+  rsc = parse_param(clean_token);
+  take_picking(rsc, client, p);
   free(clean_token);
   free(rsc);
   p->command_is_running = 1;
