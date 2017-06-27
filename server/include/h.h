@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Sun Jun 25 20:11:07 2017 Thomas
+** Last update Tue Jun 27 02:27:16 2017 Pierre Monge
 */
 
 #ifndef H_H
@@ -52,6 +52,12 @@ extern int	fd_select(struct timespec *duration);
 extern EVENT	get_event_flags(int fd, fd_set read_fds, fd_set write_fds);
 extern void	read_event(t_client *client);
 extern void	write_event(t_client *client);
+
+/*
+** Pipe
+*/
+extern int	broken_pipe_empty_event(t_client *client);
+extern void	broken_pipe(t_client *client);
 
 /*
 ** signal

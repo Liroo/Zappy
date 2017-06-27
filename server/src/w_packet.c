@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 15:17:59 2017 Pierre Monge
-** Last update Sun Jun 25 02:14:48 2017 Pierre Monge
+** Last update Tue Jun 27 01:46:03 2017 Pierre Monge
 */
 
 #include <stdarg.h>
@@ -44,7 +44,8 @@ void		queue_packet(t_client *client, char dead_packet,
       return ;
     }
   list_add_tail(&packet->list, &client->w_packet);
-  fd_set_select(client->net_info.fd, FD_SELECT_READ | FD_SELECT_WRITE, client);
+  fd_set_select(client->net_info.fd,
+		FD_SELECT_READ_P(client, FD_SELECT_WRITE), client);
 }
 
 void		queue_packet_va(t_client *client, char dead_packet,
@@ -68,7 +69,8 @@ void		queue_packet_va(t_client *client, char dead_packet,
       return ;
     }
   list_add_tail(&packet->list, &client->w_packet);
-  fd_set_select(client->net_info.fd, FD_SELECT_READ | FD_SELECT_WRITE, client);
+  fd_set_select(client->net_info.fd,
+		FD_SELECT_READ_P(client, FD_SELECT_WRITE), client);
 }
 
 int		send_single_packet(int fd, t_packet *packet)
@@ -111,7 +113,7 @@ int		send_queued_packet(t_client *client)
 
   if (list_empty(&client->w_packet))
     {
-      fd_set_select(client->net_info.fd, FD_SELECT_READ, client);
+      fd_set_select(client->net_info.fd, FD_SELECT_READ_P(client, 0), client);
       return (0);
     }
   packet = list_get_first(&client->w_packet);
@@ -128,7 +130,7 @@ int		send_queued_packet(t_client *client)
       packet = next;
     }
   if (list_empty(&client->w_packet))
-    fd_set_select(client->net_info.fd, FD_SELECT_READ, client);
+    fd_set_select(client->net_info.fd, FD_SELECT_READ_P(client, 0), client);
   return (0);
   // Function more than 26 lines
 }
