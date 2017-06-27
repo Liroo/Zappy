@@ -8,6 +8,11 @@ Installation de Irrlicht sous Ubuntu/Debian:
 -sudo apt-get install libxcursor-dev		    
 -sudo cp irrklang/libIrrKlang.so /user/bin/
 
+-----------------------------
+ Install Irrlicht on mac osX:
+
+- brew install irrlicht
+
 ______________________________________________________________
  Install de Irrlicht sous Opensuse (ou notre BLinux national):
 
