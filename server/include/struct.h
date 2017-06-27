@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 12:00:23 2017 Pierre Monge
-** Last update Sun Jun 25 01:22:39 2017 Pierre Monge
+** Last update Tue Jun 27 01:30:38 2017 Pierre Monge
 */
 
 #ifndef STRUCT_H
@@ -109,12 +109,18 @@ struct			s_client
   t_list_head		list;
 
   t_packet		r_packet;
+  char			r_pipe_broken;
   t_process_packet	process_r_packet;
   t_list_head		w_packet;
   t_net_info		net_info;
 
   void			*data;
 };
+
+# define FD_SELECT_READ_P(client, flag) \
+  flag ? \
+  (client->r_pipe_broken ? 0 : FD_SELECT_READ) | flag : \
+  (client->r_pipe_broken ? 0 : FD_SELECT_READ)
 
 struct		s_team
 {

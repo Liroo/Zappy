@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 **
 ** Started on  Thu Jun 15 22:22:38 2017 guicha_t
-** Last update Mon Jun 26 17:19:39 2017 Pierre Monge
+** Last update Tue Jun 27 02:28:30 2017 Pierre Monge
 */
 
 #include <sys/types.h>
@@ -57,6 +57,27 @@ static void	split_raw_packet(t_packet *s_packet, t_packet *packet)
     }
 }
 
+static int	recv_packet_failed(t_client *client, int recv_ret)
+{
+  if (recv_ret < 0)
+    return (perror("recv"), -1);
+  if (recv_ret == 0)
+    {
+      if (client->client_type == PLAYER &&
+	  ((t_player *)(client->data))->command_in_queue == 0
+	  && list_empty(&client->w_packet))
+	return (-1);
+      if (client->client_type == SPECTATOR)
+	return (-1);
+      if (client->client_type == ADMIN &&
+	  ((t_admin *)(client->data))->command_in_queue == 0
+	  && list_empty(&client->w_packet))
+	return (-1);
+      return (-2);
+    }
+  return (recv_ret);
+}
+
 int		recv_packet(t_client *client)
 {
   t_packet	s_packet;
@@ -65,11 +86,10 @@ int		recv_packet(t_client *client)
 
   packet = &client->r_packet;
   memset(&s_packet, 0, sizeof(t_packet));
-  if ((ret = recv(client->net_info.fd, &packet->block[packet->offset],
-			    PACKET_SIZE_DFL - packet->offset, 0)) < 0)
-    return (perror("recv"), -1);
-  if (ret == 0 && list_empty(&client->w_packet))
-    return (1);
+  ret = recv(client->net_info.fd, &packet->block[packet->offset],
+	     PACKET_SIZE_DFL - packet->offset, 0);
+  if ((ret = recv_packet_failed(client, ret)) < 0)
+    return (ret);
   packet->size += ret;
   while (s_packet.offset < packet->size)
     {

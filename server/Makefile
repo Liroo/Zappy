@@ -27,6 +27,7 @@ SRC_GEN = \
 	dispatch.c \
 	fdevent.c \
 	auth.c \
+	pipe.c \
 	\
 	list.c \
 	fdlist.c \
