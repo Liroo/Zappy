@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Mon Jun 19 22:15:36 2017 Pierre Monge
-** Last update Wed Jun 28 03:24:48 2017 Pierre Monge
+** Last update Wed Jun 28 18:17:07 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -81,6 +81,7 @@ static void	register_admin(t_packet packet, t_client *client)
 	  delete_client(client);
 	  return (void)zappy_exit();
 	}
+      memset(client->data, 0, sizeof(t_admin));
       PRINT_DEBUG("Client %d joining admin team\n", client->net_info.fd);
       client->auth_status = AUTH;
       client->client_type = ADMIN;

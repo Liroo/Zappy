@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 **
 ** Started on  Thu Jun 15 22:22:38 2017 guicha_t
-** Last update Wed Jun 28 04:39:57 2017 Pierre Monge
+** Last update Wed Jun 28 18:20:40 2017 Pierre Monge
 */
 
 #include <sys/types.h>
@@ -26,8 +26,8 @@
 
 static void	process_packet(t_packet packet, t_client *client)
 {
-  if (packet.block[packet.size] == '\r')
-    packet.block[packet.size] = 0;
+  if (packet.block[packet.size - 1] == '\r')
+    packet.block[packet.size - 1] = 0;
   if (client->process_r_packet)
     client->process_r_packet(packet, client);
 }

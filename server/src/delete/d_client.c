@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sun Jun 25 00:09:45 2017 Pierre Monge
-** Last update Wed Jun 28 04:42:37 2017 Pierre Monge
+** Last update Wed Jun 28 18:17:44 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -34,6 +34,7 @@ static void	delete_admin(t_admin *admin)
   i = 0;
   while (admin->command_queue[i].command && (i < COMMAND_QUEUE_SIZE))
     free(admin->command_queue[i++].command);
+  free(admin);
 }
 
 static void	delete_registered_client(t_client *client)
