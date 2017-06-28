@@ -7,12 +7,13 @@ public:
   ~Inventory();
 
 private:
-  int linemate;
-  int deraumere;
-  int sibur;
-  int mendiane;
-  int phiras;
-  int thystame;
+  int _food;
+  int _linemate;
+  int _deraumere;
+  int _sibur;
+  int _mendiane;
+  int _phiras;
+  int _thystame;
 
 public:
   const int &getLinemate() const;
@@ -27,6 +28,8 @@ public:
   void setPhiras(const int &);
   const int &getThystame() const;
   void setThystame(const int &);
+  const int &getFood() const;
+  void setFood(const int &);
 };
 
 #endif
