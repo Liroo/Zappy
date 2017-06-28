@@ -1,15 +1,28 @@
 //
 // core.cpp for core in /home/lucas/rendu/reseau_psu/Zappy/client/zappy_client
-// 
+//
 // Made by Lucas
 // Login   <lucas.onillon@epitech.eu>
-// 
+//
 // Started on  Sun Jun 25 22:01:46 2017 Lucas
-// Last update Mon Jun 26 14:38:55 2017 Lucas
+// Last update Wed Jun 28 01:57:08 2017 Thomas
 //
 
 #include "zappy.hpp"
 #include "core.hpp"
+
+int	Core::initConnectClient(int port, std::string host)
+{
+  coClient = new ConnectClient(port, host);
+  if (coClient->myConnect() == GUI_ERR)
+    return (GUI_ERR);
+  while (1)
+    {
+      if (coClient->my_select() == GUI_ERR)
+	return (GUI_ERR);
+    }
+  return (GUI_OK);
+}
 
 int    Core::initSplashScreen()
 {

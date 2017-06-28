@@ -5,7 +5,7 @@
 ## Login   <lucas.onillon@epitech.eu>
 ## 
 ## Started on  Sun Jun 25 22:50:07 2017 Lucas
-## Last update Mon Jun 26 14:20:37 2017 Lucas
+## Last update Wed Jun 28 01:35:41 2017 Thomas
 ##
 
 TARGET	 = zappy_client
@@ -15,12 +15,13 @@ CC	 = g++
 SRC	 = main.cpp					\
 	   core.cpp					\
 	   LTexture.cpp					\
-	   splashScreen.cpp
+	   splashScreen.cpp				\
+	   connectClient.cpp
 
 CPPFLAGS = -Iinclude -std=c++11 -Ilib_irrlicht -I/usr/X11R6/include -Iirrklang
 CXXFLAGS = -W -Wall -std=c++11 -ansi -Iinclude -Wno-unused-parameter -pedantic
 LDFLAGS	 = -lIrrlicht -lpthread -std=c++11
-LDFLAGS += -lIrrKlang
+LDFLAGS += -IrrKlang
 
 SRCDIR   = src
 OBJDIR   = obj
