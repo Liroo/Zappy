@@ -1,16 +1,17 @@
 //
 // core.hpp for core in /home/lucas/rendu/reseau_psu/Zappy/client/zappy_client
-// 
+//
 // Made by Lucas
 // Login   <lucas.onillon@epitech.eu>
-// 
+//
 // Started on  Sat Jun 25 22:00:09 2017 Lucas
-// Last update Tue Jun 27 01:26:49 2017 Lucas
+// Last update Wed Jun 28 01:33:30 2017 Thomas
 //
 
 #ifndef CORE_HPP_
 # define CORE_HPP_
 
+# include "connectClient.hpp"
 # include "zappy.hpp"
 # include "splashScreen.hpp"
 
@@ -21,6 +22,7 @@ public:
   ~Core();
   int				initSplashScreen();
   int				initDevice();
+  int				initConnectClient(int port, std::string host);
 
   irr::video::IVideoDriver*	getDriver() const;
   irr::scene::ISceneManager*    getSceneManager() const;
@@ -38,6 +40,7 @@ private:
   bool				inLobby;
   bool				inPlay;
   Ss				*ss;
+  ConnectClient			*coClient;
 };
 
 #endif /* CORE_HPP_ */
