@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Mon Jun 19 22:15:36 2017 Pierre Monge
-** Last update Sun Jun 25 23:17:28 2017 Pierre Monge
+** Last update Wed Jun 28 03:24:48 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -39,15 +39,15 @@ static t_player	*make_player(t_team *team)
 static void	register_client_in_team(t_client *client,
 					t_team *team)
 {
-  if (!(client->data = make_player(team)))
-    {
-      delete_client(client);
-      return (void)zappy_exit();;
-    }
   if (team->empty_slot <= 0)
     {
       queue_packet(client, SIMPLE_PACKET, RPL_KO);
       return ;
+    }
+  if (!(client->data = make_player(team)))
+    {
+      delete_client(client);
+      return (void)zappy_exit();;
     }
   PRINT_DEBUG("Client %d added to the team %s\n", client->net_info.fd,
 	      team->name);

@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 **
 ** Started on  Thu Jun 15 22:22:38 2017 guicha_t
-** Last update Tue Jun 27 02:28:30 2017 Pierre Monge
+** Last update Wed Jun 28 04:39:57 2017 Pierre Monge
 */
 
 #include <sys/types.h>
@@ -16,6 +16,7 @@
 #include <stdlib.h>
 
 #include "h.h"
+#include "debug.h"
 #include "fdlist.h"
 #include "event.h"
 #include "struct.h"
@@ -44,17 +45,21 @@ static void	split_raw_packet(t_packet *s_packet, t_packet *packet)
   s_packet->block = packet->block + s_packet->offset;
   if (next_token)
     {
-      s_packet->size = next_token - &packet->block[s_packet->offset] - 1;
+      s_packet->size = next_token - &packet->block[s_packet->offset];
       s_packet->offset = next_token - packet->block + 1;
       *next_token = 0;
     }
   if (!next_token)
     {
-      packet->offset = &packet->block[packet->size]
+      packet->offset = packet->size = &packet->block[packet->size]
 	- &packet->block[s_packet->offset];
       memmove(packet->block, s_packet->block, s_packet->size);
       s_packet->offset = -1;
     }
+  if (packet->offset >= PACKET_SIZE_DFL)
+    packet->offset = 0;
+  if (packet->size >= PACKET_SIZE_DFL)
+    packet->size = 0;
 }
 
 static int	recv_packet_failed(t_client *client, int recv_ret)
@@ -63,6 +68,8 @@ static int	recv_packet_failed(t_client *client, int recv_ret)
     return (perror("recv"), -1);
   if (recv_ret == 0)
     {
+      if (!client->data)
+	return (-1);
       if (client->client_type == PLAYER &&
 	  ((t_player *)(client->data))->command_in_queue == 0
 	  && list_empty(&client->w_packet))
@@ -82,15 +89,14 @@ int		recv_packet(t_client *client)
 {
   t_packet	s_packet;
   t_packet	*packet;
-  int		ret;
 
   packet = &client->r_packet;
   memset(&s_packet, 0, sizeof(t_packet));
-  ret = recv(client->net_info.fd, &packet->block[packet->offset],
+  s_packet.size = recv(client->net_info.fd, &packet->block[packet->offset],
 	     PACKET_SIZE_DFL - packet->offset, 0);
-  if ((ret = recv_packet_failed(client, ret)) < 0)
-    return (ret);
-  packet->size += ret;
+  if ((s_packet.size = recv_packet_failed(client, s_packet.size)) < 0)
+    return (s_packet.size);
+  packet->size += s_packet.size;
   while (s_packet.offset < packet->size)
     {
       split_raw_packet(&s_packet, packet);

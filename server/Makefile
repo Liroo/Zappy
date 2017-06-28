@@ -77,7 +77,7 @@ OBJ_GEN = $(addprefix $(OBJ_GENDIR), $(SRC_GEN:.c=.o))
 
 INCDIRS := -I./include
 
-CC = gcc -g
+CC = gcc
 
 FLAGS = -W -Werror -Wextra -Wall
 FLAGS += -D_GNU_SOURCE
@@ -99,7 +99,7 @@ intro:
 	@$(PRINTF) "$(YELLOW_R) ---- SERVER ---- $(CLEAR)\n"
 # debug: FLAGS += -DDEBUG -g
 debug: fclean
-	@make --no-print-directory $(NAME_BIN) DEBUG='-DDEBUG=1 -g'
+	@make --no-print-directory $(NAME_BIN) DEBUG='-DDEBUG=1 -g3'
 
 $(OBJ_GENDIR)%.o: $(SRC_GENDIR)%.c
 	@mkdir -p $(dir $@)
