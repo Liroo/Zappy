@@ -49,7 +49,9 @@ int	ConnectClient::servtoclient(int fd)
       std::cout << "Error message reception" << std::endl;
       return (1);
     }
-  printf("%s", repserv); // Pour debug, a enlever sinon
+  std::string response(repserv);
+  ai.aiBrain(response);
+  //printf("%s", repserv); // Pour debug, a enlever sinon
   return (0);
 }
 
@@ -90,10 +92,10 @@ int	ConnectClient::my_loop(fd_set fd_read, struct timeval tv, int fd)
       	FD_SET(fd, &fd_read);
       FD_SET(0, &fd_read);
       if (select(fd + 1, &fd_read, NULL, NULL, &tv) < 0)
-	{
-	  std::cout << "Select error" << std::endl;
-	  return (1);
-	}
+      	{
+      	  std::cout << "Select error" << std::endl;
+      	  return (1);
+      	}
       else if (fd != 0 && FD_ISSET(fd, &fd_read))
       	{
 	  if ((rd = servtoclient(fd)) != 0)

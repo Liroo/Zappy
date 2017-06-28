@@ -42,6 +42,7 @@ private:
   int _life;
   std::pair<Ai::ActionType, std::string>  _action;
   Ai::Direction _dir;
+  std::string _response;
 
 public:
   const int &getLevel() const;
@@ -54,6 +55,8 @@ public:
   void setLife(const int &);
   const std::pair<Ai::ActionType, std::string> &getAction() const;
   void setAction(const std::pair<Ai::ActionType, std::string> &);
+  const std::string &getResponse() const;
+  void setResponse(const std::string &);
 
   void forward();
   void right();
@@ -66,6 +69,8 @@ public:
   void take(std::string const &);
   void set(std::string const &);
   void incantation();
+
+  int aiBrain(std::string const &);
 };
 
 #endif

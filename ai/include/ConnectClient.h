@@ -3,6 +3,7 @@
 
 # include <sys/types.h>
 # include <unistd.h>
+# include "Ai.h"
 
 class ConnectClient {
 public:
@@ -13,6 +14,7 @@ private:
   int	port;
   char	*name;
   char	*machine;
+  Ai  ai;
 
 private:
   int	check_param(int, char**);

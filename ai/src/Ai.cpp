@@ -54,6 +54,14 @@ void Ai::setAction(const std::pair<Ai::ActionType, std::string> &var) {
   _action = var;
 }
 
+const std::string &Ai::getResponse() const {
+  return _response;
+}
+
+void Ai::setResponse(const std::string &var) {
+  _response = var;
+}
+
 void Ai::forward() {
   std::cout << "forward" << std::endl;
   _life--;
@@ -107,4 +115,10 @@ void Ai::set(std::string const &var) {
 void Ai::incantation() {
   std::cout << "incantation" << std::endl;
   _life--;
+}
+
+int Ai::aiBrain(std::string const &response) {
+  _response = response;
+  std::cout << getResponse();
+  return (0);
 }
