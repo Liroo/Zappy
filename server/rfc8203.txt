@@ -74,7 +74,7 @@ Network Working Grou					            M. Pierre Monge
        Description of a team and player fds in the team.
        This is send at connetion and each time player join a team.
 
-    03 - <fd player> <x> <y> <direction> <inventory>
+    03 - <fd player> <x> <y> <direction> <elevation> <inventory>
 
        Inventory of such a player concerned by fd.
        x and y is the actual position of player.
