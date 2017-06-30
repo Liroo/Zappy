@@ -72,6 +72,8 @@ public:
 
   int aiBrain(std::string const &);
   void fillBag();
+  bool  checkHook(const std::string &);
+  bool checkDebHook(const std::string &);
 };
 
 #endif
