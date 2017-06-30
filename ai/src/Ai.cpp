@@ -15,7 +15,16 @@
 # include <string.h>
 # include "Ai.h"
 
-Ai::Ai() : _level(1), _life(1260), _action({Ai::ActionType::UNKNOWN, ""}), _dir(Ai::Direction::UNKNOWN), test(0) {}
+Ai::Ai() : _level(1), _life(1260), _action({Ai::ActionType::UNKNOWN, ""}), _dir(Ai::Direction::UNKNOWN), test(0)
+{
+  _TabAdd["food"] = &Inventory::addFood;
+  _TabAdd["linemate"] = &Inventory::addLinemate;
+  _TabAdd["deraumere"] = &Inventory::addDeraumere;
+  _TabAdd["sibur"] = &Inventory::addSibur;
+  _TabAdd["mendiane"] = &Inventory::addMendiane;
+  _TabAdd["phiras"] = &Inventory::addPhiras;
+  _TabAdd["thystame"] = &Inventory::addThystame;
+}
 
 Ai::~Ai() {}
 
@@ -184,6 +193,48 @@ void Ai::fillBag() {
   _bag.setMendiane(inv[4].second);
   _bag.setPhiras(inv[5].second);
   _bag.setThystame(inv[6].second);
+  _response = "";
+}
+
+void Ai::ReplaceStringInPlace(std::string& subject, const std::string& search,
+                          const std::string& replace) {
+    size_t pos = 0;
+    while ((pos = subject.find(search, pos)) != std::string::npos) {
+         subject.replace(pos, search.length(), replace);
+         pos += replace.length();
+    }
+}
+
+void Ai::fillView() {
+  std::string comma = ",";
+  std::string space = " ";
+  std::string case_string;
+  std::string word_string;
+  size_t case_pos = 0;
+  size_t word_pos = 0;
+
+  _response.erase(0, 1);
+  _response.erase(_response.size() - 1, _response.size());
+  _response.push_back(',');
+  ReplaceStringInPlace(_response, ", ", ",");
+  ReplaceStringInPlace(_response, ",", " ,");
+  while ((case_pos = _response.find(comma)) != std::string::npos)
+    {
+      Inventory fill;
+      case_string = _response.substr(0, case_pos);
+      while ((word_pos = case_string.find(space)) != std::string::npos) {
+        word_string = case_string.substr(0, word_pos);
+        std::map<std::string, method_pointer>::iterator it;
+        it = _TabAdd.find(word_string);
+        if (it != _TabAdd.end())
+          {
+            (fill.*(*it).second)();
+          }
+        case_string.erase(0, word_pos + 1);
+      }
+      _viewMaterial.push_back(fill);
+      _response.erase(0, case_pos + 1);
+    }
   _response = "";
 }
 
