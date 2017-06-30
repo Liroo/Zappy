@@ -9,9 +9,13 @@
 //
 
 # include <sstream>
+# include <stdio.h>
+# include <sys/types.h>
+# include <sys/socket.h>
+# include <string.h>
 # include "Ai.h"
 
-Ai::Ai() : _level(1), _life(1260), _action({Ai::ActionType::UNKNOWN, ""}), _dir(Ai::Direction::UNKNOWN) {}
+Ai::Ai() : _level(1), _life(1260), _action({Ai::ActionType::UNKNOWN, ""}), _dir(Ai::Direction::UNKNOWN), test(0) {}
 
 Ai::~Ai() {}
 
@@ -47,6 +51,14 @@ void Ai::setLife(const int &var) {
   _life = var;
 }
 
+const int &Ai::getFd() const {
+  return _fd;
+}
+
+void Ai::setFd(const int &var) {
+  _fd = var;
+}
+
 const std::pair<Ai::ActionType, std::string> &Ai::getAction() const {
   return _action;
 }
@@ -64,57 +76,79 @@ void Ai::setResponse(const std::string &var) {
 }
 
 void Ai::forward() {
+  sendToServ("forward");
   std::cout << "forward" << std::endl;
+  _action.first = Ai::ActionType::FORWARD;
   _life--;
 }
 
 void Ai::right() {
+  sendToServ("right");
   std::cout << "right" << std::endl;
+  _action.first = Ai::ActionType::RIGHT;
   _life--;
 }
 
 void Ai::left() {
+  sendToServ("left");
   std::cout << "left" << std::endl;
+  _action.first = Ai::ActionType::LEFT;
   _life--;
 }
 
 void Ai::look() {
+  sendToServ("look");
   std::cout << "look" << std::endl;
+  _action.first = Ai::ActionType::LOOK;
   _life--;
 }
 
 void Ai::inventory() {
+  sendToServ("inventory");
   std::cout << "inventory" << std::endl;
+  _action.first = Ai::ActionType::INVENTORY;
   _life--;
 }
 
 void Ai::broadcast(std::string const &var) {
+  sendToServ("broadcast");
   std::cout << "broadcast" << var << std::endl;
+  _action.first = Ai::ActionType::BROADCAST;
   _life--;
 }
 
 void Ai::fork() {
+  sendToServ("fork");
   std::cout << "fork" << std::endl;
+  _action.first = Ai::ActionType::FORK;
   _life--;
 }
 
 void Ai::eject() {
+  sendToServ("eject");
   std::cout << "eject" << std::endl;
+  _action.first = Ai::ActionType::EJECT;
   _life--;
 }
 
 void Ai::take(std::string const &var) {
+  sendToServ("take");
   std::cout << "take" << var << std::endl;
+  _action.first = Ai::ActionType::TAKE;
   _life--;
 }
 
 void Ai::set(std::string const &var) {
+  sendToServ("set");
   std::cout << "set" << var << std::endl;
+  _action.first = Ai::ActionType::SET;
   _life--;
 }
 
 void Ai::incantation() {
+  sendToServ("incantation");
   std::cout << "incantation" << std::endl;
+  _action.first = Ai::ActionType::INCANTATION;
   _life--;
 }
 
@@ -161,6 +195,21 @@ bool  Ai::checkHook(const std::string &response) {
   return true;
 }
 
+int Ai::sendToServ(const std::string &varMessage)
+{
+  char  message[varMessage.length()];
+
+  std::cout << "test";
+  strcpy(message, const_cast<char*>(varMessage.c_str()));
+  sprintf(message, "%s\r\n", message);
+  if (send(_fd, message, strlen(message), 0) < 0) {
+    std::cout << "Message sending error" << std::endl;
+    return (1);
+  }
+  std::cout << "fintest";
+  return (0);
+}
+
 int   Ai::aiBrain(std::string const &response) {
   if ((_action.first == Ai::ActionType::INVENTORY || _action.first == Ai::ActionType::LOOK) && checkHook(response)) {
     _response = _response + response;
@@ -173,5 +222,12 @@ int   Ai::aiBrain(std::string const &response) {
   if (_action.first == Ai::ActionType::INVENTORY)
     fillBag();
   std::cout << getResponse();
+  if (test == 0)
+    sendToServ("toto");
+  else if (test == 1)
+    inventory();
+  else if (test == 2)
+    look();
+  test++;
   return (0);
 }
