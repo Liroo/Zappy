@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Wed Jun 21 04:30:29 2017 Pierre Monge
-** Last update Sun Jun 25 02:17:37 2017 Pierre Monge
+** Last update Fri Jun 30 23:29:46 2017 guicha_t
 */
 
 #include <time.h>
@@ -73,9 +73,14 @@ static void	process_admin(t_client *client)
    int		i;
    t_admin	*admin;
 
+   printf("ok process admin\n");
    admin = client->data;
+   printf("processexec: [%p]\n", (*admin->command_queue).exec);
    if ((*admin->command_queue).exec)
-     (*admin->command_queue).exec(client, (*admin->command_queue).command);
+     {
+       (*admin->command_queue).exec(client, (*admin->command_queue).command);
+       /* PRINT_DEBUG("exec: [%s]\n", (*admin->command_queue).command); */
+     }
    free((*admin->command_queue).command);
    (*admin->command_queue).command = NULL;
    i = 0;

@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Thu Jun 22 07:01:19 2017 guicha_t
-** Last update Mon Jun 26 00:13:29 2017 guicha_t
+** Last update Thu Jun 29 15:01:48 2017 guicha_t
 */
 
 #include <stdlib.h>
@@ -53,8 +53,14 @@ void	send_broadcast_message(t_client *c, char *msg, int dir)
   t_player	*p;
 
   p = c->data;
-  new_dir = convert_dir_about_dest(p->direction, dir);
-  queue_packet(c, SIMPLE_PACKET, "message %d, %s\n", new_dir, msg);
+  if (dir != 0)
+    new_dir = convert_dir_about_dest(p->direction, dir);
+  else
+    new_dir = 0;
+  if (msg != NULL)
+    queue_packet(c, SIMPLE_PACKET, "message %d, %s\n", new_dir, msg);
+  else
+    queue_packet(c, SIMPLE_PACKET, "message %d\n", new_dir, msg);
 }
 
 char	*get_only_message_from_token(char *token)
@@ -65,10 +71,13 @@ char	*get_only_message_from_token(char *token)
 
   it = 0;
   im = 0;
+  PRINT_DEBUG("[%s]\n", token);
   msg = malloc(sizeof(char) * strlen(token));
   memset(msg, '\0', strlen(token));
   while (token[it] != ' ' && token[it] != '\0')
     it++;
+  if (token[it] == '\0')
+    return (NULL);
   it++;
   while (token[it] != '\0')
     {
