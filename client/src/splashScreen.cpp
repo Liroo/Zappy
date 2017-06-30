@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 // 
 // Started on  Mon Jun 26 01:23:51 2017 Lucas
-// Last update Tue Jun 27 01:19:27 2017 Lucas
+// Last update Thu Jun 29 04:01:41 2017 Lucas
 //
 
 #include "splashScreen.hpp"
@@ -41,7 +41,6 @@ void    Ss::makeCamera(int type)
     }
 }
 
-
 void    Ss::makeSkybox()
 {
   driver->setTextureCreationFlag(irr::video::ETCF_CREATE_MIP_MAPS, false);
@@ -72,7 +71,6 @@ int		Ss::splashScreen()
   makeLogo();
   makeCamera(STATIC);
   makeSkybox();
-  zappyLogo = driver->getTexture(LOGO_PATH);
   start = std::chrono::system_clock::now();
   while (device->run())
     {

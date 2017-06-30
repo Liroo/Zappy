@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 // 
 // Started on  Mon Jun 26 00:55:18 2017 Lucas
-// Last update Tue Jun 27 01:22:18 2017 Lucas
+// Last update Fri Jun 30 00:23:38 2017 Lucas
 //
 
 #include "LTexture.hpp"
@@ -26,9 +26,27 @@ int	LTexture::setTexture(irr::scene::ISceneManager* smgr, irr::video::IVideoDriv
       || (SKYBOX_MOUNT_RIGHT = driver->getTexture("media/skybox/velcor_rt.tga")) == 0
       || (SKYBOX_MOUNT_FRONT = driver->getTexture("media/skybox/velcor_ft.tga")) == 0
       || (SKYBOX_MOUNT_BACK = driver->getTexture("media/skybox/velcor_bk.tga")) == 0
+      || (hostLogo = driver->getTexture("./media/img/host_layer.png")) == 0
+      || (portLogo = driver->getTexture("./media/img/port_layer.png")) == 0
+      || (connectLogo = driver->getTexture("./media/img/connect_layer.png")) == 0
       )
     return (GUI_ERR);
   return (GUI_OK);
+}
+
+irr::video::ITexture*       LTexture::getConnectL() const
+{
+  return (this->connectLogo);
+}
+
+irr::video::ITexture*       LTexture::getPortL() const
+{
+  return (this->portLogo);
+}
+
+irr::video::ITexture*       LTexture::getHostL() const
+{
+  return (this->hostLogo);
 }
 
 irr::video::ITexture*       LTexture::getLogo() const
