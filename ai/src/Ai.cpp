@@ -150,6 +150,7 @@ void Ai::fillBag() {
   _bag.setMendiane(inv[4].second);
   _bag.setPhiras(inv[5].second);
   _bag.setThystame(inv[6].second);
+  _response = "";
 }
 
 bool  Ai::checkHook(const std::string &response) {
@@ -160,20 +161,8 @@ bool  Ai::checkHook(const std::string &response) {
   return true;
 }
 
-bool  Ai::checkDebHook(const std::string &response) {
-  std::size_t found = response.find('[');
-
-  if (found != std::string::npos)
-    return false;
-  return true;
-}
-
-int Ai::aiBrain(std::string const &response) {
-  if ((_action.first == Ai::ActionType::INVENTORY || _action.first == Ai::ActionType::LOOK) && checkDebHook(response)) {
-    _response = response;
-    return (0);
-  }
-  else if ((_action.first == Ai::ActionType::INVENTORY || _action.first == Ai::ActionType::LOOK) && checkHook(response)) {
+int   Ai::aiBrain(std::string const &response) {
+  if ((_action.first == Ai::ActionType::INVENTORY || _action.first == Ai::ActionType::LOOK) && checkHook(response)) {
     _response = _response + response;
     return (0);
   }
