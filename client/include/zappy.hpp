@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Sun Jun 25 22:00:45 2017 Lucas
-// Last update Fri Jun 30 11:05:54 2017 Thomas
+// Last update Sat Jul  1 01:25:57 2017 Thomas
 //
 
 #ifndef ZAPPY_HPP_
@@ -18,6 +18,11 @@
 # define	GUI_ERR		(-1)
 # define	FPS		(10)
 # define	STATIC		(11)
+
+/*
+** Error macro definitions.
+*/
+# define        ENGINE_ERR      "Failed to initialize sound engine."
 
 /*
 ** Log font macro definitions.
@@ -46,6 +51,16 @@
 # include <sstream>
 
 /*
+** Structure type definitions.
+*/
+typedef struct                  s_sett
+{
+  bool                          on_off;
+  irrklang::ISoundEngine        *engine;
+  irrklang::ISound              *lobbySound;
+}				t_sett;
+
+/*
 ** Enum type definitions.
 */
 enum	Anim
@@ -59,7 +74,7 @@ enum	Anim
 enum    Win
   {
     LOBBY = 0,
-    PLAY = 1,
+    GUI = 1,
     SETTINGS = 2,
     CREDITS = 3,
     EOG = 4
@@ -68,11 +83,10 @@ typedef Win WinType;
 
 enum
   {
-    GUI_ID_SAVE_BUTTON = 101,
-    GUI_ID_DEFAULT_BUTTON,
+    GUI_ID_CONNECT_BUTTON = 101,
     GUI_ID_EXIT_BUTTON,
-    GUI_ID_EDIT_P1,
-    GUI_ID_EDIT_P2
+    GUI_ID_SETT_BUTTON,
+    GUI_ID_CREDITS_BUTTON
   };
 
 enum	Inv

@@ -1,25 +1,26 @@
 //
-// ConnectClient.cpp for  in /home/andre/reseau/Zappy/ai/src
-//
-// Made by andre
-// Login   <andre@epitech.net>
-//
-// Started on  Tue Jun 27 03:02:21 2017 andre
-// Last update Tue Jun 27 03:02:22 2017 andre
+// Connect.cpp for Project-Master in /home/guicha/tek2/Zappy/admin/src
+// 
+// Made by guicha_t
+// Login   <thomas.guichard@epitech.eu>
+// 
+// Started on  Fri Jun 30 19:47:54 2017 guicha_t
+// Last update Fri Jun 30 20:43:21 2017 guicha_t
 //
 
-# include <stdio.h>
-# include <sys/socket.h>
-# include <stdlib.h>
-# include <netinet/in.h>
-# include <arpa/inet.h>
-# include <string.h>
-# include <iostream>
-# include "ConnectClient.h"
+#include <stdio.h>
+#include <sys/socket.h>
+#include <stdlib.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <string.h>
+#include <iostream>
 
-int	ConnectClient::add_server_to_client()
+#include "Connect.h"
+
+int			Connect::add_server_to_client()
 {
-  int	fd;
+  int			fd;
   struct sockaddr_in	sin;
 
   if ((fd = socket(AF_INET, SOCK_STREAM, 0)) == -1)
@@ -39,7 +40,7 @@ int	ConnectClient::add_server_to_client()
   return (fd);
 }
 
-int	ConnectClient::servtoclient(int fd)
+int	Connect::servtoclient(int fd)
 {
   char	repserv[2000];
 
@@ -50,12 +51,12 @@ int	ConnectClient::servtoclient(int fd)
       return (1);
     }
   std::string response(repserv);
-  ai.aiBrain(response);
-  //printf("%s", repserv); // Pour debug, a enlever sinon
+  // ai.aiBrain(response);
+  printf("%s", repserv); // Pour debug
   return (0);
 }
 
-int	ConnectClient::clienttoserv(int fd)
+int	Connect::clienttoserv(int fd)
 {
   char	message[1000];
   char	final[1000];
@@ -81,7 +82,7 @@ int	ConnectClient::clienttoserv(int fd)
   return (0);
 }
 
-int	ConnectClient::my_loop(fd_set fd_read, struct timeval tv, int fd)
+int	Connect::my_loop(fd_set fd_read, struct timeval tv, int fd)
 {
   int	rd;
 
@@ -89,57 +90,57 @@ int	ConnectClient::my_loop(fd_set fd_read, struct timeval tv, int fd)
     {
       FD_ZERO(&fd_read);
       if (fd != 0)
-      	FD_SET(fd, &fd_read);
+	FD_SET(fd, &fd_read);
       FD_SET(0, &fd_read);
       if (select(fd + 1, &fd_read, NULL, NULL, &tv) < 0)
-      	{
-      	  std::cout << "Select error" << std::endl;
-      	  return (1);
-      	}
+	{
+	  std::cout << "Select error" << std::endl;
+	  return (1);
+	}
       else if (fd != 0 && FD_ISSET(fd, &fd_read))
-      	{
+	{
 	  if ((rd = servtoclient(fd)) != 0)
 	    return (rd);
-      	}
+	}
       else if (FD_ISSET(0, &fd_read))
-      	{
+	{
 	  if (clienttoserv(fd) == 1)
 	    return (1);
-      	}
+	}
     }
   return (0);
 }
 
-void	ConnectClient::usagedisp()
+void    Connect::usagedisp()
 {
-  std::cout << "USAGE: ./zappy_client -p port -n name -h machine" << std::endl <<
-    "\tport\tis the port number" << std::endl << "\tname\tis the name of the team" <<
-    std::endl << "\tmachine\tis the name of the machine; localhost by default"
+  std::cout << "USAGE: ./zappy_client -p port -h machine"
+	    << std::endl
+	    << "\tport\tis the port number"
+	    << std::endl
+	    << "\tmachine\tis the name of the machine; localhost by default"
 	    << std::endl;
 }
 
-int	ConnectClient::check_param(int ac, char **av)
+
+int		Connect::check_param(int ac, char **av)
 {
-  if ((ac != 5 && ac != 7) || strcmp(av[1], "-p") != 0
-      || strcmp(av[3], "-n") != 0)
+  if ((ac != 5 && ac != 7) || strcmp(av[1], "-p") != 0)
     return (usagedisp(), 1);
   if (ac == 7)
     if (strcmp(av[5], "-h") != 0)
       return(usagedisp(), 1);
   port = atoi(av[2]);
-  if ((name = (char*)malloc(strlen(av[4]))) == NULL)
-    return (1);
-  strcpy(name, av[4]);
   if ((machine = (char*)malloc(10 + strlen(av[6]))) == NULL)
     return (1);
-  if (ac == 5)
+  if (ac == 3)
     strcpy(machine, "127.0.0.1");
   else
-    strcpy(machine, av[6]);
+    strcpy(machine, av[4]);
   return (0);
 }
 
-int			ConnectClient::myConnect(int ac, char **av)
+
+int			Connect::myConnect(int ac, char **av)
 {
   fd_set		fd_read;
   struct timeval	tv;
@@ -149,15 +150,15 @@ int			ConnectClient::myConnect(int ac, char **av)
     return (0);
   if ((fd = add_server_to_client()) == 1)
     return (1);
-  ai.setFd(fd);
   tv.tv_sec = 1;
   tv.tv_usec = 0;
   if (my_loop(fd_read, tv, fd) == 1)
     return (1);
+  free(machine);
   close(fd);
   return (0);
 }
 
-ConnectClient::ConnectClient() {}
+Connect::Connect() {}
 
-ConnectClient::~ConnectClient() {}
+Connect::~Connect() {}
