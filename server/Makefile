@@ -68,8 +68,24 @@ SRC_GEN = \
 	command/algorithme_vector.c \
 	command/config_algorithme.c \
 	command/get_max_value.c \
-	command/command_eject.c
-
+	command/command_eject.c \
+	\
+	rfc/rfc.c \
+	rfc/r_auth.c \
+	rfc/r_01.c \
+	rfc/r_02.c \
+	rfc/r_03.c \
+	rfc/r_04.c \
+	rfc/r_05.c \
+	rfc/r_06.c \
+	rfc/r_07.c \
+	rfc/r_08.c \
+	rfc/r_09.c \
+	rfc/r_10.c \
+	rfc/r_11.c \
+	rfc/r_12.c \
+	rfc/r_13.c \
+	rfc/r_14.c
 
 OBJ_GEN = $(addprefix $(OBJ_GENDIR), $(SRC_GEN:.c=.o))
 

@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 22:17:36 2017 Pierre Monge
-** Last update Sat Jun 24 03:16:03 2017 Pierre Monge
+** Last update Fri Jun 30 19:23:57 2017 Pierre Monge
 */
 
 #ifndef PACKET_H
@@ -15,8 +15,8 @@
 
 # define PACKET_SIZE_DFL 4096
 
-# define SIMPLE_PACKET 0
-# define DEAD_PACKET 1
+# define SIMPLE_PACKET 0x0
+# define DEAD_PACKET 0x1
 
 # include <sys/socket.h>
 # ifndef MSG_NOSIGNAL
@@ -29,7 +29,7 @@ typedef struct	s_packet
   int		offset;
   int		size;
 
-  char		dead_packet;
+  char		type;
 
   t_list_head	list;
 }		t_packet;

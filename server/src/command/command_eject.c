@@ -5,60 +5,47 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Fri Jun 23 01:28:13 2017 Thomas
-** Last update Mon Jun 26 00:33:39 2017 Thomas
+** Last update Fri Jun 30 23:22:13 2017 Thomas
 */
 
 #include "struct.h"
 #include "h.h"
 
-static void	eject_horizontal(t_client *client)
+static void	send_eject(t_client *client, t_player *target_p, t_player *p)
 {
-  t_player      *target_p;
-
-  target_p = client->data;
-  if (target_p->direction == 1)
-    {
-      if (target_p->pos_x + 1 <= (int)game.map_size_x)
-	target_p->pos_x++;
-      else
-	target_p->pos_x = 0;
-      queue_packet(client, SIMPLE_PACKET, "eject: 3\n");
-    }
-  else if (target_p->direction == 3)
-    {
-      if (target_p->pos_x - 1 >= 0)
-	target_p->pos_x--;
-      else
-	target_p->pos_x = game.map_size_x;
-      queue_packet(client, SIMPLE_PACKET, "eject: 1\n");
-    }
+  if (target_p->direction == p->direction)
+    queue_packet(client, SIMPLE_PACKET, "eject: 5\n");
+  else if ((p->direction + 1 == target_p->direction)
+	   || (p->direction == 3 && target_p->direction == 0))
+    queue_packet(client, SIMPLE_PACKET, "eject: 7\n");
+  else if ((p->direction - 1 == target_p->direction)
+	   || (p->direction == 0 && target_p->direction == 3))
+    queue_packet(client, SIMPLE_PACKET, "eject: 3\n");
   else
-    queue_packet(client, SIMPLE_PACKET, RPL_KO);
+    queue_packet(client, SIMPLE_PACKET, "eject: 1\n");
 }
 
-static void	eject_player(t_client *client)
+static void	eject_player(t_client *client, t_player *p)
 {
   t_player	*target_p;
+  int		x;
+  int		y;
 
+  x = 0;
+  y = 0;
   target_p = client->data;
-  if (target_p->direction == 0)
-    {
-      if (target_p->pos_y + 1 <= (int)game.map_size_y)
-	target_p->pos_y++;
-      else
-	target_p->pos_y = 0;
-      queue_packet(client, SIMPLE_PACKET, "eject: 2\n");
-    }
-  else if (target_p->direction == 2)
-    {
-      if (target_p->pos_y - 1 >= 0)
-	target_p->pos_y--;
-      else
-	target_p->pos_y = game.map_size_y;
-      queue_packet(client, SIMPLE_PACKET, "eject: 0\n");
-    }
-  else
-    eject_horizontal(client);
+  get_directional_position(p, &x, &y);
+  target_p->pos_x += x;
+  target_p->pos_y += y;
+  if (target_p->pos_x < 0)
+    target_p->pos_x = game.map_size_x;
+  else if (target_p->pos_x >= (int)game.map_size_x)
+    target_p->pos_x = 0;
+  if (target_p->pos_y < 0)
+    target_p->pos_y = game.map_size_y;
+  else if (target_p->pos_y >= (int)game.map_size_y)
+    target_p->pos_y = 0;
+  send_eject(client, target_p, p);
 }
 
 static void	find_player(t_player *p, t_team	*team)
@@ -75,7 +62,7 @@ static void	find_player(t_player *p, t_team	*team)
       tmp_p = list_entry(pos_p, t_client, list);
       in = tmp_p->data;
       if (in->pos_x != p->pos_x && in->pos_y != p->pos_y)
-	eject_player(tmp_p);
+	eject_player(tmp_p, p);
       pos_p = pos_p->next;
     }
 }

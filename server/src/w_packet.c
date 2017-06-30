@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 15:17:59 2017 Pierre Monge
-** Last update Tue Jun 27 01:46:03 2017 Pierre Monge
+** Last update Fri Jun 30 19:24:02 2017 Pierre Monge
 */
 
 #include <stdarg.h>
@@ -20,7 +20,7 @@
 #include "debug.h"
 #include "fdlist.h"
 
-void		queue_packet(t_client *client, char dead_packet,
+void		queue_packet(t_client *client, char type,
 			     char *format, ...)
 {
   va_list	va;
@@ -33,7 +33,7 @@ void		queue_packet(t_client *client, char dead_packet,
       return (void)zappy_exit();
     }
   memset(packet, 0, sizeof(t_packet));
-  packet->dead_packet = dead_packet;
+  packet->type = type;
   va_start(va, format);
   packet->size = vasprintf(&packet->block, format, va);
   va_end(va);
@@ -48,7 +48,7 @@ void		queue_packet(t_client *client, char dead_packet,
 		FD_SELECT_READ_P(client, FD_SELECT_WRITE), client);
 }
 
-void		queue_packet_va(t_client *client, char dead_packet,
+void		queue_packet_va(t_client *client, char type,
 				char *format, va_list va)
 {
   t_packet	*packet;
@@ -60,7 +60,7 @@ void		queue_packet_va(t_client *client, char dead_packet,
       return (void)zappy_exit();
     }
   memset(packet, 0, sizeof(t_packet));
-  packet->dead_packet = dead_packet;
+  packet->type = type;
   packet->size = vasprintf(&packet->block, format, va);
   if (packet->size == -1)
     {
@@ -92,7 +92,7 @@ int		send_single_packet(int fd, t_packet *packet)
       return (w_ret);
     }
   packet->offset = w_ret;
-  if (packet->dead_packet == DEAD_PACKET)
+  if (packet->type == DEAD_PACKET)
     return (-1);
   return (w_ret);
 }
