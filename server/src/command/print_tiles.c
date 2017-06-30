@@ -5,7 +5,7 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Thu Jun 22 05:27:01 2017 Thomas
-** Last update Mon Jun 26 02:26:58 2017 Thomas
+** Last update Fri Jun 30 23:19:58 2017 Thomas
 */
 
 #include <stdio.h>
@@ -54,7 +54,6 @@ void	print_tiles(t_client *client, int x, int y)
     y += game.map_size_y;
   else if (y >= (int)game.map_size_y)
     y -= game.map_size_y;
-  /* printf("nbP on x y: %d on %d %d\n", game.map[x][y].player, x, y); */
   while (i < (int)game.map[x][y].player)
     {
       if (i == 0 && x == p->pos_x && y == p->pos_y)
@@ -74,18 +73,14 @@ void	send_horizontal_look(t_client *client, int range,
 
   p = client->data;
   begin_y = range * begin_direction;
-  /* printf("H: %d\n", begin_direction); */
-  /* printf("BEGIN: %d & RANGE: %d\n", begin_y, range); */
   if (begin_direction < 0)
-    {
-      while (begin_y <= range)
-	{
-	  print_tiles(client, p->pos_x + dir_x, p->pos_y - begin_y);
-	  begin_y++;
-	  if (begin_y <= range || range == 0)
-	    queue_packet(client, SIMPLE_PACKET, ",");
-	}
-    }
+    while (begin_y <= range)
+      {
+	print_tiles(client, p->pos_x + dir_x, p->pos_y - begin_y);
+	begin_y++;
+	if (begin_y <= range || range == 0)
+	  queue_packet(client, SIMPLE_PACKET, ",");
+      }
   else if (begin_direction > 0)
     {
       range *= -1;
@@ -107,7 +102,6 @@ void	send_vertical_look(t_client *client, int range,
 
   p = client->data;
   begin_x = range * begin_direction;
-  /* printf("V: %d\n", begin_direction); */
   if (begin_direction < 0)
     while (begin_x <= range)
       {

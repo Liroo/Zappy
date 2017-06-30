@@ -8,6 +8,7 @@
 // Last update Tue Jun 27 03:02:16 2017 andre
 //
 
+# include <sstream>
 # include "Ai.h"
 
 Ai::Ai() : _level(1), _life(1260), _action({Ai::ActionType::UNKNOWN, ""}), _dir(Ai::Direction::UNKNOWN) {}
@@ -117,8 +118,60 @@ void Ai::incantation() {
   _life--;
 }
 
-int Ai::aiBrain(std::string const &response) {
-  _response = response;
+void Ai::fillBag() {
+  std::stringstream ss(_response);
+  std::vector<std::string> sepFirst;
+  std::string tmp;
+  std::vector<std::pair<std::string, int>> inv;
+  std::pair<std::string, int> temp;
+  std::vector<std::string>::const_iterator it;
+  int inc = 0;
+
+  while (ss >> tmp) {
+    for(unsigned int i=0; i< tmp.size(); ++i) {
+      if(tmp[i] == ',' || tmp[i] == '[' || tmp[i] == ']')
+        tmp.erase(i,1);
+      }
+    sepFirst.push_back(tmp);
+  }
+  for (it = sepFirst.begin();it!=sepFirst.end();it++){
+    if ((inc % 2) == 0)
+      temp.first = sepFirst[inc];
+    else {
+      temp.second = std::stoi(sepFirst[inc]);
+       inv.push_back(temp);
+    }
+    inc++;
+  }
+  _bag.setFood(inv[0].second);
+  _bag.setLinemate(inv[1].second);
+  _bag.setDeraumere(inv[2].second);
+  _bag.setSibur(inv[3].second);
+  _bag.setMendiane(inv[4].second);
+  _bag.setPhiras(inv[5].second);
+  _bag.setThystame(inv[6].second);
+  _response = "";
+}
+
+bool  Ai::checkHook(const std::string &response) {
+  std::size_t found = response.find(']');
+
+  if (found != std::string::npos)
+    return false;
+  return true;
+}
+
+int   Ai::aiBrain(std::string const &response) {
+  if ((_action.first == Ai::ActionType::INVENTORY || _action.first == Ai::ActionType::LOOK) && checkHook(response)) {
+    _response = _response + response;
+    return (0);
+  }
+  else if (_action.first == Ai::ActionType::INVENTORY || _action.first == Ai::ActionType::LOOK)
+    _response = _response + response;
+  else
+    _response = response;
+  if (_action.first == Ai::ActionType::INVENTORY)
+    fillBag();
   std::cout << getResponse();
   return (0);
 }

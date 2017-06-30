@@ -71,6 +71,8 @@ public:
   void incantation();
 
   int aiBrain(std::string const &);
+  void fillBag();
+  bool  checkHook(const std::string &);
 };
 
 #endif
