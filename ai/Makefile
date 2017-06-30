@@ -12,7 +12,7 @@ PROJECT = ai
 
 OBJ_DIR = obj/
 
-# General behavior of arcade
+# General behavior of ai
 
 NAME_BIN = zappy_ai
 
