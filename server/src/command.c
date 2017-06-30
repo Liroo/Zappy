@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sat Jun 17 04:55:41 2017 Pierre Monge
-** Last update Fri Jun 30 23:32:46 2017 guicha_t
+** Last update Sat Jul  1 00:28:57 2017 guicha_t
 */
 
 #include <stdlib.h>
@@ -35,12 +35,10 @@ static int		queue_command(t_packet packet,
 	{
 	  if (*command_in_queue >= COMMAND_QUEUE_SIZE)
 	    return (-1);
-	  printf("%d\n", *command_in_queue);
 	  new_command = &(command_queue[(*command_in_queue)]);
 	  if (!(new_command->command = strdup(packet.block)))
 	    return zappy_exit();
 	  new_command->exec = command_list[i].exec;
-	  printf("cmd.exec : [%p]\n", new_command->exec);
 	  (*command_in_queue)++;
 	  return (0);
 	}
@@ -76,7 +74,6 @@ void	queue_command_admin(t_packet packet, t_client *client)
   t_admin	*admin;
 
   admin = client->data;
-  PRINT_DEBUG("queue_command_admin : [%s]\n", packet.block);
   command_list = get_command_list_admin();
   if (queue_command(packet, (t_command_queue *)admin->command_queue,
 		    &admin->command_in_queue, command_list) == -1)
@@ -84,5 +81,4 @@ void	queue_command_admin(t_packet packet, t_client *client)
       queue_packet(client, SIMPLE_PACKET, RPL_KO);
       return ;
     }
-  printf("after add queue : [%p]\n", admin->command_queue[0].exec);
 }

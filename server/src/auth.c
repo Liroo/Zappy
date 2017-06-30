@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Mon Jun 19 22:15:36 2017 Pierre Monge
-** Last update Wed Jun 28 18:17:07 2017 Pierre Monge
+** Last update Sat Jul  1 00:29:25 2017 guicha_t
 */
 
 #include <stdlib.h>
@@ -15,6 +15,7 @@
 #include "debug.h"
 #include "packet.h"
 #include "struct.h"
+#include "rfc.h"
 #include "h.h"
 
 static t_player	*make_player(t_team *team)
@@ -112,6 +113,7 @@ static void	register_spectator(t_packet packet, t_client *client)
       list_add_tail(&client->list, &game.spectators);
       delete_chrono_client(client);
       queue_packet(client, SIMPLE_PACKET, RPL_OK);
+      rfc_auth(client);
     }
   else
     queue_packet(client, DEAD_PACKET, RPL_WRONG_PASSWD);

@@ -149,6 +149,7 @@ int			ConnectClient::myConnect(int ac, char **av)
     return (0);
   if ((fd = add_server_to_client()) == 1)
     return (1);
+  ai.setFd(fd);
   tv.tv_sec = 1;
   tv.tv_usec = 0;
   if (my_loop(fd_read, tv, fd) == 1)
