@@ -5,7 +5,7 @@
 ## Login   <lucas.onillon@epitech.eu>
 ## 
 ## Started on  Sun Jun 25 22:50:07 2017 Lucas
-## Last update Wed Jun 28 01:35:41 2017 Thomas
+## Last update Fri Jun 30 16:24:07 2017 Thomas
 ##
 
 TARGET	 = zappy_client
@@ -16,7 +16,10 @@ SRC	 = main.cpp					\
 	   core.cpp					\
 	   LTexture.cpp					\
 	   splashScreen.cpp				\
-	   connectClient.cpp
+	   connectClient.cpp				\
+	   game.cpp					\
+	   player.cpp					\
+	   team.cpp
 
 CPPFLAGS = -Iinclude -std=c++11 -Ilib_irrlicht -I/usr/X11R6/include -Iirrklang
 CXXFLAGS = -W -Wall -std=c++11 -ansi -Iinclude -Wno-unused-parameter -pedantic

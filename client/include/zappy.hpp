@@ -1,11 +1,11 @@
 //
 // zappy.hpp for zappy in /home/lucas/rendu/reseau_psu/Zappy/client/zappy_client
-// 
+//
 // Made by Lucas
 // Login   <lucas.onillon@epitech.eu>
-// 
+//
 // Started on  Sun Jun 25 22:00:45 2017 Lucas
-// Last update Mon Jun 26 00:42:11 2017 Lucas
+// Last update Fri Jun 30 11:05:54 2017 Thomas
 //
 
 #ifndef ZAPPY_HPP_
@@ -74,5 +74,17 @@ enum
     GUI_ID_EDIT_P1,
     GUI_ID_EDIT_P2
   };
+
+enum	Inv
+  {
+    LINEMATE = 0,
+    DERAUMERE,
+    SIBUR,
+    MENDIANE,
+    PHIRAS,
+    THYSTAME,
+    FOOD
+  };
+typedef Inv InvType;
 
 #endif /* !ZAPPY_HPP_ */
