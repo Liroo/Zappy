@@ -76,6 +76,7 @@ SRC_GEN = \
 	command/config_algorithme.c \
 	command/get_max_value.c \
 	command/command_eject.c \
+	command/command_fork.c \
 	\
 	rfc/rfc.c \
 	rfc/r_auth.c \

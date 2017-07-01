@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 05:20:34 2017 Pierre Monge
-** Last update Sat Jul  1 02:46:01 2017 Pierre Monge
+** Last update Sat Jul  1 05:08:24 2017 Pierre Monge
 */
 
 #include <time.h>
@@ -35,13 +35,13 @@ static void		loop_game_server()
   next_chrono = NULL;
   while (!game.sig_handled)
     {
+      process_command();
       process_chrono_event();
       next_chrono = NULL;
       if (game.chrono_queue.next != &game.chrono_queue)
 	next_chrono = (struct timespec *)
 	  (&((t_chrono_queue *)list_entry(game.chrono_queue.next,
 					  t_chrono_queue, list))->duration);
-      process_command();
       if (fd_select(next_chrono) == -1)
 	break;
     }

@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Mon Jun 19 22:15:36 2017 Pierre Monge
-** Last update Sat Jul  1 02:32:57 2017 guicha_t
+** Last update Sat Jul  1 05:18:38 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -13,6 +13,7 @@
 #include <string.h>
 
 #include "debug.h"
+#include "log.h"
 #include "packet.h"
 #include "struct.h"
 #include "rfc.h"
@@ -31,8 +32,11 @@ static t_player	*make_player(t_team *team)
   player->direction = rand() % 4;
   INSERT_OBJECT(&(game.map[player->pos_x][player->pos_y]), PLAYER_OFFSET);
   player->team = team;
-  player->inventory.food = 10;
-  team->empty_slot -= 1;
+  player->inventory.food = DFL_FOOD_START;
+  if (team->empty_slot > 0)
+    team->empty_slot -= 1;
+  else
+    team->egg_slot -= 1;
   return (player);
 
 }
@@ -40,15 +44,12 @@ static t_player	*make_player(t_team *team)
 static void	register_client_in_team(t_client *client,
 					t_team *team)
 {
-  if (team->empty_slot <= 0)
-    {
-      queue_packet(client, SIMPLE_PACKET, RPL_KO);
-      return ;
-    }
+  if (team->empty_slot + team->egg_slot <= 0)
+    return ((void)queue_packet(client, SIMPLE_PACKET, RPL_KO));
   if (!(client->data = make_player(team)))
     {
       delete_client(client);
-      return (void)zappy_exit();;
+      return ((void)zappy_exit());
     }
   PRINT_DEBUG("Client %d added to the team %s\n", client->net_info.fd,
 	      team->name);
@@ -58,12 +59,14 @@ static void	register_client_in_team(t_client *client,
   client->auth_status = AUTH;
   client->client_type = PLAYER;
   client->process_r_packet = queue_command_player;
-  queue_packet(client, SIMPLE_PACKET, "%d\n", team->empty_slot);
+  queue_packet(client, SIMPLE_PACKET, "%d\n",
+	       team->empty_slot + team->egg_slot);
   queue_packet(client, SIMPLE_PACKET, "%d %d\n",
 	       ((t_player *)client->data)->pos_x,
 	       ((t_player *)client->data)->pos_y);
   delete_chrono_client(client);
   queue_chrono(LIFETIME_WITHOUT_FOOD, client, C_EVENT_LIFETIME);
+  rfc_auth_list_client(NULL, ((t_player *)client->data)->team);
 }
 
 static void	register_admin(t_packet packet, t_client *client)
@@ -83,6 +86,7 @@ static void	register_admin(t_packet packet, t_client *client)
 	  return (void)zappy_exit();
 	}
       memset(client->data, 0, sizeof(t_admin));
+      print_log("Client %d has joined as admin\n", client->net_info.fd);
       PRINT_DEBUG("Client %d joining admin team\n", client->net_info.fd);
       client->auth_status = AUTH;
       client->client_type = ADMIN;
@@ -107,6 +111,7 @@ static void	register_spectator(t_packet packet, t_client *client)
     {
       client->process_r_packet = queue_command_spectator;
       PRINT_DEBUG("Client %d joining spectator team\n", client->net_info.fd);
+      print_log("Client %d has joined as spectator\n", client->net_info.fd);
       client->auth_status = AUTH;
       client->client_type = SPECTATOR;
       list_del(client->list.prev, client->list.next);
@@ -139,6 +144,8 @@ void		auth_client(t_packet packet, t_client *client)
       if (strcmp(packet.block, team->name) == 0)
 	{
 	  register_client_in_team(client, team);
+	  print_log("Player %d has joined %s\n", client->net_info.fd,
+		    ((t_player *)client->data)->team->name);
 	  return ;
 	}
       pos = pos->next;

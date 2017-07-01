@@ -5,13 +5,13 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Fri Jun 30 22:28:39 2017 Pierre Monge
-** Last update Fri Jun 30 23:13:40 2017 Pierre Monge
+** Last update Sat Jul  1 05:14:55 2017 Pierre Monge
 */
 
 #include "struct.h"
 #include "rfc.h"
 
-static void	rfc_auth_list_client(t_client *spectator, t_team *team)
+void	rfc_auth_list_client(t_client *spectator, t_team *team)
 {
   t_list_head	*pos;
 

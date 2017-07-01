@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 12:00:23 2017 Pierre Monge
-** Last update Tue Jun 27 01:30:38 2017 Pierre Monge
+** Last update Sat Jul  1 04:06:23 2017 Pierre Monge
 */
 
 #ifndef STRUCT_H
@@ -129,6 +129,7 @@ struct		s_team
   char		*name;
   int		size;
   int		empty_slot;
+  int		egg_slot;
   t_list_head	list;
 };
 

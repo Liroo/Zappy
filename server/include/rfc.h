@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Fri Jun 30 19:39:29 2017 Pierre Monge
-** Last update Fri Jun 30 23:17:55 2017 Pierre Monge
+** Last update Sat Jul  1 05:17:14 2017 Pierre Monge
 */
 
 #ifndef RFC_H
@@ -34,10 +34,21 @@
 
 extern void	rfc(t_client *spectator, const char * restrict format, ...);
 extern void	rfc_auth(t_client *spectator);
+extern void	rfc_auth_list_client(t_client *spectator, t_team *team);
 
 extern void	rfc_01(t_client *spectator);
 extern void	rfc_02(t_client *spectator, t_team *team);
 extern void	rfc_03(t_client *spectator, t_client *client);
 extern void	rfc_04(t_client *spectator, int x, int y);
+extern void	rfc_05(t_client *spectator, t_client *client);
+extern void	rfc_06(t_client *spectator, t_client *client);
+extern void	rfc_07(t_client *spectator, t_client *client);
+extern void	rfc_08(t_client *spectator, t_client *client);
+extern void	rfc_09(t_client *spectator, t_client *client);
+extern void	rfc_10(t_client *spectator, t_client *client, char *text);
+extern void	rfc_11(t_client *spectator, t_client *client);
+extern void	rfc_12(t_client *spectator, t_client *client);
+extern void	rfc_13(t_client *spectator, t_client *client, char *object);
+extern void	rfc_14(t_client *spectator, t_client *client, char *object);
 
 #endif /* !RFC_H */

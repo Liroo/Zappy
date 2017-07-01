@@ -5,12 +5,13 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Fri Jun 16 20:34:58 2017 Pierre Monge
-** Last update Tue Jun 27 02:17:17 2017 Pierre Monge
+** Last update Sat Jul  1 03:52:51 2017 Pierre Monge
 */
 
 #include "h.h"
 #include "event.h"
 #include "debug.h"
+#include "log.h"
 
 EVENT	get_event_flags(int fd, fd_set read_fds, fd_set write_fds)
 {
@@ -34,7 +35,11 @@ void	read_event(t_client *client)
   if ((ret = recv_packet(client)) != 0)
     {
       if (ret == -1)
-	delete_client(client);
+	{
+	  print_log("Client %d has quit\n",
+		    client->net_info.fd);
+	  delete_client(client);
+	}
       else if (ret == -2)
 	broken_pipe(client);
       return ;
@@ -48,6 +53,8 @@ void	write_event(t_client *client)
   if (send_queued_packet(client) != 0 ||
       broken_pipe_empty_event(client))
     {
+      print_log("Client %d has quit\n",
+		client->net_info.fd);
       delete_client(client);
       return ;
     }

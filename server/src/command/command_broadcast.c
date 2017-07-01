@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Thu Jun 22 07:01:19 2017 guicha_t
-** Last update Sat Jul  1 02:28:51 2017 guicha_t
+** Last update Sat Jul  1 05:04:56 2017 guicha_t
 */
 
 #include <stdlib.h>
@@ -139,7 +139,5 @@ int	cmd_broadcast(t_client *client, char *token)
       pos = pos->next;
     }
   queue_packet(client, SIMPLE_PACKET, RPL_OK);
-  psend->command_is_running = 1;
-  queue_chrono(CHRONO_BROADCAST, client, C_EVENT_COMMAND);
   return (0);
 }

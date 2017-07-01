@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Wed Jun 21 04:15:36 2017 Pierre Monge
-** Last update Fri Jun 23 23:48:20 2017 Pierre Monge
+** Last update Sat Jul  1 03:47:10 2017 Pierre Monge
 */
 
 #ifndef GAME_H
@@ -36,6 +36,7 @@
 # define AUTH_TIMEOUT(f) 10 * f
 
 # define LIFETIME_WITHOUT_FOOD 126
+# define DFL_FOOD_START 9
 
 # define CHRONO_FORWARD	7
 # define CHRONO_RIGHT 7
