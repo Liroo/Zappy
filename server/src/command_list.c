@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sun Jun 25 00:41:14 2017 Pierre Monge
-** Last update Sat Jul  1 16:02:33 2017 Pierre Monge
+** Last update Sat Jul  1 17:23:16 2017 Pierre Monge
 */
 
 #include "debug.h"
@@ -18,7 +18,7 @@ t_command	*get_command_list_player()
   static t_command	command_list[MAX_COMMAND_SIZE_PLAYER + 1] =
     {
       { "Forward", 7, 7, cmd_forward, 0 },
-      { "Right", 5, 7, cmd_right, 0},
+      { "Right", 5, 7, cmd_right, 0 },
       { "Left", 4, 7, cmd_left, 0 },
       { "Look", 4, 7, cmd_look, 0 },
       { "Inventory", 9, 1, cmd_inventory, 0 },

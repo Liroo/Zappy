@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 12:00:23 2017 Pierre Monge
-** Last update Sat Jul  1 06:56:27 2017 Pierre Monge
+** Last update Sat Jul  1 20:17:55 2017 Pierre Monge
 */
 
 #ifndef STRUCT_H
@@ -79,12 +79,17 @@ typedef enum	e_client_type
     ADMIN
   }		t_client_type;
 
+# define INCANTATION_NONE 0x0
+# define INCANTATION_PROCESSING 0x1
+# define INCANTATION_FAILED 0x2
+
 struct			s_player
 {
   int			pos_x;
   int			pos_y;
   int			direction;
   unsigned char		elevation;
+  char			incantation_status;
   t_inventory		inventory;
 
   t_team		*team;
