@@ -4,6 +4,7 @@
 # include <iostream>
 # include <vector>
 # include <map>
+# include <functional>
 # include "Inventory.h"
 # include "ConnectClient.h"
 
@@ -38,10 +39,12 @@ public:
 
 private:
   // perso
-  typedef  void(Inventory::*method_pointer)();
-  std::map<std::string, method_pointer> _TabAdd;
-  typedef  const int &(Inventory::*pointer)() const;
-  std::map<std::string, pointer> _TabMaterial;
+  typedef  void(Inventory::*add_pointer)();
+  std::map<std::string, add_pointer> _TabAdd;
+  typedef  const int &(Inventory::*material_pointer)() const;
+  std::map<std::string, material_pointer> _TabMaterial;
+  typedef  void (Ai::*action_pointer)(const std::string &);
+  std::map<ActionType, action_pointer> _TabAction;
   int _level;
   Inventory _bag;
   std::vector<Inventory> _viewMaterial;
@@ -74,17 +77,17 @@ public:
   const int &getFd() const;
   void setFd(const int &);
 
-  void forward();
-  void right();
-  void left();
-  void look();
-  void inventory();
-  void broadcast(std::string const &);
-  void fork();
-  void eject();
-  void take(std::string const &);
-  void set(std::string const &);
-  void incantation();
+  void forward(const std::string &);
+  void right(const std::string &);
+  void left(const std::string &);
+  void look(const std::string &);
+  void inventory(const std::string &);
+  void broadcast(const std::string &);
+  void fork(const std::string &);
+  void eject(const std::string &);
+  void take(const std::string &);
+  void set(const std::string &);
+  void incantation(const std::string &);
 
   int aiBrain();
   void fillBag();

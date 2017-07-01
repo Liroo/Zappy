@@ -31,6 +31,11 @@ Ai::Ai() : _level(1), _life(1260), _action({Ai::ActionType::UNKNOWN, ""}), _dir(
   _TabMaterial["mendiane"] = &Inventory::getMendiane;
   _TabMaterial["phiras"] = &Inventory::getPhiras;
   _TabMaterial["thystame"] = &Inventory::getThystame;
+
+  _TabAction[ActionType::FORWARD] = &Ai::forward;
+  _TabAction[ActionType::RIGHT] = &Ai::right;
+  _TabAction[ActionType::LEFT] = &Ai::left;
+  _TabAction[ActionType::TAKE] = &Ai::take;
 }
 
 Ai::~Ai() {}
@@ -96,7 +101,8 @@ void Ai::setResponse(const std::string &var) {
   _response = var;
 }
 
-void Ai::forward() {
+void Ai::forward(const std::string &var) {
+  (void)var;
   connect.sendToServ(strdup("forward"));
   std::cout << "forward" << std::endl;
   _response = connect.getResponse();
@@ -105,7 +111,8 @@ void Ai::forward() {
   _life--;
 }
 
-void Ai::right() {
+void Ai::right(const std::string &var) {
+  (void)var;
   connect.sendToServ(strdup("right"));
   std::cout << "right" << std::endl;
   _response = connect.getResponse();
@@ -114,7 +121,8 @@ void Ai::right() {
   _life--;
 }
 
-void Ai::left() {
+void Ai::left(const std::string &var) {
+  (void)var;
   connect.sendToServ(strdup("left"));
   std::cout << "left" << std::endl;
   _response = connect.getResponse();
@@ -123,7 +131,8 @@ void Ai::left() {
   _life--;
 }
 
-void Ai::look() {
+void Ai::look(const std::string &var) {
+  (void)var;
   connect.sendToServ(strdup("look"));
   std::cout << "look" << std::endl;
   _response = connect.getResponse();
@@ -135,7 +144,8 @@ void Ai::look() {
   _life--;
 }
 
-void Ai::inventory() {
+void Ai::inventory(const std::string &var) {
+  (void)var;
   connect.sendToServ(strdup("inventory"));
   std::cout << "inventory" << std::endl;
   _response = connect.getResponse();
@@ -145,7 +155,7 @@ void Ai::inventory() {
   _life--;
 }
 
-void Ai::broadcast(std::string const &var) {
+void Ai::broadcast(const std::string &var) {
   connect.sendToServ(strdup("broadcast"));
   std::cout << "broadcast" << var << std::endl;
   _response = connect.getResponse();
@@ -154,7 +164,8 @@ void Ai::broadcast(std::string const &var) {
   _life--;
 }
 
-void Ai::fork() {
+void Ai::fork(const std::string &var) {
+  (void)var;
   connect.sendToServ(strdup("fork"));
   std::cout << "fork" << std::endl;
   _response = connect.getResponse();
@@ -163,7 +174,8 @@ void Ai::fork() {
   _life--;
 }
 
-void Ai::eject() {
+void Ai::eject(const std::string &var) {
+  (void)var;
   connect.sendToServ(strdup("eject"));
   std::cout << "eject" << std::endl;
   _response = connect.getResponse();
@@ -172,7 +184,7 @@ void Ai::eject() {
   _life--;
 }
 
-void Ai::take(std::string const &var) {
+void Ai::take(const std::string &var) {
   connect.sendToServ(strdup("take"));
   std::cout << "take " << var << std::endl;
   _response = connect.getResponse();
@@ -190,7 +202,8 @@ void Ai::set(std::string const &var) {
   _life--;
 }
 
-void Ai::incantation() {
+void Ai::incantation(std::string const &var) {
+  (void)var;
   connect.sendToServ(strdup("incantation"));
   std::cout << "incantation" << std::endl;
   _response = connect.getResponse();
@@ -262,7 +275,7 @@ void Ai::fillView() {
       case_string = _response.substr(0, case_pos);
       while ((word_pos = case_string.find(space)) != std::string::npos) {
         word_string = case_string.substr(0, word_pos);
-        std::map<std::string, method_pointer>::iterator it;
+        std::map<std::string, add_pointer>::iterator it;
         it = _TabAdd.find(word_string);
         if (it != _TabAdd.end())
           {
@@ -286,7 +299,7 @@ void Ai::fillPath(const std::string &material) {
   nb = -1;
   for (int i = 0; i < static_cast<int>(_viewMaterial.size()); i++)
     {
-      std::map<std::string, pointer>::iterator it;
+      std::map<std::string, material_pointer>::iterator it;
       it = _TabMaterial.find(material);
       if (it != _TabMaterial.end())
         {
@@ -357,8 +370,16 @@ int   Ai::aiBrain() {
 
   while (_isRunning) {
     if (_bag.getFood() < 10) {
-      look();
+      look("rida");
       fillPath("food");
+      for (int i = 0; i < static_cast<int>(_path.size()); i++)
+        {
+          std::map<Ai::ActionType, action_pointer>::iterator it;
+          it = _TabAction.find(_path[i]);
+          if (it != _TabAction.end())
+            ((*this).*(*it).second)("food");
+        }
+        _path.clear();
       // while (y a des trucs dans le vector, on les fait)
     }
     // else if (checkElevationPartenaire)
@@ -366,7 +387,7 @@ int   Ai::aiBrain() {
     // else if (checkElevation)
     //   elevation
     else
-      look(); // material
+      look("material"); // material
       // while (y a des trucs dans le vector, on les fait)
   }
   return (0);
