@@ -79,83 +79,110 @@ const std::string &Ai::getResponse() const {
   return _response;
 }
 
+void Ai::printResponse()
+{
+  std::cout << _response << '\n';;
+}
+
 void Ai::setResponse(const std::string &var) {
   _response = var;
 }
 
 void Ai::forward() {
-  sendToServ("forward");
+  connect.sendToServ(strdup("forward"));
   std::cout << "forward" << std::endl;
+  _response = connect.getResponse();
+  printResponse();
   _action.first = Ai::ActionType::FORWARD;
   _life--;
 }
 
 void Ai::right() {
-  sendToServ("right");
+  connect.sendToServ(strdup("right"));
   std::cout << "right" << std::endl;
+  _response = connect.getResponse();
+  printResponse();
   _action.first = Ai::ActionType::RIGHT;
   _life--;
 }
 
 void Ai::left() {
-  sendToServ("left");
+  connect.sendToServ(strdup("left"));
   std::cout << "left" << std::endl;
+  _response = connect.getResponse();
+  printResponse();
   _action.first = Ai::ActionType::LEFT;
   _life--;
 }
 
 void Ai::look() {
-  sendToServ("look");
+  connect.sendToServ(strdup("look"));
   std::cout << "look" << std::endl;
+  _response = connect.getResponse();
+  printResponse();
   _action.first = Ai::ActionType::LOOK;
   _life--;
 }
 
 void Ai::inventory() {
-  sendToServ("inventory");
+  connect.sendToServ(strdup("inventory"));
   std::cout << "inventory" << std::endl;
+  _response = connect.getResponse();
+  printResponse();
   _action.first = Ai::ActionType::INVENTORY;
   _life--;
 }
 
 void Ai::broadcast(std::string const &var) {
-  sendToServ("broadcast");
+  connect.sendToServ(strdup("broadcast"));
   std::cout << "broadcast" << var << std::endl;
+  _response = connect.getResponse();
+  printResponse();
   _action.first = Ai::ActionType::BROADCAST;
   _life--;
 }
 
 void Ai::fork() {
-  sendToServ("fork");
+  connect.sendToServ(strdup("fork"));
   std::cout << "fork" << std::endl;
+  _response = connect.getResponse();
+  printResponse();
   _action.first = Ai::ActionType::FORK;
   _life--;
 }
 
 void Ai::eject() {
-  sendToServ("eject");
+  connect.sendToServ(strdup("eject"));
   std::cout << "eject" << std::endl;
+  _response = connect.getResponse();
+  printResponse();
   _action.first = Ai::ActionType::EJECT;
   _life--;
 }
 
 void Ai::take(std::string const &var) {
-  sendToServ("take");
+  connect.sendToServ(strdup("take"));
   std::cout << "take" << var << std::endl;
+  _response = connect.getResponse();
+  printResponse();
   _action.first = Ai::ActionType::TAKE;
   _life--;
 }
 
 void Ai::set(std::string const &var) {
-  sendToServ("set");
+  connect.sendToServ(strdup("set"));
   std::cout << "set" << var << std::endl;
+  _response = connect.getResponse();
+  printResponse();
   _action.first = Ai::ActionType::SET;
   _life--;
 }
 
 void Ai::incantation() {
-  sendToServ("incantation");
+  connect.sendToServ(strdup("incantation"));
   std::cout << "incantation" << std::endl;
+  _response = connect.getResponse();
+  printResponse();
   _action.first = Ai::ActionType::INCANTATION;
   _life--;
 }
@@ -253,21 +280,15 @@ bool  Ai::checkDebHook(const std::string &response) {
   return false;
 }
 
-int Ai::sendToServ(const std::string &varMessage)
-{
-  char  message[varMessage.length()];
-
-  strcpy(message, const_cast<char*>(varMessage.c_str()));
-  sprintf(message, "%s\r\n", message);
-  if (send(_fd, message, strlen(message), 0) < 0) {
-    std::cout << "Message sending error" << std::endl;
-    return (1);
-  }
-  return (0);
-}
-
-int   Ai::aiBrain(std::string const &response) {
-  std::cout << response;
+int   Ai::aiBrain() {
+  std::cout << "aaaaaaa" << std::endl;
+  inventory();
+  forward();
+  right();
+  left();
+  fork();
+  eject();
+  /*std::cout << response;
   if ((_action.first == Ai::ActionType::LOOK) && checkDebHook(response)) {
     _response = response;
     return (0);
@@ -284,11 +305,11 @@ int   Ai::aiBrain(std::string const &response) {
   if (_action.first == Ai::ActionType::INVENTORY)
     fillBag();
   if (_nbResponse == 0)
-    sendToServ("toto");
+    connect.sendToServ(strdup("toto");
   else if (_nbResponse == 2)
     inventory();
   else if (_nbResponse >= 3)
     look();
-  _nbResponse++;
+  _nbResponse++;*/
   return (0);
 }

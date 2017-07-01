@@ -8,11 +8,12 @@
 // Last update Sun Jun 25 21:54:41 2017 andre
 //
 
-# include "ConnectClient.h"
+# include "Ai.h"
 
 int	main(int ac, char **av)
 {
-  ConnectClient	client;
+  Ai ai;
 
-  client.myConnect(ac, av);
+  ai.connect.myConnect(ac, av);
+  ai.aiBrain();
 }

@@ -39,7 +39,7 @@ int	ConnectClient::add_server_to_client()
   return (fd);
 }
 
-int	ConnectClient::servtoclient(int fd)
+char	*ConnectClient::servtoclient()
 {
   char	repserv[2000];
 
@@ -47,44 +47,13 @@ int	ConnectClient::servtoclient(int fd)
   if (recv(fd, repserv, 2000, 0) < 0)
     {
       std::cout << "Error message reception" << std::endl;
-      return (1);
+      return (NULL);
     }
-  std::string response(repserv);
-  ai.aiBrain(response);
-  //printf("%s", repserv); // Pour debug, a enlever sinon
-  return (0);
+  return (strdup(repserv));
 }
 
-int	ConnectClient::clienttoserv(int fd)
+char	*ConnectClient::getResponse()
 {
-  char	message[1000];
-  char	final[1000];
-  int	i;
-  int	y;
-
-  i = 0;
-  y = 0;
-  bzero(message, 1000);
-  if (read(0, (char *)message, 998) < 0)
-    return (1);
-  if (message[0] == '\n')
-    return (0);
-  message[strlen(message) - 1] = '\0';
-  sprintf(message, "%s\r\n", message);
-  if (message[0] == '/')
-    i++;
-  while (message[i] != '\0')
-    final[y++] = message[i++];
-  final[y] = message[i];
-  if (send(fd, final, strlen(final), 0) < 0)
-    return (std::cout << "Message sending error" << std::endl, 1);
-  return (0);
-}
-
-int	ConnectClient::my_loop(fd_set fd_read, struct timeval tv, int fd)
-{
-  int	rd;
-
   while (1)
     {
       FD_ZERO(&fd_read);
@@ -94,20 +63,12 @@ int	ConnectClient::my_loop(fd_set fd_read, struct timeval tv, int fd)
       if (select(fd + 1, &fd_read, NULL, NULL, &tv) < 0)
       	{
       	  std::cout << "Select error" << std::endl;
-      	  return (1);
+      	  return (NULL);
       	}
       else if (fd != 0 && FD_ISSET(fd, &fd_read))
-      	{
-	  if ((rd = servtoclient(fd)) != 0)
-	    return (rd);
-      	}
-      else if (FD_ISSET(0, &fd_read))
-      	{
-	  if (clienttoserv(fd) == 1)
-	    return (1);
-      	}
+        return(servtoclient());
     }
-  return (0);
+  return (NULL);
 }
 
 void	ConnectClient::usagedisp()
@@ -139,22 +100,28 @@ int	ConnectClient::check_param(int ac, char **av)
   return (0);
 }
 
+int     ConnectClient::sendToServ(char *message)
+{
+  sprintf(message, "%s\r\n", message);
+  if (send(fd, message, strlen(message), 0) < 0) {
+    std::cout << "Message sending error" << std::endl;
+    return (1);
+  }
+  return (0);
+}
+
 int			ConnectClient::myConnect(int ac, char **av)
 {
-  fd_set		fd_read;
-  struct timeval	tv;
-  int			fd;
-
   if (check_param(ac, av) == 1)
     return (0);
   if ((fd = add_server_to_client()) == 1)
     return (1);
-  ai.setFd(fd);
   tv.tv_sec = 1;
   tv.tv_usec = 0;
-  if (my_loop(fd_read, tv, fd) == 1)
-    return (1);
-  close(fd);
+  std::cout << "-----------" << getResponse() << '\n';
+  sendToServ(strdup("toto"));
+  std::cout << "-----------" << getResponse() << '\n';
+  std::cout << "-----------" << getResponse() << '\n';
   return (0);
 }
 

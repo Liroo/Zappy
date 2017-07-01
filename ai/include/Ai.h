@@ -5,6 +5,7 @@
 # include <vector>
 # include <map>
 # include "Inventory.h"
+# include "ConnectClient.h"
 
 class Ai {
 public:
@@ -50,6 +51,9 @@ private:
   int _nbResponse;
 
 public:
+  ConnectClient connect;
+
+public:
   const int &getLevel() const;
   void setLevel(const int &);
   const Inventory &getBag() const;
@@ -61,6 +65,7 @@ public:
   const std::pair<Ai::ActionType, std::string> &getAction() const;
   void setAction(const std::pair<Ai::ActionType, std::string> &);
   const std::string &getResponse() const;
+  void printResponse();
   void setResponse(const std::string &);
   const int &getFd() const;
   void setFd(const int &);
@@ -77,11 +82,10 @@ public:
   void set(std::string const &);
   void incantation();
 
-  int aiBrain(std::string const &);
+  int aiBrain();
   void fillBag();
   bool  checkHook(const std::string &);
   bool  checkDebHook(const std::string &);
-  int sendToServ(const std::string &);
   void fillView();
   void ReplaceStringInPlace(std::string& subject, const std::string& search, const std::string& replace);
 };

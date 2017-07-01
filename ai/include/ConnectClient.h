@@ -3,7 +3,6 @@
 
 # include <sys/types.h>
 # include <unistd.h>
-# include "Ai.h"
 
 class ConnectClient {
 public:
@@ -11,18 +10,22 @@ public:
   ~ConnectClient();
 
 private:
-  int	port;
-  char	*name;
-  char	*machine;
-  Ai  ai;
+  int						 port;
+  char					 *name;
+  char					 *machine;
+  fd_set				 fd_read;
+  int						 fd;
+  struct timeval tv;
 
 private:
-  int	check_param(int, char**);
+  int	  check_param(int, char**);
   void	usagedisp();
-  int	my_loop(fd_set, struct timeval, int);
-  int	clienttoserv(int);
-  int	servtoclient(int);
-  int	add_server_to_client();
+  char	*servtoclient();
+  int	  add_server_to_client();
+
+public:
+  char	*getResponse();
+  int		sendToServ(char *);
 
 
 public:
