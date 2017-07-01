@@ -23,6 +23,14 @@ Ai::Ai() : _level(1), _life(1260), _action({Ai::ActionType::UNKNOWN, ""}), _dir(
   _TabAdd["mendiane"] = &Inventory::addMendiane;
   _TabAdd["phiras"] = &Inventory::addPhiras;
   _TabAdd["thystame"] = &Inventory::addThystame;
+
+  _TabMaterial["food"] = &Inventory::getFood;
+  _TabMaterial["linemate"] = &Inventory::getLinemate;
+  _TabMaterial["deraumere"] = &Inventory::getDeraumere;
+  _TabMaterial["sibur"] = &Inventory::getSibur;
+  _TabMaterial["mendiane"] = &Inventory::getMendiane;
+  _TabMaterial["phiras"] = &Inventory::getPhiras;
+  _TabMaterial["thystame"] = &Inventory::getThystame;
 }
 
 Ai::~Ai() {}
@@ -119,7 +127,10 @@ void Ai::look() {
   connect.sendToServ(strdup("look"));
   std::cout << "look" << std::endl;
   _response = connect.getResponse();
+  while (checkHook(_response) == false)
+    _response += connect.getResponse();
   printResponse();
+  fillView();
   _action.first = Ai::ActionType::LOOK;
   _life--;
 }
@@ -265,6 +276,75 @@ void Ai::fillView() {
   _response = "";
 }
 
+void Ai::fillPath(const std::string &material) {
+  int nb;
+  int pos_y = 0;
+  int pos_x = 0;
+  int check = 0;
+  int save;
+
+  nb = -1;
+  for (int i = 0; i < static_cast<int>(_viewMaterial.size()); i++)
+    {
+      std::map<std::string, pointer>::iterator it;
+      it = _TabMaterial.find(material);
+      if (it != _TabMaterial.end())
+        {
+          if ((_viewMaterial[i].*(*it).second)() > 0)
+            {
+              nb = i;
+              i = static_cast<int>(_viewMaterial.size());
+            }
+        }
+    }
+  if (nb != -1)
+    {
+    for (int i = 1; i < static_cast<int>(_viewMaterial.size()); i = i + 2)
+      {
+        save = check;
+        check += i;
+        if (nb < check)
+          {
+            save += pos_y;
+            pos_x = nb - save;
+            i = static_cast<int>(_viewMaterial.size());
+          }
+        else
+          pos_y++;
+      }
+
+    while (pos_y > 0)
+      {
+        _path.push_back(ActionType::FORWARD);
+        pos_y--;
+      }
+    if (pos_x > 0)
+      _path.push_back(ActionType::RIGHT);
+    if (pos_x < 0)
+      {
+        _path.push_back(ActionType::LEFT);
+        pos_x *= -1;
+      }
+    while (pos_x > 0)
+      {
+        _path.push_back(ActionType::FORWARD);
+        pos_x--;
+      }
+    _path.push_back(ActionType::TAKE);
+    _path.push_back(ActionType::INVENTORY);
+    }
+  else
+    {
+      // random
+      _path.push_back(ActionType::FORWARD);
+    }
+  // print action
+  for (int i = 0; i < static_cast<int>(_path.size()); i++)
+    {
+      std::cout << static_cast<int>(_path[i]) << std::endl;
+    }
+}
+
 bool  Ai::checkHook(const std::string &response) {
   std::size_t found = response.find(']');
 
@@ -278,6 +358,7 @@ int   Ai::aiBrain() {
   while (_isRunning) {
     if (_bag.getFood() < 10) {
       look();
+      fillPath("food");
       // while (y a des trucs dans le vector, on les fait)
     }
     // else if (checkElevationPartenaire)

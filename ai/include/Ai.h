@@ -40,12 +40,15 @@ private:
   // perso
   typedef  void(Inventory::*method_pointer)();
   std::map<std::string, method_pointer> _TabAdd;
+  typedef  const int &(Inventory::*pointer)() const;
+  std::map<std::string, pointer> _TabMaterial;
   int _level;
   Inventory _bag;
   std::vector<Inventory> _viewMaterial;
   int _life;
   std::pair<Ai::ActionType, std::string>  _action;
   Ai::Direction _dir;
+  std::vector<ActionType> _path;
   std::string _response;
   int _fd;
   int _nbResponse;
@@ -87,6 +90,7 @@ public:
   void fillBag();
   bool  checkHook(const std::string &);
   void fillView();
+  void fillPath(const std::string &);
   void ReplaceStringInPlace(std::string& subject, const std::string& search, const std::string& replace);
 };
 
