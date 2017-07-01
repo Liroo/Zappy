@@ -10,12 +10,12 @@ public:
   ~ConnectClient();
 
 private:
-  int						 port;
-  char					 *name;
-  char					 *machine;
-  fd_set				 fd_read;
-  int						 fd;
-  struct timeval tv;
+  int						 _port;
+  char					 *_name;
+  char					 *_machine;
+  fd_set				 _fd_read;
+  int						 _fd;
+  struct timeval _tv;
 
 private:
   int	  check_param(int, char**);

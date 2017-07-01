@@ -49,6 +49,7 @@ private:
   std::string _response;
   int _fd;
   int _nbResponse;
+  bool  _isRunning;
 
 public:
   ConnectClient connect;

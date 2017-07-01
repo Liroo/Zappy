@@ -27,9 +27,9 @@ int	ConnectClient::add_server_to_client()
       std::cout << "Server connection error" << std::endl;
       return (1);
     }
-  sin.sin_addr.s_addr = inet_addr(machine);
+  sin.sin_addr.s_addr = inet_addr(_machine);
   sin.sin_family = AF_INET;
-  sin.sin_port = htons(port);
+  sin.sin_port = htons(_port);
   if (connect(fd, (struct sockaddr*)&sin, sizeof(sin)))
     {
       std::cout << "Server connection error" << std::endl;
@@ -44,7 +44,7 @@ char	*ConnectClient::servtoclient()
   char	repserv[2000];
 
   bzero(repserv, 2000);
-  if (recv(fd, repserv, 2000, 0) < 0)
+  if (recv(_fd, repserv, 2000, 0) < 0)
     {
       std::cout << "Error message reception" << std::endl;
       return (NULL);
@@ -56,16 +56,16 @@ char	*ConnectClient::getResponse()
 {
   while (1)
     {
-      FD_ZERO(&fd_read);
-      if (fd != 0)
-      	FD_SET(fd, &fd_read);
-      FD_SET(0, &fd_read);
-      if (select(fd + 1, &fd_read, NULL, NULL, &tv) < 0)
+      FD_ZERO(&_fd_read);
+      if (_fd != 0)
+      	FD_SET(_fd, &_fd_read);
+      FD_SET(0, &_fd_read);
+      if (select(_fd + 1, &_fd_read, NULL, NULL, &_tv) < 0)
       	{
       	  std::cout << "Select error" << std::endl;
       	  return (NULL);
       	}
-      else if (fd != 0 && FD_ISSET(fd, &fd_read))
+      else if (_fd != 0 && FD_ISSET(_fd, &_fd_read))
         return(servtoclient());
     }
   return (NULL);
@@ -87,23 +87,23 @@ int	ConnectClient::check_param(int ac, char **av)
   if (ac == 7)
     if (strcmp(av[5], "-h") != 0)
       return(usagedisp(), 1);
-  port = atoi(av[2]);
-  if ((name = (char*)malloc(strlen(av[4]))) == NULL)
+  _port = atoi(av[2]);
+  if ((_name = (char*)malloc(strlen(av[4]))) == NULL)
     return (1);
-  strcpy(name, av[4]);
-  if ((machine = (char*)malloc(10 + strlen(av[6]))) == NULL)
+  strcpy(_name, av[4]);
+  if ((_machine = (char*)malloc(10 + strlen(av[6]))) == NULL)
     return (1);
   if (ac == 5)
-    strcpy(machine, "127.0.0.1");
+    strcpy(_machine, "127.0.0.1");
   else
-    strcpy(machine, av[6]);
+    strcpy(_machine, av[6]);
   return (0);
 }
 
 int     ConnectClient::sendToServ(char *message)
 {
   sprintf(message, "%s\r\n", message);
-  if (send(fd, message, strlen(message), 0) < 0) {
+  if (send(_fd, message, strlen(message), 0) < 0) {
     std::cout << "Message sending error" << std::endl;
     return (1);
   }
@@ -114,12 +114,12 @@ int			ConnectClient::myConnect(int ac, char **av)
 {
   if (check_param(ac, av) == 1)
     return (0);
-  if ((fd = add_server_to_client()) == 1)
+  if ((_fd = add_server_to_client()) == 1)
     return (1);
-  tv.tv_sec = 1;
-  tv.tv_usec = 0;
+  _tv.tv_sec = 1;
+  _tv.tv_usec = 0;
   std::cout << getResponse();
-  sendToServ(name);
+  sendToServ(_name);
   std::cout << getResponse();
   std::cout << getResponse();
   return (0);

@@ -15,7 +15,7 @@
 # include <string.h>
 # include "Ai.h"
 
-Ai::Ai() : _level(1), _life(1260), _action({Ai::ActionType::UNKNOWN, ""}), _dir(Ai::Direction::UNKNOWN), _nbResponse(0) {
+Ai::Ai() : _level(1), _life(1260), _action({Ai::ActionType::UNKNOWN, ""}), _dir(Ai::Direction::UNKNOWN), _nbResponse(0), _isRunning(true) {
   _TabAdd["food"] = &Inventory::addFood;
   _TabAdd["linemate"] = &Inventory::addLinemate;
   _TabAdd["deraumere"] = &Inventory::addDeraumere;
@@ -274,34 +274,19 @@ bool  Ai::checkHook(const std::string &response) {
 }
 
 int   Ai::aiBrain() {
-  inventory();
-  forward();
-  right();
-  left();
-  fork();
-  eject();
-  /*std::cout << response;
-  if ((_action.first == Ai::ActionType::LOOK) && checkDebHook(response)) {
-    _response = response;
-    return (0);
+
+  while (_isRunning) {
+    if (_bag.getFood() < 10) {
+      look();
+      // while (y a des trucs dans le vector, on les fait)
+    }
+    // else if (checkElevationPartenaire)
+    //   golerejoindre
+    // else if (checkElevation)
+    //   elevation
+    else
+      look(); // material
+      // while (y a des trucs dans le vector, on les fait)
   }
-  else if ((_action.first == Ai::ActionType::LOOK) && checkHook(response)) {
-    _response = _response + response;
-    fillView();
-    return (0);
-  }
-  else if (_action.first == Ai::ActionType::LOOK)
-    _response = _response + response;
-  else
-    _response = response;
-  if (_action.first == Ai::ActionType::INVENTORY)
-    fillBag();
-  if (_nbResponse == 0)
-    connect.sendToServ(strdup("toto");
-  else if (_nbResponse == 2)
-    inventory();
-  else if (_nbResponse >= 3)
-    look();
-  _nbResponse++;*/
   return (0);
 }
