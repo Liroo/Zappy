@@ -5,11 +5,23 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Sun Jun 25 22:00:45 2017 Lucas
-// Last update Sat Jul  1 03:51:44 2017 Lucas
+// Last update Sun Jul  2 00:42:04 2017 Lucas
 //
 
 #ifndef ZAPPY_HPP_
 # define ZAPPY_HPP_
+
+/*
+** Standard header inclusions.
+*/
+# include <map>
+# include <vector>
+# include <string>
+
+/*
+** Personnal header inclusions.
+*/
+# include "player.hpp"
 
 /*
 ** Macro definitions.
@@ -51,7 +63,7 @@
 # include <sstream>
 
 /*
-** Structure type definitions.
+** Settings structure, contain mostly the sound system data.
 */
 typedef struct                  s_sett
 {
@@ -92,16 +104,18 @@ enum
     GUI_ID_MSG_BOX
   };
 
-enum	Inv
-  {
-    LINEMATE = 0,
-    DERAUMERE,
-    SIBUR,
-    MENDIANE,
-    PHIRAS,
-    THYSTAME,
-    FOOD
-  };
 typedef Inv InvType;
+
+/*
+** Map tile structure, describe one tile of the Map.
+*/
+typedef struct                          s_tiles
+{
+  int                                   x;
+  int                                   y;
+  std::map<InvType, int>                items;
+  bool                                  available;
+  std::vector<Player>                   players;
+}                                       t_tiles;
 
 #endif /* !ZAPPY_HPP_ */
