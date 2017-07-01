@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Sat Jun 25 22:00:09 2017 Lucas
-// Last update Fri Jun 30 23:32:50 2017 Lucas
+// Last update Sat Jul  1 04:59:55 2017 Lucas
 //
 
 #ifndef CORE_HPP_

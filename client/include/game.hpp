@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 01:23:13 2017 Thomas
-// Last update Sat Jul  1 04:10:06 2017 Thomas
+// Last update Sat Jul  1 04:30:03 2017 Lucas
 //
 
 #ifndef GAME_HPP
@@ -37,15 +37,17 @@ public:
 
 
 private:
+  int					_map_x;
+  int					_map_y;
   std::vector<Team>			_teams;
   std::map<std::string, pfunc>		_allResp;
   std::vector<std::vector<t_tiles>>	_map;
 
 private:
-  int	initMap(std::string &);
+  int	size(std::string &);
   int	teamsDetails(std::string &);
   int	playerDetails(std::string &);
-  int	tileInventory(std::string &);
+  int	initMap(std::string &);
   int	forward(std::string &);
   int	right(std::string &);
   int	left(std::string &);
@@ -56,6 +58,10 @@ private:
   int	dead(std::string &);
   int	takeObject(std::string &);
   int	setObject(std::string &);
+
+public:
+  int	getMapX() const;
+  int	getMapY() const;
 
 };
 
