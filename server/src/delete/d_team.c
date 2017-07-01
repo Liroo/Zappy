@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sun Jun 25 00:19:41 2017 Pierre Monge
-** Last update Sun Jun 25 00:26:27 2017 Pierre Monge
+** Last update Sat Jul  1 07:02:02 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -13,6 +13,12 @@
 #include "debug.h"
 #include "struct.h"
 #include "h.h"
+
+void	delete_egg(t_egg *egg)
+{
+  list_del(egg->list.prev, egg->list.next);
+  free(egg);
+}
 
 void		delete_team(t_team *team)
 {
@@ -27,6 +33,14 @@ void		delete_team(t_team *team)
     {
       next = pos->next;
       delete_client(list_entry(pos, t_client, list));
+      pos = next;
+    }
+  pos = list_get_first(&team->eggs);
+  while (pos != &team->eggs)
+    {
+      next = pos->next;
+      list_del(pos->prev, pos->next);
+      free(list_entry(pos, t_egg, list));
       pos = next;
     }
   free(team);

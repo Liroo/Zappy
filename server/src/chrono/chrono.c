@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Wed Jun 21 00:04:42 2017 Pierre Monge
-** Last update Sun Jun 25 02:18:17 2017 Pierre Monge
+** Last update Sat Jul  1 06:12:07 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -20,7 +20,7 @@
 t_chrono_event_func		*get_chrono_event_func_list()
 {
   static t_chrono_event_func	chrono_event_func_list[MAX_C_EVENT_SIZE] = {
-    event_timeout, event_lifetime, event_command
+    event_timeout, event_lifetime, event_command, event_fork
   };
 
   return (chrono_event_func_list);

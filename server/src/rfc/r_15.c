@@ -11,8 +11,10 @@
 #include "struct.h"
 #include "rfc.h"
 
-void		rfc_14(t_client *spectator, t_client *client,
-		       char *object)
+void		rfc_15(t_client *spectator, t_client *client)
 {
-  rfc(spectator, RPL_RFC_14, client->net_info.fd, object);
+  t_player	*player;
+
+  player = client->data;
+  rfc(spectator, RPL_RFC_15, client->net_info.fd, player->pos_x, player->pos_y);
 }

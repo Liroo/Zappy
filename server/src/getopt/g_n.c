@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sat Jul  1 02:26:10 2017 Pierre Monge
-** Last update Sat Jul  1 02:44:40 2017 Pierre Monge
+** Last update Sat Jul  1 06:07:26 2017 Pierre Monge
 */
 
 #include <string.h>
@@ -25,6 +25,7 @@ static void	make_team(char *name)
   if (!(team->name = strdup(name)))
     return (free(team), (void)zappy_exit());
   list_init(&team->players);
+  list_init(&team->eggs);
   list_add_tail(&team->list, &game.teams);
 }
 

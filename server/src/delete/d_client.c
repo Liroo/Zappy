@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sun Jun 25 00:09:45 2017 Pierre Monge
-** Last update Wed Jun 28 18:17:44 2017 Pierre Monge
+** Last update Sat Jul  1 06:57:19 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -21,7 +21,8 @@ static void	delete_player(t_player *player)
   int		i;
 
   i = 0;
-  player->team->empty_slot++;
+  if (!player->is_from_egg)
+    player->team->empty_slot++;
   while (player->command_queue[i].command && (i < COMMAND_QUEUE_SIZE))
     free(player->command_queue[i++].command);
   free(player);

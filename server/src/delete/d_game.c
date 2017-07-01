@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sun Jun 25 00:22:07 2017 Pierre Monge
-** Last update Sun Jun 25 00:26:46 2017 Pierre Monge
+** Last update Sat Jul  1 06:39:35 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -42,25 +42,35 @@ static void	delete_teams()
     }
 }
 
-void	delete_game()
+static void		delete_chronos()
 {
-  t_list_head	*pos;
-  t_list_head	*next;
-  int		i;
+  t_list_head		*pos;
+  t_list_head		*next;
+  t_chrono_queue	*chrono;
 
-  PRINT_DEBUG("Deleting game...\n");
-  delete_teams();
-  delete_client_list(&game.connection_queue);
-  delete_client_list(&game.admins);
-  delete_client_list(&game.spectators);
   pos = list_get_first(&game.chrono_queue);
   while (pos != &game.chrono_queue)
     {
       next = pos->next;
-      free(list_entry(pos, t_chrono_queue, list));
+      chrono = list_entry(pos, t_chrono_queue, list);
+      if (chrono->event_type == C_EVENT_FORK)
+	free(chrono->data);
+      free(chrono);
       pos = next;
     }
+}
+
+void	delete_game()
+{
+  int		i;
+
+  PRINT_DEBUG("Deleting game...\n");
   i = 0;
+  delete_teams();
+  delete_client_list(&game.connection_queue);
+  delete_client_list(&game.admins);
+  delete_client_list(&game.spectators);
+  delete_chronos();
   while (i < (int)game.map_size_y)
     free(game.map[i++]);
   free(game.map);

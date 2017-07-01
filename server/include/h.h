@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Sat Jul  1 04:34:20 2017 Pierre Monge
+** Last update Sat Jul  1 07:01:57 2017 Pierre Monge
 */
 
 #ifndef H_H
@@ -128,6 +128,7 @@ extern int	cmd_getplayer(t_client *client, char *token);
 ** Free class
 */
 extern void	delete_game();
+extern void	delete_egg(t_egg *egg);
 extern void	delete_team(t_team *team);
 extern void	delete_client(t_client *client);
 
@@ -189,6 +190,7 @@ extern void	process_command();
 extern void	event_command(void *data);
 extern void	event_lifetime(void *data);
 extern void	event_timeout(void *data);
+extern void	event_fork(void *data);
 
 /*
 ** Exit

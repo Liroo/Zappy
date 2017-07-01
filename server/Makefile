@@ -54,6 +54,7 @@ SRC_GEN = \
 	event/e_command.c \
 	event/e_lifetime.c \
 	event/e_timeout.c \
+	event/e_fork.c \
 	\
 	command.c \
 	command_list.c \
@@ -93,7 +94,9 @@ SRC_GEN = \
 	rfc/r_11.c \
 	rfc/r_12.c \
 	rfc/r_13.c \
-	rfc/r_14.c
+	rfc/r_14.c \
+	rfc/r_15.c \
+	rfc/r_16.c
 
 OBJ_GEN = $(addprefix $(OBJ_GENDIR), $(SRC_GEN:.c=.o))
 

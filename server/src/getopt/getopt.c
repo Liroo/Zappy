@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sat Jul  1 01:20:27 2017 Pierre Monge
-** Last update Sat Jul  1 03:13:26 2017 Pierre Monge
+** Last update Sat Jul  1 06:07:37 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -53,6 +53,7 @@ static void	teamopt()
       if (!(team->name = strdup(DFL_TEAM_NAME)))
 	return (free(team), (void)zappy_exit());
       list_init(&team->players);
+      list_init(&team->eggs);
       list_add_tail(&team->list, &game.teams);
     }
   pos = list_get_first(&game.teams);

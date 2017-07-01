@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 12:00:23 2017 Pierre Monge
-** Last update Sat Jul  1 04:06:23 2017 Pierre Monge
+** Last update Sat Jul  1 06:56:27 2017 Pierre Monge
 */
 
 #ifndef STRUCT_H
@@ -88,6 +88,7 @@ struct			s_player
   t_inventory		inventory;
 
   t_team		*team;
+  int			is_from_egg;
 
   int			command_in_queue;
   t_command_queue	command_queue[COMMAND_QUEUE_SIZE];
@@ -122,9 +123,24 @@ struct			s_client
   (client->r_pipe_broken ? 0 : FD_SELECT_READ) | flag : \
   (client->r_pipe_broken ? 0 : FD_SELECT_READ)
 
+typedef struct	s_egg
+{
+  int		pos_x;
+  int		pos_y;
+  t_list_head	list;
+}		t_egg;
+
+typedef struct	s_waiting_egg
+{
+  int		pos_x;
+  int		pos_y;
+  t_team	*team;
+}		t_waiting_egg;
+
 struct		s_team
 {
   t_list_head	players;
+  t_list_head	eggs;
 
   char		*name;
   int		size;

@@ -145,6 +145,11 @@ Network Working Grou					            M. Pierre Monge
        Set command. Object is the litteral string of the object set.
        This is send each time player set an object on the ground.
 
+    15 - <fd player> <x> <y>
+
+       Fork command. x and y is the position of the egg.
+       This is send each time player fork an egg that open a new connection.
+
 
 Author's Address
 

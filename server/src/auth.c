@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Mon Jun 19 22:15:36 2017 Pierre Monge
-** Last update Sat Jul  1 05:36:25 2017 Pierre Monge
+** Last update Sat Jul  1 07:01:09 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -22,9 +22,10 @@
 static t_player	*make_player(t_team *team)
 {
   t_player	*player;
+  t_egg		*egg;
 
   if (!(player = malloc(sizeof(t_player))))
-    return (zappy_exit(), NULL);
+    return (NULL);
   memset(player, 0, sizeof(t_player));
   player->elevation = 1;
   player->pos_x = rand() % game.map_size_x;
@@ -36,20 +37,26 @@ static t_player	*make_player(t_team *team)
   if (team->empty_slot > 0)
     team->empty_slot -= 1;
   else
-    team->egg_slot -= 1;
+    {
+      player->is_from_egg = 1;
+      egg = list_entry(list_get_first(&team->eggs), t_egg, list);
+      player->pos_x = egg->pos_x;
+      player->pos_y = egg->pos_y;
+      delete_egg(egg);
+      team->egg_slot -= 1;
+    }
   return (player);
-
 }
 
-static void	register_client_in_team(t_client *client,
+static int	register_client_in_team(t_client *client,
 					t_team *team)
 {
   if (team->empty_slot + team->egg_slot <= 0)
-    return ((void)queue_packet(client, SIMPLE_PACKET, RPL_KO));
+    return (queue_packet(client, SIMPLE_PACKET, RPL_KO), 1);
   if (!(client->data = make_player(team)))
     {
       delete_client(client);
-      return ((void)zappy_exit());
+      return (zappy_exit());
     }
   PRINT_DEBUG("Client %d added to the team %s\n", client->net_info.fd,
 	      team->name);
@@ -68,6 +75,7 @@ static void	register_client_in_team(t_client *client,
   queue_chrono(LIFETIME_WITHOUT_FOOD, client, C_EVENT_LIFETIME);
   rfc_02(NULL, ((t_player *)client->data)->team);
   rfc_auth_list_client(NULL, ((t_player *)client->data)->team);
+  return (0);
 }
 
 static void	register_admin(t_packet packet, t_client *client)
@@ -144,9 +152,9 @@ void		auth_client(t_packet packet, t_client *client)
       team = list_entry(pos, t_team, list);
       if (strcmp(packet.block, team->name) == 0)
 	{
-	  register_client_in_team(client, team);
-	  print_log("Player %d has joined %s\n", client->net_info.fd,
-		    ((t_player *)client->data)->team->name);
+	  if (register_client_in_team(client, team) == 0)
+	    print_log("Player %d has joined %s\n", client->net_info.fd,
+		      ((t_player *)client->data)->team->name);
 	  return ;
 	}
       pos = pos->next;

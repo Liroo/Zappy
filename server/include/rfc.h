@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Fri Jun 30 19:39:29 2017 Pierre Monge
-** Last update Sat Jul  1 05:17:14 2017 Pierre Monge
+** Last update Sat Jul  1 06:38:47 2017 Pierre Monge
 */
 
 #ifndef RFC_H
@@ -31,6 +31,8 @@
 # define RPL_RFC_12 "12 %d\n"
 # define RPL_RFC_13 "13 %d %s\n"
 # define RPL_RFC_14 "14 %d %s\n"
+# define RPL_RFC_15 "15 %d %d %d\n"
+# define RPL_RFC_16 "16 %s %d %d\n"
 
 extern void	rfc(t_client *spectator, const char * restrict format, ...);
 extern void	rfc_auth(t_client *spectator);
@@ -50,5 +52,7 @@ extern void	rfc_11(t_client *spectator, t_client *client);
 extern void	rfc_12(t_client *spectator, t_client *client);
 extern void	rfc_13(t_client *spectator, t_client *client, char *object);
 extern void	rfc_14(t_client *spectator, t_client *client, char *object);
+extern void	rfc_15(t_client *spectator, t_client *client);
+extern void	rfc_16(t_client *spectator, t_team *team, t_egg *egg);
 
 #endif /* !RFC_H */

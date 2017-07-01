@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Wed Jun 21 04:15:36 2017 Pierre Monge
-** Last update Sat Jul  1 03:47:10 2017 Pierre Monge
+** Last update Sat Jul  1 06:13:09 2017 Pierre Monge
 */
 
 #ifndef GAME_H
@@ -48,6 +48,7 @@
 # define CHRONO_EJECT 7
 # define CHRONO_TAKE 7
 # define CHRONO_SET 7
+# define CHRONO_EGG 600
 # define CHRONO_INCANTATION 300
 
 # define RPL_OK "ok\n"
