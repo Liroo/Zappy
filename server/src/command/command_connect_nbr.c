@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 **
 ** Started on  Wed Jun 21 02:31:05 2017 guicha_t
-** Last update Sat Jul  1 04:13:19 2017 Pierre Monge
+** Last update Sat Jul  1 05:16:57 2017 Pierre Monge
 */
 
 #include "debug.h"
@@ -25,6 +25,5 @@ int		cmd_connect_nbr(t_client *client, char *token)
 	    client->net_info.fd,
 	    player->team->name,
 	    player->team->empty_slot + player->team->egg_slot);
-  player->command_is_running = 1;
   return (0);
 }

@@ -5,7 +5,7 @@
 ## Login   <lucas.onillon@epitech.eu>
 ## 
 ## Started on  Sun Jun 25 22:50:07 2017 Lucas
-## Last update Fri Jun 30 17:35:17 2017 Lucas
+## Last update Sat Jul  1 01:25:41 2017 Thomas
 ##
 
 TARGET	 = zappy_client
@@ -17,6 +17,9 @@ SRC	 = main.cpp					\
 	   LTexture.cpp					\
 	   splashScreen.cpp				\
 	   connectClient.cpp				\
+	   game.cpp					\
+	   player.cpp					\
+	   team.cpp					\
 	   lobby.cpp					\
 	   event.cpp					\
 	   gui.cpp

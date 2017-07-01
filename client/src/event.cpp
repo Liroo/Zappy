@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 // 
 // Started on  Thu Jun 29 16:34:55 2017 Lucas
-// Last update Fri Jun 30 23:37:07 2017 Lucas
+// Last update Sat Jul  1 04:00:10 2017 Lucas
 //
 
 #include "eventGesture.hpp"
@@ -22,6 +22,9 @@ bool		Event::OnEvent(const irr::SEvent &event)
 	  std::cout << "EVENT ESCAPE" << std::endl;
 	  quit = true;
 	  break;
+	case (irr::KEY_KEY_7):
+	  std::cout << "CATCH" << std::endl;
+	  break;
 	default:
 	  break;
 	}
@@ -37,7 +40,7 @@ bool		Event::OnEvent(const irr::SEvent &event)
 	    {
 	    case GUI_ID_CONNECT_BUTTON:
 	      pressConnect = true;
-	      return (true);
+	      return (false);
 	    default:
 	      return (false);
 	    }
@@ -46,6 +49,11 @@ bool		Event::OnEvent(const irr::SEvent &event)
 	}
     }
   return (false);
+}
+
+void	Event::setPressConnect(bool update)
+{
+  this->pressConnect = update;
 }
 
 bool	Event::getPressConnect() const

@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 **
 ** Started on  Wed Jun 21 02:09:58 2017 guicha_t
-** Last update Sat Jul  1 01:27:56 2017 guicha_t
+** Last update Sat Jul  1 05:08:24 2017 guicha_t
 */
 
 #include <string.h>
@@ -68,7 +68,5 @@ int	cmd_take(t_client *client, char *token)
   take_picking(rsc, client, p);
   free(clean_token);
   free(rsc);
-  p->command_is_running = 1;
-  queue_chrono(CHRONO_TAKE, client, C_EVENT_COMMAND);
   return (0);
 }

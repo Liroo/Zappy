@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Mon Jun 19 22:15:36 2017 Pierre Monge
-** Last update Sat Jul  1 05:14:28 2017 Pierre Monge
+** Last update Sat Jul  1 05:18:38 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -66,7 +66,7 @@ static void	register_client_in_team(t_client *client,
 	       ((t_player *)client->data)->pos_y);
   delete_chrono_client(client);
   queue_chrono(LIFETIME_WITHOUT_FOOD, client, C_EVENT_LIFETIME);
-  rfc_auth_list_client(NULL, player->team);
+  rfc_auth_list_client(NULL, ((t_player *)client->data)->team);
 }
 
 static void	register_admin(t_packet packet, t_client *client)

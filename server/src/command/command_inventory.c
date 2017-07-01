@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Wed Jun 21 02:43:02 2017 guicha_t
-** Last update Sat Jul  1 01:32:32 2017 guicha_t
+** Last update Sat Jul  1 05:07:11 2017 guicha_t
 */
 
 #include "h.h"
@@ -35,7 +35,5 @@ int	cmd_inventory(t_client *client, char *token)
   print_log("Player %d from %s: INVENTORY.\n",
 	    client->net_info.fd,
 	    p->team->name);
-  p->command_is_running = 1;
-  queue_chrono(CHRONO_INVENTORY, client, C_EVENT_COMMAND);
   return (0);
 }
