@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Thu Jun 29 10:02:43 2017 guicha_t
-** Last update Sat Jul  1 06:13:02 2017 guicha_t
+** Last update Sat Jul  1 23:52:25 2017 guicha_t
 */
 
 #include "debug.h"
@@ -13,12 +13,24 @@
 #include "struct.h"
 #include "h.h"
 
-void	display_informations(t_client *client, t_player *player)
+void	display_informations(t_client *client, t_client *tmp_p,
+			     t_player *player)
 {
-  queue_packet(client, SIMPLE_PACKET, "fd %d - [%d][%d]\n",
-	       client->net_info.fd,
+  char	dir;
+
+  if (player->direction == 0)
+    dir = 'N';
+  else if (player->direction == 1)
+    dir = 'E';
+  else if (player->direction == 2)
+    dir = 'S';
+  else
+    dir = 'W';
+  queue_packet(client, SIMPLE_PACKET, "fd %d - [%d][%d] dir:%c\n",
+	       tmp_p->net_info.fd,
 	       player->pos_x,
-	       player->pos_y);
+	       player->pos_y,
+	       dir);
 }
 
 void	find_player_in_team(t_client *client, t_team *team)
@@ -34,11 +46,9 @@ void	find_player_in_team(t_client *client, t_team *team)
     {
       tmp_p = list_entry(pos_p, t_client, list);
       player = tmp_p->data;
-      display_informations(client, player);
+      display_informations(client, tmp_p, player);
       pos_p = pos_p->next;
     }
-  (void)client;
-  (void)team;
 }
 
 int	cmd_getplayer(t_client *client, char *token)

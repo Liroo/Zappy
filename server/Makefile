@@ -61,6 +61,8 @@ SRC_GEN = \
 	process.c \
 	\
 	command/command_admin/command_getplayer.c \
+	command/command_admin/command_mvplayer.c \
+	command/command_admin/countword.c \
 	command/command_forward.c \
 	command/command_left.c \
 	command/command_right.c \

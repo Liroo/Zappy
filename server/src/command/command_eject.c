@@ -5,9 +5,10 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Fri Jun 23 01:28:13 2017 Thomas
-** Last update Sat Jul  1 06:20:03 2017 guicha_t
+** Last update Sun Jul  2 00:09:11 2017 guicha_t
 */
 
+#include "debug.h"
 #include "struct.h"
 #include "h.h"
 #include "rfc.h"
@@ -52,20 +53,22 @@ static void	eject_player(t_client *client, t_player *p)
   send_eject(client, target_p, p);
 }
 
-static void	find_player(t_player *p, t_team	*team)
+static void	find_player(t_client *client,
+			    t_player *p, t_team	*team)
 {
   t_list_head	*head_p;
   t_list_head	*pos_p;
   t_client	*tmp_p;
   t_player	*in;
-
+  
   head_p = &team->players;
   pos_p = list_get_first(head_p);
   while (pos_p != head_p)
     {
       tmp_p = list_entry(pos_p, t_client, list);
       in = tmp_p->data;
-      if (in->pos_x != p->pos_x && in->pos_y != p->pos_y)
+      if (in->pos_x == p->pos_x && in->pos_y == p->pos_y
+	  && client->net_info.fd != tmp_p->net_info.fd)
 	eject_player(tmp_p, p);
       pos_p = pos_p->next;
     }
@@ -80,7 +83,7 @@ int	cmd_eject(t_client *client, char *token)
 
   (void)token;
   p = client->data;
-  if (game.map[p->pos_y][p->pos_x].player <= 0)
+  if (game.map[p->pos_x][p->pos_y].player <= 1)
     {
       queue_packet(client, SIMPLE_PACKET, RPL_KO);
       return (1);
@@ -92,7 +95,7 @@ int	cmd_eject(t_client *client, char *token)
   while (pos != head)
     {
       tmp = list_entry(pos, t_team, list);
-      find_player(p, tmp);
+      find_player(client, p, tmp);
       pos = pos->next;
     }
   queue_packet(client, SIMPLE_PACKET, RPL_OK);

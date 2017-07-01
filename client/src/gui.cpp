@@ -1,11 +1,11 @@
 //
 // gui.cpp for gui in /home/lucas/Zappy/client
-// 
+//
 // Made by Lucas
 // Login   <lucas.onillon@epitech.eu>
-// 
+//
 // Started on  Fri Jun 30 05:14:07 2017 Lucas
-// Last update Sat Jul  1 05:02:28 2017 Lucas
+// Last update Sat Jul  1 17:05:21 2017 Thomas
 //
 
 #include "gui.hpp"
@@ -45,11 +45,15 @@ void		Gui::initChatBox()
   chatBox->addItem(L"Facile");
 }
 
-int		Gui::initGui()
+int		Gui::initGui(const int &port, const std::string &host)
 {
   Event		event;
 
+  game = new Game();
   makeGuiSkybox();
+  coClient = new ConnectClient(port, host, false);
+  if (coClient->myConnect() == GUI_ERR)
+    return (GUI_ERR);
   //  initChatBox();
   device->setEventReceiver(&event);
   while (device->run() && win == GUI && quit == false)
@@ -59,6 +63,11 @@ int		Gui::initGui()
       smgr->drawAll();
       envGUI->drawAll();
       driver->endScene();
+      coClient->my_select();
+      if (coClient->getResponse().size() > 0) {
+	game->updateGame(coClient->getResponse());
+	coClient->clearResponse();
+      }
     }
   guiRemove();
   return (GUI_OK);

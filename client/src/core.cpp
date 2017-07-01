@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Sun Jun 25 22:01:46 2017 Lucas
-// Last update Sat Jul  1 05:12:06 2017 Lucas
+// Last update Sat Jul  1 18:56:12 2017 Thomas
 //
 
 #include "zappy.hpp"
@@ -43,6 +43,8 @@ int     Core::launchLobby(t_sett *sett, int status)
 	case (GUI):
 	  inGui = true;
 	  inLobby = false;
+	  port = lobby->getPort();
+	  host = lobby->getHost();
 	default:
 	  break;
 	}
@@ -69,7 +71,7 @@ int		Core::launchGUI(t_sett *s)
       switch (winTmp)
 	{
 	case (GUI):
-	  winTmp = (WinType)gui->initGui();
+	  winTmp = (WinType)gui->initGui(port, host);
 	  break;
 	default:
 	  break;
@@ -102,21 +104,8 @@ int             Core::loopGui()
 	default:
 	  break;
 	}
-      
-      //loopGui
-    }
-  return (GUI_OK);
-}
 
-int	Core::initConnectClient(int port, std::string host)
-{
-  coClient = new ConnectClient(port, host, false);
-  if (coClient->myConnect() == GUI_ERR)
-    return (GUI_ERR);
-  while (1)
-    {
-      if (coClient->my_select() == GUI_ERR)
-	return (GUI_ERR);
+      //loopGui
     }
   return (GUI_OK);
 }

@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Sat Jul  1 16:04:34 2017 Pierre Monge
+** Last update Sat Jul  1 21:36:38 2017 guicha_t
 */
 
 #ifndef H_H
@@ -124,7 +124,8 @@ extern int	get_diff_max_x(t_player *send, t_player *dest);
 ** Command Admin
 */
 extern int	cmd_getplayer(t_client *client, char *token);
-
+extern int	cmd_mvplayer(t_client *client, char *token);
+extern int	my_count_word(char *str, char d);
 
 /*
 ** Free class

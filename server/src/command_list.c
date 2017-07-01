@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sun Jun 25 00:41:14 2017 Pierre Monge
-** Last update Sat Jul  1 17:23:16 2017 Pierre Monge
+** Last update Sun Jul  2 00:23:00 2017 Pierre Monge
 */
 
 #include "debug.h"
@@ -40,6 +40,7 @@ t_command	*get_command_list_admin()
   static t_command	command_list[MAX_COMMAND_SIZE_ADMIN + 1] =
     {
       { "getinfo", 7, 0, cmd_getplayer, 0 },
+      { "mvplayer", 8, 0, cmd_mvplayer, 0 },
       { NULL, -1, 0, NULL, 0 }
     };
 
