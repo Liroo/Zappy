@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 22 22:20:37 2017 Pierre Monge
-** Last update Sat Jul  1 06:08:41 2017 guicha_t
+** Last update Sun Jul  2 01:03:23 2017 Pierre Monge
 */
 
 #include "struct.h"
@@ -24,9 +24,9 @@ void		event_lifetime(void *data)
   player = client->data;
   if (player->inventory.food > 0)
     {
+      player->inventory.food -= 1;
       print_log("Player %d from %s: eat food, rest: %d\n", client->net_info.fd,
 		player->team->name, player->inventory.food);
-      player->inventory.food -= 1;
       queue_chrono(LIFETIME_WITHOUT_FOOD, data, C_EVENT_LIFETIME);
       PRINT_DEBUG("Player %d eat foot\n", client->net_info.fd);
     }
