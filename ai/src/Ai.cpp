@@ -81,7 +81,7 @@ const std::string &Ai::getResponse() const {
 
 void Ai::printResponse()
 {
-  std::cout << _response << '\n';;
+  std::cout << _response;
 }
 
 void Ai::setResponse(const std::string &var) {
@@ -119,10 +119,7 @@ void Ai::look() {
   connect.sendToServ(strdup("look"));
   std::cout << "look" << std::endl;
   _response = connect.getResponse();
-  while (checkHook(_response) == false)
-    _response += connect.getResponse();
   printResponse();
-  fillView();
   _action.first = Ai::ActionType::LOOK;
   _life--;
 }
@@ -133,6 +130,7 @@ void Ai::inventory() {
   _response = connect.getResponse();
   printResponse();
   _action.first = Ai::ActionType::INVENTORY;
+  fillBag();
   _life--;
 }
 
@@ -276,8 +274,12 @@ bool  Ai::checkHook(const std::string &response) {
 }
 
 int   Ai::aiBrain() {
-  std::cout << "aaaaaaa" << std::endl;
-  look();
+  inventory();
+  forward();
+  right();
+  left();
+  fork();
+  eject();
   /*std::cout << response;
   if ((_action.first == Ai::ActionType::LOOK) && checkDebHook(response)) {
     _response = response;

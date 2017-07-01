@@ -118,10 +118,10 @@ int			ConnectClient::myConnect(int ac, char **av)
     return (1);
   tv.tv_sec = 1;
   tv.tv_usec = 0;
-  std::cout << "-----------" << getResponse() << '\n';
-  sendToServ(strdup("toto"));
-  std::cout << "-----------" << getResponse() << '\n';
-  std::cout << "-----------" << getResponse() << '\n';
+  std::cout << getResponse();
+  sendToServ(name);
+  std::cout << getResponse();
+  std::cout << getResponse();
   return (0);
 }
 
