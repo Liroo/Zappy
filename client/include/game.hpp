@@ -5,45 +5,66 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 01:23:13 2017 Thomas
-// Last update Sat Jul  1 17:06:27 2017 Thomas
+// Last update Sun Jul  2 00:42:26 2017 Lucas
 //
 
 #ifndef GAME_HPP
 # define GAME_HPP
 
+/*
+** Standard header inclusions.
+*/
 # include <map>
 # include <vector>
 # include <string>
 
 # include "team.hpp"
+# include "zappy.hpp"
 
-typedef struct                          s_tiles
-{
-  int                                   x;
-  int                                   y;
-  std::map<InvType, int>                items;
-  bool                                  available;
-  std::vector<Player>                   players;
-}					t_tiles;
+/*
+** Macro definitions.
+*/
+# define	DEFAULT	(0)
 
+/*
+** Game class definitions.
+** Handle the map process.
+*/
 class Game {
 
 public:
-  Game();
+  Game(irr::scene::ISceneManager *, irr::video::IVideoDriver*, irr::IrrlichtDevice*);
   ~Game();
   int	updateGame(const std::string &);
 
   typedef int   (Game::*pfunc)(std::string &);
 
+  int	getMapX() const;
+  int	getMapY() const;
+  int	getFreq() const;
+  bool	getMapInit() const;
+  void	setMapInit(bool update);
+  int	createMap();
+  void	makeGround(int x, int y);
 
 private:
+  irr::video::IVideoDriver		*driver;
+  irr::scene::ISceneManager		*sm;
+  irr::IrrlichtDevice			*device;
+  irr::gui::IGUIEnvironment		*gameGUI;
+  
+
+  int					nbGround;
+  int					_freq;
   int					_map_x;
   int					_map_y;
   std::vector<Team>			_teams;
   std::map<std::string, pfunc>		_allResp;
-  std::vector<std::vector<t_tiles>>	_map;
+  bool					_mapInit;
+  std::vector< std::vector< t_tiles > >	_map;
+  irr::scene::ISceneNode*               gameTiles[400];
 
-private:
+  // PTR FUNC //
   int	size(std::string &);
   int	teamsDetails(std::string &);
   int	playerDetails(std::string &);
@@ -58,11 +79,6 @@ private:
   int	dead(std::string &);
   int	takeObject(std::string &);
   int	setObject(std::string &);
-
-public:
-  int	getMapX() const;
-  int	getMapY() const;
-
 };
 
 #endif

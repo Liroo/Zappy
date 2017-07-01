@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 13:54:26 2017 Thomas
-// Last update Sat Jul  1 00:44:01 2017 Thomas
+// Last update Sun Jul  2 00:41:16 2017 Lucas
 //
 
 #ifndef PLAYER_HPP
@@ -13,7 +13,17 @@
 
 # include <map>
 
-# include "zappy.hpp"
+enum    Inv
+  {
+    LINEMATE = 0,
+    DERAUMERE,
+    SIBUR,
+    MENDIANE,
+    PHIRAS,
+    THYSTAME,
+    FOOD
+  };
+typedef Inv InvType;
 
 class Player {
 
