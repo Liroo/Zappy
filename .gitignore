@@ -38,6 +38,7 @@
 zappy_ai
 zappy_client
 zappy_server
+zappy_admin
 
 # Debug files
 *.dSYM/
