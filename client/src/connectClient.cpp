@@ -5,7 +5,7 @@
 // Login   <andre@epitech.net>
 //
 // Started on  Tue Jun 27 03:02:21 2017 andre
-// Last update Wed Jun 28 03:45:11 2017 Thomas
+// Last update Sat Jul  1 02:13:00 2017 Lucas
 //
 
 # include <stdio.h>
@@ -35,6 +35,8 @@ int	ConnectClient::add_server_to_client()
       return (1);
     }
   std::cout << "Connected..." << std::endl;
+  if (this->_checkParam == true)
+    return (PARAM_OK);
   return (0);
 }
 
@@ -116,11 +118,15 @@ int			ConnectClient::firstConnect()
 
 int			ConnectClient::myConnect()
 {
+  int	ret;
   int	i;
 
   i = 0;
-  if (add_server_to_client() == 1)
+  ret = 0;
+  if ((ret = add_server_to_client()) == 1)
     return (-1);
+  else if (ret == PARAM_OK)
+    return (0);
   while (firstConnect() == 1 && i < 20)
     i++;
   if (i >= 20)
@@ -128,11 +134,12 @@ int			ConnectClient::myConnect()
   return (0);
 }
 
-ConnectClient::ConnectClient(int port, std::string host) {
+ConnectClient::ConnectClient(int port, std::string host, bool param) {
   _port = port;
   _host = host;
   _tv.tv_sec = 5;
   _tv.tv_usec = 0;
+  _checkParam = param;
 }
 
 ConnectClient::~ConnectClient() {
