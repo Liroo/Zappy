@@ -5,12 +5,13 @@
 ** Login   <thomas.guichard@epitech.eu>
 **
 ** Started on  Wed Jun 21 02:31:05 2017 guicha_t
-** Last update Sun Jun 25 01:36:31 2017 Pierre Monge
+** Last update Sat Jul  1 01:46:10 2017 guicha_t
 */
 
 #include "debug.h"
 #include "struct.h"
 #include "h.h"
+#include "log.h"
 
 int		cmd_connect_nbr(t_client *client, char *token)
 {
@@ -18,7 +19,11 @@ int		cmd_connect_nbr(t_client *client, char *token)
 
   player = client->data;
   (void)token;
-  queue_packet(client, SIMPLE_PACKET, "%d\n", player->team->empty_slot);
+  queue_packet(client, SIMPLE_PACKET, "%d\n",
+	       player->team->empty_slot);
+  print_log("Player %d from %s: CONNECT_NBR.\n",
+	    client->net_info.fd,
+	    player->team->name);
   player->command_is_running = 1;
   return (0);
 }

@@ -5,10 +5,11 @@
 ** Login   <thomas.guichard@epitech.eu>
 **
 ** Started on  Wed Jun 21 01:01:36 2017 guicha_t
-** Last update Sun Jun 25 01:35:14 2017 Pierre Monge
+** Last update Sat Jul  1 01:20:00 2017 guicha_t
 */
 
 #include "h.h"
+#include "log.h"
 #include "debug.h"
 #include "game.h"
 #include "chrono.h"
@@ -21,11 +22,12 @@ int		cmd_left(t_client *client, char *token)
 
   player = client->data;
   (void)token;
-  PRINT_DEBUG("Left Last Dir: %d\n", player->direction);
   --player->direction;
   if (player->direction < 0)
     player->direction = 3;
-  PRINT_DEBUG("Left New Dir: %d\n", player->direction);
+  print_log("Player %d from %s: Left.\n",
+	    client->net_info.fd,
+	    player->team->name);
   queue_packet(client, SIMPLE_PACKET, RPL_OK);
   player->command_is_running = 1;
   queue_chrono(CHRONO_LEFT, client, C_EVENT_COMMAND);

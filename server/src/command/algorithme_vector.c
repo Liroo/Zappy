@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 **
 ** Started on  Thu Jun 22 21:43:46 2017 guicha_t
-** Last update Thu Jun 29 14:45:33 2017 guicha_t
+** Last update Sat Jul  1 01:40:34 2017 guicha_t
 */
 
 #include "debug.h"
@@ -17,15 +17,9 @@ int	check_same_line_col(t_player *p_send, t_player *p_dest)
 {
   if (p_send->pos_x == p_dest->pos_x &&
       p_send->pos_y == p_dest->pos_y)
-    {
-      // same tile
-      PRINT_DEBUG("Broadcast [same tile]\n");
-      return (0);
-      // WARNING
-    }
+    return (0);
   else if (p_send->pos_x == p_dest->pos_x)
     {
-      PRINT_DEBUG("Broadcast [same column]\n");
       if (p_send->pos_y > p_dest->pos_y)
 	return (N);
       else
@@ -33,7 +27,6 @@ int	check_same_line_col(t_player *p_send, t_player *p_dest)
     }
   else if (p_send->pos_y == p_dest->pos_y)
     {
-      PRINT_DEBUG("Broadcast [same line]\n");
       if (p_send->pos_x > p_dest->pos_x)
 	return (E);
       else
@@ -95,10 +88,7 @@ int	algorithme_vector(t_player *p_send, t_player *p_dest)
   dir = check_same_line_col(p_send, p_dest);
   if (dir == -1)
     dir = check_same_diagonal(p_send, p_dest);
-  if (dir != -1)
-    PRINT_DEBUG("Broadcast [same diago]\n");
   if (dir == -1)
     dir = harmless_vector(p_send, p_dest);
-  PRINT_DEBUG("Broadcast Dir : %d\n", dir);
   return (dir);
 }

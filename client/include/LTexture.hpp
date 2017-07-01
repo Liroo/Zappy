@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 // 
 // Started on  Mon Jun 26 00:57:46 2017 Lucas
-// Last update Mon Jun 26 23:48:57 2017 Lucas
+// Last update Fri Jun 30 00:22:31 2017 Lucas
 //
 
 #ifndef LTexture_HPP
@@ -16,6 +16,9 @@
 */
 # include "zappy.hpp"
 
+/*
+** Class that will be used to handle the texture loading process.
+*/
 class LTexture
 {
 public:
@@ -25,7 +28,9 @@ public:
   int				setTexture(irr::scene::ISceneManager *, irr::video::IVideoDriver *,
 					   irr::gui::IGUIEnvironment *);
   irr::video::ITexture		*getLogo() const;
-  irr::scene::IAnimatedMesh	*getLogoOBJ() const;
+  irr::video::ITexture		*getHostL() const;
+  irr::video::ITexture		*getPortL() const;
+  irr::video::ITexture		*getConnectL() const;
 
   irr::video::ITexture*		getSbMountUp() const;
   irr::video::ITexture*         getSbMountDown() const;
@@ -36,8 +41,11 @@ public:
   
 
 private:
+  // LOBBY //
   irr::video::ITexture		*LogoPNG;
-  irr::scene::IAnimatedMesh	*LogoOBJ;
+  irr::video::ITexture		*hostLogo;
+  irr::video::ITexture		*portLogo;
+  irr::video::ITexture		*connectLogo;
 
   // SKYBOX //
   irr::video::ITexture	       *SKYBOX_MOUNT_UP;

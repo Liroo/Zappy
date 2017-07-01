@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Thu Jun 22 00:36:24 2017 guicha_t
-** Last update Thu Jun 22 00:42:51 2017 guicha_t
+** Last update Sat Jul  1 02:29:28 2017 guicha_t
 */
 
 #include <string.h>
@@ -23,8 +23,8 @@ char	*parse_param(char *token)
   int	i_p;
 
   if ((param = malloc(sizeof(char) * strlen(token))) == NULL)
-    perror("malloc");
-  memset(param, '\0', strlen(token));
+    return (zappy_exit(), NULL);
+    memset(param, '\0', strlen(token));
   i = 0;
   i_p = 0;
   while (token[i] != ' ')
