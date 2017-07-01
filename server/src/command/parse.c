@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 **
 ** Started on  Thu Jun 22 00:36:24 2017 guicha_t
-** Last update Sat Jul  1 17:01:06 2017 Pierre Monge
+** Last update Sun Jul  2 00:57:26 2017 guicha_t
 */
 
 #include <string.h>
@@ -27,9 +27,10 @@ char	*parse_param(char *token)
   memset(param, '\0', strlen(token));
   i = 0;
   i_p = 0;
-  while (token[i] != ' ')
+  while (token[i] != ' ' && token[i] != '\0')
     i++;
-  i++;
+  if (token[i])
+    i++;
   while (token[i] != ' ' && token[i] != '\0')
     {
       param[i_p] = token[i];
