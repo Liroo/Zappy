@@ -42,7 +42,7 @@ private:
   std::map<std::string, method_pointer> _TabAdd;
   int _level;
   Inventory _bag;
-  std::vector<Inventory, std::pair<int, int>> _viewMaterial;
+  std::vector<Inventory> _viewMaterial;
   int _life;
   std::pair<Ai::ActionType, std::string>  _action;
   Ai::Direction _dir;
