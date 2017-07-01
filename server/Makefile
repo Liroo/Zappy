@@ -33,9 +33,15 @@ SRC_GEN = \
 	fdlist.c \
 	map.c \
 	\
-	parsing_option.c \
-	option.c \
-	name_option.c \
+	getopt/getopt.c \
+	getopt/getopt_list.c \
+	getopt/g_c.c \
+	getopt/g_f.c \
+	getopt/g_help.c \
+	getopt/g_n.c \
+	getopt/g_p.c \
+	getopt/g_x.c \
+	getopt/g_y.c \
 	\
 	chrono/chrono.c \
 	chrono/c_operator.c \

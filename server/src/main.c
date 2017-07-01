@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 05:20:34 2017 Pierre Monge
-** Last update Sun Jun 25 02:07:05 2017 Pierre Monge
+** Last update Sat Jul  1 02:46:01 2017 Pierre Monge
 */
 
 #include <time.h>
@@ -16,7 +16,7 @@
 #include "log.h"
 #include "h.h"
 #include "list.h"
-#include "option.h"
+#include "getopt.h"
 #include "struct.h"
 #include "chrono.h"
 
@@ -57,7 +57,7 @@ static int	init_game_server(int argc, char *argv[])
   list_init(&game.admins);
   list_init(&game.spectators);
   sig_set(1);
-  if (!parse_option(argc, argv, &game))
+  if (getopt(argc, argv) == -1)
     return (-1);
   if (generate_map() == -1)
     return (-1);
