@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 **
 ** Started on  Wed Jun 21 02:31:05 2017 guicha_t
-** Last update Sat Jul  1 01:46:10 2017 guicha_t
+** Last update Sat Jul  1 05:05:08 2017 guicha_t
 */
 
 #include "debug.h"
@@ -24,6 +24,5 @@ int		cmd_connect_nbr(t_client *client, char *token)
   print_log("Player %d from %s: CONNECT_NBR.\n",
 	    client->net_info.fd,
 	    player->team->name);
-  player->command_is_running = 1;
   return (0);
 }

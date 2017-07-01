@@ -5,7 +5,7 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Fri Jun 23 01:28:13 2017 Thomas
-** Last update Fri Jun 30 23:22:13 2017 Thomas
+** Last update Sat Jul  1 05:06:01 2017 guicha_t
 */
 
 #include "struct.h"
@@ -90,6 +90,5 @@ int	cmd_eject(t_client *client, char *token)
       pos = pos->next;
     }
   queue_packet(client, SIMPLE_PACKET, RPL_OK);
-  queue_chrono(CHRONO_EJECT, client, C_EVENT_COMMAND);
   return (0);
 }

@@ -5,7 +5,7 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Wed Jun 21 22:49:06 2017 Thomas
-** Last update Fri Jun 30 23:17:54 2017 Thomas
+** Last update Sat Jul  1 05:07:32 2017 guicha_t
 */
 
 #include <stdio.h>
@@ -81,7 +81,5 @@ int	cmd_look(t_client *client, char *token)
       i++;
     }
   queue_packet(client, SIMPLE_PACKET, "]\n");
-  p->command_is_running = 1;
-  queue_chrono(CHRONO_LOOK, client, C_EVENT_COMMAND);
   return (0);
 }
