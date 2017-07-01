@@ -53,6 +53,7 @@ SRC_GEN = \
 	command_list.c \
 	process.c \
 	\
+	command/command_admin/getplayer.c \
 	command/command_forward.c \
 	command/command_left.c \
 	command/command_right.c \

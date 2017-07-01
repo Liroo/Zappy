@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Wed Jun 21 04:30:29 2017 Pierre Monge
-** Last update Sun Jun 25 02:17:37 2017 Pierre Monge
+** Last update Sat Jul  1 00:28:38 2017 guicha_t
 */
 
 #include <time.h>
@@ -74,6 +74,9 @@ static void	process_admin(t_client *client)
    t_admin	*admin;
 
    admin = client->data;
+   if (admin->command_in_queue <= 0)
+     return ;
+
    if ((*admin->command_queue).exec)
      (*admin->command_queue).exec(client, (*admin->command_queue).command);
    free((*admin->command_queue).command);

@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 // 
 // Started on  Mon Jun 26 00:47:57 2017 Lucas
-// Last update Tue Jun 27 01:04:12 2017 Lucas
+// Last update Thu Jun 29 20:13:41 2017 Lucas
 //
 
 #ifndef SPLASH_SCREEN_HPP_
@@ -19,7 +19,7 @@
 /*
 ** Macro definitions.
 */
-# define	TIMER	(5)
+# define	TIMER	(3)
 # define	LOGO_PATH	"./media/img/zappyLogo.png"
 
 /*

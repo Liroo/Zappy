@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Fri Jun 30 23:37:28 2017 Thomas
+** Last update Fri Jun 30 23:40:10 2017 guicha_t
 */
 
 #ifndef H_H
@@ -115,6 +115,13 @@ extern int	get_dir_config_three(int xmax, int y, int sendx, int destx);
 extern int	get_dir_config_four(int x, int y, t_player *s, t_player *d);
 extern int	get_diff_max_y(t_player *send, t_player *dest);
 extern int	get_diff_max_x(t_player *send, t_player *dest);
+
+
+/*
+** Command Admin
+*/
+extern int	cmd_getplayer(t_client *client, char *token);
+
 
 /*
 ** Free class

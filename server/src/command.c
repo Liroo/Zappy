@@ -5,12 +5,13 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sat Jun 17 04:55:41 2017 Pierre Monge
-** Last update Sun Jun 25 02:16:12 2017 Pierre Monge
+** Last update Sat Jul  1 00:28:57 2017 guicha_t
 */
 
 #include <stdlib.h>
 #include <string.h>
 #include <strings.h>
+#include <stdio.h>
 
 #include "struct.h"
 #include "debug.h"

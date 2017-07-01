@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 **
 ** Started on  Thu Jun 22 21:43:46 2017 guicha_t
-** Last update Tue Jun 27 00:31:47 2017 guicha_t
+** Last update Thu Jun 29 14:45:33 2017 guicha_t
 */
 
 #include "debug.h"
@@ -39,7 +39,7 @@ int	check_same_line_col(t_player *p_send, t_player *p_dest)
       else
 	return (W);
     }
-  return (0);
+  return (-1);
 }
 
 int	check_same_diagonal(t_player *p_send, t_player *p_dest)
@@ -57,7 +57,7 @@ int	check_same_diagonal(t_player *p_send, t_player *p_dest)
     return (SW);
   else if (diff_x < 0 && diff_x == -diff_y)
     return (NW);
-  return (0);
+  return (-1);
 }
 
 int	harmless_vector(t_player *send, t_player *dest)
@@ -93,11 +93,11 @@ int	algorithme_vector(t_player *p_send, t_player *p_dest)
   int	dir;
 
   dir = check_same_line_col(p_send, p_dest);
-  if (dir == 0)
+  if (dir == -1)
     dir = check_same_diagonal(p_send, p_dest);
-  if (dir != 0)
+  if (dir != -1)
     PRINT_DEBUG("Broadcast [same diago]\n");
-  if (dir == 0)
+  if (dir == -1)
     dir = harmless_vector(p_send, p_dest);
   PRINT_DEBUG("Broadcast Dir : %d\n", dir);
   return (dir);
