@@ -1,11 +1,11 @@
 /*
 ** epur_str.c for Project-Master in /home/guicha/tek2/Zappy/server/src/cmds
-** 
+**
 ** Made by guicha_t
 ** Login   <thomas.guichard@epitech.eu>
-** 
+**
 ** Started on  Wed Jun 21 23:18:03 2017 guicha_t
-** Last update Sat Jul  1 02:31:03 2017 guicha_t
+** Last update Sat Jul  1 16:59:41 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -20,10 +20,10 @@ char	*strepur(char *str)
   int   i;
   int   j;
 
+  i = 0;
+  j = 0;
   if ((epur = malloc(strlen(str) + 1)) == NULL)
     return (zappy_exit(), NULL);
-    i = 0;
-  j = 0;
   while ((str[i] == '\t') || (str[i] == ' '))
     i = i + 1;
   while (str[i] != '\0')
