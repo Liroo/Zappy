@@ -15,8 +15,7 @@
 # include <string.h>
 # include "Ai.h"
 
-Ai::Ai() : _level(1), _life(1260), _action({Ai::ActionType::UNKNOWN, ""}), _dir(Ai::Direction::UNKNOWN), test(0)
-{
+Ai::Ai() : _level(1), _life(1260), _action({Ai::ActionType::UNKNOWN, ""}), _dir(Ai::Direction::UNKNOWN), _nbResponse(0) {
   _TabAdd["food"] = &Inventory::addFood;
   _TabAdd["linemate"] = &Inventory::addLinemate;
   _TabAdd["deraumere"] = &Inventory::addDeraumere;
@@ -242,43 +241,54 @@ bool  Ai::checkHook(const std::string &response) {
   std::size_t found = response.find(']');
 
   if (found != std::string::npos)
-    return false;
-  return true;
+    return true;
+  return false;
+}
+
+bool  Ai::checkDebHook(const std::string &response) {
+  std::size_t found = response.find('[');
+
+  if (found != std::string::npos)
+    return true;
+  return false;
 }
 
 int Ai::sendToServ(const std::string &varMessage)
 {
   char  message[varMessage.length()];
 
-  std::cout << "test";
   strcpy(message, const_cast<char*>(varMessage.c_str()));
   sprintf(message, "%s\r\n", message);
   if (send(_fd, message, strlen(message), 0) < 0) {
     std::cout << "Message sending error" << std::endl;
     return (1);
   }
-  std::cout << "fintest";
   return (0);
 }
 
 int   Ai::aiBrain(std::string const &response) {
-  if ((_action.first == Ai::ActionType::INVENTORY || _action.first == Ai::ActionType::LOOK) && checkHook(response)) {
-    _response = _response + response;
+  std::cout << response;
+  if ((_action.first == Ai::ActionType::LOOK) && checkDebHook(response)) {
+    _response = response;
     return (0);
   }
-  else if (_action.first == Ai::ActionType::INVENTORY || _action.first == Ai::ActionType::LOOK)
+  else if ((_action.first == Ai::ActionType::LOOK) && checkHook(response)) {
+    _response = _response + response;
+    fillView();
+    return (0);
+  }
+  else if (_action.first == Ai::ActionType::LOOK)
     _response = _response + response;
   else
     _response = response;
   if (_action.first == Ai::ActionType::INVENTORY)
     fillBag();
-  std::cout << getResponse();
-  if (test == 0)
+  if (_nbResponse == 0)
     sendToServ("toto");
-  else if (test == 1)
+  else if (_nbResponse == 2)
     inventory();
-  else if (test == 2)
+  else if (_nbResponse >= 3)
     look();
-  test++;
+  _nbResponse++;
   return (0);
 }

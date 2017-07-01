@@ -5,7 +5,7 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Wed Jun 28 00:50:35 2017 Thomas
-// Last update Wed Jun 28 03:14:56 2017 Thomas
+// Last update Sat Jul  1 02:10:59 2017 Lucas
 */
 
 #ifndef CONNECTCLIENT_H
@@ -14,10 +14,12 @@
 # include <sys/types.h>
 # include <unistd.h>
 
+# define	PARAM_OK	(2)
+
 class ConnectClient {
 
 public:
-  ConnectClient(int, std::string);
+  ConnectClient(int, std::string, bool param);
   ~ConnectClient();
 
 private:
@@ -26,6 +28,7 @@ private:
   int			_fd;
   fd_set		_fd_read;
   struct timeval	_tv;
+  bool			_checkParam;
 
 private:
   int	clienttoserv();

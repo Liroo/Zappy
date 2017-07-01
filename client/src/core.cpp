@@ -5,15 +5,112 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Sun Jun 25 22:01:46 2017 Lucas
-// Last update Wed Jun 28 01:57:08 2017 Thomas
+// Last update Sat Jul  1 02:13:21 2017 Lucas
 //
 
 #include "zappy.hpp"
 #include "core.hpp"
 
+int             Core::initSound(t_sett *sett)
+{
+  /*  if (!(sett->engine = irrklang::ISoundDevice::createIrrKlangDevice()))
+    {
+      std::cerr << ENGINE_ERR << std::endl;
+      return (GUI_ERR);
+      }
+  if ((sett->lobbySound = sett->engine->play2D("media/music/veridisquo.ogg", true, false, true)))
+    sett->lobbySound->setIsPaused(true);
+  sett->on_off = true;
+*/
+  return (GUI_OK);
+}
+
+int     Core::launchLobby(t_sett *sett, int status)
+{
+  lobby = new Lobby(smgr, driver, device);
+  if (lobby->setTexture(smgr, driver, lobbyGUI) == GUI_ERR)
+    return (GUI_ERR);
+  inLobby = true;
+  while (device->run() && inLobby == true && quit == false)
+    {
+      //if (sett->lobbySound)
+      //sett->lobbySound->setIsPaused(!sett->on_off);
+      switch (status)
+	{
+	case (LOBBY):
+	  status = lobby->initLobby(sett, LOBBY);
+	  break;
+	case (GUI):
+	  inGui = true;
+	  inLobby = false;
+	default:
+	  break;
+	}
+      quit = lobby->getQuit();
+    }
+  win = (WinType)status;
+  std::cout << RED << "WIN == " << win << BLANK << std::endl;
+  delete (lobby);
+  return (GUI_OK);
+}
+
+int		Core::launchGUI(t_sett *s)
+{
+  int		winTmp;
+
+  winTmp = win;
+  gui = new Gui(smgr, driver, device);
+  if (gui->setTexture(smgr, driver, lobbyGUI) == GUI_ERR)
+    return (GUI_ERR);
+  inGui = true;
+  quit = false;
+  while (device->run() && quit == false && inGui == true)
+    {
+      switch (winTmp)
+	{
+	case (GUI):
+	  winTmp = (WinType)gui->initGui();
+	  break;
+	default:
+	  break;
+	}
+      quit = gui->getQuit();
+    }
+  win = (WinType)winTmp;
+  delete (gui);
+  return (GUI_OK);
+}
+
+int             Core::loopGui()
+{
+  t_sett        *sett = new t_sett;
+
+  if (initSound(sett) == GUI_ERR)
+    return (GUI_ERR);
+  while (device->run() && quit == false)
+    {
+      switch (win)
+	{
+	case (LOBBY):
+	  if (launchLobby(sett, LOBBY) == GUI_ERR)
+	    return (GUI_ERR);
+	  break;
+	case (GUI):
+	  
+	  if (launchGUI(sett) == GUI_ERR)
+	    return (GUI_ERR);
+	  break;
+	default:
+	  break;
+	}
+      //loopGui
+    }
+  return (GUI_OK);
+}
+
 int	Core::initConnectClient(int port, std::string host)
 {
-  coClient = new ConnectClient(port, host);
+  coClient = new ConnectClient(port, host, false);
   if (coClient->myConnect() == GUI_ERR)
     return (GUI_ERR);
   while (1)
@@ -37,7 +134,8 @@ int    Core::initSplashScreen()
 
 Core::Core()
 {
-  this->window = LOBBY;
+  this->inGui = false;
+  this->win = LOBBY;
   this->quit = false;
 }
 

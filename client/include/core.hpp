@@ -5,16 +5,25 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Sat Jun 25 22:00:09 2017 Lucas
-// Last update Wed Jun 28 01:33:30 2017 Thomas
+// Last update Fri Jun 30 23:32:50 2017 Lucas
 //
 
 #ifndef CORE_HPP_
 # define CORE_HPP_
 
+/*
+** Personnal header inclusions.
+*/
 # include "connectClient.hpp"
 # include "zappy.hpp"
 # include "splashScreen.hpp"
+# include "lobby.hpp"
+# include "gui.hpp"
 
+/*
+** Core class definition.
+** Handle the whole process (GFX & server connections).
+*/
 class Core
 {
 public:
@@ -23,6 +32,10 @@ public:
   int				initSplashScreen();
   int				initDevice();
   int				initConnectClient(int port, std::string host);
+  int                           launchLobby(t_sett *settings, int status);
+  int                           loopGui();
+  int                           initSound(t_sett *);
+  int				launchGUI(t_sett *);
 
   irr::video::IVideoDriver*	getDriver() const;
   irr::scene::ISceneManager*    getSceneManager() const;
@@ -35,10 +48,12 @@ private:
   irr::IrrlichtDevice*		device;
   irr::gui::IGUIEnvironment*	lobbyGUI;
 
-  Win				window;
+  Gui				*gui;
+  Lobby                         *lobby;
+  Win				win;
   bool				quit;
   bool				inLobby;
-  bool				inPlay;
+  bool				inGui;
   Ss				*ss;
   ConnectClient			*coClient;
 };
