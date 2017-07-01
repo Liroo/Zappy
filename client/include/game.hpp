@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 01:23:13 2017 Thomas
-// Last update Sat Jul  1 04:30:03 2017 Lucas
+// Last update Sat Jul  1 17:06:27 2017 Thomas
 //
 
 #ifndef GAME_HPP
@@ -31,7 +31,7 @@ class Game {
 public:
   Game();
   ~Game();
-  int	updateGame(std::string &);
+  int	updateGame(const std::string &);
 
   typedef int   (Game::*pfunc)(std::string &);
 

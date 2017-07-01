@@ -27,9 +27,9 @@ int	ConnectClient::add_server_to_client()
       std::cout << "Server connection error" << std::endl;
       return (1);
     }
-  sin.sin_addr.s_addr = inet_addr(machine);
+  sin.sin_addr.s_addr = inet_addr(_machine);
   sin.sin_family = AF_INET;
-  sin.sin_port = htons(port);
+  sin.sin_port = htons(_port);
   if (connect(fd, (struct sockaddr*)&sin, sizeof(sin)))
     {
       std::cout << "Server connection error" << std::endl;
@@ -39,75 +39,36 @@ int	ConnectClient::add_server_to_client()
   return (fd);
 }
 
-int	ConnectClient::servtoclient(int fd)
+char	*ConnectClient::servtoclient()
 {
   char	repserv[2000];
 
   bzero(repserv, 2000);
-  if (recv(fd, repserv, 2000, 0) < 0)
+  if (recv(_fd, repserv, 2000, 0) < 0)
     {
       std::cout << "Error message reception" << std::endl;
-      return (1);
+      return (NULL);
     }
-  std::string response(repserv);
-  ai.aiBrain(response);
-  //printf("%s", repserv); // Pour debug, a enlever sinon
-  return (0);
+  return (strdup(repserv));
 }
 
-int	ConnectClient::clienttoserv(int fd)
+char	*ConnectClient::getResponse()
 {
-  char	message[1000];
-  char	final[1000];
-  int	i;
-  int	y;
-
-  i = 0;
-  y = 0;
-  bzero(message, 1000);
-  if (read(0, (char *)message, 998) < 0)
-    return (1);
-  if (message[0] == '\n')
-    return (0);
-  message[strlen(message) - 1] = '\0';
-  sprintf(message, "%s\r\n", message);
-  if (message[0] == '/')
-    i++;
-  while (message[i] != '\0')
-    final[y++] = message[i++];
-  final[y] = message[i];
-  if (send(fd, final, strlen(final), 0) < 0)
-    return (std::cout << "Message sending error" << std::endl, 1);
-  return (0);
-}
-
-int	ConnectClient::my_loop(fd_set fd_read, struct timeval tv, int fd)
-{
-  int	rd;
-
   while (1)
     {
-      FD_ZERO(&fd_read);
-      if (fd != 0)
-      	FD_SET(fd, &fd_read);
-      FD_SET(0, &fd_read);
-      if (select(fd + 1, &fd_read, NULL, NULL, &tv) < 0)
+      FD_ZERO(&_fd_read);
+      if (_fd != 0)
+      	FD_SET(_fd, &_fd_read);
+      FD_SET(0, &_fd_read);
+      if (select(_fd + 1, &_fd_read, NULL, NULL, &_tv) < 0)
       	{
       	  std::cout << "Select error" << std::endl;
-      	  return (1);
+      	  return (NULL);
       	}
-      else if (fd != 0 && FD_ISSET(fd, &fd_read))
-      	{
-	  if ((rd = servtoclient(fd)) != 0)
-	    return (rd);
-      	}
-      else if (FD_ISSET(0, &fd_read))
-      	{
-	  if (clienttoserv(fd) == 1)
-	    return (1);
-      	}
+      else if (_fd != 0 && FD_ISSET(_fd, &_fd_read))
+        return(servtoclient());
     }
-  return (0);
+  return (NULL);
 }
 
 void	ConnectClient::usagedisp()
@@ -126,35 +87,41 @@ int	ConnectClient::check_param(int ac, char **av)
   if (ac == 7)
     if (strcmp(av[5], "-h") != 0)
       return(usagedisp(), 1);
-  port = atoi(av[2]);
-  if ((name = (char*)malloc(strlen(av[4]))) == NULL)
+  _port = atoi(av[2]);
+  if ((_name = (char*)malloc(strlen(av[4]))) == NULL)
     return (1);
-  strcpy(name, av[4]);
-  if ((machine = (char*)malloc(10 + strlen(av[6]))) == NULL)
+  strcpy(_name, av[4]);
+  if ((_machine = (char*)malloc(10 + strlen(av[6]))) == NULL)
     return (1);
   if (ac == 5)
-    strcpy(machine, "127.0.0.1");
+    strcpy(_machine, "127.0.0.1");
   else
-    strcpy(machine, av[6]);
+    strcpy(_machine, av[6]);
+  return (0);
+}
+
+int     ConnectClient::sendToServ(char *message)
+{
+  sprintf(message, "%s\r\n", message);
+  if (send(_fd, message, strlen(message), 0) < 0) {
+    std::cout << "Message sending error" << std::endl;
+    return (1);
+  }
   return (0);
 }
 
 int			ConnectClient::myConnect(int ac, char **av)
 {
-  fd_set		fd_read;
-  struct timeval	tv;
-  int			fd;
-
   if (check_param(ac, av) == 1)
     return (0);
-  if ((fd = add_server_to_client()) == 1)
+  if ((_fd = add_server_to_client()) == 1)
     return (1);
-  ai.setFd(fd);
-  tv.tv_sec = 1;
-  tv.tv_usec = 0;
-  if (my_loop(fd_read, tv, fd) == 1)
-    return (1);
-  close(fd);
+  _tv.tv_sec = 1;
+  _tv.tv_usec = 0;
+  std::cout << getResponse();
+  sendToServ(_name);
+  std::cout << getResponse();
+  std::cout << getResponse();
   return (0);
 }
 

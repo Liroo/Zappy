@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Wed Jun 28 00:39:03 2017 Lucas
-// Last update Sat Jul  1 04:14:01 2017 Lucas
+// Last update Sat Jul  1 18:49:50 2017 Thomas
 //
 
 #include "lobby.hpp"
@@ -44,6 +44,17 @@ void	Lobby::lobbyRemove()
   lobbyGUI->clear();
 }
 
+int	Lobby::getPort() const
+{
+  return (save_port);
+}
+
+std::string	Lobby::getHost() const
+{
+  return (save_host);
+}
+
+
 int	Lobby::initLobby(t_sett *sett, int status)
 {
   Event	event;
@@ -73,15 +84,16 @@ int	Lobby::initLobby(t_sett *sett, int status)
 	    lobbyGUI->addMessageBox(L"Syntax error", L"Wrong connection informations !", true);
 	  else
 	    {
-	      checkConnect = new ConnectClient(std::stoi(check_port, nullptr, 10), check_host, true);
-	      if (checkConnect->myConnect() == 0)
+	      connect = new ConnectClient(std::stoi(check_port, nullptr, 10), check_host, true);
+	      if (connect->myConnect() == 0) {
 		status = GUI;
+		save_port = std::stoi(check_port, nullptr, 10);
+		save_host = check_host;
+	      }
 	      else
 		lobbyGUI->addMessageBox(L"Internal error", L"Connection failed !", true);
-	      delete (checkConnect);
+	      delete (connect);
 	    }
-	  check_port.clear();
-	  check_host.clear();
 	  event.setPressConnect(false);
 	}
     }
@@ -108,6 +120,8 @@ Lobby::Lobby(irr::scene::ISceneManager* sm_, irr::video::IVideoDriver* driver_,
   this->lobbyGUI = device->getGUIEnvironment();
   this->quit = false;
   win = LOBBY;
+  save_port = 0;
+  save_host = "";
 }
 
 Lobby::~Lobby()

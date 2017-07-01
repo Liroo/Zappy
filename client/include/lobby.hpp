@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Wed Jun 28 00:16:38 2017 Lucas
-// Last update Sat Jul  1 05:00:36 2017 Lucas
+// Last update Sat Jul  1 17:03:34 2017 Thomas
 //
 
 #ifndef LOBBY_HPP_
@@ -42,6 +42,8 @@ public:
   bool		getQuit() const;
   int           launchGUI(t_sett *, int status);
   bool		isDigits(const std::string &str);
+  int		getPort() const;
+  std::string	getHost() const;
 
 private:
   irr::scene::ISceneManager	*sm;
@@ -61,6 +63,8 @@ private:
   Win				win;
 
   ConnectClient			*connect;
+  int				save_port;
+  std::string			save_host;
 };
 
 #endif	/* !LOBBY_HPP_*/

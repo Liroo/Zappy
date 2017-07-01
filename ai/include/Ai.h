@@ -5,6 +5,7 @@
 # include <vector>
 # include <map>
 # include "Inventory.h"
+# include "ConnectClient.h"
 
 class Ai {
 public:
@@ -39,15 +40,22 @@ private:
   // perso
   typedef  void(Inventory::*method_pointer)();
   std::map<std::string, method_pointer> _TabAdd;
+  typedef  const int &(Inventory::*pointer)() const;
+  std::map<std::string, pointer> _TabMaterial;
   int _level;
   Inventory _bag;
   std::vector<Inventory> _viewMaterial;
   int _life;
   std::pair<Ai::ActionType, std::string>  _action;
   Ai::Direction _dir;
+  std::vector<ActionType> _path;
   std::string _response;
   int _fd;
   int _nbResponse;
+  bool  _isRunning;
+
+public:
+  ConnectClient connect;
 
 public:
   const int &getLevel() const;
@@ -61,6 +69,7 @@ public:
   const std::pair<Ai::ActionType, std::string> &getAction() const;
   void setAction(const std::pair<Ai::ActionType, std::string> &);
   const std::string &getResponse() const;
+  void printResponse();
   void setResponse(const std::string &);
   const int &getFd() const;
   void setFd(const int &);
@@ -77,12 +86,11 @@ public:
   void set(std::string const &);
   void incantation();
 
-  int aiBrain(std::string const &);
+  int aiBrain();
   void fillBag();
   bool  checkHook(const std::string &);
-  bool  checkDebHook(const std::string &);
-  int sendToServ(const std::string &);
   void fillView();
+  void fillPath(const std::string &);
   void ReplaceStringInPlace(std::string& subject, const std::string& search, const std::string& replace);
 };
 

@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Sat Jun 25 22:00:09 2017 Lucas
-// Last update Sat Jul  1 04:59:55 2017 Lucas
+// Last update Sat Jul  1 18:54:56 2017 Thomas
 //
 
 #ifndef CORE_HPP_
@@ -55,7 +55,9 @@ private:
   bool				inLobby;
   bool				inGui;
   Ss				*ss;
-  ConnectClient			*coClient;
+
+  int				port;
+  std::string			host;
 };
 
 #endif /* CORE_HPP_ */

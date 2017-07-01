@@ -5,7 +5,7 @@
 // Login   <andre@epitech.net>
 //
 // Started on  Tue Jun 27 03:02:21 2017 andre
-// Last update Sat Jul  1 03:14:33 2017 Thomas
+// Last update Sat Jul  1 18:57:22 2017 Thomas
 //
 
 # include <stdio.h>
@@ -40,19 +40,23 @@ int	ConnectClient::add_server_to_client()
   return (0);
 }
 
+std::string	ConnectClient::getResponse() const
+{
+  return (_buf);
+}
+
+void		ConnectClient::clearResponse()
+{
+  _buf.clear();
+}
+
 int	ConnectClient::servtoclient()
 {
-  char	repserv[2000];
-
-  bzero(repserv, 2000);
-  if (recv(_fd, repserv, 2000, 0) < 0)
-    {
-      std::cout << "Error message reception" << std::endl;
-      return (1);
-    }
-  printf("%s", repserv); // Pour debug, a enlever sinon
-  _buf = repserv;
-  return (0);
+  _buf = _gnl->getnextline(_fd);
+  if (_buf.size() > 0)
+    return (0);
+  else
+    return (-1);
 }
 
 int	ConnectClient::clienttoserv()
@@ -132,6 +136,7 @@ int			ConnectClient::myConnect()
     i++;
   if (i >= 20)
     return (-1);
+  _gnl = new Gnl();
   return (0);
 }
 

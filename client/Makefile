@@ -5,7 +5,7 @@
 ## Login   <lucas.onillon@epitech.eu>
 ## 
 ## Started on  Sun Jun 25 22:50:07 2017 Lucas
-## Last update Sat Jul  1 03:29:13 2017 Lucas
+## Last update Sat Jul  1 18:13:28 2017 Thomas
 ##
 
 TARGET	 = zappy_client
@@ -19,7 +19,11 @@ SRC	 = main.cpp					\
 	   connectClient.cpp				\
 	   lobby.cpp					\
 	   event.cpp					\
-	   gui.cpp
+	   gui.cpp					\
+	   game.cpp					\
+	   player.cpp					\
+	   team.cpp					\
+	   gnl.cpp
 
 CPPFLAGS = -Iinclude -std=c++11 -Ilib_irrlicht -I/usr/X11R6/include -Iirrklang
 CXXFLAGS = -W -Wall -std=c++11 -ansi -Iinclude -Wno-unused-parameter -pedantic

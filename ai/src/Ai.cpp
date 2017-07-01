@@ -15,7 +15,7 @@
 # include <string.h>
 # include "Ai.h"
 
-Ai::Ai() : _level(1), _life(1260), _action({Ai::ActionType::UNKNOWN, ""}), _dir(Ai::Direction::UNKNOWN), _nbResponse(0) {
+Ai::Ai() : _level(1), _life(1260), _action({Ai::ActionType::UNKNOWN, ""}), _dir(Ai::Direction::UNKNOWN), _nbResponse(0), _isRunning(true) {
   _TabAdd["food"] = &Inventory::addFood;
   _TabAdd["linemate"] = &Inventory::addLinemate;
   _TabAdd["deraumere"] = &Inventory::addDeraumere;
@@ -23,6 +23,14 @@ Ai::Ai() : _level(1), _life(1260), _action({Ai::ActionType::UNKNOWN, ""}), _dir(
   _TabAdd["mendiane"] = &Inventory::addMendiane;
   _TabAdd["phiras"] = &Inventory::addPhiras;
   _TabAdd["thystame"] = &Inventory::addThystame;
+
+  _TabMaterial["food"] = &Inventory::getFood;
+  _TabMaterial["linemate"] = &Inventory::getLinemate;
+  _TabMaterial["deraumere"] = &Inventory::getDeraumere;
+  _TabMaterial["sibur"] = &Inventory::getSibur;
+  _TabMaterial["mendiane"] = &Inventory::getMendiane;
+  _TabMaterial["phiras"] = &Inventory::getPhiras;
+  _TabMaterial["thystame"] = &Inventory::getThystame;
 }
 
 Ai::~Ai() {}
@@ -79,83 +87,114 @@ const std::string &Ai::getResponse() const {
   return _response;
 }
 
+void Ai::printResponse()
+{
+  std::cout << _response;
+}
+
 void Ai::setResponse(const std::string &var) {
   _response = var;
 }
 
 void Ai::forward() {
-  sendToServ("forward");
+  connect.sendToServ(strdup("forward"));
   std::cout << "forward" << std::endl;
+  _response = connect.getResponse();
+  printResponse();
   _action.first = Ai::ActionType::FORWARD;
   _life--;
 }
 
 void Ai::right() {
-  sendToServ("right");
+  connect.sendToServ(strdup("right"));
   std::cout << "right" << std::endl;
+  _response = connect.getResponse();
+  printResponse();
   _action.first = Ai::ActionType::RIGHT;
   _life--;
 }
 
 void Ai::left() {
-  sendToServ("left");
+  connect.sendToServ(strdup("left"));
   std::cout << "left" << std::endl;
+  _response = connect.getResponse();
+  printResponse();
   _action.first = Ai::ActionType::LEFT;
   _life--;
 }
 
 void Ai::look() {
-  sendToServ("look");
+  connect.sendToServ(strdup("look"));
   std::cout << "look" << std::endl;
+  _response = connect.getResponse();
+  while (checkHook(_response) == false)
+    _response += connect.getResponse();
+  printResponse();
+  fillView();
   _action.first = Ai::ActionType::LOOK;
   _life--;
 }
 
 void Ai::inventory() {
-  sendToServ("inventory");
+  connect.sendToServ(strdup("inventory"));
   std::cout << "inventory" << std::endl;
+  _response = connect.getResponse();
+  printResponse();
   _action.first = Ai::ActionType::INVENTORY;
+  fillBag();
   _life--;
 }
 
 void Ai::broadcast(std::string const &var) {
-  sendToServ("broadcast");
+  connect.sendToServ(strdup("broadcast"));
   std::cout << "broadcast" << var << std::endl;
+  _response = connect.getResponse();
+  printResponse();
   _action.first = Ai::ActionType::BROADCAST;
   _life--;
 }
 
 void Ai::fork() {
-  sendToServ("fork");
+  connect.sendToServ(strdup("fork"));
   std::cout << "fork" << std::endl;
+  _response = connect.getResponse();
+  printResponse();
   _action.first = Ai::ActionType::FORK;
   _life--;
 }
 
 void Ai::eject() {
-  sendToServ("eject");
+  connect.sendToServ(strdup("eject"));
   std::cout << "eject" << std::endl;
+  _response = connect.getResponse();
+  printResponse();
   _action.first = Ai::ActionType::EJECT;
   _life--;
 }
 
 void Ai::take(std::string const &var) {
-  sendToServ("take");
-  std::cout << "take" << var << std::endl;
+  connect.sendToServ(strdup("take"));
+  std::cout << "take " << var << std::endl;
+  _response = connect.getResponse();
+  printResponse();
   _action.first = Ai::ActionType::TAKE;
   _life--;
 }
 
 void Ai::set(std::string const &var) {
-  sendToServ("set");
-  std::cout << "set" << var << std::endl;
+  connect.sendToServ(strdup("set"));
+  std::cout << "set " << var << std::endl;
+  _response = connect.getResponse();
+  printResponse();
   _action.first = Ai::ActionType::SET;
   _life--;
 }
 
 void Ai::incantation() {
-  sendToServ("incantation");
+  connect.sendToServ(strdup("incantation"));
   std::cout << "incantation" << std::endl;
+  _response = connect.getResponse();
+  printResponse();
   _action.first = Ai::ActionType::INCANTATION;
   _life--;
 }
@@ -237,6 +276,75 @@ void Ai::fillView() {
   _response = "";
 }
 
+void Ai::fillPath(const std::string &material) {
+  int nb;
+  int pos_y = 0;
+  int pos_x = 0;
+  int check = 0;
+  int save;
+
+  nb = -1;
+  for (int i = 0; i < static_cast<int>(_viewMaterial.size()); i++)
+    {
+      std::map<std::string, pointer>::iterator it;
+      it = _TabMaterial.find(material);
+      if (it != _TabMaterial.end())
+        {
+          if ((_viewMaterial[i].*(*it).second)() > 0)
+            {
+              nb = i;
+              i = static_cast<int>(_viewMaterial.size());
+            }
+        }
+    }
+  if (nb != -1)
+    {
+    for (int i = 1; i < static_cast<int>(_viewMaterial.size()); i = i + 2)
+      {
+        save = check;
+        check += i;
+        if (nb < check)
+          {
+            save += pos_y;
+            pos_x = nb - save;
+            i = static_cast<int>(_viewMaterial.size());
+          }
+        else
+          pos_y++;
+      }
+
+    while (pos_y > 0)
+      {
+        _path.push_back(ActionType::FORWARD);
+        pos_y--;
+      }
+    if (pos_x > 0)
+      _path.push_back(ActionType::RIGHT);
+    if (pos_x < 0)
+      {
+        _path.push_back(ActionType::LEFT);
+        pos_x *= -1;
+      }
+    while (pos_x > 0)
+      {
+        _path.push_back(ActionType::FORWARD);
+        pos_x--;
+      }
+    _path.push_back(ActionType::TAKE);
+    _path.push_back(ActionType::INVENTORY);
+    }
+  else
+    {
+      // random
+      _path.push_back(ActionType::FORWARD);
+    }
+  // print action
+  for (int i = 0; i < static_cast<int>(_path.size()); i++)
+    {
+      std::cout << static_cast<int>(_path[i]) << std::endl;
+    }
+}
+
 bool  Ai::checkHook(const std::string &response) {
   std::size_t found = response.find(']');
 
@@ -245,50 +353,21 @@ bool  Ai::checkHook(const std::string &response) {
   return false;
 }
 
-bool  Ai::checkDebHook(const std::string &response) {
-  std::size_t found = response.find('[');
+int   Ai::aiBrain() {
 
-  if (found != std::string::npos)
-    return true;
-  return false;
-}
-
-int Ai::sendToServ(const std::string &varMessage)
-{
-  char  message[varMessage.length()];
-
-  strcpy(message, const_cast<char*>(varMessage.c_str()));
-  sprintf(message, "%s\r\n", message);
-  if (send(_fd, message, strlen(message), 0) < 0) {
-    std::cout << "Message sending error" << std::endl;
-    return (1);
+  while (_isRunning) {
+    if (_bag.getFood() < 10) {
+      look();
+      fillPath("food");
+      // while (y a des trucs dans le vector, on les fait)
+    }
+    // else if (checkElevationPartenaire)
+    //   golerejoindre
+    // else if (checkElevation)
+    //   elevation
+    else
+      look(); // material
+      // while (y a des trucs dans le vector, on les fait)
   }
-  return (0);
-}
-
-int   Ai::aiBrain(std::string const &response) {
-  std::cout << response;
-  if ((_action.first == Ai::ActionType::LOOK) && checkDebHook(response)) {
-    _response = response;
-    return (0);
-  }
-  else if ((_action.first == Ai::ActionType::LOOK) && checkHook(response)) {
-    _response = _response + response;
-    fillView();
-    return (0);
-  }
-  else if (_action.first == Ai::ActionType::LOOK)
-    _response = _response + response;
-  else
-    _response = response;
-  if (_action.first == Ai::ActionType::INVENTORY)
-    fillBag();
-  if (_nbResponse == 0)
-    sendToServ("toto");
-  else if (_nbResponse == 2)
-    inventory();
-  else if (_nbResponse >= 3)
-    look();
-  _nbResponse++;
   return (0);
 }
