@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 02:42:24 2017 Thomas
-// Last update Sun Jul  2 00:43:08 2017 Lucas
+// Last update Sun Jul  2 01:30:58 2017 Thomas
 //
 
 #include <iostream>
@@ -38,143 +38,163 @@ int	Game::getFreq() const
 
 int	Game::initMap(std::string &resp)
 {
-  // std::string   delim = " ";
-  // std::string   params;
-  // size_t        pos = 0;
-  // t_tiles	tmp;
+  std::string   delim_before = " ";
+  std::string	delim_after = ", ";
+  std::string   params;
+  size_t        pos = 0;
+  int		x;
+  int		y;
+  int		i;
 
-  // if ((pos = resp.find(delim)) != std::string::npos) {
-  //   params = resp.substr(0, pos);
-  //   resp.erase(0, pos + delim.length());
-  // }
-  // else
-  //   return (1);
-  // tmp.x = std::stoi(params, nullptr, 10);
+  x = 0;
+  y = 0;
+  while (x < _map_x)
+    {
+      while (y < _map_y)
+	{
+	  t_tiles	tmp;
 
-  // if ((pos = resp.find(delim)) != std::string::npos) {
-  //   params = resp.substr(0, pos);
-  //   resp.erase(0, pos + delim.length());
-  // }
-  // else
-  //   return (1);
-  // tmp.y = std::stoi(params, nullptr, 10);
-
-  // if ((pos = resp.find(delim)) != std::string::npos) {
-  //   params = resp.substr(0, pos);
-  //   resp.erase(0, pos + delim.length());
-  // }
-  // else
-  //   return (1);
-
-  // delim = ",";
-
-  // if ((pos = resp.find(delim)) != std::string::npos) {
-  //   params = resp.substr(0, pos);
-  //   resp.erase(0, pos + delim.length());
-  // }
-  // else
-  //   return (1);
-  // tmp.items[LINEMATE] = std::stoi(params, nullptr, 10);
-
+	  i = 0;
+	  tmp.available = true;
+	  if ((pos = resp.find(delim_before)) != std::string::npos) {
+	    params = resp.substr(0, pos);
+	    resp.erase(0, pos + delim_before.length());
+	  }
+	  else
+	    return (1);
+	  tmp.x = std::stoi(params, nullptr, 10);
+	  if ((pos = resp.find(delim_before)) != std::string::npos) {
+	    params = resp.substr(0, pos);
+	    resp.erase(0, pos + delim_before.length());
+	  }
+	  else
+	    return (1);
+	  tmp.y = std::stoi(params, nullptr, 10);
+	  while (i < 6)
+	    {
+	      if ((pos = resp.find(delim_before)) != std::string::npos) {
+		params = resp.substr(0, pos);
+		resp.erase(0, pos + delim_before.length());
+	      }
+	      if ((pos = resp.find(delim_after)) != std::string::npos) {
+		params = resp.substr(0, pos);
+		resp.erase(0, pos + delim_after.length());
+	      }
+	      tmp.items[(InvType)i] = std::stoi(params, nullptr, 10);
+	      i++;
+	    }
+	  if ((pos = resp.find(delim_before)) != std::string::npos) {
+	    params = resp.substr(0, pos);
+	    resp.erase(0, pos + delim_before.length());
+	  }
+	  resp.substr(0, resp.size() - 1);
+	  tmp.items[(InvType)i] = std::stoi(resp, nullptr, 10);
+	  y++;
+	}
+      x++;
+      y = 0;
+    }
   return (0);
 }
 
 int	Game::teamsDetails(std::string &resp)
 {
-  // std::string   delim = " ";
-  // std::string   params;
-  // std::string	team_name;
-  // size_t        pos = 0;
-  // Team		*tmp;
-  // Player	*tmp_p;
+  std::string	delim = " ";
+  std::string	params;
+  std::string	team_name;
+  size_t	pos = 0;
+  Player	*tmp;
+  Team		*tmp_t;
 
-  // if ((pos = resp.find(delim)) != std::string::npos) {
-  //   team_name = resp.substr(0, pos);
-  //   resp.erase(0, pos + delim.length());
-  // }
-  // else
-  //   return (1);
+  if ((pos = resp.find(delim)) != std::string::npos) {
+    team_name = resp.substr(0, pos);
+    resp.erase(0, pos + delim.length());
+  }
+  else
+    return (1);
 
-  // while ((pos = resp.find(delim)) != std::string::npos) {
-  //   params = resp.substr(0, pos);
-  //   resp.erase(0, pos + delim.length());
-  // }
+  while ((pos = resp.find(delim)) != std::string::npos) {
+    params = resp.substr(0, pos);
+    resp.erase(0, pos + delim.length());
+  }
+  tmp = new Player(std::stoi(resp, nullptr, 10));
 
-  // tmp_p = new Player(std::stoi(resp, nullptr, 10));
-
-  // std::vector<Team>::iterator it_team = _teams.begin();
-  // while (it_team != _teams.end() && (*it_team).getName() != team_name)
-  //   it_team++;
-  // if (it_team == _teams.end())
-  //   {
-  //     tmp = new Team(team_name);
-  //     tmp->getAllPlayer().push_back(*tmp_p);
-  //   }
-  // else
-  //   (*it_team).getAllPlayer().push_back(*tmp_p);
-
+  std::vector<Team>::iterator it_team = _teams.begin();
+  while (it_team != _teams.end() && (*it_team).getName() != team_name)
+    it_team++;
+  if (it_team == _teams.end())
+    {
+      tmp_t = new Team(team_name);
+      tmp_t->setNbPlayer(1);
+      tmp_t->addPlayer(*tmp);
+      _teams.push_back(*tmp_t);
+    }
+  else
+    {
+      (*it_team).setNbPlayer((*it_team).getNbPlayer() + 1);
+      (*it_team).addPlayer(*tmp);
+    }
   return (0);
 }
 
 int	Game::playerDetails(std::string &resp)
 {
-  // std::string   delim = " ";
-  // std::string   params;
-  // size_t        pos = 0;
+  std::string   delim = " ";
+  std::string   params;
+  size_t        pos = 0;
 
-  // if ((pos = resp.find(delim)) != std::string::npos) {
-  //   params = resp.substr(0, pos);
-  //   resp.erase(0, pos + delim.length());
-  // }
-  // else
-  //   return (1);
+  if ((pos = resp.find(delim)) != std::string::npos) {
+    params = resp.substr(0, pos);
+    resp.erase(0, pos + delim.length());
+  }
+  else
+    return (1);
 
-  // std::vector<Team>::iterator it_team = _teams.begin();
-  // while (it_team != _teams.end())
-  //   {
-  //     std::vector<Player>::iterator it_player = (*it_team).getAllPlayer().begin();
-  //     while (it_player != (*it_team).getAllPlayer().end() && (*it_player).getFd()
-  // 	     != std::stoi(params, nullptr, 10))
-  // 	it_player++;
-  //     if (it_player != (*it_team).getAllPlayer().end() && (*it_player).getFd()
-  // 	  == std::stoi(params, nullptr, 10))
-  // 	{
-  // 	  if ((pos = resp.find(delim)) != std::string::npos) {
-  // 	    params = resp.substr(0, pos);
-  // 	    resp.erase(0, pos + delim.length());
-  // 	  }
-  // 	  else
-  // 	    return (1);
-  // 	  (*it_player).setX(std::stoi(params, nullptr, 10));
+  std::vector<Team>::iterator it_team = _teams.begin();
+  while (it_team != _teams.end())
+    {
+      std::vector<Player>       tmp = (*it_team).getAllPlayer();
+      std::vector<Player>::iterator it_player = tmp.begin();
+      while (it_player != tmp.end() && (*it_player).getFd() != std::stoi(params, nullptr, 10))
+	it_player++;
+      if ((*it_player).getFd() == std::stoi(params, nullptr, 10))
+	{
+	  if ((pos = resp.find(delim)) != std::string::npos) {
+	    params = resp.substr(0, pos);
+	    resp.erase(0, pos + delim.length());
+	  }
+	  else
+	    return (1);
+	  (*it_player).setX(std::stoi(params, nullptr, 10));
 
-  // 	  if ((pos = resp.find(delim)) != std::string::npos) {
-  // 	    params = resp.substr(0, pos);
-  // 	    resp.erase(0, pos + delim.length());
-  // 	  }
-  // 	  else
-  // 	    return (1);
-  // 	  (*it_player).setY(std::stoi(params, nullptr, 10));
+	  if ((pos = resp.find(delim)) != std::string::npos) {
+	    params = resp.substr(0, pos);
+	    resp.erase(0, pos + delim.length());
+	  }
+	  else
+	    return (1);
+	  (*it_player).setY(std::stoi(params, nullptr, 10));
 
-  // 	  if ((pos = resp.find(delim)) != std::string::npos) {
-  // 	    params = resp.substr(0, pos);
-  // 	    resp.erase(0, pos + delim.length());
-  // 	  }
-  // 	  else
-  // 	    return (1);
-  // 	  (*it_player).setDirection(std::stoi(params, nullptr, 10));
+	  if ((pos = resp.find(delim)) != std::string::npos) {
+	    params = resp.substr(0, pos);
+	    resp.erase(0, pos + delim.length());
+	  }
+	  else
+	    return (1);
+	  (*it_player).setDirection(std::stoi(params, nullptr, 10));
 
-  // 	  if ((pos = resp.find(delim)) != std::string::npos) {
-  // 	    params = resp.substr(0, pos);
-  // 	    resp.erase(0, pos + delim.length());
-  // 	  }
-  // 	  else
-  // 	    return (1);
-  // 	  (*it_player).setLevel(std::stoi(params, nullptr, 10));
+	  if ((pos = resp.find(delim)) != std::string::npos) {
+	    params = resp.substr(0, pos);
+	    resp.erase(0, pos + delim.length());
+	  }
+	  else
+	    return (1);
+	  (*it_player).setLevel(std::stoi(params, nullptr, 10));
 
-  // 	  (*it_player).updateInventory(resp);
-  // 	}
-  //     it_team++;
-  //   }
+	  (*it_player).updateInventory(resp);
+	}
+      it_team++;
+    }
   return (0);
 }
 
@@ -260,7 +280,6 @@ int	Game::updateGame(const std::string &old)
   size_t	pos = 0;
 
   resp = old;
-  std::cout << "$$$" << resp << "&&&" << std::endl;
   if ((pos = resp.find(delim)) != std::string::npos) {
     id = resp.substr(0, pos);
     resp.erase(0, pos + delim.length());

@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 13:54:32 2017 Thomas
-// Last update Fri Jun 30 20:09:56 2017 Thomas
+// Last update Sun Jul  2 01:35:14 2017 Thomas
 //
 
 #include "player.hpp"
@@ -37,18 +37,31 @@ void    Player::setLevel(const int &level)
 
 void    Player::updateInventory(std::string &inv)
 {
-  std::string   delim = " ";
+  std::string   delim_before = " ";
+  std::string	delim_after = ", ";
   std::string   params;
   size_t        pos = 0;
   int		i;
 
   i = 0;
-  while ((pos = inv.find(delim)) != std::string::npos) {
+  while (i < 6)
+    {
+      if ((pos = inv.find(delim_before)) != std::string::npos) {
+	params = inv.substr(0, pos);
+	inv.erase(0, pos + delim_before.length());
+      }
+      if ((pos = inv.find(delim_after)) != std::string::npos) {
+	params = inv.substr(0, pos);
+	inv.erase(0, pos + delim_after.length());
+      }
+      _inventory[(InvType)i] = std::stoi(params, nullptr, 10);
+      i++;
+    }
+  if ((pos = inv.find(delim_before)) != std::string::npos) {
     params = inv.substr(0, pos);
-    inv.erase(0, pos + delim.length());
-    _inventory[(InvType)i] = std::stoi(params, nullptr, 10);
-    i++;
+    inv.erase(0, pos + delim_before.length());
   }
+  inv.substr(0, inv.size() - 1);
   _inventory[(InvType)i] = std::stoi(inv, nullptr, 10);
 }
 
@@ -77,6 +90,11 @@ int	Player::getLevel() const
   return (_level);
 }
 
+std::map<InvType, int>	Player::getInventory() const
+{
+  return (_inventory);
+}
+
 Player::Player(int fd)
 {
   _fd = fd;
@@ -92,6 +110,17 @@ Player::Player(int fd)
   _inventory[PHIRAS] = 0;
   _inventory[THYSTAME] = 0;
   _inventory[FOOD] = 0;
+}
+
+Player::Player(const Player &p)
+{
+  _fd = p.getFd();
+  _x = p.getX();
+  _y = p.getY();
+  _direction = p.getDirection();
+  _level = p.getLevel();
+  _is_alive = true;
+  _inventory = p.getInventory();
 }
 
 Player::~Player() {}

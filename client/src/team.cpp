@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 15:37:59 2017 Thomas
-// Last update Sat Jul  1 00:40:20 2017 Thomas
+// Last update Sun Jul  2 00:12:03 2017 Thomas
 //
 
 #include "team.hpp"
@@ -47,7 +47,7 @@ std::vector<Player>	Team::getAllPlayer() const
 
 Team::Team(const std::string &name)
 {
-  _name = "";
+  _name = name;
   _nbPlayers = 0;
 }
 
