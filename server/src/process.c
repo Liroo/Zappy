@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Wed Jun 21 04:30:29 2017 Pierre Monge
-** Last update Sat Jul  1 05:12:55 2017 Pierre Monge
+** Last update Sat Jul  1 16:21:54 2017 Pierre Monge
 */
 
 #include <time.h>
@@ -18,6 +18,7 @@
 #include "chrono.h"
 #include "h.h"
 #include "debug.h"
+#include "rfc.h"
 
 void			process_chrono_event()
 {
@@ -57,9 +58,11 @@ static void	process_player(t_client *client)
      return ;
    if ((*player->command_queue).duration > 0)
      {
+       if ((*player->command_queue).pre_exec)
+	 (*player->command_queue).pre_exec(client, (*player->command_queue).command);
        player->command_is_running = 1;
        queue_chrono((*player->command_queue).duration, client, C_EVENT_COMMAND);
-       return ;
+       return ((void)rfc_19(NULL, client, (*player->command_queue).duration));
      }
    if ((*player->command_queue).exec)
      (*player->command_queue).exec(client, (*player->command_queue).command);

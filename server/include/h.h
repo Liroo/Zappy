@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Sat Jul  1 07:01:57 2017 Pierre Monge
+** Last update Sat Jul  1 16:04:34 2017 Pierre Monge
 */
 
 #ifndef H_H
@@ -99,6 +99,8 @@ extern int	cmd_look(t_client *client, char *token);
 extern int	cmd_eject(t_client *client, char *token);
 extern int	cmd_broadcast(t_client *client, char *token);
 extern int	cmd_fork(t_client *client, char *token);
+extern int	cmd_pre_elevation(t_client *client, char *token);
+extern int	cmd_elevation(t_client *client, char *token);
 
 extern char	*parse_param(char *token);
 extern char	*strepur(char *str);

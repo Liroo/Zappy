@@ -78,6 +78,7 @@ SRC_GEN = \
 	command/get_max_value.c \
 	command/command_eject.c \
 	command/command_fork.c \
+	command/command_elevation.c \
 	\
 	rfc/rfc.c \
 	rfc/r_auth.c \
@@ -96,7 +97,10 @@ SRC_GEN = \
 	rfc/r_13.c \
 	rfc/r_14.c \
 	rfc/r_15.c \
-	rfc/r_16.c
+	rfc/r_16.c \
+	rfc/r_17.c \
+	rfc/r_18.c \
+	rfc/r_19.c
 
 OBJ_GEN = $(addprefix $(OBJ_GENDIR), $(SRC_GEN:.c=.o))
 

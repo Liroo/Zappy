@@ -64,9 +64,10 @@ Network Working Grou					            M. Pierre Monge
 
  5. RESPONSE IDS
 
-    01 - <x> <y>
+    01 - <x> <y> <freq>
 
        Size of the board game.
+       Freq is indicative of frequence of the server.
        This is send at connection.
 
     02 - <team name> [<fd>...]
@@ -132,7 +133,7 @@ Network Working Grou					            M. Pierre Monge
 
     12 - <fd player>
 
-       Dead notification.
+       Dead notification. On dead, the player may leave his inventory on place.
        This is send once the player is dead.
 
     13 - <fd player> <object>
@@ -148,7 +149,30 @@ Network Working Grou					            M. Pierre Monge
     15 - <fd player> <x> <y>
 
        Fork command. x and y is the position of the egg.
-       This is send each time player fork an egg that open a new connection.
+       This is send each time player fork an egg.
+
+    16 - <team name> <x> <y>
+
+       Egg hatching. x and y is the position of the egg.
+       This is send each time an egg is hatching that open a new connection.
+
+    17 - <fd player> <x> <y>
+
+       Elevation command.
+       This is send each time player start an incantation.
+
+    18 - <fd player> <elevation>
+
+       Elevation command. If the elevation is the same as fd player that start
+       the incantation, this significate that the elevation has failed.
+       This command generate multi 03 if elevation is succesfull.
+       This is send each time player end an incantation.
+
+    19 - <fd player> <duration>
+
+       Command casting. Each time a player is casting a command which get a
+       duration > 0. It send a 19 id with duration based on subject.
+       This is send each time player end an incantation.
 
 
 Author's Address

@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sat Jun 17 04:55:41 2017 Pierre Monge
-** Last update Sat Jul  1 04:53:10 2017 Pierre Monge
+** Last update Sat Jul  1 16:21:38 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -39,6 +39,7 @@ static int		queue_command(t_packet packet,
 	  if (!(new_command->command = strdup(packet.block)))
 	    return zappy_exit();
 	  new_command->exec = command_list[i].exec;
+	  new_command->pre_exec = command_list[i].pre_exec;
 	  new_command->duration = command_list[i].duration;
 	  (*command_in_queue)++;
 	  return (0);

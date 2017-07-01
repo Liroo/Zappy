@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 **
 ** Started on  Thu Jun 15 23:05:33 2017 guicha_t
-** Last update Sat Jul  1 04:53:16 2017 Pierre Monge
+** Last update Sat Jul  1 16:21:16 2017 Pierre Monge
 */
 
 #ifndef _COMMAND_H
@@ -26,6 +26,7 @@ struct			s_command
   int			title_len;
   int			duration;
   t_command_func	exec;
+  t_command_func	pre_exec;
 };
 
 struct			s_command_queue
@@ -33,6 +34,7 @@ struct			s_command_queue
   char			*command;
   int			duration;
   t_command_func	exec;
+  t_command_func	pre_exec;
 };
 
 #endif /* _COMMAND_H */
