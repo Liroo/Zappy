@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Wed Jun 21 04:15:36 2017 Pierre Monge
-** Last update Sat Jul  1 06:13:09 2017 Pierre Monge
+** Last update Sat Jul  1 07:28:04 2017 Pierre Monge
 */
 
 #ifndef GAME_H
@@ -16,12 +16,13 @@
 # define SPECTATOR_TEAM "spectator"
 # define SPECTATOR_TEAM_PASSWD "spectator"
 
-# define MIN_LINEMATE_PER_TEAM 54 + (54 / 2)
-# define MIN_DERAUMERE_PER_TEAM 48 + (48 / 2)
-# define MIN_SIBUR_PER_TEAM 60 + (60 / 2)
-# define MIN_MENDIANE_PER_TEAM 30 + (30 / 2)
-# define MIN_PHIRAS_PER_TEAM 36 + (36 / 2)
-# define MIN_THYSTAME_PER_TEAM 6 + (6 / 2)
+# define MIN_LINEMATE_PER_TEAM 15 + (15 / 2)
+# define MIN_DERAUMERE_PER_TEAM 13 + (13 / 2)
+# define MIN_SIBUR_PER_TEAM 18 + (18 / 2)
+# define MIN_MENDIANE_PER_TEAM 7 + (7 / 2)
+# define MIN_PHIRAS_PER_TEAM 8 + (8 / 2)
+# define MIN_THYSTAME_PER_TEAM 1 + (1 / 2)
+# define MIN_FOOD_PER_TEAM 20 + (20 / 2)
 
 # define N	1
 # define NW	2

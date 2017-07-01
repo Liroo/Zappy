@@ -1,11 +1,11 @@
 /*
 ** cmd_set.c for Project-Master in /home/guicha/tek2/Zappy/server/src/cmds
-** 
+**
 ** Made by guicha_t
 ** Login   <thomas.guichard@epitech.eu>
-** 
+**
 ** Started on  Thu Jun 22 00:49:52 2017 guicha_t
-** Last update Sat Jul  1 06:15:23 2017 guicha_t
+** Last update Sat Jul  1 07:45:28 2017 Pierre Monge
 */
 
 #include <string.h>
@@ -35,6 +35,7 @@ void		deposit_on_tile(t_player *p, t_client *c,
 		p->team->name,
 		rsc);
       rfc_14(NULL, c, rsc);
+      rfc_map(NULL);
       queue_packet(c, SIMPLE_PACKET, RPL_OK);
     }
 }

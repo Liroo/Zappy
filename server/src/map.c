@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 20 22:09:29 2017 Pierre Monge
-** Last update Sat Jul  1 02:45:16 2017 guicha_t
+** Last update Sat Jul  1 07:44:01 2017 Pierre Monge
 */
 
 #include <time.h>
@@ -29,13 +29,12 @@ void	insert_objects_in_map(int offset, int nb)
     {
       y = rand() % game.map_size_y;
       x = rand() % game.map_size_x;
-      INSERT_OBJECT(&(game.map[x][y]),
-		    offset);
+      INSERT_OBJECT(&(game.map[x][y]), offset);
       nb--;
     }
 }
 
-static void		spawn_stone()
+static void		spawn_objects()
 {
   t_list_head	*pos;
   int		team_nb;
@@ -53,6 +52,7 @@ static void		spawn_stone()
   insert_objects_in_map(MENDIANE_OFFSET, MIN_MENDIANE_PER_TEAM * team_nb);
   insert_objects_in_map(PHIRAS_OFFSET, MIN_PHIRAS_PER_TEAM * team_nb);
   insert_objects_in_map(THYSTAME_OFFSET, MIN_THYSTAME_PER_TEAM * team_nb);
+  insert_objects_in_map(FOOD_OFFSET, MIN_FOOD_PER_TEAM * team_nb);
 }
 
 #include "debug.h"
@@ -71,6 +71,6 @@ int	generate_map()
       memset(game.map[i], 0, sizeof(t_inventory) * game.map_size_y);
       i++;
     }
-  spawn_stone();
+  spawn_objects();
   return (0);
 }

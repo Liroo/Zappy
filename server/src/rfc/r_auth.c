@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Fri Jun 30 22:28:39 2017 Pierre Monge
-** Last update Sat Jul  1 05:14:55 2017 Pierre Monge
+** Last update Sat Jul  1 07:48:25 2017 Pierre Monge
 */
 
 #include "struct.h"
@@ -36,7 +36,7 @@ static void	rfc_auth_list_team(t_client *spectator)
     }
 }
 
-static void	rfc_map(t_client *spectator)
+void	rfc_map(t_client *spectator)
 {
   int		x;
   int		y;

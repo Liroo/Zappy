@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Fri Jun 30 19:39:29 2017 Pierre Monge
-** Last update Sat Jul  1 06:38:47 2017 Pierre Monge
+** Last update Sat Jul  1 07:40:12 2017 Pierre Monge
 */
 
 #ifndef RFC_H
@@ -35,6 +35,7 @@
 # define RPL_RFC_16 "16 %s %d %d\n"
 
 extern void	rfc(t_client *spectator, const char * restrict format, ...);
+extern void	rfc_map(t_client *spectator);
 extern void	rfc_auth(t_client *spectator);
 extern void	rfc_auth_list_client(t_client *spectator, t_team *team);
 

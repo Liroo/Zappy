@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sun Jun 25 00:09:45 2017 Pierre Monge
-** Last update Sat Jul  1 06:57:19 2017 Pierre Monge
+** Last update Sat Jul  1 07:33:14 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -25,6 +25,21 @@ static void	delete_player(t_player *player)
     player->team->empty_slot++;
   while (player->command_queue[i].command && (i < COMMAND_QUEUE_SIZE))
     free(player->command_queue[i++].command);
+  game.map[player->pos_x][player->pos_y].player--;
+  game.map[player->pos_x][player->pos_y].linemate +=
+    player->inventory.linemate;
+  game.map[player->pos_x][player->pos_y].deraumere +=
+    player->inventory.deraumere;
+  game.map[player->pos_x][player->pos_y].sibur +=
+    player->inventory.sibur;
+  game.map[player->pos_x][player->pos_y].mendiane +=
+    player->inventory.mendiane;
+  game.map[player->pos_x][player->pos_y].phiras +=
+    player->inventory.phiras;
+  game.map[player->pos_x][player->pos_y].thystame +=
+    player->inventory.thystame;
+  game.map[player->pos_x][player->pos_y].food +=
+    player->inventory.food;
   free(player);
 }
 
