@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Thu Jun 22 00:49:52 2017 guicha_t
-** Last update Tue Jun 27 21:30:27 2017 guicha_t
+** Last update Sat Jul  1 01:29:44 2017 guicha_t
 */
 
 #include <string.h>
@@ -18,8 +18,10 @@
 #include "debug.h"
 #include "h.h"
 #include "struct.h"
+#include "log.h"
 
-void		deposit_on_tile(t_player *p, t_client *c, int offset)
+void		deposit_on_tile(t_player *p, t_client *c,
+				int offset, char *rsc)
 {
   if (*(((char *)&p->inventory) + offset) <= 0)
     queue_packet(c, SIMPLE_PACKET, RPL_KO);
@@ -27,6 +29,10 @@ void		deposit_on_tile(t_player *p, t_client *c, int offset)
     {
       REMOVE_OBJECT(&p->inventory, offset);
       INSERT_OBJECT(&game.map[p->pos_x][p->pos_y], offset);
+      print_log("Player %d from %s: SET [%s].\n",
+		c->net_info.fd,
+		p->team->name,
+		rsc);
       queue_packet(c, SIMPLE_PACKET, RPL_OK);
     }
 }
@@ -34,19 +40,19 @@ void		deposit_on_tile(t_player *p, t_client *c, int offset)
 void		set_picking(char *rsc, t_client *client, t_player *p)
 {
   if (strcasecmp(rsc, "linemate") == 0)
-    deposit_on_tile(p, client, LINEMATE_OFFSET);
+    deposit_on_tile(p, client, LINEMATE_OFFSET, rsc);
   else if (strcasecmp(rsc, "deraumere") == 0)
-    deposit_on_tile(p, client, DERAUMERE_OFFSET);
+    deposit_on_tile(p, client, DERAUMERE_OFFSET, rsc);
   else if (strcasecmp(rsc, "sibur") == 0)
-    deposit_on_tile(p, client, SIBUR_OFFSET);
+    deposit_on_tile(p, client, SIBUR_OFFSET, rsc);
   else if (strcasecmp(rsc, "mendiane") == 0)
-    deposit_on_tile(p, client, MENDIANE_OFFSET);
+    deposit_on_tile(p, client, MENDIANE_OFFSET, rsc);
   else if (strcasecmp(rsc, "phiras") == 0)
-    deposit_on_tile(p, client, PHIRAS_OFFSET);
+    deposit_on_tile(p, client, PHIRAS_OFFSET, rsc);
   else if (strcasecmp(rsc, "thystame") == 0)
-    deposit_on_tile(p, client, THYSTAME_OFFSET);
+    deposit_on_tile(p, client, THYSTAME_OFFSET, rsc);
   else if (strcasecmp(rsc, "food") == 0)
-    deposit_on_tile(p, client, FOOD_OFFSET);
+    deposit_on_tile(p, client, FOOD_OFFSET, rsc);
   else
     queue_packet(client, SIMPLE_PACKET, RPL_KO);
 }

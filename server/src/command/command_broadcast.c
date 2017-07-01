@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Thu Jun 22 07:01:19 2017 guicha_t
-** Last update Thu Jun 29 15:01:48 2017 guicha_t
+** Last update Sat Jul  1 02:28:51 2017 guicha_t
 */
 
 #include <stdlib.h>
@@ -17,6 +17,7 @@
 #include "struct.h"
 #include "h.h"
 #include "packet.h"
+#include "log.h"
 
 int	convert_dir_about_dest(int pdir, int dir)
 {
@@ -43,7 +44,6 @@ int	convert_dir_about_dest(int pdir, int dir)
       if (real_dir > 8)
 	real_dir = real_dir - 8;
     }
-  PRINT_DEBUG("real dir %d\n", real_dir);
   return (real_dir);
 }
 
@@ -61,6 +61,9 @@ void	send_broadcast_message(t_client *c, char *msg, int dir)
     queue_packet(c, SIMPLE_PACKET, "message %d, %s\n", new_dir, msg);
   else
     queue_packet(c, SIMPLE_PACKET, "message %d\n", new_dir, msg);
+  print_log("Player %d from %s: receive BROADCAST.\n",
+	    c->net_info.fd,
+	    p->team->name);
 }
 
 char	*get_only_message_from_token(char *token)
@@ -71,8 +74,8 @@ char	*get_only_message_from_token(char *token)
 
   it = 0;
   im = 0;
-  PRINT_DEBUG("[%s]\n", token);
-  msg = malloc(sizeof(char) * strlen(token));
+  if (!(msg = malloc(sizeof(char) * strlen(token))))
+    return (zappy_exit(), NULL);
   memset(msg, '\0', strlen(token));
   while (token[it] != ' ' && token[it] != '\0')
     it++;
@@ -126,6 +129,9 @@ int	cmd_broadcast(t_client *client, char *token)
   psend = client->data;
   head = &game.teams;
   pos = list_get_first(head);
+  print_log("Player %d from %s: BROADCAST.\n",
+	    client->net_info.fd,
+	    psend->team->name);
   while (pos != head)
     {
       team = list_entry(pos, t_team, list);

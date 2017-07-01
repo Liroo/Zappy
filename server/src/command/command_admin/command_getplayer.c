@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Thu Jun 29 10:02:43 2017 guicha_t
-** Last update Sat Jul  1 00:32:33 2017 guicha_t
+** Last update Sat Jul  1 00:38:37 2017 guicha_t
 */
 
 #include "debug.h"
@@ -15,10 +15,7 @@
 
 void	display_informations(t_client *client, t_player *player)
 {
-  queue_packet(client, SIMPLE_PACKET, "fd->%d [%d][%d]\n", player->pos_x, player->pos_y);
-  (void)player;
-  (void)client;
-  /* queue_packet(client, SIMPLE_PACKET, RPL_OK); */
+  queue_packet(client, SIMPLE_PACKET, "fd->%d [%d][%d]\n", client->net_info.fd, player->pos_x, player->pos_y);
 }
 
 void	find_player_in_team(t_client *client, t_team *team)
@@ -47,8 +44,6 @@ int	cmd_getplayer(t_client *client, char *token)
   t_list_head	*pos;
   t_team	*team;
 
-  queue_packet(client, SIMPLE_PACKET, "In cmd getplayer\n");
-  queue_packet(client, SIMPLE_PACKET, RPL_OK);
   (void)token;
   head = &game.teams;
   pos = list_get_first(head);
@@ -58,5 +53,6 @@ int	cmd_getplayer(t_client *client, char *token)
       find_player_in_team(client, team);
       pos = pos->next;
     }
+  queue_packet(client, SIMPLE_PACKET, "--END OF GETINFO--\n");
   return (0);
 }

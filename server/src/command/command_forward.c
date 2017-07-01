@@ -5,10 +5,11 @@
 ** Login   <thomas.guichard@epitech.eu>
 **
 ** Started on  Tue Jun 20 23:05:54 2017 guicha_t
-** Last update Sun Jun 25 01:33:02 2017 Pierre Monge
+** Last update Sat Jul  1 01:19:49 2017 guicha_t
 */
 
 #include "h.h"
+#include "log.h"
 #include "debug.h"
 #include "game.h"
 #include "struct.h"
@@ -50,11 +51,13 @@ int		cmd_forward(t_client *client, char *token)
   player = client->data;
   (void)token;
   --game.map[player->pos_x][player->pos_y].player;
-  PRINT_DEBUG("Last pos: [%d][%d]\n", player->pos_x, player->pos_y);
   pos_about_direction(player);
   ++game.map[player->pos_x][player->pos_y].player;
-  PRINT_DEBUG("New pos: [%d][%d]\n", player->pos_x, player->pos_y);
-  PRINT_DEBUG("Forward ok!\n");
+  print_log("Player %d from %s: FORWARD to [%d][%d].\n",
+	    client->net_info.fd,
+	    player->team->name,
+	    player->pos_x,
+	    player->pos_y);
   queue_packet(client, SIMPLE_PACKET, RPL_OK);
   player->command_is_running = 1;
   queue_chrono(CHRONO_FORWARD, client, C_EVENT_COMMAND);

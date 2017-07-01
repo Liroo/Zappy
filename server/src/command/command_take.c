@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 **
 ** Started on  Wed Jun 21 02:09:58 2017 guicha_t
-** Last update Tue Jun 27 21:29:16 2017 guicha_t
+** Last update Sat Jul  1 01:27:56 2017 guicha_t
 */
 
 #include <string.h>
@@ -18,8 +18,9 @@
 #include "h.h"
 #include "struct.h"
 #include "packet.h"
+#include "log.h"
 
-void	extract(t_player *p, t_client *client, int offset)
+void	extract(t_player *p, t_client *client, int offset, char *rsc)
 {
   if (*(((char *)&game.map[p->pos_x][p->pos_y]) + offset) <= 0)
     queue_packet(client, SIMPLE_PACKET, RPL_KO);
@@ -27,6 +28,10 @@ void	extract(t_player *p, t_client *client, int offset)
     {
       REMOVE_OBJECT(&game.map[p->pos_x][p->pos_y], offset);
       INSERT_OBJECT(&p->inventory, offset);
+      print_log("Player %d from %s: TAKE [%s].\n",
+		client->net_info.fd,
+		p->team->name,
+		rsc);
       queue_packet(client, SIMPLE_PACKET, RPL_OK);
     }
 }
@@ -34,19 +39,19 @@ void	extract(t_player *p, t_client *client, int offset)
 void	take_picking(char *rsc, t_client *client, t_player *p)
 {
   if (strcasecmp(rsc, "linemate") == 0)
-    extract(p, client, LINEMATE_OFFSET);
+    extract(p, client, LINEMATE_OFFSET, rsc);
   else if (strcasecmp(rsc, "deraumere") == 0)
-    extract(p, client, DERAUMERE_OFFSET);
+    extract(p, client, DERAUMERE_OFFSET, rsc);
   else if (strcasecmp(rsc, "sibur") == 0)
-    extract(p, client, SIBUR_OFFSET);
+    extract(p, client, SIBUR_OFFSET, rsc);
   else if (strcasecmp(rsc, "mendiane") == 0)
-    extract(p, client, MENDIANE_OFFSET);
+    extract(p, client, MENDIANE_OFFSET, rsc);
   else if (strcasecmp(rsc, "phiras") == 0)
-    extract(p, client, PHIRAS_OFFSET);
+    extract(p, client, PHIRAS_OFFSET, rsc);
   else if (strcasecmp(rsc, "thystame") == 0)
-    extract(p, client, THYSTAME_OFFSET);
+    extract(p, client, THYSTAME_OFFSET, rsc);
   else if (strcasecmp(rsc, "food") == 0)
-    extract(p, client, FOOD_OFFSET);
+    extract(p, client, FOOD_OFFSET, rsc);
   else
     queue_packet(client, SIMPLE_PACKET, RPL_KO);
 }
