@@ -163,7 +163,7 @@ void Ai::eject() {
 
 void Ai::take(std::string const &var) {
   connect.sendToServ(strdup("take"));
-  std::cout << "take" << var << std::endl;
+  std::cout << "take " << var << std::endl;
   _response = connect.getResponse();
   printResponse();
   _action.first = Ai::ActionType::TAKE;
@@ -172,7 +172,7 @@ void Ai::take(std::string const &var) {
 
 void Ai::set(std::string const &var) {
   connect.sendToServ(strdup("set"));
-  std::cout << "set" << var << std::endl;
+  std::cout << "set " << var << std::endl;
   _response = connect.getResponse();
   printResponse();
   _action.first = Ai::ActionType::SET;
