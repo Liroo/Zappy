@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Sun Jun 25 22:01:46 2017 Lucas
-// Last update Sat Jul  1 01:17:03 2017 Lucas
+// Last update Sat Jul  1 02:13:21 2017 Lucas
 //
 
 #include "zappy.hpp"
@@ -110,7 +110,7 @@ int             Core::loopGui()
 
 int	Core::initConnectClient(int port, std::string host)
 {
-  coClient = new ConnectClient(port, host);
+  coClient = new ConnectClient(port, host, false);
   if (coClient->myConnect() == GUI_ERR)
     return (GUI_ERR);
   while (1)

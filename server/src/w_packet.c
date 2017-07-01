@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 15:17:59 2017 Pierre Monge
-** Last update Fri Jun 30 19:24:02 2017 Pierre Monge
+** Last update Sat Jul  1 02:44:54 2017 guicha_t
 */
 
 #include <stdarg.h>
@@ -29,7 +29,6 @@ void		queue_packet(t_client *client, char type,
   if (!(packet = malloc(sizeof(t_packet))))
     {
       PRINT_DEBUG("packet lost for fd: %d\n", client->net_info.fd);
-      perror("malloc");
       return (void)zappy_exit();
     }
   memset(packet, 0, sizeof(t_packet));
@@ -39,9 +38,8 @@ void		queue_packet(t_client *client, char type,
   va_end(va);
   if (packet->size == -1)
     {
-      PRINT_DEBUG("packet lost for fd: %d\n", client->net_info.fd);
       free(packet);
-      return ;
+      return ((void)zappy_exit());
     }
   list_add_tail(&packet->list, &client->w_packet);
   fd_set_select(client->net_info.fd,
@@ -56,7 +54,6 @@ void		queue_packet_va(t_client *client, char type,
   if (!(packet = malloc(sizeof(t_packet))))
     {
       PRINT_DEBUG("packet lost for fd: %d\n", client->net_info.fd);
-      perror("malloc");
       return (void)zappy_exit();
     }
   memset(packet, 0, sizeof(t_packet));
@@ -64,9 +61,8 @@ void		queue_packet_va(t_client *client, char type,
   packet->size = vasprintf(&packet->block, format, va);
   if (packet->size == -1)
     {
-      PRINT_DEBUG("packet lost for fd: %d\n", client->net_info.fd);
       free(packet);
-      return ;
+      return ((void)zappy_exit());
     }
   list_add_tail(&packet->list, &client->w_packet);
   fd_set_select(client->net_info.fd,

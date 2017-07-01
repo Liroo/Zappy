@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Fri Jun 23 02:57:54 2017 guicha_t
-** Last update Tue Jun 27 01:30:35 2017 guicha_t
+** Last update Sat Jul  1 01:41:19 2017 guicha_t
 */
 
 #include "debug.h"
@@ -42,7 +42,6 @@ int	get_dir_config_one(int x, int y)
   int   positive_x;
   int   positive_y;
 
-  PRINT_DEBUG("Broadcast [AB]\n");
   if (x < 0)
     positive_x = -x;
   else
@@ -67,7 +66,6 @@ int	get_dir_config_two(int x, int ymax, int send_y, int dest_y)
 {
   int   positive_x;
 
-  PRINT_DEBUG("Broadcast [AD]\n");
   if (x < 0)
     positive_x = -x;
   else
@@ -94,7 +92,6 @@ int	get_dir_config_three(int xmax, int y, int send_x, int dest_x)
 {
   int   positive_y;
 
-  PRINT_DEBUG("Broadcast [BC]\n");
   if (y < 0)
     positive_y = -y;
   else
@@ -119,7 +116,6 @@ int	get_dir_config_three(int xmax, int y, int send_x, int dest_x)
 
 int	get_dir_config_four(int x, int y, t_player *s, t_player *d)
 {
-  PRINT_DEBUG("Broadcast [CD]\n");
   if (d->pos_x > s->pos_x && d->pos_y > s->pos_y)
     if (x > y)
       return (E);

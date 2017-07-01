@@ -5,12 +5,14 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Wed Jun 21 23:18:03 2017 guicha_t
-** Last update Fri Jun 23 03:14:38 2017 guicha_t
+** Last update Sat Jul  1 02:31:03 2017 guicha_t
 */
 
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+
+#include "h.h"
 
 char	*strepur(char *str)
 {
@@ -19,8 +21,8 @@ char	*strepur(char *str)
   int   j;
 
   if ((epur = malloc(strlen(str) + 1)) == NULL)
-    perror("malloc");
-  i = 0;
+    return (zappy_exit(), NULL);
+    i = 0;
   j = 0;
   while ((str[i] == '\t') || (str[i] == ' '))
     i = i + 1;

@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 20 22:09:29 2017 Pierre Monge
-** Last update Sun Jun 25 23:17:10 2017 Pierre Monge
+** Last update Sat Jul  1 02:45:16 2017 guicha_t
 */
 
 #include <time.h>
@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "h.h"
 #include "struct.h"
 #include "game.h"
 
@@ -62,11 +63,11 @@ int	generate_map()
 
   i = 0;
   if (!(game.map = malloc(sizeof(t_inventory *) * game.map_size_x)))
-    return (perror("malloc"), -1);
+    return (zappy_exit(), -1);
   while (i < (int)game.map_size_x)
     {
       if (!(game.map[i] = malloc(sizeof(t_inventory) * game.map_size_y)))
-	return (perror("malloc"), -1);
+	return (zappy_exit(), -1);
       memset(game.map[i], 0, sizeof(t_inventory) * game.map_size_y);
       i++;
     }

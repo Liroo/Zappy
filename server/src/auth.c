@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Mon Jun 19 22:15:36 2017 Pierre Monge
-** Last update Sat Jul  1 00:29:25 2017 guicha_t
+** Last update Sat Jul  1 02:32:57 2017 guicha_t
 */
 
 #include <stdlib.h>
@@ -23,7 +23,7 @@ static t_player	*make_player(t_team *team)
   t_player	*player;
 
   if (!(player = malloc(sizeof(t_player))))
-    return (NULL);
+    return (zappy_exit(), NULL);
   memset(player, 0, sizeof(t_player));
   player->elevation = 1;
   player->pos_x = rand() % game.map_size_x;

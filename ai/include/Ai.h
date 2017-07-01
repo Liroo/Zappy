@@ -47,7 +47,7 @@ private:
   Ai::Direction _dir;
   std::string _response;
   int _fd;
-  int test;
+  int _nbResponse;
 
 public:
   const int &getLevel() const;
@@ -79,10 +79,11 @@ public:
 
   int aiBrain(std::string const &);
   void fillBag();
+  bool  checkHook(const std::string &);
+  bool  checkDebHook(const std::string &);
+  int sendToServ(const std::string &);
   void fillView();
   void ReplaceStringInPlace(std::string& subject, const std::string& search, const std::string& replace);
-  bool checkHook(const std::string &);
-  int sendToServ(const std::string &);
 };
 
 #endif
