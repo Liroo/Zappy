@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Wed Jun 21 04:30:29 2017 Pierre Monge
-** Last update Sat Jul  1 00:28:38 2017 guicha_t
+** Last update Sat Jul  1 05:12:55 2017 Pierre Monge
 */
 
 #include <time.h>
@@ -55,6 +55,12 @@ static void	process_player(t_client *client)
    player = client->data;
    if (player->command_is_running || player->command_in_queue <= 0)
      return ;
+   if ((*player->command_queue).duration > 0)
+     {
+       player->command_is_running = 1;
+       queue_chrono((*player->command_queue).duration, client, C_EVENT_COMMAND);
+       return ;
+     }
    if ((*player->command_queue).exec)
      (*player->command_queue).exec(client, (*player->command_queue).command);
    free((*player->command_queue).command);
@@ -76,7 +82,6 @@ static void	process_admin(t_client *client)
    admin = client->data;
    if (admin->command_in_queue <= 0)
      return ;
-
    if ((*admin->command_queue).exec)
      (*admin->command_queue).exec(client, (*admin->command_queue).command);
    free((*admin->command_queue).command);

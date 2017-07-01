@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Fri Jun 30 19:39:29 2017 Pierre Monge
-** Last update Fri Jun 30 23:17:55 2017 Pierre Monge
+** Last update Sat Jul  1 05:13:24 2017 Pierre Monge
 */
 
 #ifndef RFC_H
@@ -34,6 +34,7 @@
 
 extern void	rfc(t_client *spectator, const char * restrict format, ...);
 extern void	rfc_auth(t_client *spectator);
+extern void	rfc_auth_list_client(t_client *spectator, t_team *team);
 
 extern void	rfc_01(t_client *spectator);
 extern void	rfc_02(t_client *spectator, t_team *team);

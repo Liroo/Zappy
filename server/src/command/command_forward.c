@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 **
 ** Started on  Tue Jun 20 23:05:54 2017 guicha_t
-** Last update Sat Jul  1 01:19:49 2017 guicha_t
+** Last update Sat Jul  1 05:00:44 2017 Pierre Monge
 */
 
 #include "h.h"
@@ -59,7 +59,5 @@ int		cmd_forward(t_client *client, char *token)
 	    player->pos_x,
 	    player->pos_y);
   queue_packet(client, SIMPLE_PACKET, RPL_OK);
-  player->command_is_running = 1;
-  queue_chrono(CHRONO_FORWARD, client, C_EVENT_COMMAND);
   return (0);
 }
