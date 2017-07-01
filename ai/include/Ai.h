@@ -42,7 +42,7 @@ private:
   std::map<std::string, method_pointer> _TabAdd;
   int _level;
   Inventory _bag;
-  std::vector<Inventory> _viewMaterial;
+  std::vector<Inventory, std::pair<int, int>> _viewMaterial;
   int _life;
   std::pair<Ai::ActionType, std::string>  _action;
   Ai::Direction _dir;
@@ -85,7 +85,6 @@ public:
   int aiBrain();
   void fillBag();
   bool  checkHook(const std::string &);
-  bool  checkDebHook(const std::string &);
   void fillView();
   void ReplaceStringInPlace(std::string& subject, const std::string& search, const std::string& replace);
 };
