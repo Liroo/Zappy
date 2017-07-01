@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 **
 ** Started on  Tue Jun 20 23:05:54 2017 guicha_t
-** Last update Sat Jul  1 05:00:44 2017 Pierre Monge
+** Last update Sat Jul  1 06:14:48 2017 guicha_t
 */
 
 #include "h.h"
@@ -13,8 +13,9 @@
 #include "debug.h"
 #include "game.h"
 #include "struct.h"
-#include  "chrono.h"
+#include "chrono.h"
 #include "packet.h"
+#include "rfc.h"
 
 void		pos_about_direction(t_player *p)
 {
@@ -53,11 +54,12 @@ int		cmd_forward(t_client *client, char *token)
   --game.map[player->pos_x][player->pos_y].player;
   pos_about_direction(player);
   ++game.map[player->pos_x][player->pos_y].player;
-  print_log("Player %d from %s: FORWARD to [%d][%d].\n",
+  print_log("Player %d from %s: FORWARD to [%d][%d]\n",
 	    client->net_info.fd,
 	    player->team->name,
 	    player->pos_x,
 	    player->pos_y);
   queue_packet(client, SIMPLE_PACKET, RPL_OK);
+  rfc_05(NULL, client);
   return (0);
 }

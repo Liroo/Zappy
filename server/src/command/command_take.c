@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 **
 ** Started on  Wed Jun 21 02:09:58 2017 guicha_t
-** Last update Sat Jul  1 05:08:24 2017 guicha_t
+** Last update Sat Jul  1 06:15:29 2017 guicha_t
 */
 
 #include <string.h>
@@ -19,6 +19,7 @@
 #include "struct.h"
 #include "packet.h"
 #include "log.h"
+#include "rfc.h"
 
 void	extract(t_player *p, t_client *client, int offset, char *rsc)
 {
@@ -28,10 +29,11 @@ void	extract(t_player *p, t_client *client, int offset, char *rsc)
     {
       REMOVE_OBJECT(&game.map[p->pos_x][p->pos_y], offset);
       INSERT_OBJECT(&p->inventory, offset);
-      print_log("Player %d from %s: TAKE [%s].\n",
+      print_log("Player %d from %s: TAKE [%s]\n",
 		client->net_info.fd,
 		p->team->name,
 		rsc);
+      rfc_13(NULL, client, rsc);
       queue_packet(client, SIMPLE_PACKET, RPL_OK);
     }
 }

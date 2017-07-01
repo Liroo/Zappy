@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 **
 ** Started on  Wed Jun 21 01:12:18 2017 guicha_t
-** Last update Sat Jul  1 05:08:04 2017 guicha_t
+** Last update Sat Jul  1 06:15:15 2017 guicha_t
 */
 
 #include "h.h"
@@ -15,6 +15,7 @@
 #include "chrono.h"
 #include "struct.h"
 #include "packet.h"
+#include "rfc.h"
 
 int		cmd_right(t_client *client, char *token)
 {
@@ -25,9 +26,10 @@ int		cmd_right(t_client *client, char *token)
   ++player->direction;
   if (player->direction > 3)
     player->direction = 0;
-  print_log("Player %d from %s: RIGHT.\n",
+  print_log("Player %d from %s: RIGHT\n",
 	    client->net_info.fd,
 	    player->team->name);
   queue_packet(client, SIMPLE_PACKET, RPL_OK);
+  rfc_06(NULL, client);
   return (0);
 }

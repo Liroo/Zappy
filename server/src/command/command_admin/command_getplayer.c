@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Thu Jun 29 10:02:43 2017 guicha_t
-** Last update Sat Jul  1 00:38:37 2017 guicha_t
+** Last update Sat Jul  1 06:13:02 2017 guicha_t
 */
 
 #include "debug.h"
@@ -15,7 +15,10 @@
 
 void	display_informations(t_client *client, t_player *player)
 {
-  queue_packet(client, SIMPLE_PACKET, "fd->%d [%d][%d]\n", client->net_info.fd, player->pos_x, player->pos_y);
+  queue_packet(client, SIMPLE_PACKET, "fd %d - [%d][%d]\n",
+	       client->net_info.fd,
+	       player->pos_x,
+	       player->pos_y);
 }
 
 void	find_player_in_team(t_client *client, t_team *team)

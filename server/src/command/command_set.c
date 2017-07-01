@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Thu Jun 22 00:49:52 2017 guicha_t
-** Last update Sat Jul  1 05:08:15 2017 guicha_t
+** Last update Sat Jul  1 06:15:23 2017 guicha_t
 */
 
 #include <string.h>
@@ -19,6 +19,7 @@
 #include "h.h"
 #include "struct.h"
 #include "log.h"
+#include "rfc.h"
 
 void		deposit_on_tile(t_player *p, t_client *c,
 				int offset, char *rsc)
@@ -29,10 +30,11 @@ void		deposit_on_tile(t_player *p, t_client *c,
     {
       REMOVE_OBJECT(&p->inventory, offset);
       INSERT_OBJECT(&game.map[p->pos_x][p->pos_y], offset);
-      print_log("Player %d from %s: SET [%s].\n",
+      print_log("Player %d from %s: SET [%s]\n",
 		c->net_info.fd,
 		p->team->name,
 		rsc);
+      rfc_14(NULL, c, rsc);
       queue_packet(c, SIMPLE_PACKET, RPL_OK);
     }
 }
