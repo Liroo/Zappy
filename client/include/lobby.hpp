@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Wed Jun 28 00:16:38 2017 Lucas
-// Last update Sat Jul  1 03:05:34 2017 Thomas
+// Last update Sat Jul  1 03:35:57 2017 Lucas
 //
 
 #ifndef LOBBY_HPP_
@@ -41,6 +41,7 @@ public:
   void		lobbyRemove();
   bool		getQuit() const;
   int           launchGUI(t_sett *, int status);
+  bool		isDigits(const std::string &str);
 
 private:
   irr::scene::ISceneManager	*sm;

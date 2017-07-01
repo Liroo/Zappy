@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Sun Jun 25 22:00:45 2017 Lucas
-// Last update Sat Jul  1 01:53:54 2017 Thomas
+// Last update Sat Jul  1 03:51:44 2017 Lucas
 //
 
 #ifndef ZAPPY_HPP_
@@ -88,7 +88,8 @@ enum
     GUI_ID_SETT_BUTTON,
     GUI_ID_CREDITS_BUTTON,
     GUI_ID_HOST_TF,
-    GUI_ID_PORT_TF
+    GUI_ID_PORT_TF,
+    GUI_ID_MSG_BOX
   };
 
 enum	Inv

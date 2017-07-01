@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Wed Jun 28 00:39:03 2017 Lucas
-// Last update Sat Jul  1 03:25:13 2017 Thomas
+// Last update Sat Jul  1 04:14:01 2017 Lucas
 //
 
 #include "lobby.hpp"
@@ -69,13 +69,20 @@ int	Lobby::initLobby(t_sett *sett, int status)
 	  std::string check_host(ws.begin(), ws.end());
 	  ws = port;
 	  std::string check_port(ws.begin(), ws.end());
-	  checkConnect = new ConnectClient(std::stoi(check_port, nullptr, 10), check_host, true);
-	  if (checkConnect->myConnect() == 0)
-	    std::cout << "$OK$\n" << std::endl;
+	  if (!isDigits(check_port) || check_port.empty() == true || check_host.empty() == true)
+	    lobbyGUI->addMessageBox(L"Syntax error", L"Wrong connection informations !", true);
 	  else
-	    std::cout << "$KO$\n" << std::endl;
-	  delete (checkConnect);
-	  status = GUI;
+	    {
+	      checkConnect = new ConnectClient(std::stoi(check_port, nullptr, 10), check_host, true);
+	      if (checkConnect->myConnect() == 0)
+		status = GUI;
+	      else
+		lobbyGUI->addMessageBox(L"Internal error", L"Connection failed !", true);
+	      delete (checkConnect);
+	    }
+	  check_port.clear();
+	  check_host.clear();
+	  event.setPressConnect(false);
 	}
     }
   lobbyRemove();
@@ -85,6 +92,11 @@ int	Lobby::initLobby(t_sett *sett, int status)
 bool	Lobby::getQuit() const
 {
   return (this->quit);
+}
+
+bool	Lobby::isDigits(const std::string &str)
+{
+  return str.find_first_not_of("0123456789") == std::string::npos;
 }
 
 Lobby::Lobby(irr::scene::ISceneManager* sm_, irr::video::IVideoDriver* driver_,

@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 // 
 // Started on  Thu Jun 29 16:00:47 2017 Lucas
-// Last update Fri Jun 30 01:55:13 2017 Lucas
+// Last update Sat Jul  1 03:59:26 2017 Lucas
 //
 
 #ifndef EVENTGESTURE_HPP_
@@ -27,6 +27,7 @@ public:
 
   bool		getQuit() const;
   bool		getPressConnect() const;
+  void		setPressConnect(bool);
   
   virtual bool	OnEvent(const irr::SEvent &event);
 
