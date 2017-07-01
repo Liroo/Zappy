@@ -1,11 +1,11 @@
 //
 // lobby.hpp for lobby in /home/lucas/rendu/reseau_psu/Zappy/client
-// 
+//
 // Made by Lucas
 // Login   <lucas.onillon@epitech.eu>
-// 
+//
 // Started on  Wed Jun 28 00:16:38 2017 Lucas
-// Last update Fri Jun 30 23:15:29 2017 Lucas
+// Last update Sat Jul  1 03:05:34 2017 Thomas
 //
 
 #ifndef LOBBY_HPP_
@@ -18,6 +18,7 @@
 # include "LTexture.hpp"
 # include "eventGesture.hpp"
 # include "gui.hpp"
+# include "connectClient.hpp"
 
 /*
 ** Macro definitions.
@@ -52,9 +53,13 @@ private:
   irr::gui::IGUIEditBox		*portTF;
   irr::gui::IGUIButton		*connectBtt;
 
+  irr::gui::IGUIElement		*elem;
+
   irr::scene::ISceneNode        *skybox;
   bool				quit;
   Win				win;
+
+  ConnectClient			*checkConnect;
 };
 
 #endif	/* !LOBBY_HPP_*/

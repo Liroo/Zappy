@@ -5,7 +5,7 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Wed Jun 28 00:50:35 2017 Thomas
-// Last update Sat Jul  1 02:10:59 2017 Lucas
+// Last update Sat Jul  1 03:13:41 2017 Thomas
 */
 
 #ifndef CONNECTCLIENT_H
@@ -29,6 +29,7 @@ private:
   fd_set		_fd_read;
   struct timeval	_tv;
   bool			_checkParam;
+  std::string		_buf;
 
 private:
   int	clienttoserv();
@@ -37,8 +38,9 @@ private:
   int	firstConnect();
 
 public:
-  int	myConnect();
-  int	my_select();
+  int		myConnect();
+  int		my_select();
+  std::string	getResponse() const;
 
 };
 

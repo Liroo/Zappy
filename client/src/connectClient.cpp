@@ -5,7 +5,7 @@
 // Login   <andre@epitech.net>
 //
 // Started on  Tue Jun 27 03:02:21 2017 andre
-// Last update Sat Jul  1 02:13:00 2017 Lucas
+// Last update Sat Jul  1 03:14:33 2017 Thomas
 //
 
 # include <stdio.h>
@@ -51,6 +51,7 @@ int	ConnectClient::servtoclient()
       return (1);
     }
   printf("%s", repserv); // Pour debug, a enlever sinon
+  _buf = repserv;
   return (0);
 }
 
