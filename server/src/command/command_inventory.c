@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Wed Jun 21 02:43:02 2017 guicha_t
-** Last update Sat Jul  1 05:07:11 2017 guicha_t
+** Last update Sat Jul  1 06:14:58 2017 guicha_t
 */
 
 #include "h.h"
@@ -14,6 +14,7 @@
 #include "chrono.h"
 #include "debug.h"
 #include "log.h"
+#include "rfc.h"
 
 int	cmd_inventory(t_client *client, char *token)
 {
@@ -32,8 +33,9 @@ int	cmd_inventory(t_client *client, char *token)
 	       p->inventory.mendiane,
 	       p->inventory.phiras,
 	       p->inventory.thystame);
-  print_log("Player %d from %s: INVENTORY.\n",
+  print_log("Player %d from %s: INVENTORY\n",
 	    client->net_info.fd,
 	    p->team->name);
+  rfc_09(NULL, client);
   return (0);
 }

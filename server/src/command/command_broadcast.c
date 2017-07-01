@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Thu Jun 22 07:01:19 2017 guicha_t
-** Last update Sat Jul  1 05:04:56 2017 guicha_t
+** Last update Sat Jul  1 06:14:31 2017 guicha_t
 */
 
 #include <stdlib.h>
@@ -18,6 +18,7 @@
 #include "h.h"
 #include "packet.h"
 #include "log.h"
+#include "rfc.h"
 
 int	convert_dir_about_dest(int pdir, int dir)
 {
@@ -61,7 +62,7 @@ void	send_broadcast_message(t_client *c, char *msg, int dir)
     queue_packet(c, SIMPLE_PACKET, "message %d, %s\n", new_dir, msg);
   else
     queue_packet(c, SIMPLE_PACKET, "message %d\n", new_dir, msg);
-  print_log("Player %d from %s: receive BROADCAST.\n",
+  print_log("Player %d from %s: receive BROADCAST\n",
 	    c->net_info.fd,
 	    p->team->name);
 }
@@ -105,6 +106,7 @@ void	find_player_broadcast(t_client *send, t_team *team, char *t)
   pos_p = list_get_first(head_p);
   psend = send->data;
   msg = get_only_message_from_token(t);
+  rfc_10(NULL, send, msg);
   while (pos_p != head_p)
     {
       tmp_p = list_entry(pos_p, t_client, list);
@@ -129,7 +131,7 @@ int	cmd_broadcast(t_client *client, char *token)
   psend = client->data;
   head = &game.teams;
   pos = list_get_first(head);
-  print_log("Player %d from %s: BROADCAST.\n",
+  print_log("Player %d from %s: BROADCAST\n",
 	    client->net_info.fd,
 	    psend->team->name);
   while (pos != head)

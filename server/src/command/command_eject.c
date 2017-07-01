@@ -5,11 +5,13 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Fri Jun 23 01:28:13 2017 Thomas
-** Last update Sat Jul  1 05:06:01 2017 guicha_t
+** Last update Sat Jul  1 06:20:03 2017 guicha_t
 */
 
 #include "struct.h"
 #include "h.h"
+#include "rfc.h"
+#include "log.h"
 
 static void	send_eject(t_client *client, t_player *target_p, t_player *p)
 {
@@ -23,6 +25,8 @@ static void	send_eject(t_client *client, t_player *target_p, t_player *p)
     queue_packet(client, SIMPLE_PACKET, "eject: 3\n");
   else
     queue_packet(client, SIMPLE_PACKET, "eject: 1\n");
+  print_log("Player %d from %s: Ejected\n", client->net_info.fd,
+	    target_p->team->name);
 }
 
 static void	eject_player(t_client *client, t_player *p)
@@ -81,6 +85,8 @@ int	cmd_eject(t_client *client, char *token)
       queue_packet(client, SIMPLE_PACKET, RPL_KO);
       return (1);
     }
+  print_log("Player %d from %s: EJECT\n", client->net_info.fd,
+	    p->team->name);
   head = &game.teams;
   pos = list_get_first(head);
   while (pos != head)
@@ -90,5 +96,6 @@ int	cmd_eject(t_client *client, char *token)
       pos = pos->next;
     }
   queue_packet(client, SIMPLE_PACKET, RPL_OK);
+  rfc_11(NULL, client);
   return (0);
 }

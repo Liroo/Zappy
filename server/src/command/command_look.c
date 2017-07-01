@@ -5,7 +5,7 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Wed Jun 21 22:49:06 2017 Thomas
-** Last update Sat Jul  1 05:07:32 2017 guicha_t
+** Last update Sat Jul  1 06:16:52 2017 guicha_t
 */
 
 #include <stdio.h>
@@ -15,6 +15,8 @@
 #include "game.h"
 #include "debug.h"
 #include "h.h"
+#include "rfc.h"
+#include "log.h"
 
 static int	get_range_per_elevation(t_player *p)
 {
@@ -81,5 +83,9 @@ int	cmd_look(t_client *client, char *token)
       i++;
     }
   queue_packet(client, SIMPLE_PACKET, "]\n");
+  print_log("Player %d from %s: LOOK\n",
+	    client->net_info.fd,
+	    p->team->name);
+  rfc_08(NULL, client);
   return (0);
 }
