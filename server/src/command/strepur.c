@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 **
 ** Started on  Wed Jun 21 23:18:03 2017 guicha_t
-** Last update Sat Jul  1 16:59:41 2017 Pierre Monge
+** Last update Sun Jul  2 01:03:27 2017 guicha_t
 */
 
 #include <stdlib.h>
@@ -24,12 +24,12 @@ char	*strepur(char *str)
   j = 0;
   if ((epur = malloc(strlen(str) + 1)) == NULL)
     return (zappy_exit(), NULL);
-  while ((str[i] == '\t') || (str[i] == ' '))
+  while (((str[i] == '\t') || (str[i] == ' ')) && (str[i]))
     i = i + 1;
   while (str[i] != '\0')
     {
       epur[j++] = str[i++];
-      while ((str[i] == '\t') || (str[i] == ' '))
+      while (((str[i] == '\t') || (str[i] == ' ')) && (str[i]))
 	i = i + 1;
       if (((str[i - 1] == '\t') ||
 	   (str[i - 1] == ' ')) &&

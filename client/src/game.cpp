@@ -5,12 +5,21 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 02:42:24 2017 Thomas
-// Last update Sat Jul  1 18:46:32 2017 Thomas
+// Last update Sun Jul  2 00:43:08 2017 Lucas
 //
 
 #include <iostream>
-
 #include "game.hpp"
+
+void	Game::setMapInit(bool update)
+{
+  this->_mapInit = update;
+}
+
+bool	Game::getMapInit() const
+{
+  return (this->_mapInit);
+}
 
 int	Game::getMapX() const
 {
@@ -20,6 +29,11 @@ int	Game::getMapX() const
 int	Game::getMapY() const
 {
   return (_map_y);
+}
+
+int	Game::getFreq() const
+{
+  return (_freq);
 }
 
 int	Game::initMap(std::string &resp)
@@ -177,7 +191,14 @@ int	Game::size(std::string &resp)
   else
     return (1);
   _map_x = std::stoi(params, nullptr, 10);
-  _map_y = std::stoi(resp, nullptr, 10);
+  if ((pos = resp.find(delim)) != std::string::npos) {
+    params = resp.substr(0, pos);
+    resp.erase(0, pos + delim.length());
+  }
+  else
+    return (1);
+  _map_y = std::stoi(params, nullptr, 10);
+  _freq = std::stoi(resp, nullptr, 10);
   return (0);
 }
 
@@ -253,8 +274,17 @@ int	Game::updateGame(const std::string &old)
     return (1);
 }
 
-Game::Game()
+Game::Game(irr::scene::ISceneManager *smgr, irr::video::IVideoDriver *driver,
+	   irr::IrrlichtDevice *device)
 {
+  sm = smgr;
+  driver = driver;
+  device = device;
+  gameGUI = device->getGUIEnvironment();
+  nbGround = 0;
+  _mapInit = false;
+  _map_x = DEFAULT;
+  _map_y = DEFAULT;
   _allResp["01"] = &Game::size;
   _allResp["02"] = &Game::teamsDetails;
   _allResp["03"] = &Game::playerDetails;

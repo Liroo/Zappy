@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Fri Jun 30 05:14:07 2017 Lucas
-// Last update Sat Jul  1 17:05:21 2017 Thomas
+// Last update Sun Jul  2 00:12:46 2017 Lucas
 //
 
 #include "gui.hpp"
@@ -49,7 +49,7 @@ int		Gui::initGui(const int &port, const std::string &host)
 {
   Event		event;
 
-  game = new Game();
+  game = new Game(smgr, driver, device);
   makeGuiSkybox();
   coClient = new ConnectClient(port, host, false);
   if (coClient->myConnect() == GUI_ERR)
@@ -58,6 +58,12 @@ int		Gui::initGui(const int &port, const std::string &host)
   device->setEventReceiver(&event);
   while (device->run() && win == GUI && quit == false)
     {
+      if (game->getMapInit() == false && game->getMapX() != DEFAULT && game->getMapY() != DEFAULT)
+	{
+	  if (game->createMap() == GUI_ERR)
+	    return (GUI_ERR);
+	  game->setMapInit(true);
+	}
       driver->beginScene(true, true, irr::video::SColor(255, 38, 196, 236));
       quit = event.getQuit();
       smgr->drawAll();
