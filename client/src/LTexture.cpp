@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 // 
 // Started on  Mon Jun 26 00:55:18 2017 Lucas
-// Last update Fri Jun 30 00:23:38 2017 Lucas
+// Last update Sat Jul  1 20:46:51 2017 Lucas
 //
 
 #include "LTexture.hpp"
@@ -29,9 +29,15 @@ int	LTexture::setTexture(irr::scene::ISceneManager* smgr, irr::video::IVideoDriv
       || (hostLogo = driver->getTexture("./media/img/host_layer.png")) == 0
       || (portLogo = driver->getTexture("./media/img/port_layer.png")) == 0
       || (connectLogo = driver->getTexture("./media/img/connect_layer.png")) == 0
+      || (tile = driver->getTexture("./media/img/materials/floor.png")) == 0
       )
     return (GUI_ERR);
   return (GUI_OK);
+}
+
+irr::video::ITexture*       LTexture::getTile() const
+{
+  return (this->tile);
 }
 
 irr::video::ITexture*       LTexture::getConnectL() const

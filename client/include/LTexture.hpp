@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 // 
 // Started on  Mon Jun 26 00:57:46 2017 Lucas
-// Last update Fri Jun 30 00:22:31 2017 Lucas
+// Last update Sat Jul  1 20:45:38 2017 Lucas
 //
 
 #ifndef LTexture_HPP
@@ -27,20 +27,27 @@ public:
   int				initDevice();
   int				setTexture(irr::scene::ISceneManager *, irr::video::IVideoDriver *,
 					   irr::gui::IGUIEnvironment *);
+  // LOBBY //
   irr::video::ITexture		*getLogo() const;
   irr::video::ITexture		*getHostL() const;
   irr::video::ITexture		*getPortL() const;
   irr::video::ITexture		*getConnectL() const;
 
+  // SKYBOX //
   irr::video::ITexture*		getSbMountUp() const;
   irr::video::ITexture*         getSbMountDown() const;
   irr::video::ITexture*         getSbMountRight() const;
   irr::video::ITexture*         getSbMountLeft() const;
   irr::video::ITexture*         getSbMountFront() const;
   irr::video::ITexture*         getSbMountBack() const;
-  
+
+  // MAP OBJECTS //
+  irr::video::ITexture		*getTile() const;
 
 private:
+  // MAP OBJECTS //
+  irr::video::ITexture		*tile;
+  
   // LOBBY //
   irr::video::ITexture		*LogoPNG;
   irr::video::ITexture		*hostLogo;
