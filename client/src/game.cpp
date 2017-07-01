@@ -5,12 +5,22 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 02:42:24 2017 Thomas
-// Last update Sat Jul  1 04:07:53 2017 Thomas
+// Last update Sat Jul  1 04:31:00 2017 Lucas
 //
 
 #include <iostream>
 
 #include "game.hpp"
+
+int	Game::getMapX() const
+{
+  return (_map_x);
+}
+
+int	Game::getMapY() const
+{
+  return (_map_y);
+}
 
 int	Game::initMap(std::string &resp)
 {
@@ -154,8 +164,20 @@ int	Game::playerDetails(std::string &resp)
   return (0);
 }
 
-int	Game::tileInventory(std::string &resp)
+int	Game::size(std::string &resp)
 {
+  std::string   delim = " ";
+  std::string   params;
+  size_t        pos = 0;
+
+  if ((pos = resp.find(delim)) != std::string::npos) {
+    params = resp.substr(0, pos);
+    resp.erase(0, pos + delim.length());
+  }
+  else
+    return (1);
+  _map_x = std::stoi(params, nullptr, 10);
+  _map_y = std::stoi(resp, nullptr, 10);
   return (0);
 }
 
@@ -230,10 +252,10 @@ int	Game::updateGame(std::string &resp)
 
 Game::Game()
 {
-  _allResp["01"] = &Game::initMap;
+  _allResp["01"] = &Game::size;
   _allResp["02"] = &Game::teamsDetails;
   _allResp["03"] = &Game::playerDetails;
-  _allResp["04"] = &Game::tileInventory;
+  _allResp["04"] = &Game::initMap;
   _allResp["05"] = &Game::forward;
   _allResp["06"] = &Game::right;
   _allResp["07"] = &Game::left;

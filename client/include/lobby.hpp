@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Wed Jun 28 00:16:38 2017 Lucas
-// Last update Sat Jul  1 03:35:57 2017 Lucas
+// Last update Sat Jul  1 05:00:36 2017 Lucas
 //
 
 #ifndef LOBBY_HPP_
@@ -60,7 +60,7 @@ private:
   bool				quit;
   Win				win;
 
-  ConnectClient			*checkConnect;
+  ConnectClient			*connect;
 };
 
 #endif	/* !LOBBY_HPP_*/

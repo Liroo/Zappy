@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Sun Jun 25 22:01:46 2017 Lucas
-// Last update Sat Jul  1 02:13:21 2017 Lucas
+// Last update Sat Jul  1 05:12:06 2017 Lucas
 //
 
 #include "zappy.hpp"
@@ -96,13 +96,13 @@ int             Core::loopGui()
 	    return (GUI_ERR);
 	  break;
 	case (GUI):
-	  
 	  if (launchGUI(sett) == GUI_ERR)
 	    return (GUI_ERR);
 	  break;
 	default:
 	  break;
 	}
+      
       //loopGui
     }
   return (GUI_OK);
