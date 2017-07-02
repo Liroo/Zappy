@@ -625,10 +625,14 @@ void Ai::fillBag() {
   std::vector<std::pair<std::string, int>> inv;
   std::pair<std::string, int> temp;
   std::vector<std::string>::const_iterator it;
+  size_t  found = _response.find('[');
   int inc = 0;
 
+  if (found >= 1)
+    _response.erase(0, (found - 1));
   if (checkHook(_response) == false)
     return ;
+  std::cout << "AA" << _response << "BB" << std::endl;
   while (ss >> tmp) {
     for(unsigned int i=0; i< tmp.size(); ++i) {
       if(tmp[i] == ',' || tmp[i] == '[' || tmp[i] == ']')
@@ -636,6 +640,7 @@ void Ai::fillBag() {
       }
     sepFirst.push_back(tmp);
   }
+  std::cout << "BONJOUR" << std::endl;
   for (it = sepFirst.begin();it!=sepFirst.end();it++){
     if ((inc % 2) == 0)
       temp.first = sepFirst[inc];
@@ -645,6 +650,7 @@ void Ai::fillBag() {
     }
     inc++;
   }
+  std::cout << "COUCOU" << std::endl;
   _bag.setFood(inv[0].second);
   _bag.setLinemate(inv[1].second);
   _bag.setDeraumere(inv[2].second);
@@ -653,6 +659,7 @@ void Ai::fillBag() {
   _bag.setPhiras(inv[5].second);
   _bag.setThystame(inv[6].second);
   _response = "";
+  std::cout << "SALUT" << std::endl;
 }
 
 void Ai::ReplaceStringInPlace(std::string& subject, const std::string& search,
@@ -671,8 +678,11 @@ void Ai::fillView() {
   std::string word_string;
   size_t case_pos = 0;
   size_t word_pos = 0;
+  size_t  found = _response.find('[');
 
   _viewMaterial.clear();
+  if (found >= 1)
+    _response.erase(0, (found - 1));
   _response.erase(0, 1);
   _response.erase(_response.size() - 1, _response.size());
   _response.push_back(',');
