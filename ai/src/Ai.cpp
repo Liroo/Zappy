@@ -762,6 +762,7 @@ void  Ai::getCaseIncantation() {
 
 bool  Ai::checkElevation() { // ne pas oublier de monter de level si ok
   Inventory obj = *_invToInc[_level - 1];
+
   look("checkElevation");
   if (inventoryCompare(_bag, *_invToInc[_level - 1])) {
     if (_bag.getPlayer() != obj.getPlayer())
@@ -797,7 +798,7 @@ int   Ai::aiBrain() {
       continue;
     else if (_CalledSomeone)
       continue;
-    else {
+    else if (_isCalled == false){
       look(_materialObj);
       fillPath(_materialObj);
       for (int i = 0; i < static_cast<int>(_path.size()); i++)
