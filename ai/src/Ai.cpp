@@ -127,7 +127,7 @@ void Ai::forward(const std::string &var) {
   _response = connect.getResponse();
   _action.first = Ai::ActionType::FORWARD;
   _life--;
-  if (checkBroadcast(_response) == false)
+  if (checkServerMessage(_response) == false)
     printResponse();
 }
 
@@ -138,7 +138,7 @@ void Ai::right(const std::string &var) {
   _response = connect.getResponse();
   _action.first = Ai::ActionType::RIGHT;
   _life--;
-  if (checkBroadcast(_response) == false)
+  if (checkServerMessage(_response) == false)
     printResponse();
 }
 
@@ -149,7 +149,7 @@ void Ai::left(const std::string &var) {
   _response = connect.getResponse();
   _action.first = Ai::ActionType::LEFT;
   _life--;
-  if (checkBroadcast(_response) == false)
+  if (checkServerMessage(_response) == false)
     printResponse();
 }
 
@@ -160,7 +160,7 @@ void Ai::look(const std::string &var) {
   _response = connect.getResponse();
   _action.first = Ai::ActionType::LOOK;
   _life--;
-  if (checkBroadcast(_response) == false)
+  if (checkServerMessage(_response) == false)
     {
       while (checkHook(_response) == false)
         _response += connect.getResponse();
@@ -176,7 +176,7 @@ void Ai::inventory(const std::string &var) {
   _response = connect.getResponse();
   _action.first = Ai::ActionType::INVENTORY;
   _life--;
-  if (checkBroadcast(_response) == false)
+  if (checkServerMessage(_response) == false)
     {
       printResponse();
       fillBag();
@@ -185,7 +185,7 @@ void Ai::inventory(const std::string &var) {
 
 void Ai::broadcast(const std::string &var) {
   connect.sendToServ(strcat(strdup("broadcast "), var.c_str()));
-  std::cout << "broadcast" << var << std::endl;
+  std::cout << "broadcast " << var << std::endl;
   _response = connect.getResponse();
   _action.first = Ai::ActionType::BROADCAST;
   _life--;
@@ -198,7 +198,7 @@ void Ai::fork(const std::string &var) {
   _response = connect.getResponse();
   _action.first = Ai::ActionType::FORK;
   _life--;
-  if (checkBroadcast(_response) == false)
+  if (checkServerMessage(_response) == false)
     printResponse();
 }
 
@@ -209,7 +209,7 @@ void Ai::eject(const std::string &var) {
   _response = connect.getResponse();
   _action.first = Ai::ActionType::EJECT;
   _life--;
-  if (checkBroadcast(_response) == false)
+  if (checkServerMessage(_response) == false)
     printResponse();
 }
 
@@ -219,7 +219,7 @@ void Ai::take(const std::string &var) {
   _response = connect.getResponse();
   _action.first = Ai::ActionType::TAKE;
   _life--;
-  if (checkBroadcast(_response) == false)
+  if (checkServerMessage(_response) == false)
       printResponse();
 }
 
@@ -227,7 +227,7 @@ void Ai::set(std::string const &var) {
   connect.sendToServ(strcat(strdup("set "), var.c_str()));
   std::cout << "set " << var << std::endl;
   _response = connect.getResponse();
-  if (checkBroadcast(_response) == false)
+  if (checkServerMessage(_response) == false)
     {
       printResponse();
       _action.first = Ai::ActionType::SET;
@@ -240,7 +240,7 @@ void Ai::incantation(std::string const &var) {
   connect.sendToServ(strdup("incantation"));
   std::cout << "incantation" << std::endl;
   _response = connect.getResponse();
-  if (checkBroadcast(_response) == false)
+  if (checkServerMessage(_response) == false)
     {
       printResponse();
       _action.first = Ai::ActionType::INCANTATION;
@@ -399,11 +399,14 @@ bool  Ai::checkHook(const std::string &response) {
   return false;
 }
 
-bool  Ai::checkBroadcast(const std::string &response) {
+bool  Ai::checkServerMessage(const std::string &response) {
   std::string a = response;
   std::size_t found = a.find("message");
+  std::size_t found_elevation = a.find("Current level");
   int pos = 0;
 
+  if (found_elevation != std::string::npos)
+    _level++;
   if (found != std::string::npos)
     {
       a.erase(0, 8);
@@ -465,9 +468,6 @@ void  Ai::randInventory() {
 }
 
 bool  Ai::inventoryCompare(const Inventory &us, const Inventory &obj) {
-  std::cout << us.getPlayer() << std::endl;
-  std::cout << obj.getPlayer() << std::endl;
-
   if (us.getPlayer() == obj.getPlayer() && us.getLinemate() >= obj.getLinemate() && us.getDeraumere() >= obj.getDeraumere() &&
       us.getSibur() >= obj.getSibur() && us.getMendiane() >= obj.getMendiane() && us.getPhiras() >= obj.getPhiras() &&
       us.getThystame() >= obj.getThystame())

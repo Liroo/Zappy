@@ -97,7 +97,7 @@ public:
   void fillView();
   void fillPath(const std::string &);
   void goToPlayer();
-  bool checkBroadcast(const std::string &);
+  bool checkServerMessage(const std::string &);
   void ReplaceStringInPlace(std::string& subject, const std::string& search, const std::string& replace);
   void randInventory();
   bool  checkElevation();
