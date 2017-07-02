@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 02:42:24 2017 Thomas
-// Last update Sun Jul  2 09:36:32 2017 Thomas
+// Last update Sun Jul  2 16:28:39 2017 Thomas
 //
 
 #include <iostream>
@@ -67,6 +67,18 @@ int	Game::getMapY() const
 int	Game::getFreq() const
 {
   return (_freq);
+}
+
+int	Game::convertX(int x)
+{
+  x = 1150 - (127 * x);
+  return (x);
+}
+
+int	Game::convertY(int y)
+{
+  y = 1300 + (40 * y);
+  return (y);
 }
 
 int	Game::initMap(std::string &resp)
@@ -207,6 +219,8 @@ int	Game::playerDetails(std::string &resp)
   size_t        pos = 0;
   int		find;
   bool		is_already;
+  int		x;
+  int		y;
 
   if ((pos = resp.find(delim)) != std::string::npos) {
     params = resp.substr(0, pos);
@@ -234,7 +248,9 @@ int	Game::playerDetails(std::string &resp)
 	  }
 	  else
 	    return (1);
-	  (*it_player).setX(std::stoi(params, nullptr, 10));
+	  x = std::stoi(params, nullptr, 10);
+	  (*it_player).setX(x);
+	  (*it_player).setRendX(convertX(x));
 
 	  if ((pos = resp.find(delim)) != std::string::npos) {
 	    params = resp.substr(0, pos);
@@ -242,7 +258,9 @@ int	Game::playerDetails(std::string &resp)
 	  }
 	  else
 	    return (1);
-	  (*it_player).setY(std::stoi(params, nullptr, 10));
+	  y = std::stoi(params, nullptr, 10);
+	  (*it_player).setY(y);
+	  (*it_player).setRendY(convertY(y));
 
 	  if ((pos = resp.find(delim)) != std::string::npos) {
 	    params = resp.substr(0, pos);
@@ -261,6 +279,8 @@ int	Game::playerDetails(std::string &resp)
 	  (*it_player).setLevel(std::stoi(params, nullptr, 10));
 
 	  (*it_player).updateInventory(resp);
+
+	  (*it_player).makePlayer();
 
 	  is_already = false;
 	  std::vector<Player>::iterator check = _map[(*it_player).getX()][(*it_player).getY()].players.begin();
@@ -343,7 +363,9 @@ int	Game::forward(std::string &resp)
 	  else
 	    return (1);
 	  x = std::stoi(params, nullptr, 10);
+	  x = convertX(x);
 	  y = std::stoi(resp, nullptr, 10);
+	  y = convertY(y);
 	  (*it_player).setX(x);
 	  (*it_player).setY(y);
 	  std::vector<Player>::iterator check = _map[x][y].players.begin();

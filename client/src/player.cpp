@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 13:54:32 2017 Thomas
-// Last update Sun Jul  2 09:09:18 2017 Thomas
+// Last update Sun Jul  2 16:31:21 2017 Thomas
 //
 
 #include "player.hpp"
@@ -23,6 +23,16 @@ void	Player::setX(const int &x)
 void    Player::setY(const int &y)
 {
   _y = y;
+}
+
+void	Player::setRendX(const int &x)
+{
+  _rendX = x;
+}
+
+void	Player::setRendY(const int &y)
+{
+  _rendY = y;
 }
 
 void    Player::setDirection(const int &direction)
@@ -106,6 +116,16 @@ int	Player::getY() const
   return (_y);
 }
 
+int	Player::getRendX() const
+{
+  return (_rendX);
+}
+
+int	Player::getRendY() const
+{
+  return (_rendY);
+}
+
 int	Player::getDirection() const
 {
   return (_direction);
@@ -136,11 +156,24 @@ bool	Player::getIsPrint() const
 //   return (_inventory[type]);
 // }
 
+void	Player::makePlayer()
+{
+  playerMesh = sm->addAnimatedMeshSceneNode(getPlayerObj(),
+					  0, -1,
+					  position,
+					  rotation,
+					  echelle);
+  playerMesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+  playerMesh->setMaterialTexture(0, getPlayerTexture());
+}
+
 Player::Player(int fd)
 {
   _fd = fd;
   _x = 0;
   _y = 0;
+  _rendX = 0;
+  _rendY = 0;
   _direction = 0;
   _level = 1;
   _is_alive = true;
@@ -159,6 +192,8 @@ Player::Player(const Player &p)
   _fd = p._fd;
   _x = p._x;
   _y = p._y;
+  _rendX = p._rendX;
+  _rendY = p._rendY;
   _direction = p._direction;
   _level = p._level;
   _is_alive = p._is_alive;
