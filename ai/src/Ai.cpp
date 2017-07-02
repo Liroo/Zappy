@@ -107,9 +107,18 @@ void Ai::forward(const std::string &var) {
   connect.sendToServ(strdup("forward"));
   std::cout << "forward" << std::endl;
   _response = connect.getResponse();
-  printResponse();
-  _action.first = Ai::ActionType::FORWARD;
-  _life--;
+  if (checkBroadcast(_response) == false)
+    {
+      printResponse();
+      _action.first = Ai::ActionType::FORWARD;
+      _life--;
+    }
+  else
+    {
+      printResponse();
+      _response = connect.getResponse();
+      printResponse();
+    }
 }
 
 void Ai::right(const std::string &var) {
@@ -117,9 +126,18 @@ void Ai::right(const std::string &var) {
   connect.sendToServ(strdup("right"));
   std::cout << "right" << std::endl;
   _response = connect.getResponse();
-  printResponse();
-  _action.first = Ai::ActionType::RIGHT;
-  _life--;
+  if (checkBroadcast(_response) == false)
+    {
+      printResponse();
+      _action.first = Ai::ActionType::RIGHT;
+      _life--;
+    }
+  else
+    {
+      printResponse();
+      _response = connect.getResponse();
+      printResponse();
+    }
 }
 
 void Ai::left(const std::string &var) {
@@ -127,9 +145,18 @@ void Ai::left(const std::string &var) {
   connect.sendToServ(strdup("left"));
   std::cout << "left" << std::endl;
   _response = connect.getResponse();
-  printResponse();
-  _action.first = Ai::ActionType::LEFT;
-  _life--;
+  if (checkBroadcast(_response) == false)
+    {
+      printResponse();
+      _action.first = Ai::ActionType::LEFT;
+      _life--;
+    }
+  else
+    {
+      printResponse();
+      _response = connect.getResponse();
+      printResponse();
+    }
 }
 
 void Ai::look(const std::string &var) {
@@ -137,12 +164,22 @@ void Ai::look(const std::string &var) {
   connect.sendToServ(strdup("look"));
   std::cout << "look" << std::endl;
   _response = connect.getResponse();
-  while (checkHook(_response) == false)
-    _response += connect.getResponse();
-  printResponse();
-  fillView();
-  _action.first = Ai::ActionType::LOOK;
-  _life--;
+  if (checkBroadcast(_response) == false)
+    {
+      while (checkHook(_response) == false)
+        _response += connect.getResponse();
+      printResponse();
+      fillView();
+      _action.first = Ai::ActionType::LOOK;
+      _life--;
+    }
+  else
+    {
+      printResponse();
+      while (checkHook(_response) == false)
+        _response += connect.getResponse();
+      printResponse();
+    }
 }
 
 void Ai::inventory(const std::string &var) {
@@ -150,17 +187,25 @@ void Ai::inventory(const std::string &var) {
   connect.sendToServ(strdup("inventory"));
   std::cout << "inventory" << std::endl;
   _response = connect.getResponse();
-  printResponse();
-  _action.first = Ai::ActionType::INVENTORY;
-  fillBag();
-  _life--;
+  if (checkBroadcast(_response) == false)
+    {
+      printResponse();
+      _action.first = Ai::ActionType::INVENTORY;
+      fillBag();
+      _life--;
+    }
+  else
+    {
+      printResponse();
+      _response = connect.getResponse();
+      printResponse();
+    }
 }
 
 void Ai::broadcast(const std::string &var) {
   connect.sendToServ(strcat(strdup("broadcast "), var.c_str()));
   std::cout << "broadcast" << var << std::endl;
   _response = connect.getResponse();
-  printResponse();
   _action.first = Ai::ActionType::BROADCAST;
   _life--;
 }
@@ -170,9 +215,18 @@ void Ai::fork(const std::string &var) {
   connect.sendToServ(strdup("fork"));
   std::cout << "fork" << std::endl;
   _response = connect.getResponse();
-  printResponse();
-  _action.first = Ai::ActionType::FORK;
-  _life--;
+  if (checkBroadcast(_response) == false)
+    {
+      printResponse();
+      _action.first = Ai::ActionType::FORK;
+      _life--;
+    }
+  else
+    {
+      printResponse();
+      _response = connect.getResponse();
+      printResponse();
+    }
 }
 
 void Ai::eject(const std::string &var) {
@@ -180,27 +234,54 @@ void Ai::eject(const std::string &var) {
   connect.sendToServ(strdup("eject"));
   std::cout << "eject" << std::endl;
   _response = connect.getResponse();
-  printResponse();
-  _action.first = Ai::ActionType::EJECT;
-  _life--;
+  if (checkBroadcast(_response) == false)
+    {
+    printResponse();
+    _action.first = Ai::ActionType::EJECT;
+    _life--;
+    }
+  else
+    {
+      printResponse();
+      _response = connect.getResponse();
+      printResponse();
+    }
 }
 
 void Ai::take(const std::string &var) {
   connect.sendToServ(strcat(strdup("take "), var.c_str()));
   std::cout << "take " << var << std::endl;
   _response = connect.getResponse();
-  printResponse();
-  _action.first = Ai::ActionType::TAKE;
-  _life--;
+  if (checkBroadcast(_response) == false)
+    {
+      printResponse();
+      _action.first = Ai::ActionType::TAKE;
+      _life--;
+    }
+  else
+    {
+      printResponse();
+      _response = connect.getResponse();
+      printResponse();
+    }
 }
 
 void Ai::set(std::string const &var) {
   connect.sendToServ(strcat(strdup("set "), var.c_str()));
   std::cout << "set " << var << std::endl;
   _response = connect.getResponse();
-  printResponse();
-  _action.first = Ai::ActionType::SET;
-  _life--;
+  if (checkBroadcast(_response) == false)
+    {
+      printResponse();
+      _action.first = Ai::ActionType::SET;
+      _life--;
+    }
+  else
+    {
+      printResponse();
+      _response = connect.getResponse();
+      printResponse();
+    }
 }
 
 void Ai::incantation(std::string const &var) {
@@ -208,9 +289,18 @@ void Ai::incantation(std::string const &var) {
   connect.sendToServ(strdup("incantation"));
   std::cout << "incantation" << std::endl;
   _response = connect.getResponse();
-  printResponse();
-  _action.first = Ai::ActionType::INCANTATION;
-  _life--;
+  if (checkBroadcast(_response) == false)
+    {
+      printResponse();
+      _action.first = Ai::ActionType::INCANTATION;
+      _life--;
+    }
+  else
+    {
+      printResponse();
+      _response = connect.getResponse();
+      printResponse();
+    }
 }
 
 void Ai::fillBag() {
@@ -352,6 +442,7 @@ void Ai::fillPath(const std::string &material) {
     {
       // random
       _path.push_back(ActionType::FORWARD);
+      _path.push_back(ActionType::LEFT);
     }
 }
 
@@ -360,6 +451,40 @@ bool  Ai::checkHook(const std::string &response) {
 
   if (found != std::string::npos)
     return true;
+  return false;
+}
+
+bool  Ai::checkBroadcast(const std::string &response) {
+  std::string a = response;
+  std::size_t found = a.find("message");
+  int pos = 0;
+
+  if (found != std::string::npos)
+    {
+      a.erase(0, 8);
+      pos = std::stoi(a.substr(0, 1));
+      std::size_t comma = a.find(", ");
+      if (comma != std::string::npos)
+        {
+          if (a.size() >= 4)
+            a.erase(0, 3);
+          if (a.size() >= 1)
+            {
+              try
+                {
+                    if (std::stoi(a.substr(0, 1)) == _level)
+                      {
+                        std::cout << "I am comming " << pos << '\n';
+                        return true;
+                      }
+                }
+              catch (std::invalid_argument&)
+                {
+                  return false;
+                }
+            }
+        }
+    }
   return false;
 }
 

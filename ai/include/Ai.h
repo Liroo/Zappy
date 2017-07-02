@@ -91,9 +91,11 @@ public:
 
   int aiBrain();
   void fillBag();
-  bool  checkHook(const std::string &);
+  bool checkHook(const std::string &);
   void fillView();
   void fillPath(const std::string &);
+  void goToPlayer();
+  bool checkBroadcast(const std::string &);
   void ReplaceStringInPlace(std::string& subject, const std::string& search, const std::string& replace);
 };
 
