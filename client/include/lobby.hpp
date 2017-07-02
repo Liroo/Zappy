@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Wed Jun 28 00:16:38 2017 Lucas
-// Last update Sun Jul  2 16:58:52 2017 Lucas
+// Last update Sun Jul  2 23:37:23 2017 Thomas
 //
 
 #ifndef LOBBY_HPP_
@@ -23,7 +23,7 @@
 /*
 ** Macro definitions.
 */
-# define	CONNECTL_PATH	"./media/img/connect_layer.png"
+# define	CONNECTL_PATH	"./client/media/img/connect_layer.png"
 
 /*
 ** Lobby class, while handle the home Lobby

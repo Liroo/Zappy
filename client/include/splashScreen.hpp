@@ -1,11 +1,11 @@
 //
 // splash_screen.hpp for ss in /home/lucas/rendu/reseau_psu/Zappy/client/zappy_client
-// 
+//
 // Made by Lucas
 // Login   <lucas.onillon@epitech.eu>
-// 
+//
 // Started on  Mon Jun 26 00:47:57 2017 Lucas
-// Last update Sun Jul  2 16:49:08 2017 Lucas
+// Last update Sun Jul  2 23:37:36 2017 Thomas
 //
 
 #ifndef SPLASH_SCREEN_HPP_
@@ -20,7 +20,7 @@
 ** Macro definitions.
 */
 # define	TIMER	(3)
-# define	LOGO_PATH	"./media/img/zappyLogo.png"
+# define	LOGO_PATH	"./client/media/img/zappyLogo.png"
 
 /*
 ** Splash Screen class, used while loading the GUI.

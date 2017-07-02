@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Mon Jun 26 00:55:18 2017 Lucas
-// Last update Sun Jul  2 16:42:06 2017 Lucas
+// Last update Sun Jul  2 23:36:19 2017 Thomas
 //
 
 #include "LTexture.hpp"
@@ -19,20 +19,20 @@ LTexture::~LTexture()
 int	LTexture::setTexture(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* driver,
 			     irr::gui::IGUIEnvironment* lobbyGUI)
 {
-  if ((LogoPNG = driver->getTexture("./media/img/layer1.png")) == 0
-      || (SKYBOX_MOUNT_UP = driver->getTexture("media/skybox/velcor_up.tga")) == 0
-      || (SKYBOX_MOUNT_DOWN = driver->getTexture("media/skybox/velcor_dn.tga")) == 0
-      || (SKYBOX_MOUNT_LEFT = driver->getTexture("media/skybox/velcor_lf.tga")) == 0
-      || (SKYBOX_MOUNT_RIGHT = driver->getTexture("media/skybox/velcor_rt.tga")) == 0
-      || (SKYBOX_MOUNT_FRONT = driver->getTexture("media/skybox/velcor_ft.tga")) == 0
-      || (SKYBOX_MOUNT_BACK = driver->getTexture("media/skybox/velcor_bk.tga")) == 0
-      || (hostLogo = driver->getTexture("./media/img/host_layer.png")) == 0
-      || (portLogo = driver->getTexture("./media/img/port_layer.png")) == 0
-      || (connectLogo = driver->getTexture("./media/img/connect_layer.png")) == 0
-      || (GROUND_PNG = driver->getTexture("./media/img/materials/floor.png")) == 0
-      || (BRICKS_MENU_OBJ = smgr->getMesh("./media/models/brick_menu.dae")) == NULL
-      || (BRICKS_MENU_PNG = driver->getTexture("./media/Texture/brick_menu.png")) == 0
-      || (PLAYER_PNG = driver->getTexture("./media/models/sprites/trantorian.png")) == 0
+  if ((LogoPNG = driver->getTexture("./client/media/img/layer1.png")) == 0
+      || (SKYBOX_MOUNT_UP = driver->getTexture("./client/media/skybox/velcor_up.tga")) == 0
+      || (SKYBOX_MOUNT_DOWN = driver->getTexture("./client/media/skybox/velcor_dn.tga")) == 0
+      || (SKYBOX_MOUNT_LEFT = driver->getTexture("./client/media/skybox/velcor_lf.tga")) == 0
+      || (SKYBOX_MOUNT_RIGHT = driver->getTexture("./client/media/skybox/velcor_rt.tga")) == 0
+      || (SKYBOX_MOUNT_FRONT = driver->getTexture("./client/media/skybox/velcor_ft.tga")) == 0
+      || (SKYBOX_MOUNT_BACK = driver->getTexture("./client/media/skybox/velcor_bk.tga")) == 0
+      || (hostLogo = driver->getTexture("./client/media/img/host_layer.png")) == 0
+      || (portLogo = driver->getTexture("./client/media/img/port_layer.png")) == 0
+      || (connectLogo = driver->getTexture("./client/media/img/connect_layer.png")) == 0
+      || (GROUND_PNG = driver->getTexture("./client/media/img/materials/floor.png")) == 0
+      || (BRICKS_MENU_OBJ = smgr->getMesh("./client/media/models/brick_menu.dae")) == NULL
+      || (BRICKS_MENU_PNG = driver->getTexture("./client/media/Texture/brick_menu.png")) == 0
+      || (PLAYER_PNG = driver->getTexture("./client/media/models/sprites/trantorian.png")) == 0
       )
     return (GUI_ERR);
   return (GUI_OK);
