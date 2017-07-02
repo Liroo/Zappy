@@ -259,6 +259,8 @@ void Ai::fillBag() {
   std::vector<std::string>::const_iterator it;
   int inc = 0;
 
+  if (_response == "ok" || _response == "ko")
+    return ;
   while (ss >> tmp) {
     for(unsigned int i=0; i< tmp.size(); ++i) {
       if(tmp[i] == ',' || tmp[i] == '[' || tmp[i] == ']')
@@ -410,6 +412,7 @@ bool  Ai::checkServerMessage(const std::string &response) {
   int pos = 0;
 
   //std::cout << "abc";
+  std::cout << "-----------------" << a << std::endl;
   if (found_elevation != std::string::npos) {
     _level++;
   }
@@ -433,6 +436,10 @@ bool  Ai::checkServerMessage(const std::string &response) {
                           {
                             while (checkHook(_response) == false)
                               _response += connect.getResponse();
+                            found_elevation = _response.find("level");
+                            if (found_elevation != std::string::npos) {
+                              _level++;
+                            }
                             printResponse();
                             fillView();
                           }
@@ -462,6 +469,10 @@ bool  Ai::checkServerMessage(const std::string &response) {
                         {
                           while (checkHook(_response) == false)
                             _response += connect.getResponse();
+                          found_elevation = _response.find("level");
+                          if (found_elevation != std::string::npos) {
+                            _level++;
+                          }
                           printResponse();
                           fillView();
                         }
@@ -499,7 +510,7 @@ void  Ai::randInventory() {
 bool  Ai::inventoryCompare(const Inventory &us, const Inventory &obj) {
   if (us.getLinemate() >= obj.getLinemate() && us.getDeraumere() >= obj.getDeraumere() &&
       us.getSibur() >= obj.getSibur() && us.getMendiane() >= obj.getMendiane() && us.getPhiras() >= obj.getPhiras() &&
-      us.getThystame() >= obj.getThystame())
+      us.getThystame() >= obj.getThystame() && _isCalled == false)
     {
       if (us.getPlayer() < obj.getPlayer())
         broadcast(std::to_string(_level) + "start");
@@ -548,7 +559,7 @@ void  Ai::whatMaterialToFind(const Inventory &obj) {
   objTab = returnTabInv(obj);
 
   for(std::map<std::string, int>::iterator i = usTab.begin(); i != usTab.end(); i++) {
-    if (usTab[i->first] != objTab[i->first])
+    if (usTab[i->first] < objTab[i->first])
       _materialObj = i->first;
   }
 }
