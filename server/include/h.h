@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Sat Jul  1 21:36:38 2017 guicha_t
+** Last update Sun Jul  2 02:56:15 2017 Pierre Monge
 */
 
 #ifndef H_H
@@ -102,6 +102,7 @@ extern int	cmd_fork(t_client *client, char *token);
 extern int	cmd_pre_elevation(t_client *client, char *token);
 extern int	cmd_elevation(t_client *client, char *token);
 
+extern void	elevate_players(int x, int y);
 extern char	*parse_param(char *token);
 extern char	*strepur(char *str);
 extern void	get_directional_position(t_player *p, int *x, int *y);

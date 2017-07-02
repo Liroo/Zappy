@@ -72,6 +72,7 @@ SRC_GEN = \
 	command/command_inventory.c \
 	command/command_set.c \
 	command/command_take.c \
+	command/elevation.c \
 	command/strepur.c \
 	command/parse.c \
 	command/command_broadcast.c \
