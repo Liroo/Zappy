@@ -45,6 +45,7 @@ private:
   std::map<std::string, material_pointer> _TabMaterial;
   typedef  void (Ai::*action_pointer)(const std::string &);
   std::map<ActionType, action_pointer> _TabAction;
+  std::vector<std::vector<ActionType>> _closeAction;
   int _level;
   Inventory _bag;
   std::vector<Inventory> _viewMaterial;

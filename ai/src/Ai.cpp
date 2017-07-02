@@ -37,6 +37,16 @@ Ai::Ai() : _level(1), _life(1260), _action({Ai::ActionType::UNKNOWN, ""}), _dir(
   _TabAction[ActionType::LEFT] = &Ai::left;
   _TabAction[ActionType::TAKE] = &Ai::take;
   _TabAction[ActionType::INVENTORY] = &Ai::inventory;
+
+  _closeAction.push_back({ActionType::LOOK});
+  _closeAction.push_back({ActionType::FORWARD});
+  _closeAction.push_back({ActionType::FORWARD, ActionType::LEFT, ActionType::FORWARD, ActionType::RIGHT});
+  _closeAction.push_back({ActionType::LEFT, ActionType::FORWARD});
+  _closeAction.push_back({ActionType::LEFT, ActionType::LEFT, ActionType::FORWARD, ActionType::RIGHT, ActionType::FORWARD, ActionType::LEFT});
+  _closeAction.push_back({ActionType::LEFT, ActionType::LEFT, ActionType::FORWARD});
+  _closeAction.push_back({{ActionType::RIGHT, ActionType::FORWARD, ActionType::RIGHT, ActionType::FORWARD}});
+  _closeAction.push_back({ActionType::RIGHT, ActionType::FORWARD});
+  _closeAction.push_back({{ActionType::RIGHT, ActionType::FORWARD, ActionType::LEFT, ActionType::FORWARD}});
 }
 
 Ai::~Ai() {}
@@ -107,18 +117,10 @@ void Ai::forward(const std::string &var) {
   connect.sendToServ(strdup("forward"));
   std::cout << "forward" << std::endl;
   _response = connect.getResponse();
+  _action.first = Ai::ActionType::FORWARD;
+  _life--;
   if (checkBroadcast(_response) == false)
-    {
-      printResponse();
-      _action.first = Ai::ActionType::FORWARD;
-      _life--;
-    }
-  else
-    {
-      printResponse();
-      _response = connect.getResponse();
-      printResponse();
-    }
+    printResponse();
 }
 
 void Ai::right(const std::string &var) {
@@ -126,18 +128,10 @@ void Ai::right(const std::string &var) {
   connect.sendToServ(strdup("right"));
   std::cout << "right" << std::endl;
   _response = connect.getResponse();
+  _action.first = Ai::ActionType::RIGHT;
+  _life--;
   if (checkBroadcast(_response) == false)
-    {
-      printResponse();
-      _action.first = Ai::ActionType::RIGHT;
-      _life--;
-    }
-  else
-    {
-      printResponse();
-      _response = connect.getResponse();
-      printResponse();
-    }
+    printResponse();
 }
 
 void Ai::left(const std::string &var) {
@@ -145,18 +139,10 @@ void Ai::left(const std::string &var) {
   connect.sendToServ(strdup("left"));
   std::cout << "left" << std::endl;
   _response = connect.getResponse();
+  _action.first = Ai::ActionType::LEFT;
+  _life--;
   if (checkBroadcast(_response) == false)
-    {
-      printResponse();
-      _action.first = Ai::ActionType::LEFT;
-      _life--;
-    }
-  else
-    {
-      printResponse();
-      _response = connect.getResponse();
-      printResponse();
-    }
+    printResponse();
 }
 
 void Ai::look(const std::string &var) {
@@ -164,21 +150,14 @@ void Ai::look(const std::string &var) {
   connect.sendToServ(strdup("look"));
   std::cout << "look" << std::endl;
   _response = connect.getResponse();
+  _action.first = Ai::ActionType::LOOK;
+  _life--;
   if (checkBroadcast(_response) == false)
     {
       while (checkHook(_response) == false)
         _response += connect.getResponse();
       printResponse();
       fillView();
-      _action.first = Ai::ActionType::LOOK;
-      _life--;
-    }
-  else
-    {
-      printResponse();
-      while (checkHook(_response) == false)
-        _response += connect.getResponse();
-      printResponse();
     }
 }
 
@@ -187,18 +166,12 @@ void Ai::inventory(const std::string &var) {
   connect.sendToServ(strdup("inventory"));
   std::cout << "inventory" << std::endl;
   _response = connect.getResponse();
+  _action.first = Ai::ActionType::INVENTORY;
+  _life--;
   if (checkBroadcast(_response) == false)
     {
       printResponse();
-      _action.first = Ai::ActionType::INVENTORY;
       fillBag();
-      _life--;
-    }
-  else
-    {
-      printResponse();
-      _response = connect.getResponse();
-      printResponse();
     }
 }
 
@@ -215,18 +188,10 @@ void Ai::fork(const std::string &var) {
   connect.sendToServ(strdup("fork"));
   std::cout << "fork" << std::endl;
   _response = connect.getResponse();
+  _action.first = Ai::ActionType::FORK;
+  _life--;
   if (checkBroadcast(_response) == false)
-    {
-      printResponse();
-      _action.first = Ai::ActionType::FORK;
-      _life--;
-    }
-  else
-    {
-      printResponse();
-      _response = connect.getResponse();
-      printResponse();
-    }
+    printResponse();
 }
 
 void Ai::eject(const std::string &var) {
@@ -234,36 +199,20 @@ void Ai::eject(const std::string &var) {
   connect.sendToServ(strdup("eject"));
   std::cout << "eject" << std::endl;
   _response = connect.getResponse();
+  _action.first = Ai::ActionType::EJECT;
+  _life--;
   if (checkBroadcast(_response) == false)
-    {
     printResponse();
-    _action.first = Ai::ActionType::EJECT;
-    _life--;
-    }
-  else
-    {
-      printResponse();
-      _response = connect.getResponse();
-      printResponse();
-    }
 }
 
 void Ai::take(const std::string &var) {
   connect.sendToServ(strcat(strdup("take "), var.c_str()));
   std::cout << "take " << var << std::endl;
   _response = connect.getResponse();
+  _action.first = Ai::ActionType::TAKE;
+  _life--;
   if (checkBroadcast(_response) == false)
-    {
       printResponse();
-      _action.first = Ai::ActionType::TAKE;
-      _life--;
-    }
-  else
-    {
-      printResponse();
-      _response = connect.getResponse();
-      printResponse();
-    }
 }
 
 void Ai::set(std::string const &var) {
@@ -275,12 +224,6 @@ void Ai::set(std::string const &var) {
       printResponse();
       _action.first = Ai::ActionType::SET;
       _life--;
-    }
-  else
-    {
-      printResponse();
-      _response = connect.getResponse();
-      printResponse();
     }
 }
 
@@ -294,12 +237,6 @@ void Ai::incantation(std::string const &var) {
       printResponse();
       _action.first = Ai::ActionType::INCANTATION;
       _life--;
-    }
-  else
-    {
-      printResponse();
-      _response = connect.getResponse();
-      printResponse();
     }
 }
 
@@ -474,7 +411,31 @@ bool  Ai::checkBroadcast(const std::string &response) {
                 {
                     if (std::stoi(a.substr(0, 1)) == _level)
                       {
-                        std::cout << "I am comming " << pos << '\n';
+                        if (_action.first == ActionType::LOOK)
+                          {
+                            while (checkHook(_response) == false)
+                              _response += connect.getResponse();
+                            printResponse();
+                            fillView();
+                          }
+                        else if (_action.first == ActionType::INVENTORY)
+                          {
+                            _response = connect.getResponse();
+                            printResponse();
+                            fillBag();
+                          }
+                        else
+                          {
+                            _response = connect.getResponse();
+                            printResponse();
+                          }
+                        for (int i = 0; i < static_cast<int>(_closeAction[pos].size()); i++)
+                          {
+                            std::map<Ai::ActionType, action_pointer>::iterator it;
+                            it = _TabAction.find(_closeAction[pos][i]);
+                            if (it != _TabAction.end())
+                              ((*this).*(*it).second)("food");
+                          }
                         return true;
                       }
                 }
