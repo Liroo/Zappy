@@ -123,7 +123,7 @@ void Ai::setResponse(const std::string &var) {
 
 void Ai::forward(const std::string &var) {
   (void)var;
-  connect.sendToServ(strdup("forward"));
+  connect.sendToServ(strdup("forward\n"));
   std::cout << "forward" << std::endl;
   _response = connect.getResponse();
   _action.first = Ai::ActionType::FORWARD;
@@ -153,7 +153,7 @@ void Ai::forward(const std::string &var) {
 
 void Ai::right(const std::string &var) {
   (void)var;
-  connect.sendToServ(strdup("right"));
+  connect.sendToServ(strdup("right\n"));
   std::cout << "right" << std::endl;
   _response = connect.getResponse();
   _action.first = Ai::ActionType::RIGHT;
@@ -183,7 +183,7 @@ void Ai::right(const std::string &var) {
 
 void Ai::left(const std::string &var) {
   (void)var;
-  connect.sendToServ(strdup("left"));
+  connect.sendToServ(strdup("left\n"));
   std::cout << "left" << std::endl;
   _response = connect.getResponse();
   _action.first = Ai::ActionType::LEFT;
@@ -213,7 +213,7 @@ void Ai::left(const std::string &var) {
 
 void Ai::look(const std::string &var) {
   (void)var;
-  connect.sendToServ(strdup("look"));
+  connect.sendToServ(strdup("look\n"));
   std::cout << "look" << std::endl;
   _response = connect.getResponse();
   _action.first = Ai::ActionType::LOOK;
@@ -244,7 +244,7 @@ void Ai::look(const std::string &var) {
 
 void Ai::inventory(const std::string &var) {
   (void)var;
-  connect.sendToServ(strdup("inventory"));
+  connect.sendToServ(strdup("inventory\n"));
   std::cout << "inventory" << std::endl;
   _response = connect.getResponse();
   _action.first = Ai::ActionType::INVENTORY;
@@ -272,8 +272,11 @@ void Ai::inventory(const std::string &var) {
 }
 
 void Ai::broadcast(const std::string &var) {
-  connect.sendToServ(strcat(strdup("broadcast "), var.c_str()));
-  std::cout << "broadcast " << var << std::endl;
+  std::stringstream resp;
+
+  resp << "broadcast " << var << "\n";
+  connect.sendToServ((char *)resp.str().c_str());
+  std::cout << resp.str();
   _response = connect.getResponse();
   _action.first = Ai::ActionType::BROADCAST;
   _life--;
@@ -302,7 +305,7 @@ void Ai::broadcast(const std::string &var) {
 
 void Ai::fork(const std::string &var) {
   (void)var;
-  connect.sendToServ(strdup("fork"));
+  connect.sendToServ(strdup("fork\n"));
   std::cout << "fork" << std::endl;
   _response = connect.getResponse();
   _action.first = Ai::ActionType::FORK;
@@ -332,7 +335,7 @@ void Ai::fork(const std::string &var) {
 
 void Ai::eject(const std::string &var) {
   (void)var;
-  connect.sendToServ(strdup("eject"));
+  connect.sendToServ(strdup("eject\n"));
   std::cout << "eject" << std::endl;
   _response = connect.getResponse();
   _action.first = Ai::ActionType::EJECT;
@@ -361,8 +364,11 @@ void Ai::eject(const std::string &var) {
 }
 
 void Ai::take(const std::string &var) {
-  connect.sendToServ(strcat(strdup("take "), var.c_str()));
-  std::cout << "take " << var << std::endl;
+  std::stringstream resp;
+
+  resp << "take " << var << "\n";
+  connect.sendToServ((char *)resp.str().c_str());
+  std::cout << resp.str();
   _response = connect.getResponse();
   _action.first = Ai::ActionType::TAKE;
   _life--;
@@ -390,8 +396,11 @@ void Ai::take(const std::string &var) {
 }
 
 void Ai::set(std::string const &var) {
-  connect.sendToServ(strcat(strdup("set "), var.c_str()));
-  std::cout << "set " << var << std::endl;
+  std::stringstream resp;
+
+  resp << "set " << var << "\n";
+  connect.sendToServ((char *)resp.str().c_str());
+  std::cout << resp.str();
   _response = connect.getResponse();
   _action.first = Ai::ActionType::SET;
   _life--;
@@ -420,21 +429,31 @@ void Ai::set(std::string const &var) {
 
 void Ai::incantation(std::string const &var) {
   (void)var;
-  connect.sendToServ(strdup("incantation"));
+  connect.sendToServ(strdup("incantation\n"));
   std::cout << "incantation" << std::endl;
   _response = connect.getResponse();
   _action.first = Ai::ActionType::INCANTATION;
   _life--;
   _goToPlayer = -1;
   std::size_t found_level = _response.find("level");
-  std::size_t found_ko = _response.find("ko");
+  std::size_t found_ko = _response.find("ko");;
   while (found_level == std::string::npos && found_ko == std::string::npos)
     {
       checkServerMessage(_response);
       _response = connect.getResponse();
       found_level = _response.find("level");
+      found_ko = _response.find("ko");
     }
-  if (found_level != std::string::npos)
+  found_ko = _response.find("ko");
+  if (found_ko != std::string::npos)
+  {
+    _isCalled = false;
+    _CalledSomeone = false;
+    forward("incantation");
+    inventory("incantation");
+    look("incantation");
+  }
+  else if (found_level != std::string::npos)
     _level++;
   printResponse();
   if (_goToPlayer != -1)
@@ -447,6 +466,7 @@ void Ai::incantation(std::string const &var) {
             ((*this).*(*it).second)("food");
         }
     }
+  _CalledSomeone = false;
 }
 
 void Ai::fillBag() {
@@ -608,6 +628,7 @@ void  Ai::checkServerMessage(const std::string &response) {
   std::size_t found_start = save.find("start");
   std::size_t found_stop = save.find("stop");
   std::size_t found_level = save.find("level");
+  std::size_t found_death = save.find("dead");
 
   if (found_msg != std::string::npos)
     {
@@ -632,25 +653,40 @@ void  Ai::checkServerMessage(const std::string &response) {
                           _goToPlayer = -1;
                         }
                         else
-                          _goToPlayer = -1;
+                          {
+                            _goToPlayer = -1;
+                            _isCalled = false;
+                          }
                     }
                   catch (std::invalid_argument&)
                     {
                       _goToPlayer = -1;
+                      _isCalled = false;
                     }
                 }
             }
           else
-            _goToPlayer = -1;
+            {
+              _goToPlayer = -1;
+              _isCalled = false;
+            }
         }
       else
-        _goToPlayer = -1;
+        {
+          _goToPlayer = -1;
+          _isCalled = false;
+        }
     }
   else if (found_level != std::string::npos)
     {
-      std::cout << save;
+      std::cout << std::endl << std::endl << std::endl << save << std::endl << std::endl;
       _isCalled = false;
       _level++;
+    }
+  else if (found_death != std::string::npos)
+    {
+      std::cout << save;
+      exit (1);
     }
   else
     std::cout << save;
@@ -683,6 +719,7 @@ bool  Ai::inventoryCompare(const Inventory &us, const Inventory &obj) {
       // std::cout << "IN" << std::endl;
       if (us.getPlayer() < obj.getPlayer()) {
         broadcast(std::to_string(_level) + "start");
+        _CalledSomeone = true;
         return true;
       }
       else if (us.getPlayer() == obj.getPlayer())
@@ -783,8 +820,8 @@ int   Ai::aiBrain() {
   srand(time(NULL));
   while (_isRunning) {
     randInventory();
-    if (_bag.getFood() < 5) {
-      while (_bag.getFood() < 10) {
+    if (_bag.getFood() < 15) {
+      while (_bag.getFood() < 30) {
         look("food");
         fillPath("food");
         for (int i = 0; i < static_cast<int>(_path.size()); i++)
