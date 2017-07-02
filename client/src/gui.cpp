@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Fri Jun 30 05:14:07 2017 Lucas
-// Last update Sun Jul  2 00:12:46 2017 Lucas
+// Last update Sun Jul  2 01:12:33 2017 Thomas
 //
 
 #include "gui.hpp"
@@ -60,8 +60,8 @@ int		Gui::initGui(const int &port, const std::string &host)
     {
       if (game->getMapInit() == false && game->getMapX() != DEFAULT && game->getMapY() != DEFAULT)
 	{
-	  if (game->createMap() == GUI_ERR)
-	    return (GUI_ERR);
+	  // if (game->createMap() == GUI_ERR)
+	  //   return (GUI_ERR);
 	  game->setMapInit(true);
 	}
       driver->beginScene(true, true, irr::video::SColor(255, 38, 196, 236));

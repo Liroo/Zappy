@@ -36,6 +36,7 @@ Ai::Ai() : _level(1), _life(1260), _action({Ai::ActionType::UNKNOWN, ""}), _dir(
   _TabAction[ActionType::RIGHT] = &Ai::right;
   _TabAction[ActionType::LEFT] = &Ai::left;
   _TabAction[ActionType::TAKE] = &Ai::take;
+  _TabAction[ActionType::INVENTORY] = &Ai::inventory;
 }
 
 Ai::~Ai() {}
@@ -156,7 +157,7 @@ void Ai::inventory(const std::string &var) {
 }
 
 void Ai::broadcast(const std::string &var) {
-  connect.sendToServ(strdup("broadcast"));
+  connect.sendToServ(strcat(strdup("broadcast "), var.c_str()));
   std::cout << "broadcast" << var << std::endl;
   _response = connect.getResponse();
   printResponse();
@@ -185,7 +186,7 @@ void Ai::eject(const std::string &var) {
 }
 
 void Ai::take(const std::string &var) {
-  connect.sendToServ(strdup("take"));
+  connect.sendToServ(strcat(strdup("take "), var.c_str()));
   std::cout << "take " << var << std::endl;
   _response = connect.getResponse();
   printResponse();
@@ -194,7 +195,7 @@ void Ai::take(const std::string &var) {
 }
 
 void Ai::set(std::string const &var) {
-  connect.sendToServ(strdup("set"));
+  connect.sendToServ(strcat(strdup("set "), var.c_str()));
   std::cout << "set " << var << std::endl;
   _response = connect.getResponse();
   printResponse();
@@ -264,6 +265,7 @@ void Ai::fillView() {
   size_t case_pos = 0;
   size_t word_pos = 0;
 
+  _viewMaterial.clear();
   _response.erase(0, 1);
   _response.erase(_response.size() - 1, _response.size());
   _response.push_back(',');
@@ -297,6 +299,7 @@ void Ai::fillPath(const std::string &material) {
   int save;
 
   nb = -1;
+  _path.clear();
   for (int i = 0; i < static_cast<int>(_viewMaterial.size()); i++)
     {
       std::map<std::string, material_pointer>::iterator it;
@@ -325,7 +328,6 @@ void Ai::fillPath(const std::string &material) {
         else
           pos_y++;
       }
-
     while (pos_y > 0)
       {
         _path.push_back(ActionType::FORWARD);
@@ -351,11 +353,6 @@ void Ai::fillPath(const std::string &material) {
       // random
       _path.push_back(ActionType::FORWARD);
     }
-  // print action
-  for (int i = 0; i < static_cast<int>(_path.size()); i++)
-    {
-      std::cout << static_cast<int>(_path[i]) << std::endl;
-    }
 }
 
 bool  Ai::checkHook(const std::string &response) {
@@ -369,8 +366,9 @@ bool  Ai::checkHook(const std::string &response) {
 int   Ai::aiBrain() {
 
   while (_isRunning) {
+    inventory("zaza");
     if (_bag.getFood() < 10) {
-      look("rida");
+      look("food");
       fillPath("food");
       for (int i = 0; i < static_cast<int>(_path.size()); i++)
         {
@@ -379,7 +377,6 @@ int   Ai::aiBrain() {
           if (it != _TabAction.end())
             ((*this).*(*it).second)("food");
         }
-        _path.clear();
       // while (y a des trucs dans le vector, on les fait)
     }
     // else if (checkElevationPartenaire)
@@ -387,7 +384,7 @@ int   Ai::aiBrain() {
     // else if (checkElevation)
     //   elevation
     else
-      look("material"); // material
+      look("food"); // material
       // while (y a des trucs dans le vector, on les fait)
   }
   return (0);
