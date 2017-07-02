@@ -604,7 +604,6 @@ bool  Ai::checkHook(const std::string &response) {
 void  Ai::checkServerMessage(const std::string &response) {
   std::string save = response;
   std::size_t found_msg = _response.find("message");
-  std::size_t found_level = _response.find("Current level");
   std::size_t found_start = save.find("start");
   std::size_t found_stop = save.find("stop");
 
@@ -624,6 +623,7 @@ void  Ai::checkServerMessage(const std::string &response) {
                     {
                         if (std::stoi(save.substr(0, 1)) == _level && found_start != std::string::npos)
                           {
+                            _isCalled = true;
                             _goToPlayer = _goToPlayer;
                           }
                         else if (std::stoi(save.substr(0, 1)) == _level && found_stop != std::string::npos) {
@@ -645,8 +645,6 @@ void  Ai::checkServerMessage(const std::string &response) {
       else
         _goToPlayer = -1;
     }
-  else if (found_level != std::string::npos)
-    _level++;
 }
 
 void  Ai::randInventory() {
@@ -745,15 +743,17 @@ int   Ai::aiBrain() {
   srand(time(NULL));
     while (_isRunning) {
       randInventory();
-      if (_bag.getFood() < 2) {
-        look("food");
-        fillPath("food");
-        for (int i = 0; i < static_cast<int>(_path.size()); i++)
-          {
-            std::map<Ai::ActionType, action_pointer>::iterator it;
-            it = _TabAction.find(_path[i]);
-            if (it != _TabAction.end())
-              ((*this).*(*it).second)("food");
+      if (_bag.getFood() < 15) {
+        while (_bag.getFood() < 30) {
+          look("food");
+          fillPath("food");
+          for (int i = 0; i < static_cast<int>(_path.size()); i++)
+            {
+              std::map<Ai::ActionType, action_pointer>::iterator it;
+              it = _TabAction.find(_path[i]);
+              if (it != _TabAction.end())
+                ((*this).*(*it).second)("food");
+            }
           }
       }
       // else if (checkElevationPartenaire)
