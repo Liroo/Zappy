@@ -5,7 +5,7 @@
 // Login   <thomas.guichard@epitech.eu>
 // 
 // Started on  Fri Jun 30 19:47:54 2017 guicha_t
-// Last update Sun Jul  2 07:47:50 2017 guicha_t
+// Last update Sun Jul  2 08:19:20 2017 guicha_t
 //
 
 #include <stdio.h>
@@ -60,7 +60,10 @@ int	Connect::servtoclient(int fd)
       return (1);
     }
   else if (ret == 0)
-    exit(EXIT_SUCCESS);
+    {
+      free(machine);
+      exit(EXIT_SUCCESS);
+    }
   if (repserv[1999] != '\0')
     repserv[1999] = '\0';
   std::string	response(repserv);
@@ -117,7 +120,10 @@ int	Connect::my_loop(fd_set fd_read, struct timeval tv, int fd)
       else if (FD_ISSET(0, &fd_read))
 	{
 	  if (clienttoserv(fd) == 1)
-	    return (1);
+	    {
+	      free(machine);
+	      return (0);
+	    }
 	}
     }
   return (0);
