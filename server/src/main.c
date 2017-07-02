@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 05:20:34 2017 Pierre Monge
-** Last update Sat Jul  1 05:08:24 2017 Pierre Monge
+** Last update Sun Jul  2 07:35:57 2017 Pierre Monge
 */
 
 #include <time.h>
@@ -37,6 +37,8 @@ static void		loop_game_server()
     {
       process_command();
       process_chrono_event();
+      if (game.game_ended && is_server_ended())
+	break;
       next_chrono = NULL;
       if (game.chrono_queue.next != &game.chrono_queue)
 	next_chrono = (struct timespec *)

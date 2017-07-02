@@ -5,11 +5,13 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Wed Jun 21 04:15:36 2017 Pierre Monge
-** Last update Sun Jul  2 02:48:51 2017 Pierre Monge
+** Last update Sun Jul  2 07:04:57 2017 Pierre Monge
 */
 
 #ifndef GAME_H
 # define GAME_H
+
+# define DFL_PLAYERS_ELEVATED_WIN 6
 
 # define ADMIN_TEAM "admin"
 # define ADMIN_TEAM_PASSWD "admin"
