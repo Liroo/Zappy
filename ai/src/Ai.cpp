@@ -652,19 +652,23 @@ void Ai::fillBag() {
       try {
         temp.second = std::stoi(sepFirst[inc]);
       }
-      catch (...) {
+      catch (std::invalid_argument&) {
+        temp.second = -1;
       }
       inv.push_back(temp);
     }
     inc++;
   }
-  _bag.setFood(inv[0].second);
-  _bag.setLinemate(inv[1].second);
-  _bag.setDeraumere(inv[2].second);
-  _bag.setSibur(inv[3].second);
-  _bag.setMendiane(inv[4].second);
-  _bag.setPhiras(inv[5].second);
-  _bag.setThystame(inv[6].second);
+  if (inv[0].second != -1)
+    {
+      _bag.setFood(inv[0].second);
+      _bag.setLinemate(inv[1].second);
+      _bag.setDeraumere(inv[2].second);
+      _bag.setSibur(inv[3].second);
+      _bag.setMendiane(inv[4].second);
+      _bag.setPhiras(inv[5].second);
+      _bag.setThystame(inv[6].second);
+    }
   _response = "";
 }
 
