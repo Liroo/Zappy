@@ -398,7 +398,7 @@ int Ai::fork(const std::string &var)
 
   if (_isDead == true)
     return (-1);
-  connect.sendToServ(strdup("fork\n"));
+  connect.sendToServ(strdup("fork\r\n"));
   std::cout << "fork" << std::endl;
   _response = connect.getResponse();
   if (_response.size() == 0)
