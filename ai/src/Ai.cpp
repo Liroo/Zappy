@@ -23,6 +23,7 @@ Ai::Ai() : _level(1), _life(1260), _action({Ai::ActionType::UNKNOWN, ""}), _dir(
   _TabAdd["mendiane"] = &Inventory::addMendiane;
   _TabAdd["phiras"] = &Inventory::addPhiras;
   _TabAdd["thystame"] = &Inventory::addThystame;
+  _TabAdd["player"] = &Inventory::addPlayer;
 
   _TabMaterial["food"] = &Inventory::getFood;
   _TabMaterial["linemate"] = &Inventory::getLinemate;
@@ -610,6 +611,7 @@ void  Ai::checkServerMessage(const std::string &response) {
 
   if (found_msg != std::string::npos)
     {
+      std::cout << save;
       save.erase(0, 8);
       _goToPlayer = std::stoi(save.substr(0, 1));
       std::size_t comma = save.find(", ");
@@ -647,11 +649,14 @@ void  Ai::checkServerMessage(const std::string &response) {
       else
         _goToPlayer = -1;
     }
-  if (found_level != std::string::npos)
+  else if (found_level != std::string::npos)
     {
+      std::cout << save;
       _isCalled = false;
       _level++;
     }
+  else
+    std::cout << save;
 }
 
 void  Ai::randInventory() {
