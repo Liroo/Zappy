@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sun Jun 25 00:41:14 2017 Pierre Monge
-** Last update Sun Jul  2 00:23:00 2017 Pierre Monge
+** Last update Sun Jul  2 05:54:40 2017 guicha_t
 */
 
 #include "debug.h"
@@ -41,6 +41,8 @@ t_command	*get_command_list_admin()
     {
       { "getinfo", 7, 0, cmd_getplayer, 0 },
       { "mvplayer", 8, 0, cmd_mvplayer, 0 },
+      { "logoff", 6, 0, cmd_disable_log, 0 },
+      { "logon", 5, 0, cmd_able_log, 0 },
       { NULL, -1, 0, NULL, 0 }
     };
 

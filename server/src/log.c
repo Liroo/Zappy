@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Fri Jun 23 23:09:22 2017 Pierre Monge
-** Last update Fri Jun 30 23:26:58 2017 Pierre Monge
+** Last update Sun Jul  2 05:52:44 2017 guicha_t
 */
 
 #include <stdio.h>
@@ -23,13 +23,18 @@ static void	print_log_list(t_list_head *head,
 {
   t_list_head	*pos;
   va_list	va_cpy;
+  t_client	*c_admin;
+  t_admin	*admin;
 
   pos = list_get_first(head);
   while (pos != head)
     {
       va_copy(va_cpy, va);
-      queue_packet_va(list_entry(pos, t_client, list), SIMPLE_PACKET,
-		      (char *)format, va_cpy);
+      c_admin = list_entry(pos, t_client, list);
+      admin = c_admin->data;
+      if (admin->disable_log == 0)
+	queue_packet_va(list_entry(pos, t_client, list),
+			SIMPLE_PACKET, (char *)format, va_cpy);
       pos = pos->next;
     }
 }
