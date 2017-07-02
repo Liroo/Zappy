@@ -5,12 +5,25 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Wed Jun 28 00:50:35 2017 Thomas
-// Last update Sat Jul  1 18:11:03 2017 Thomas
+// Last update Sun Jul  2 18:36:19 2017 Lucas
 */
 
 #ifndef CONNECTCLIENT_H
 # define CONNECTCLIENT_H
 
+# include <irrlicht.h>
+# include <iostream>
+# include <fstream>
+# include <chrono>
+# include <ctime>
+# include <vector>
+# include <thread>
+# include <string>
+# include <mutex>
+# include <limits>
+# include <time.h>
+# include <irrKlang.h>
+# include <sstream>
 # include <sys/types.h>
 # include <unistd.h>
 
@@ -21,10 +34,16 @@
 class ConnectClient {
 
 public:
-  ConnectClient(int, std::string, bool param);
+  ConnectClient(int, std::string, bool param, irr::scene::ISceneManager*,
+		irr::video::IVideoDriver*, irr::IrrlichtDevice*);
   ~ConnectClient();
 
 private:
+  irr::video::IVideoDriver      *driver;
+  irr::scene::ISceneManager     *smgr;
+  irr::IrrlichtDevice           *device;
+  irr::gui::IGUIEnvironment     *coGUI;
+
   int			_port;
   int			_save_port;
   std::string		_host;
