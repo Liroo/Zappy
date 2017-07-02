@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 12:00:23 2017 Pierre Monge
-** Last update Sat Jul  1 20:17:55 2017 Pierre Monge
+** Last update Sun Jul  2 06:37:08 2017 Pierre Monge
 */
 
 #ifndef STRUCT_H
@@ -159,6 +159,8 @@ struct		s_team
 
 struct			s_game
 {
+  char			game_ended;
+
   unsigned int		map_size_x;
   unsigned int		map_size_y;
   t_inventory		**map;

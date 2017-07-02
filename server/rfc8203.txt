@@ -174,6 +174,12 @@ Network Working Grou					            M. Pierre Monge
        duration > 0. It send a 19 id with duration based on subject.
        This is send each time player end an incantation.
 
+    20 - <team name>
+
+       Winning team.
+       This is send at the end of the game, when 6 players of the same team
+       reach elevation 8.
+
 
 Author's Address
 

@@ -19,6 +19,7 @@ SRC_GEN = \
 	sig.c \
 	log.c \
 	exit.c \
+	end.c \
 	\
 	socket.c \
 	bsd.c \
@@ -103,7 +104,8 @@ SRC_GEN = \
 	rfc/r_16.c \
 	rfc/r_17.c \
 	rfc/r_18.c \
-	rfc/r_19.c
+	rfc/r_19.c \
+	rfc/r_20.c
 
 OBJ_GEN = $(addprefix $(OBJ_GENDIR), $(SRC_GEN:.c=.o))
 
