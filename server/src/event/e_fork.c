@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sat Jul  1 06:14:34 2017 Pierre Monge
-** Last update Sat Jul  1 06:45:18 2017 Pierre Monge
+** Last update Sun Jul  2 08:12:43 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -17,14 +17,14 @@
 #include "debug.h"
 #include "h.h"
 
-void		event_fork(void *data)
+int		event_fork(void *data)
 {
   t_waiting_egg	*waiting_egg;
   t_egg		*egg;
 
   waiting_egg = data;
   if (!(egg = malloc(sizeof(t_egg))))
-    return ((void)zappy_exit());
+    return ((void)zappy_exit(), 0);
   memset(egg, 0, sizeof(t_egg));
   egg->pos_x = waiting_egg->pos_x;
   egg->pos_y = waiting_egg->pos_y;
@@ -34,4 +34,5 @@ void		event_fork(void *data)
   print_log("Team %s has an hatched egg on %d %d\n", waiting_egg->team->name,
 	    egg->pos_x, egg->pos_y);
   free(waiting_egg);
+  return (0);
 }

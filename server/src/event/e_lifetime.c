@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 22 22:20:37 2017 Pierre Monge
-** Last update Sun Jul  2 01:03:23 2017 Pierre Monge
+** Last update Sun Jul  2 08:12:57 2017 Pierre Monge
 */
 
 #include "struct.h"
@@ -15,7 +15,7 @@
 #include "h.h"
 #include "rfc.h"
 
-void		event_lifetime(void *data)
+int		event_lifetime(void *data)
 {
   t_client	*client;
   t_player	*player;
@@ -38,4 +38,5 @@ void		event_lifetime(void *data)
       rfc_12(NULL, client);
       PRINT_DEBUG("Player %d is dead caused by anorexy\n", client->net_info.fd);
     }
+  return (0);
 }

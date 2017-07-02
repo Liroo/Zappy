@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 22 22:20:11 2017 Pierre Monge
-** Last update Sat Jul  1 07:03:46 2017 Pierre Monge
+** Last update Sun Jul  2 08:13:28 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -13,7 +13,7 @@
 #include "struct.h"
 #include "debug.h"
 
-void		event_command(void *data)
+int		event_command(void *data)
 {
   t_client	*client;
   t_player	*player;
@@ -21,8 +21,9 @@ void		event_command(void *data)
 
   client = data;
   player = client->data;
-  if ((*player->command_queue).exec)
-    (*player->command_queue).exec(client, (*player->command_queue).command);
+  if ((*player->command_queue).exec &&
+      (*player->command_queue).exec(client, (*player->command_queue).command))
+    return (1);
   free((*player->command_queue).command);
   (*player->command_queue).command = NULL;
   i = 0;
@@ -33,4 +34,5 @@ void		event_command(void *data)
     }
   player->command_in_queue -= 1;
   player->command_is_running = 0;
+  return (0);
 }
