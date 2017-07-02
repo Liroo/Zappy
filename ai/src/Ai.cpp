@@ -139,7 +139,7 @@ int Ai::forward(const std::string &var) {
   while (found_ok == std::string::npos && found_ko == std::string::npos)
     {
       if (checkServerMessage(_response) == -1) {
-        std::cout << "C EST PASSE" << std::endl;
+        std::cout << "dead" << std::endl;
         return (-1);
       }
       _response = connect.getResponse();
@@ -180,7 +180,7 @@ int Ai::right(const std::string &var) {
   while (found_ok == std::string::npos && found_ko == std::string::npos)
     {
       if (checkServerMessage(_response) == -1) {
-        std::cout << "C EST PASSE" << std::endl;
+        std::cout << "dead" << std::endl;
         return (-1);
       }
       _response = connect.getResponse();
@@ -221,7 +221,7 @@ int Ai::left(const std::string &var) {
   while (found_ok == std::string::npos && found_ko == std::string::npos)
     {
       if (checkServerMessage(_response) == -1) {
-        std::cout << "C EST PASSE" << std::endl;
+        std::cout << "dead" << std::endl;
         return (-1);
       }
       _response = connect.getResponse();
@@ -265,7 +265,7 @@ int Ai::look(const std::string &var)
       if (_isDead == true)
         return (-1);
       if (checkServerMessage(_response) == -1) {
-        std::cout << "C EST PASSE" << std::endl;
+        std::cout << "dead" << std::endl;
         return (-1);
       }
       _response = connect.getResponse();
@@ -326,7 +326,7 @@ int Ai::inventory(const std::string &var)
   while (found_hook == std::string::npos)
     {
       if (checkServerMessage(_response) == -1) {
-        std::cout << "C EST PASSE" << std::endl;
+        std::cout << "dead" << std::endl;
         return (-1);
       }
       _response = connect.getResponse();
@@ -369,7 +369,7 @@ int Ai::broadcast(const std::string &var)
   while (found_ok == std::string::npos && found_ko == std::string::npos)
     {
       if (checkServerMessage(_response) == -1) {
-        std::cout << "C EST PASSE" << std::endl;
+        std::cout << "dead" << std::endl;
         return (-1);
       }
       _response = connect.getResponse();
@@ -411,7 +411,7 @@ int Ai::fork(const std::string &var)
   while (found_ok == std::string::npos && found_ko == std::string::npos)
     {
       if (checkServerMessage(_response) == -1) {
-        std::cout << "C EST PASSE" << std::endl;
+        std::cout << "dead" << std::endl;
         return (-1);
       }
       _response = connect.getResponse();
@@ -453,7 +453,7 @@ int Ai::eject(const std::string &var)
   while (found_ok == std::string::npos && found_ko == std::string::npos)
     {
       if (checkServerMessage(_response) == -1) {
-        std::cout << "C EST PASSE" << std::endl;
+        std::cout << "dead" << std::endl;
         return (-1);
       }
       _response = connect.getResponse();
@@ -496,7 +496,7 @@ int Ai::take(const std::string &var)
   while (found_ok == std::string::npos && found_ko == std::string::npos)
     {
       if (checkServerMessage(_response) == -1) {
-        std::cout << "C EST PASSE" << std::endl;
+        std::cout << "dead" << std::endl;
         return (-1);
       }
       _response = connect.getResponse();
@@ -539,7 +539,7 @@ int Ai::set(std::string const &var)
   while (found_ok == std::string::npos && found_ko == std::string::npos)
     {
         if (checkServerMessage(_response) == -1) {
-          std::cout << "C EST PASSE" << std::endl;
+          std::cout << "dead" << std::endl;
           return (-1);
         }
         _response = connect.getResponse();
@@ -582,7 +582,7 @@ int Ai::incantation(std::string const &var)
           && found_ko == std::string::npos)
     {
       if (checkServerMessage(_response) == -1) {
-        std::cout << "C EST PASSE" << std::endl;
+        std::cout << "dead" << std::endl;
         return (-1);
       }
       _response = connect.getResponse();
@@ -626,10 +626,15 @@ void Ai::fillBag() {
   std::pair<std::string, int> temp;
   std::vector<std::string>::const_iterator it;
   size_t  found = _response.find('[');
+  size_t  found2 = _response.find(']');
   int inc = 0;
 
   if (found >= 1)
-    _response.erase(0, (found - 1));
+    _response.erase(0, found);
+  std::cout << "ERASE : " << _response << std::endl;
+  if (found2 < _response.size())
+    _response.erase((found2 + 1), _response.size());
+  std::cout << "REPONSE : " << _response << std::endl;
   if (checkHook(_response) == false)
     return ;
   std::cout << "AA" << _response << "BB" << std::endl;
@@ -642,11 +647,17 @@ void Ai::fillBag() {
   }
   std::cout << "BONJOUR" << std::endl;
   for (it = sepFirst.begin();it!=sepFirst.end();it++){
-    if ((inc % 2) == 0)
+    if ((inc % 2) != 0) {
+      std::cout << "T";
       temp.first = sepFirst[inc];
+      std::cout << "U";
+    }
     else {
+      std::cout << "J" << sepFirst[inc] << "M";
       temp.second = std::stoi(sepFirst[inc]);
-       inv.push_back(temp);
+      std::cout << "K";
+      inv.push_back(temp);
+      std::cout << "L";
     }
     inc++;
   }
@@ -682,7 +693,7 @@ void Ai::fillView() {
 
   _viewMaterial.clear();
   if (found >= 1)
-    _response.erase(0, (found - 1));
+    _response.erase(0, found);
   _response.erase(0, 1);
   _response.erase(_response.size() - 1, _response.size());
   _response.push_back(',');
