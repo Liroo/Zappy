@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Sun Jul  2 07:45:51 2017 Pierre Monge
+** Last update Sun Jul  2 07:59:20 2017 Pierre Monge
 */
 
 #ifndef H_H
@@ -108,7 +108,7 @@ extern int	cmd_pre_elevation(t_client *client, char *token);
 extern int	cmd_elevation(t_client *client, char *token);
 
 extern void	elevate_players(int x, int y);
-extern void	check_winning_condition();
+extern int	check_winning_condition();
 extern char	*parse_param(char *token);
 extern char	*strepur(char *str);
 extern void	print_tiles(t_client *client, int x, int y);
