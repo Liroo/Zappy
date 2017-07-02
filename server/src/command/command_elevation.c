@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sat Jul  1 15:53:48 2017 Pierre Monge
-** Last update Sun Jul  2 07:58:28 2017 Pierre Monge
+** Last update Sun Jul  2 18:15:04 2017 Pierre Monge
 */
 
 #include "struct.h"
@@ -78,8 +78,10 @@ int		cmd_pre_elevation(t_client *client,
       queue_packet(client, SIMPLE_PACKET, RPL_KO);
       player->incantation_status = INCANTATION_FAILED;
     }
-  else if (check_object_on_tile(player->elevation, player->pos_x, player->pos_y) &&
-      check_player_on_tile(player->elevation, player->pos_x, player->pos_y))
+  else if (check_object_on_tile(player->elevation,
+				player->pos_x, player->pos_y)
+	   && check_player_on_tile(player->elevation,
+				   player->pos_x, player->pos_y))
     {
       queue_packet(client, SIMPLE_PACKET, RPL_UNDER_ELEVATION);
       player->incantation_status = INCANTATION_PROCESSING;

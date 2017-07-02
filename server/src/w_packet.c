@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 15:17:59 2017 Pierre Monge
-** Last update Sat Jul  1 02:44:54 2017 guicha_t
+** Last update Sun Jul  2 18:13:25 2017 Pierre Monge
 */
 
 #include <stdarg.h>
@@ -113,7 +113,6 @@ int		send_queued_packet(t_client *client)
       return (0);
     }
   packet = list_get_first(&client->w_packet);
-  w_len = 0;
   while (packet != &client->w_packet)
     {
       container = list_entry(packet, t_packet, list);
@@ -128,5 +127,4 @@ int		send_queued_packet(t_client *client)
   if (list_empty(&client->w_packet))
     fd_set_select(client->net_info.fd, FD_SELECT_READ_P(client, 0), client);
   return (0);
-  // Function more than 26 lines
 }
