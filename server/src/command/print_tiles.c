@@ -5,7 +5,7 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Thu Jun 22 05:27:01 2017 Thomas
-** Last update Fri Jun 30 23:19:58 2017 Thomas
+** Last update Sun Jul  2 05:48:42 2017 Pierre Monge
 */
 
 #include <stdio.h>
@@ -63,62 +63,4 @@ void	print_tiles(t_client *client, int x, int y)
       i++;
     }
   print_tiles_next(client, x, y);
-}
-
-void	send_horizontal_look(t_client *client, int range,
-			      int begin_direction, int dir_x)
-{
-  int	begin_y;
-  t_player      *p;
-
-  p = client->data;
-  begin_y = range * begin_direction;
-  if (begin_direction < 0)
-    while (begin_y <= range)
-      {
-	print_tiles(client, p->pos_x + dir_x, p->pos_y - begin_y);
-	begin_y++;
-	if (begin_y <= range || range == 0)
-	  queue_packet(client, SIMPLE_PACKET, ",");
-      }
-  else if (begin_direction > 0)
-    {
-      range *= -1;
-      while (begin_y >= range)
-	{
-	  print_tiles(client, p->pos_x + dir_x, p->pos_y - begin_y);
-	  begin_y--;
-	  if (begin_y >= range || range == 0)
-	    queue_packet(client, SIMPLE_PACKET, ",");
-	}
-    }
-}
-
-void	send_vertical_look(t_client *client, int range,
-			   int begin_direction, int dir_y)
-{
-  int	begin_x;
-  t_player	*p;
-
-  p = client->data;
-  begin_x = range * begin_direction;
-  if (begin_direction < 0)
-    while (begin_x <= range)
-      {
-	print_tiles(client, p->pos_x + begin_x, p->pos_y + dir_y);
-	begin_x++;
-	if (begin_x <= range || range == 0)
-	  queue_packet(client, SIMPLE_PACKET, ",");
-      }
-  else if (begin_direction > 0)
-    {
-      range *= -1;
-      while (begin_x >= range)
-	{
-	  print_tiles(client, p->pos_x + begin_x, p->pos_y + dir_y);
-	  begin_x--;
-	  if (begin_x >= range || range == 0)
-	    queue_packet(client, SIMPLE_PACKET, ",");
-	}
-    }
 }

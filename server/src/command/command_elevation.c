@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sat Jul  1 15:53:48 2017 Pierre Monge
-** Last update Sun Jul  2 00:19:27 2017 Pierre Monge
+** Last update Sun Jul  2 03:01:23 2017 Pierre Monge
 */
 
 #include "struct.h"
@@ -21,7 +21,7 @@ static int		check_player_on_tile(int elevation, int x, int y)
   t_list_head		*client;
   t_team		*team_ptr;
   int			nb_players;
-  t_player		*player;
+  t_player		*p;
 
   nb_players = 0;
   team = list_get_first(&game.teams);
@@ -31,15 +31,15 @@ static int		check_player_on_tile(int elevation, int x, int y)
       client = list_get_first(&team_ptr->players);
       while (client != &team_ptr->players)
 	{
-	  player = ((t_client *)list_entry(client, t_client, list))->data;
-	  if (player->pos_x == x && player->pos_y == y &&
-	      player->elevation == elevation)
+	  p = ((t_client *)list_entry(client, t_client, list))->data;
+	  if (p->pos_x == x && p->pos_y == y && p->elevation == elevation)
 	    nb_players += 1;
 	  client = client->next;
 	}
       team = team->next;
     }
-  return (nb_players == elevation_stats[elevation - 1]);
+  return ((int)game.map[x][y].player == nb_players &&
+	  nb_players == elevation_stats[elevation - 1]);
 }
 
 static int	check_object_on_tile(int elevation, int x, int y)
@@ -75,9 +75,15 @@ int		cmd_pre_elevation(t_client *client,
   rfc_17(NULL, client);
   if (check_object_on_tile(player->elevation, player->pos_x, player->pos_y) &&
       check_player_on_tile(player->elevation, player->pos_x, player->pos_y))
-    player->incantation_status = INCANTATION_PROCESSING;
+    {
+      queue_packet(client, SIMPLE_PACKET, RPL_UNDER_ELEVATION);
+      player->incantation_status = INCANTATION_PROCESSING;
+    }
   else
-    player->incantation_status = INCANTATION_FAILED;
+    {
+      queue_packet(client, SIMPLE_PACKET, RPL_KO);
+      player->incantation_status = INCANTATION_FAILED;
+    }
   return (0);
 }
 
@@ -87,12 +93,9 @@ int		cmd_elevation(t_client *client,
   t_player	*player;
 
   player = client->data;
-  if (player->incantation_status != INCANTATION_FAILED &&
-      check_object_on_tile(player->elevation, player->pos_x, player->pos_y) &&
+  if (check_object_on_tile(player->elevation, player->pos_x, player->pos_y) &&
       check_player_on_tile(player->elevation, player->pos_x, player->pos_y))
-    {
-      (void)1;
-    }
+    elevate_players(player->pos_x, player->pos_y);
   else
     {
       player->incantation_status = INCANTATION_NONE;

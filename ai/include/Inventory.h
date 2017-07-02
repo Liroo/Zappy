@@ -4,6 +4,7 @@
 class Inventory {
 public:
   Inventory();
+  Inventory(int, int, int, int, int, int, int);
   ~Inventory();
 
 private:
@@ -14,11 +15,15 @@ private:
   int _mendiane;
   int _phiras;
   int _thystame;
+  int _player;
 
 public:
   const int &getLinemate() const;
   void addLinemate();
   void setLinemate(const int &);
+  const int &getPlayer() const;
+  void addPlayer();
+  void setPlayer(const int &);
   const int &getDeraumere() const;
   void addDeraumere();
   void setDeraumere(const int &);

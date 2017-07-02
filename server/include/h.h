@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Sun Jul  2 05:59:13 2017 guicha_t
+** Last update Sun Jul  2 06:16:53 2017 guicha_t
 */
 
 #ifndef H_H
@@ -107,14 +107,10 @@ extern int	cmd_fork(t_client *client, char *token);
 extern int	cmd_pre_elevation(t_client *client, char *token);
 extern int	cmd_elevation(t_client *client, char *token);
 
+extern void	elevate_players(int x, int y);
 extern char	*parse_param(char *token);
 extern char	*strepur(char *str);
-extern void	get_directional_position(t_player *p, int *x, int *y);
 extern void	print_tiles(t_client *client, int x, int y);
-extern void	send_vertical_look(t_client *client, int range,
-				   int begin_direction, int dir_y);
-extern void	send_horizontal_look(t_client *client, int range,
-				     int begin_direction, int dir_x);
 extern int	algorithme_vector(t_player *p_send, t_player *p_dest);
 extern int	get_config_vector(int x, int y, int xmax, int ymax);
 extern int	get_dir_config_one(int x, int y);

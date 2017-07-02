@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 15:37:59 2017 Thomas
-// Last update Sat Jul  1 00:40:20 2017 Thomas
+// Last update Sun Jul  2 02:47:10 2017 Thomas
 //
 
 #include "team.hpp"
@@ -23,6 +23,11 @@ void	Team::setNbPlayer(const int &nb)
 void	Team::addPlayer(const Player &p)
 {
   _players.push_back(p);
+}
+
+void	Team::erasePlayer(const std::vector<Player>::iterator &it)
+{
+  _players.erase(it);
 }
 
 std::string	Team::getName() const
@@ -47,7 +52,7 @@ std::vector<Player>	Team::getAllPlayer() const
 
 Team::Team(const std::string &name)
 {
-  _name = "";
+  _name = name;
   _nbPlayers = 0;
 }
 

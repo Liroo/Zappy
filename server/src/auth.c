@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Mon Jun 19 22:15:36 2017 Pierre Monge
-** Last update Sun Jul  2 06:10:42 2017 guicha_t
+** Last update Sun Jul  2 06:15:45 2017 guicha_t
 */
 
 #include <stdlib.h>
@@ -69,8 +69,7 @@ static int	register_client_in_team(t_client *client,
   queue_packet(client, SIMPLE_PACKET, "%d\n",
 	       team->empty_slot + team->egg_slot);
   queue_packet(client, SIMPLE_PACKET, "%d %d\n",
-	       ((t_player *)client->data)->pos_x,
-	       ((t_player *)client->data)->pos_y);
+	       game.map_size_x, game.map_size_y);
   delete_chrono_client(client);
   queue_chrono(LIFETIME_WITHOUT_FOOD, client, C_EVENT_LIFETIME);
   rfc_02(NULL, ((t_player *)client->data)->team);

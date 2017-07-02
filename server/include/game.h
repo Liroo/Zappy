@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Wed Jun 21 04:15:36 2017 Pierre Monge
-** Last update Sat Jul  1 07:28:04 2017 Pierre Monge
+** Last update Sun Jul  2 02:48:51 2017 Pierre Monge
 */
 
 #ifndef GAME_H
@@ -22,7 +22,7 @@
 # define MIN_MENDIANE_PER_TEAM 7 + (7 / 2)
 # define MIN_PHIRAS_PER_TEAM 8 + (8 / 2)
 # define MIN_THYSTAME_PER_TEAM 1 + (1 / 2)
-# define MIN_FOOD_PER_TEAM 20 + (20 / 2)
+# define MIN_FOOD_PER_TEAM 100 + (100 / 2)
 
 # define N	1
 # define NW	2
@@ -59,6 +59,8 @@
 # define RPL_WELCOME "WELCOME\n"
 # define RPL_PASSWD "Require password\n"
 # define RPL_WRONG_PASSWD "Wrong password\n"
+# define RPL_UNDER_ELEVATION "Elevation underway\n"
+# define RPL_ELEVATION "Current level: %d\n"
 # define RPL_DEAD "dead\n"
 
 #endif /* !GAME_H */
