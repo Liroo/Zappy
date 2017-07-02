@@ -5,7 +5,7 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Wed Jun 21 22:49:06 2017 Thomas
-** Last update Sat Jul  1 06:16:52 2017 guicha_t
+** Last update Sun Jul  2 05:55:54 2017 Pierre Monge
 */
 
 #include <stdio.h>
@@ -18,74 +18,84 @@
 #include "rfc.h"
 #include "log.h"
 
-static int	get_range_per_elevation(t_player *p)
+static void	send_vertical_look(t_client *client, int distance,
+				   int dir, int dir_x)
 {
-  int		range;
+  int		x;
+  int		y;
+  int		end_y;
+  t_player	*player;
 
-  range = 0;
-  if (p->elevation < '2')
-    range = 1;
-  else if (p->elevation < '3')
-    range = 2;
-  else
-    range = 3;
-  return (range);
+  player = client->data;
+  x = player->pos_x + (dir_x * distance);
+  y = player->pos_y - (dir * distance);
+  end_y = player->pos_y + (dir * distance) + dir;
+  while (y != end_y)
+    {
+      queue_packet(client, SIMPLE_PACKET, ",");
+      print_tiles(client, x, y);
+      y += dir;
+    }
 }
 
-void		get_directional_position(t_player *p, int *x, int *y)
+static void	send_horizontal_look(t_client *client, int distance,
+				   int dir, int dir_y)
 {
-  if (p->direction == 0)
-    *y = 1;
-  else if (p->direction == 1)
-    *x = 1;
-  else if (p->direction == 2)
-    *y = -1;
-  else
-    *x = -1;
+  int		x;
+  int		end_x;
+  int		y;
+  t_player	*player;
+
+  player = client->data;
+  x = player->pos_x - (dir * distance);
+  end_x = player->pos_x + (dir * distance) + dir;
+  y = player->pos_y + (dir_y * distance);
+  while (x != end_x)
+    {
+      queue_packet(client, SIMPLE_PACKET, ",");
+      print_tiles(client, x, y);
+      x += dir;
+    }
 }
 
 static void	get_tiles_line_object(t_client *client, int dir_x,
-				      int dir_y, int range)
+				      int dir_y, int distance)
 {
-  int		begin_direction;
-  t_player	*p;
+  int		dir;
+  t_player	*player;
 
-  p = client->data;
-  if (p->direction == 0 || p->direction == 1)
-    begin_direction = -1;
+  player = client->data;
+  dir = player->direction == 1 || player->direction == 2 ?
+    -1 : 1;
+  if (dir_x != 0)
+    send_vertical_look(client, distance, dir, dir_x);
   else
-    begin_direction = 1;
-  if (dir_x == 0)
-    send_vertical_look(client, range, begin_direction, dir_y);
-  else if (dir_y == 0)
-    send_horizontal_look(client, range, begin_direction, dir_x);
+    send_horizontal_look(client, distance, dir, dir_y);
 }
 
 int	cmd_look(t_client *client, char *token)
 {
-  t_player	*p;
-  int		range;
+  t_player	*player;
   int		dir_x;
   int		dir_y;
-  int		i;
+  int		distance;
 
   (void)token;
-  p = client->data;
-  i = 0;
-  dir_x = 0;
-  dir_y = 0;
-  range = get_range_per_elevation(p);
-  get_directional_position(p, &dir_x, &dir_y);
+  player = client->data;
+  dir_x = (player->direction % 2 == 1) ? (player->direction - 2) * -1 : 0;
+  dir_y = (player->direction % 2 == 0) ? (player->direction - 1) * -1 : 0;
+  distance = 1;
   queue_packet(client, SIMPLE_PACKET, "[");
-  while (i <= range)
+  print_tiles(client, player->pos_x, player->pos_y);
+  while (distance <= player->elevation)
     {
-      get_tiles_line_object(client, dir_x * i, dir_y * i, i);
-      i++;
+      get_tiles_line_object(client, dir_x, dir_y, distance);
+      distance++;
     }
   queue_packet(client, SIMPLE_PACKET, "]\n");
   print_log("Player %d from %s: LOOK\n",
 	    client->net_info.fd,
-	    p->team->name);
+	    player->team->name);
   rfc_08(NULL, client);
   return (0);
 }

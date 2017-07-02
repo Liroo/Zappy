@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 13 12:00:23 2017 Pierre Monge
-** Last update Sat Jul  1 20:17:55 2017 Pierre Monge
+** Last update Sun Jul  2 05:22:23 2017 guicha_t
 */
 
 #ifndef STRUCT_H
@@ -104,6 +104,8 @@ struct			s_admin
 {
   int			command_in_queue;
   t_command_queue	command_queue[COMMAND_QUEUE_SIZE];
+
+  int			disable_log;
 };
 
 typedef void		(*t_process_packet)(t_packet packet, t_client *client);

@@ -5,7 +5,7 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Fri Jun 23 01:28:13 2017 Thomas
-** Last update Sun Jul  2 00:09:11 2017 guicha_t
+** Last update Sun Jul  2 06:15:30 2017 guicha_t
 */
 
 #include "debug.h"
@@ -36,10 +36,9 @@ static void	eject_player(t_client *client, t_player *p)
   int		x;
   int		y;
 
-  x = 0;
-  y = 0;
   target_p = client->data;
-  get_directional_position(p, &x, &y);
+  x = (p->direction % 2 == 0) ? -(p->direction - 1) : 0;
+  y = (p->direction % 2 == 1) ? -(p->direction - 2) : 0;
   target_p->pos_x += x;
   target_p->pos_y += y;
   if (target_p->pos_x < 0)
@@ -50,6 +49,7 @@ static void	eject_player(t_client *client, t_player *p)
     target_p->pos_y = game.map_size_y;
   else if (target_p->pos_y >= (int)game.map_size_y)
     target_p->pos_y = 0;
+  game.map[target_p->pos_x][target_p->pos_y].player++;
   send_eject(client, target_p, p);
 }
 
@@ -60,7 +60,7 @@ static void	find_player(t_client *client,
   t_list_head	*pos_p;
   t_client	*tmp_p;
   t_player	*in;
-  
+
   head_p = &team->players;
   pos_p = list_get_first(head_p);
   while (pos_p != head_p)

@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 // 
 // Started on  Mon Jun 26 00:57:46 2017 Lucas
-// Last update Sat Jul  1 20:45:38 2017 Lucas
+// Last update Sun Jul  2 05:48:16 2017 Lucas
 //
 
 #ifndef LTexture_HPP
@@ -42,11 +42,17 @@ public:
   irr::video::ITexture*         getSbMountBack() const;
 
   // MAP OBJECTS //
-  irr::video::ITexture		*getTile() const;
+  irr::video::ITexture		*getGroundPng() const;
+  irr::scene::IAnimatedMesh     *getBricksObj() const;
+  
 
 private:
   // MAP OBJECTS //
-  irr::video::ITexture		*tile;
+  irr::video::ITexture*                     BRICKS_MENU_PNG;
+  irr::scene::IAnimatedMesh*                BRICKS_MENU_OBJ;
+  irr::video::ITexture*                     GROUND_PNG;
+  
+  
   
   // LOBBY //
   irr::video::ITexture		*LogoPNG;

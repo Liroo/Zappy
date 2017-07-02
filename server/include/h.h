@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Sun Jul  2 02:56:15 2017 Pierre Monge
+** Last update Sun Jul  2 06:16:53 2017 guicha_t
 */
 
 #ifndef H_H
@@ -25,6 +25,11 @@
 extern int	inetport(int port);
 extern void	accept_connection(int sock_fd);
 extern void	add_connection(int fd);
+
+/*
+** auth
+*/
+extern void	init_disable_log(t_client *client);
 
 /*
 ** socket
@@ -105,12 +110,7 @@ extern int	cmd_elevation(t_client *client, char *token);
 extern void	elevate_players(int x, int y);
 extern char	*parse_param(char *token);
 extern char	*strepur(char *str);
-extern void	get_directional_position(t_player *p, int *x, int *y);
 extern void	print_tiles(t_client *client, int x, int y);
-extern void	send_vertical_look(t_client *client, int range,
-				   int begin_direction, int dir_y);
-extern void	send_horizontal_look(t_client *client, int range,
-				     int begin_direction, int dir_x);
 extern int	algorithme_vector(t_player *p_send, t_player *p_dest);
 extern int	get_config_vector(int x, int y, int xmax, int ymax);
 extern int	get_dir_config_one(int x, int y);
@@ -127,6 +127,8 @@ extern int	get_diff_max_x(t_player *send, t_player *dest);
 extern int	cmd_getplayer(t_client *client, char *token);
 extern int	cmd_mvplayer(t_client *client, char *token);
 extern int	my_count_word(char *str, char d);
+extern int	cmd_disable_log(t_client *client, char *token);
+extern int	cmd_able_log(t_client *client, char *token);
 
 /*
 ** Free class
