@@ -126,8 +126,8 @@ int Ai::forward(const std::string &var) {
 
   if (_isDead == true)
     return (-1);
-  connect.sendToServ(strdup("forward\n"));
-  std::cout << "forward" << std::endl;
+  connect.sendToServ(strdup("Forward\n"));
+  std::cout << "Forward" << std::endl;
   _response = connect.getResponse();
   if (_response.size() == 0)
     return (-1);
@@ -167,8 +167,8 @@ int Ai::right(const std::string &var) {
 
   if (_isDead == true)
     return (-1);
-  connect.sendToServ(strdup("right\n"));
-  std::cout << "right" << std::endl;
+  connect.sendToServ(strdup("Right\n"));
+  std::cout << "Right" << std::endl;
   _response = connect.getResponse();
   if (_response.size() == 0)
     return (-1);
@@ -208,8 +208,8 @@ int Ai::left(const std::string &var) {
 
   if (_isDead == true)
     return (-1);
-  connect.sendToServ(strdup("left\n"));
-  std::cout << "left" << std::endl;
+  connect.sendToServ(strdup("Left\n"));
+  std::cout << "Left" << std::endl;
   _response = connect.getResponse();
   if (_response.size() == 0)
     return (-1);
@@ -251,8 +251,8 @@ int Ai::look(const std::string &var)
 
   if (_isDead == true)
     return (-1);
-  connect.sendToServ(strdup("look\n"));
-  std::cout << "look" << std::endl;
+  connect.sendToServ(strdup("Look\n"));
+  std::cout << "Look" << std::endl;
   _response = connect.getResponse();
   if (_response.size() == 0)
     return (-1);
@@ -314,8 +314,8 @@ int Ai::inventory(const std::string &var)
 
   if (_isDead == true)
     return (-1);
-  connect.sendToServ(strdup("inventory\n"));
-  std::cout << "inventory" << std::endl;
+  connect.sendToServ(strdup("Inventory\n"));
+  std::cout << "Inventory" << std::endl;
   _response = connect.getResponse();
   if (_response.size() == 0)
     return (-1);
@@ -355,7 +355,7 @@ int Ai::broadcast(const std::string &var)
 
   if (_isDead == true)
     return (-1);
-  resp << "broadcast " << var << "\n";
+  resp << "Broadcast " << var << "\n";
   connect.sendToServ((char *)resp.str().c_str());
   std::cout << resp.str();
   _response = connect.getResponse();
@@ -398,8 +398,8 @@ int Ai::fork(const std::string &var)
 
   if (_isDead == true)
     return (-1);
-  connect.sendToServ(strdup("fork\r\n"));
-  std::cout << "fork" << std::endl;
+  connect.sendToServ(strdup("Fork\n"));
+  std::cout << "Fork" << std::endl;
   _response = connect.getResponse();
   if (_response.size() == 0)
     return (-1);
@@ -440,8 +440,8 @@ int Ai::eject(const std::string &var)
 
   if (_isDead == true)
     return (-1);
-  connect.sendToServ(strdup("eject\n"));
-  std::cout << "eject" << std::endl;
+  connect.sendToServ(strdup("Eject\n"));
+  std::cout << "Eject" << std::endl;
   _response = connect.getResponse();
   if (_response.size() == 0)
     return (-1);
@@ -482,7 +482,7 @@ int Ai::take(const std::string &var)
 
   if (_isDead == true)
     return (-1);
-  resp << "take " << var << "\n";
+  resp << "Take " << var << "\n";
   connect.sendToServ((char *)resp.str().c_str());
   std::cout << resp.str();
   _response = connect.getResponse();
@@ -525,7 +525,7 @@ int Ai::set(std::string const &var)
 
   if (_isDead == true)
     return (-1);
-  resp << "set " << var << "\n";
+  resp << "Set " << var << "\n";
   connect.sendToServ((char *)resp.str().c_str());
   std::cout << resp.str();
   _response = connect.getResponse();
@@ -568,8 +568,8 @@ int Ai::incantation(std::string const &var)
 
   if (_isDead == true)
     return (-1);
-  connect.sendToServ(strdup("incantation\n"));
-  std::cout << "incantation" << std::endl;
+  connect.sendToServ(strdup("Incantation\n"));
+  std::cout << "Incantation" << std::endl;
   _response = connect.getResponse();
   if (_response.size() == 0)
     return (-1);
@@ -619,24 +619,24 @@ int Ai::incantation(std::string const &var)
 }
 
 void Ai::fillBag() {
-  std::stringstream ss(_response);
   std::vector<std::string> sepFirst;
   std::string tmp;
   std::vector<std::pair<std::string, int>> inv;
   std::pair<std::string, int> temp;
   std::vector<std::string>::const_iterator it;
-  size_t  found = _response.find('[');
+  size_t  found = _response.find("[ ");
   size_t  found2 = _response.find(']');
   int inc = 0;
 
-  if (found >= 1)
-    _response.erase(0, found);
+  if (found == 0)
+    _response.erase(0, 2);
   if (found2 < _response.size())
     _response.erase((found2 + 1), _response.size());
   if (_response[_response.size()] == '\n')
     _response[_response.size()] = '\0';
   if (checkHook(_response) == false)
     return ;
+  std::stringstream ss(_response);
   while (ss >> tmp) {
     for(unsigned int i=0; i< tmp.size(); ++i) {
       if(tmp[i] == ',' || tmp[i] == '[' || tmp[i] == ']')
