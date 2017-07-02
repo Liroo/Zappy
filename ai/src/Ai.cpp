@@ -127,8 +127,27 @@ void Ai::forward(const std::string &var) {
   _response = connect.getResponse();
   _action.first = Ai::ActionType::FORWARD;
   _life--;
-  if (checkServerMessage(_response) == false)
-    printResponse();
+  _goToPlayer = -1;
+  std::size_t found_ok = _response.find("ok");
+  std::size_t found_ko = _response.find("ko");
+  while (found_ok == std::string::npos && found_ko == std::string::npos)
+    {
+      checkServerMessage(_response);
+      _response = connect.getResponse();
+      found_ok = _response.find("ok");
+      found_ko = _response.find("ko");
+    }
+  printResponse();
+  if (_goToPlayer != -1)
+    {
+      for (int i = 0; i < static_cast<int>(_closeAction[_goToPlayer].size()); i++)
+        {
+          std::map<Ai::ActionType, action_pointer>::iterator it;
+          it = _TabAction.find(_closeAction[_goToPlayer][i]);
+          if (it != _TabAction.end())
+            ((*this).*(*it).second)("food");
+        }
+    }
 }
 
 void Ai::right(const std::string &var) {
@@ -138,8 +157,27 @@ void Ai::right(const std::string &var) {
   _response = connect.getResponse();
   _action.first = Ai::ActionType::RIGHT;
   _life--;
-  if (checkServerMessage(_response) == false)
-    printResponse();
+  _goToPlayer = -1;
+  std::size_t found_ok = _response.find("ok");
+  std::size_t found_ko = _response.find("ko");
+  while (found_ok == std::string::npos && found_ko == std::string::npos)
+    {
+      checkServerMessage(_response);
+      _response = connect.getResponse();
+      found_ok = _response.find("ok");
+      found_ko = _response.find("ko");
+    }
+  printResponse();
+  if (_goToPlayer != -1)
+    {
+      for (int i = 0; i < static_cast<int>(_closeAction[_goToPlayer].size()); i++)
+        {
+          std::map<Ai::ActionType, action_pointer>::iterator it;
+          it = _TabAction.find(_closeAction[_goToPlayer][i]);
+          if (it != _TabAction.end())
+            ((*this).*(*it).second)("food");
+        }
+    }
 }
 
 void Ai::left(const std::string &var) {
@@ -149,8 +187,27 @@ void Ai::left(const std::string &var) {
   _response = connect.getResponse();
   _action.first = Ai::ActionType::LEFT;
   _life--;
-  if (checkServerMessage(_response) == false)
-    printResponse();
+  _goToPlayer = -1;
+  std::size_t found_ok = _response.find("ok");
+  std::size_t found_ko = _response.find("ko");
+  while (found_ok == std::string::npos && found_ko == std::string::npos)
+    {
+      checkServerMessage(_response);
+      _response = connect.getResponse();
+      found_ok = _response.find("ok");
+      found_ko = _response.find("ko");
+    }
+  printResponse();
+  if (_goToPlayer != -1)
+    {
+      for (int i = 0; i < static_cast<int>(_closeAction[_goToPlayer].size()); i++)
+        {
+          std::map<Ai::ActionType, action_pointer>::iterator it;
+          it = _TabAction.find(_closeAction[_goToPlayer][i]);
+          if (it != _TabAction.end())
+            ((*this).*(*it).second)("food");
+        }
+    }
 }
 
 void Ai::look(const std::string &var) {
@@ -160,12 +217,27 @@ void Ai::look(const std::string &var) {
   _response = connect.getResponse();
   _action.first = Ai::ActionType::LOOK;
   _life--;
-  if (checkServerMessage(_response) == false)
+  _goToPlayer = -1;
+  std::size_t found_hook = _response.find("[");
+  while (found_hook == std::string::npos)
     {
-      while (checkHook(_response) == false)
-        _response += connect.getResponse();
-      printResponse();
-      fillView();
+      checkServerMessage(_response);
+      _response = connect.getResponse();
+      found_hook = _response.find("[");
+    }
+  while (checkHook(_response) == false)
+    _response += connect.getResponse();
+  printResponse();
+  fillView();
+  if (_goToPlayer != -1)
+    {
+      for (int i = 0; i < static_cast<int>(_closeAction[_goToPlayer].size()); i++)
+        {
+          std::map<Ai::ActionType, action_pointer>::iterator it;
+          it = _TabAction.find(_closeAction[_goToPlayer][i]);
+          if (it != _TabAction.end())
+            ((*this).*(*it).second)("food");
+        }
     }
 }
 
@@ -176,10 +248,25 @@ void Ai::inventory(const std::string &var) {
   _response = connect.getResponse();
   _action.first = Ai::ActionType::INVENTORY;
   _life--;
-  if (checkServerMessage(_response) == false)
+  _goToPlayer = -1;
+  std::size_t found_hook = _response.find("[");
+  while (found_hook == std::string::npos)
     {
-      printResponse();
-      fillBag();
+      checkServerMessage(_response);
+      _response = connect.getResponse();
+      found_hook = _response.find("[");
+    }
+  printResponse();
+  fillBag();
+  if (_goToPlayer != -1)
+    {
+      for (int i = 0; i < static_cast<int>(_closeAction[_goToPlayer].size()); i++)
+        {
+          std::map<Ai::ActionType, action_pointer>::iterator it;
+          it = _TabAction.find(_closeAction[_goToPlayer][i]);
+          if (it != _TabAction.end())
+            ((*this).*(*it).second)("food");
+        }
     }
 }
 
@@ -189,8 +276,27 @@ void Ai::broadcast(const std::string &var) {
   _response = connect.getResponse();
   _action.first = Ai::ActionType::BROADCAST;
   _life--;
-  if (checkServerMessage(_response) == false)
-    printResponse();
+  _goToPlayer = -1;
+  std::size_t found_ok = _response.find("ok");
+  std::size_t found_ko = _response.find("ko");
+  while (found_ok == std::string::npos && found_ko == std::string::npos)
+    {
+      checkServerMessage(_response);
+      _response = connect.getResponse();
+      found_ok = _response.find("ok");
+      found_ko = _response.find("ko");
+    }
+  printResponse();
+  if (_goToPlayer != -1)
+    {
+      for (int i = 0; i < static_cast<int>(_closeAction[_goToPlayer].size()); i++)
+        {
+          std::map<Ai::ActionType, action_pointer>::iterator it;
+          it = _TabAction.find(_closeAction[_goToPlayer][i]);
+          if (it != _TabAction.end())
+            ((*this).*(*it).second)("food");
+        }
+    }
 }
 
 void Ai::fork(const std::string &var) {
@@ -200,8 +306,27 @@ void Ai::fork(const std::string &var) {
   _response = connect.getResponse();
   _action.first = Ai::ActionType::FORK;
   _life--;
-  if (checkServerMessage(_response) == false)
-    printResponse();
+  _goToPlayer = -1;
+  std::size_t found_ok = _response.find("ok");
+  std::size_t found_ko = _response.find("ko");
+  while (found_ok == std::string::npos && found_ko == std::string::npos)
+    {
+      checkServerMessage(_response);
+      _response = connect.getResponse();
+      found_ok = _response.find("ok");
+      found_ko = _response.find("ko");
+    }
+  printResponse();
+  if (_goToPlayer != -1)
+    {
+      for (int i = 0; i < static_cast<int>(_closeAction[_goToPlayer].size()); i++)
+        {
+          std::map<Ai::ActionType, action_pointer>::iterator it;
+          it = _TabAction.find(_closeAction[_goToPlayer][i]);
+          if (it != _TabAction.end())
+            ((*this).*(*it).second)("food");
+        }
+    }
 }
 
 void Ai::eject(const std::string &var) {
@@ -211,8 +336,27 @@ void Ai::eject(const std::string &var) {
   _response = connect.getResponse();
   _action.first = Ai::ActionType::EJECT;
   _life--;
-  if (checkServerMessage(_response) == false)
-    printResponse();
+  _goToPlayer = -1;
+  std::size_t found_ok = _response.find("ok");
+  std::size_t found_ko = _response.find("ko");
+  while (found_ok == std::string::npos && found_ko == std::string::npos)
+    {
+      checkServerMessage(_response);
+      _response = connect.getResponse();
+      found_ok = _response.find("ok");
+      found_ko = _response.find("ko");
+    }
+  printResponse();
+  if (_goToPlayer != -1)
+    {
+      for (int i = 0; i < static_cast<int>(_closeAction[_goToPlayer].size()); i++)
+        {
+          std::map<Ai::ActionType, action_pointer>::iterator it;
+          it = _TabAction.find(_closeAction[_goToPlayer][i]);
+          if (it != _TabAction.end())
+            ((*this).*(*it).second)("food");
+        }
+    }
 }
 
 void Ai::take(const std::string &var) {
@@ -221,19 +365,55 @@ void Ai::take(const std::string &var) {
   _response = connect.getResponse();
   _action.first = Ai::ActionType::TAKE;
   _life--;
-  if (checkServerMessage(_response) == false)
-      printResponse();
+  _goToPlayer = -1;
+  std::size_t found_ok = _response.find("ok");
+  std::size_t found_ko = _response.find("ko");
+  while (found_ok == std::string::npos && found_ko == std::string::npos)
+    {
+      checkServerMessage(_response);
+      _response = connect.getResponse();
+      found_ok = _response.find("ok");
+      found_ko = _response.find("ko");
+    }
+  printResponse();
+  if (_goToPlayer != -1)
+    {
+      for (int i = 0; i < static_cast<int>(_closeAction[_goToPlayer].size()); i++)
+        {
+          std::map<Ai::ActionType, action_pointer>::iterator it;
+          it = _TabAction.find(_closeAction[_goToPlayer][i]);
+          if (it != _TabAction.end())
+            ((*this).*(*it).second)("food");
+        }
+    }
 }
 
 void Ai::set(std::string const &var) {
   connect.sendToServ(strcat(strdup("set "), var.c_str()));
   std::cout << "set " << var << std::endl;
   _response = connect.getResponse();
-  if (checkServerMessage(_response) == false)
+  _action.first = Ai::ActionType::SET;
+  _life--;
+  _goToPlayer = -1;
+  std::size_t found_ok = _response.find("ok");
+  std::size_t found_ko = _response.find("ko");
+  while (found_ok == std::string::npos && found_ko == std::string::npos)
     {
-      printResponse();
-      _action.first = Ai::ActionType::SET;
-      _life--;
+      checkServerMessage(_response);
+      _response = connect.getResponse();
+      found_ok = _response.find("ok");
+      found_ko = _response.find("ko");
+    }
+  printResponse();
+  if (_goToPlayer != -1)
+    {
+      for (int i = 0; i < static_cast<int>(_closeAction[_goToPlayer].size()); i++)
+        {
+          std::map<Ai::ActionType, action_pointer>::iterator it;
+          it = _TabAction.find(_closeAction[_goToPlayer][i]);
+          if (it != _TabAction.end())
+            ((*this).*(*it).second)("food");
+        }
     }
 }
 
@@ -242,11 +422,29 @@ void Ai::incantation(std::string const &var) {
   connect.sendToServ(strdup("incantation"));
   std::cout << "incantation" << std::endl;
   _response = connect.getResponse();
-  if (checkServerMessage(_response) == false)
+  _action.first = Ai::ActionType::INCANTATION;
+  _life--;
+  _goToPlayer = -1;
+  std::size_t found_level = _response.find("level");
+  std::size_t found_ko = _response.find("ko");
+  while (found_level == std::string::npos && found_ko == std::string::npos)
     {
-      printResponse();
-      _action.first = Ai::ActionType::INCANTATION;
-      _life--;
+      checkServerMessage(_response);
+      _response = connect.getResponse();
+      found_level = _response.find("level");
+    }
+  if (found_level != std::string::npos)
+    _level++;
+  printResponse();
+  if (_goToPlayer != -1)
+    {
+      for (int i = 0; i < static_cast<int>(_closeAction[_goToPlayer].size()); i++)
+        {
+          std::map<Ai::ActionType, action_pointer>::iterator it;
+          it = _TabAction.find(_closeAction[_goToPlayer][i]);
+          if (it != _TabAction.end())
+            ((*this).*(*it).second)("food");
+        }
     }
 }
 
@@ -403,101 +601,52 @@ bool  Ai::checkHook(const std::string &response) {
   return false;
 }
 
-bool  Ai::checkServerMessage(const std::string &response) {
-  std::string a = response;
-  std::size_t found = a.find("message");
-  std::size_t found_elevation = a.find("level");
-  std::size_t found_start = a.find("start");
-  std::size_t found_stop = a.find("stop");
-  int pos = 0;
+void  Ai::checkServerMessage(const std::string &response) {
+  std::string save = response;
+  std::size_t found_msg = _response.find("message");
+  std::size_t found_level = _response.find("Current level");
+  std::size_t found_start = save.find("start");
+  std::size_t found_stop = save.find("stop");
 
-  //std::cout << "abc";
-  std::cout << "-----------------" << a << std::endl;
-  if (found_elevation != std::string::npos) {
-    _level++;
-  }
-  else if (found != std::string::npos)
+  if (found_msg != std::string::npos)
     {
-      a.erase(0, 8);
-      pos = std::stoi(a.substr(0, 1));
-      std::size_t comma = a.find(", ");
+      save.erase(0, 8);
+      _goToPlayer = std::stoi(save.substr(0, 1));
+      std::size_t comma = save.find(", ");
       if (comma != std::string::npos)
         {
-          if (a.size() >= 4)
-            a.erase(0, 3);
-          if (a.size() >= 1)
+          if (save.size() >= 4)
             {
-              try
+              save.erase(0, 3);
+              if (save.size() >= 1)
                 {
-                    if (std::stoi(a.substr(0, 1)) == _level && found_start != std::string::npos)
-                      {
-                        _isCalled = true;
-                        if (_action.first == ActionType::LOOK)
+                  try
+                    {
+                        if (std::stoi(save.substr(0, 1)) == _level && found_start != std::string::npos)
                           {
-                            while (checkHook(_response) == false)
-                              _response += connect.getResponse();
-                            found_elevation = _response.find("level");
-                            if (found_elevation != std::string::npos) {
-                              _level++;
-                            }
-                            printResponse();
-                            fillView();
+                            _goToPlayer = _goToPlayer;
                           }
-                        else if (_action.first == ActionType::INVENTORY)
-                          {
-                            _response = connect.getResponse();
-                            printResponse();
-                            fillBag();
-                          }
+                        else if (std::stoi(save.substr(0, 1)) == _level && found_stop != std::string::npos) {
+                          _isCalled = false;
+                          _goToPlayer = -1;
+                        }
                         else
-                          {
-                            _response = connect.getResponse();
-                            printResponse();
-                          }
-                        for (int i = 0; i < static_cast<int>(_closeAction[pos].size()); i++)
-                          {
-                            std::map<Ai::ActionType, action_pointer>::iterator it;
-                            it = _TabAction.find(_closeAction[pos][i]);
-                            if (it != _TabAction.end())
-                              ((*this).*(*it).second)("food");
-                          }
-                        return true;
-                      }
-                    else if (std::stoi(a.substr(0, 1)) == _level && found_stop != std::string::npos) {
-                      _isCalled = false;
-                      if (_action.first == ActionType::LOOK)
-                        {
-                          while (checkHook(_response) == false)
-                            _response += connect.getResponse();
-                          found_elevation = _response.find("level");
-                          if (found_elevation != std::string::npos) {
-                            _level++;
-                          }
-                          printResponse();
-                          fillView();
-                        }
-                      else if (_action.first == ActionType::INVENTORY)
-                        {
-                          _response = connect.getResponse();
-                          printResponse();
-                          fillBag();
-                        }
-                      else
-                        {
-                          _response = connect.getResponse();
-                          printResponse();
-                        }
-                      return true;
+                          _goToPlayer = -1;
+                    }
+                  catch (std::invalid_argument&)
+                    {
+                      _goToPlayer = -1;
                     }
                 }
-              catch (std::invalid_argument&)
-                {
-                  return false;
-                }
             }
+          else
+            _goToPlayer = -1;
         }
+      else
+        _goToPlayer = -1;
     }
-  return false;
+  else if (found_level != std::string::npos)
+    _level++;
 }
 
 void  Ai::randInventory() {
