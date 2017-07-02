@@ -5,11 +5,44 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 02:42:24 2017 Thomas
-// Last update Sun Jul  2 05:15:07 2017 Thomas
+// Last update Sun Jul  2 06:14:40 2017 Lucas
 //
 
 #include <iostream>
 #include "game.hpp"
+
+Game::Game(irr::scene::ISceneManager *smgr, irr::video::IVideoDriver *driver,
+	   irr::IrrlichtDevice *device)
+{
+  sm = smgr;
+  driver = driver;
+  device = device;
+  gameGUI = device->getGUIEnvironment();
+  setTexture(sm, driver, gameGUI);
+  nbGround = 0;
+  _mapInit = false;
+  _map_x = DEFAULT;
+  _map_y = DEFAULT;
+  _allResp["01"] = &Game::size;
+  _allResp["02"] = &Game::teamsDetails;
+  _allResp["03"] = &Game::playerDetails;
+  _allResp["04"] = &Game::initMap;
+  _allResp["05"] = &Game::forward;
+  _allResp["06"] = &Game::direction;
+  _allResp["07"] = &Game::direction;
+  _allResp["08"] = &Game::see;
+  _allResp["09"] = &Game::inventoryPlayer;
+  _allResp["10"] = &Game::broadcast;
+  _allResp["11"] = &Game::eject;
+  _allResp["12"] = &Game::dead;
+  _allResp["13"] = &Game::takeObject;
+  _allResp["14"] = &Game::setObject;
+  _allResp["15"] = &Game::forkPlayer;
+  _allResp["16"] = &Game::egg;
+  _allResp["17"] = &Game::elevationAll;
+  _allResp["18"] = &Game::elevationPlayer;
+  _allResp["19"] = &Game::cast;
+}
 
 void	Game::setMapInit(bool update)
 {
@@ -709,38 +742,6 @@ int	Game::updateGame(const std::string &old)
     return (this->*(it->second))(resp);
   else
     return (1);
-}
-
-Game::Game(irr::scene::ISceneManager *smgr, irr::video::IVideoDriver *driver,
-	   irr::IrrlichtDevice *device)
-{
-  sm = smgr;
-  driver = driver;
-  device = device;
-  gameGUI = device->getGUIEnvironment();
-  nbGround = 0;
-  _mapInit = false;
-  _map_x = DEFAULT;
-  _map_y = DEFAULT;
-  _allResp["01"] = &Game::size;
-  _allResp["02"] = &Game::teamsDetails;
-  _allResp["03"] = &Game::playerDetails;
-  _allResp["04"] = &Game::initMap;
-  _allResp["05"] = &Game::forward;
-  _allResp["06"] = &Game::direction;
-  _allResp["07"] = &Game::direction;
-  _allResp["08"] = &Game::see;
-  _allResp["09"] = &Game::inventoryPlayer;
-  _allResp["10"] = &Game::broadcast;
-  _allResp["11"] = &Game::eject;
-  _allResp["12"] = &Game::dead;
-  _allResp["13"] = &Game::takeObject;
-  _allResp["14"] = &Game::setObject;
-  _allResp["15"] = &Game::forkPlayer;
-  _allResp["16"] = &Game::egg;
-  _allResp["17"] = &Game::elevationAll;
-  _allResp["18"] = &Game::elevationPlayer;
-  _allResp["19"] = &Game::cast;
 }
 
 Game::~Game() {}

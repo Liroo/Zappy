@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 // 
 // Started on  Mon Jun 26 00:55:18 2017 Lucas
-// Last update Sat Jul  1 20:46:51 2017 Lucas
+// Last update Sun Jul  2 06:05:22 2017 Lucas
 //
 
 #include "LTexture.hpp"
@@ -29,15 +29,22 @@ int	LTexture::setTexture(irr::scene::ISceneManager* smgr, irr::video::IVideoDriv
       || (hostLogo = driver->getTexture("./media/img/host_layer.png")) == 0
       || (portLogo = driver->getTexture("./media/img/port_layer.png")) == 0
       || (connectLogo = driver->getTexture("./media/img/connect_layer.png")) == 0
-      || (tile = driver->getTexture("./media/img/materials/floor.png")) == 0
+      || (GROUND_PNG = driver->getTexture("./media/img/materials/floor.png")) == 0
+      || (BRICKS_MENU_OBJ = smgr->getMesh("./media/models/brick_menu.dae")) == NULL
+      || (BRICKS_MENU_PNG = driver->getTexture("./media/Texture/brick_menu.png")) == 0
       )
     return (GUI_ERR);
   return (GUI_OK);
 }
 
-irr::video::ITexture*       LTexture::getTile() const
+irr::video::ITexture*       LTexture::getGroundPng() const
 {
-  return (this->tile);
+  return (this->GROUND_PNG);
+}
+
+irr::scene::IAnimatedMesh*  LTexture::getBricksObj() const
+{
+  return (this->BRICKS_MENU_OBJ);
 }
 
 irr::video::ITexture*       LTexture::getConnectL() const
