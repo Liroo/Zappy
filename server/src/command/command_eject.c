@@ -5,7 +5,7 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Fri Jun 23 01:28:13 2017 Thomas
-** Last update Sun Jul  2 07:59:01 2017 guicha_t
+** Last update Sun Jul  2 20:10:23 2017 guicha_t
 */
 
 #include "debug.h"
@@ -37,8 +37,10 @@ static void	eject_player(t_client *client, t_player *p)
   int		y;
 
   target_p = client->data;
-  x = (p->direction % 2 == 0) ? -(p->direction - 1) : 0;
-  y = (p->direction % 2 == 1) ? -(p->direction - 2) : 0;
+  y = (p->direction % 2 == 0) ? -(p->direction - 1) : 0;
+  x = (p->direction % 2 == 1) ? -(p->direction - 2) : 0;
+  PRINT_DEBUG("x = %d ; y = %d\n", x, y);
+  game.map[p->pos_x][p->pos_y].player--;
   target_p->pos_x += x;
   target_p->pos_y += y;
   if (target_p->pos_x < 0)
