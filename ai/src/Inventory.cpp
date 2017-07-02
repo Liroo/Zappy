@@ -1,6 +1,16 @@
 # include "Inventory.h"
 
-Inventory::Inventory() : _food(0), _linemate(0), _deraumere(0), _sibur(0), _mendiane(0), _phiras(0), _thystame(0) {}
+Inventory::Inventory() : _food(0), _linemate(0), _deraumere(0), _sibur(0), _mendiane(0), _phiras(0), _thystame(0), _player(1) {}
+
+Inventory::Inventory(int player, int linemate, int deraumere, int sibur, int mendiane, int phiras, int thystame) {
+  _player = player;
+  _linemate = linemate;
+  _deraumere = deraumere;
+  _sibur = sibur;
+  _mendiane = mendiane;
+  _phiras = phiras;
+  _thystame = thystame;
+}
 
 Inventory::~Inventory() {}
 
@@ -14,6 +24,18 @@ void Inventory::addLinemate() {
 
 void Inventory::setLinemate(const int &mat) {
   _linemate = mat;
+}
+
+const int &Inventory::getPlayer() const {
+  return _player;
+}
+
+void Inventory::addPlayer() {
+  _player++;
+}
+
+void Inventory::setPlayer(const int &mat) {
+  _player = mat;
 }
 
 const int &Inventory::getDeraumere() const {

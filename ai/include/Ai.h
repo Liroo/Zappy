@@ -4,7 +4,6 @@
 # include <iostream>
 # include <vector>
 # include <map>
-# include <functional>
 # include "Inventory.h"
 # include "ConnectClient.h"
 
@@ -57,6 +56,8 @@ private:
   int _fd;
   int _nbResponse;
   bool  _isRunning;
+  std::vector<Inventory*>  _invToInc;
+  std::string _materialObj;
 
 public:
   ConnectClient connect;
@@ -98,6 +99,13 @@ public:
   void goToPlayer();
   bool checkBroadcast(const std::string &);
   void ReplaceStringInPlace(std::string& subject, const std::string& search, const std::string& replace);
+  void randInventory();
+  bool  checkElevation();
+  bool  inventoryCompare(const Inventory &, const Inventory &);
+  void  whatMaterialToFind(const Inventory &);
+  std::map<std::string, int>  returnTabInv(const Inventory &) const;
+  void  setMaterials(const Inventory &);
+  void  getCaseIncantation();
 };
 
 #endif
