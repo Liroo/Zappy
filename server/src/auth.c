@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Mon Jun 19 22:15:36 2017 Pierre Monge
-** Last update Sun Jul  2 22:39:22 2017 Pierre Monge
+** Last update Sun Jul  2 22:43:58 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -96,7 +96,6 @@ static void	register_admin(t_packet packet, t_client *client)
       print_log("Client %d has joined as admin\n", client->net_info.fd);
       client->auth_status = AUTH;
       client->client_type = ADMIN;
-      ((t_admin *)client->data)->disable_log = 0;
       list_del(client->list.prev, client->list.next);
       list_add_tail(&client->list, &game.admins);
       delete_chrono_client(client);
