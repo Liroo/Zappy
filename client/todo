@@ -4,15 +4,15 @@
       - makeInputs(); (port/host)			[LUCAS] DONE
 
 ----> Connect:
-      - Créer classe Thomas avec Param du lobby.	[THOMAS]
-      - Incorporer boucle select dans boucle Game.	[LUCAS]
-      - Parser input (RFC Pierre).			[THOMAS]
+      - Créer classe Thomas avec Param du lobby.	[THOMAS] DONE
+      - Incorporer boucle select dans boucle Game.	[THOMAS] DONE 
+      - Parser input (RFC Pierre).			[THOMAS] DONE
       - Créer cmds et transformations en conséquence.	[THOMAS + LUCAS]
       - Créer map + items + joueurs.			[LUCAS]
 
 -----> Gameplay:
        - Créer scène jeu.				[LUCAS] DONE
-       - Ajuster taille map.				[LUCAS]
+       - Ajuster taille map.				[LUCAS] DONE
        - Ajuster GUI pour team info + inventaire.	[LUCAS]
        - settings & credits buttons.			[LUCAS]
 

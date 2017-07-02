@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 13:54:32 2017 Thomas
-// Last update Sun Jul  2 03:57:15 2017 Thomas
+// Last update Sun Jul  2 09:09:18 2017 Thomas
 //
 
 #include "player.hpp"
@@ -61,7 +61,7 @@ void    Player::updateInventory(std::string &inv)
     params = inv.substr(0, pos);
     inv.erase(0, pos + delim_before.length());
   }
-  inv.substr(0, inv.size() - 1);
+  inv = inv.substr(0, inv.size() - 1);
   _inventory[(InvType)i] = std::stoi(inv, nullptr, 10);
 }
 
@@ -156,15 +156,22 @@ Player::Player(int fd)
 
 Player::Player(const Player &p)
 {
-  _fd = p.getFd();
-  _x = p.getX();
-  _y = p.getY();
-  _direction = p.getDirection();
-  _level = p.getLevel();
-  _is_alive = true;
-  _inventory = p.getInventory();
-  _buf = p.getBuf();
-  _print_buf = p.getIsPrint();
+  _fd = p._fd;
+  _x = p._x;
+  _y = p._y;
+  _direction = p._direction;
+  _level = p._level;
+  _is_alive = p._is_alive;
+  _inventory = p._inventory;
+  _buf = p._buf;
+  _print_buf = p._print_buf;
+}
+
+Player	Player::operator=(const Player &p)
+{
+  Player	tmp(p);
+
+  return (tmp);
 }
 
 Player::~Player() {}

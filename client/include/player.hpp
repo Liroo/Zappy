@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 13:54:26 2017 Thomas
-// Last update Sun Jul  2 03:57:48 2017 Thomas
+// Last update Sun Jul  2 08:18:14 2017 Thomas
 //
 
 #ifndef PLAYER_HPP
@@ -32,6 +32,8 @@ public:
   Player(int);
   Player(const Player &);
   ~Player();
+
+  Player	operator=(const Player &);
 
 private:
   int				_fd;
