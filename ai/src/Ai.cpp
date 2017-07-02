@@ -955,8 +955,9 @@ int   Ai::aiBrain() {
     if (_isDead == true)
       return (0);
     randInventory();
-    if (_bag.getFood() < 15) {
-      while (_bag.getFood() < 30) {
+    inventory("remake");
+    if (_bag.getFood() < 10) {
+      while (_bag.getFood() < 40) {
         if (look("food") == -1)
           return (0);
         fillPath("food");
