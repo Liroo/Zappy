@@ -625,10 +625,7 @@ void  Ai::checkServerMessage(const std::string &response) {
                   try
                     {
                         if (std::stoi(save.substr(0, 1)) == _level && found_start != std::string::npos)
-                          {
-                            _isCalled = true;
-                            _goToPlayer = _goToPlayer;
-                          }
+                          _isCalled = true;
                         else if (std::stoi(save.substr(0, 1)) == _level && found_stop != std::string::npos) {
                           if (!checkIfPerson(*_invToInc[_level - 1]))
                             _isCalled = false;
@@ -786,8 +783,8 @@ int   Ai::aiBrain() {
   srand(time(NULL));
   while (_isRunning) {
     randInventory();
-    if (_bag.getFood() < 15) {
-      while (_bag.getFood() < 30) {
+    if (_bag.getFood() < 5) {
+      while (_bag.getFood() < 10) {
         look("food");
         fillPath("food");
         for (int i = 0; i < static_cast<int>(_path.size()); i++)
