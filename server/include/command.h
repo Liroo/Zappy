@@ -5,14 +5,14 @@
 ** Login   <thomas.guichard@epitech.eu>
 **
 ** Started on  Thu Jun 15 23:05:33 2017 guicha_t
-** Last update Sun Jul  2 05:54:48 2017 guicha_t
+** Last update Sun Jul  2 07:35:21 2017 guicha_t
 */
 
 #ifndef _COMMAND_H
 # define _COMMAND_H
 
 # define MAX_COMMAND_SIZE_PLAYER 12
-# define MAX_COMMAND_SIZE_ADMIN 4
+# define MAX_COMMAND_SIZE_ADMIN 5
 
 typedef struct s_command	t_command;
 typedef struct s_command_queue	t_command_queue;

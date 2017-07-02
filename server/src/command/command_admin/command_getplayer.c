@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Thu Jun 29 10:02:43 2017 guicha_t
-** Last update Sat Jul  1 23:52:25 2017 guicha_t
+** Last update Sun Jul  2 07:38:13 2017 guicha_t
 */
 
 #include "debug.h"
@@ -26,11 +26,12 @@ void	display_informations(t_client *client, t_client *tmp_p,
     dir = 'S';
   else
     dir = 'W';
-  queue_packet(client, SIMPLE_PACKET, "fd %d - [%d][%d] dir:%c\n",
+  queue_packet(client, SIMPLE_PACKET,
+	       "fd %d - [%d][%d] dir:%c lvl:%d\n",
 	       tmp_p->net_info.fd,
 	       player->pos_x,
 	       player->pos_y,
-	       dir);
+	       dir, player->elevation);
 }
 
 void	find_player_in_team(t_client *client, t_team *team)

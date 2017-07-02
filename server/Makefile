@@ -66,6 +66,7 @@ SRC_GEN = \
 	command/command_admin/countword.c \
 	command/command_admin/command_disable_log.c \
 	command/command_admin/command_able_log.c \
+	command/command_admin/command_set_level.c \
 	command/command_forward.c \
 	command/command_left.c \
 	command/command_right.c \

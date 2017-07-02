@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Sun Jul  2 06:16:53 2017 guicha_t
+** Last update Sun Jul  2 07:35:01 2017 guicha_t
 */
 
 #ifndef H_H
@@ -129,6 +129,8 @@ extern int	cmd_mvplayer(t_client *client, char *token);
 extern int	my_count_word(char *str, char d);
 extern int	cmd_disable_log(t_client *client, char *token);
 extern int	cmd_able_log(t_client *client, char *token);
+extern void	catch_each_param(char *token, char *src);
+extern int	cmd_set_level(t_client *client, char *token);
 
 /*
 ** Free class

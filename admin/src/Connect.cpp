@@ -5,7 +5,7 @@
 // Login   <thomas.guichard@epitech.eu>
 // 
 // Started on  Fri Jun 30 19:47:54 2017 guicha_t
-// Last update Sun Jul  2 07:14:33 2017 guicha_t
+// Last update Sun Jul  2 07:47:50 2017 guicha_t
 //
 
 #include <stdio.h>
@@ -61,6 +61,8 @@ int	Connect::servtoclient(int fd)
     }
   else if (ret == 0)
     exit(EXIT_SUCCESS);
+  if (repserv[1999] != '\0')
+    repserv[1999] = '\0';
   std::string	response(repserv);
   printf("[%s]: %s", f_time, repserv);
   return (0);
