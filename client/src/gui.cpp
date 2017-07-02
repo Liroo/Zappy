@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Fri Jun 30 05:14:07 2017 Lucas
-// Last update Sun Jul  2 06:19:32 2017 Lucas
+// Last update Sun Jul  2 08:14:07 2017 Lucas
 //
 
 #include "gui.hpp"
@@ -29,8 +29,8 @@ void		Gui::guiRemove()
 
 void		Gui::makeCamera(int type)
 {
-  guiCamera = smgr->addCameraSceneNode(0, irr::core::vector3df(0,30,1200),
-				       irr::core::vector3df(0,0,0));
+  guiCamera = smgr->addCameraSceneNode(0, irr::core::vector3df(0,0,1200),
+				       irr::core::vector3df(0,60,-400));
   device->getCursorControl()->setVisible(true);
 }
 
