@@ -5,7 +5,7 @@
 ## Login   <lucas.onillon@epitech.eu>
 ## 
 ## Started on  Sun Jun 25 22:50:07 2017 Lucas
-## Last update Sun Jul  2 05:31:18 2017 Lucas
+## Last update Sun Jul  2 23:18:16 2017 Thomas
 ##
 
 TARGET	 = zappy_client
@@ -28,6 +28,7 @@ SRC	 = main.cpp					\
 
 CPPFLAGS = -Iinclude -std=c++11 -Ilib_irrlicht -I/usr/X11R6/include -Iirrklang
 CXXFLAGS = -W -Wall -std=c++11 -ansi -Iinclude -Wno-unused-parameter -pedantic
+FLAGS	+= $(DEBUG)
 LDFLAGS	 = -lIrrlicht -lpthread -std=c++11 -g
 LDFLAGS += -IrrKlang
 
@@ -54,6 +55,9 @@ all	 : all_linux
 all_linux: LDFLAGS += -L/usr/X11R6/lib$(LIBSELECT) -lGL -lXxf86vm -lXext -lX11 -lXcursor
 
 all_linux : $(TARGET)
+
+debug: fclean
+	@make --no-print-directory $(NAME_BIN) DEBUG='-DDEBUG=1 -g3'
 
 clean	: clean_linux
 
