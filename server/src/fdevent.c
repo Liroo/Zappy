@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Fri Jun 16 20:34:58 2017 Pierre Monge
-** Last update Sat Jul  1 03:52:51 2017 Pierre Monge
+** Last update Sun Jul  2 22:32:36 2017 Pierre Monge
 */
 
 #include "h.h"
@@ -13,7 +13,7 @@
 #include "debug.h"
 #include "log.h"
 
-EVENT	get_event_flags(int fd, fd_set read_fds, fd_set write_fds)
+EVENT		get_event_flags(int fd, fd_set read_fds, fd_set write_fds)
 {
   EVENT		event_flags;
 

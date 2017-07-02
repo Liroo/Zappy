@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Fri Jun 30 19:35:57 2017 Pierre Monge
-** Last update Fri Jun 30 22:57:20 2017 Pierre Monge
+** Last update Sun Jul  2 22:35:57 2017 Pierre Monge
 */
 
 #include <stdarg.h>
@@ -31,7 +31,7 @@ static void	print_log_list(t_list_head *head,
     }
 }
 
-void	rfc(t_client *spectator, const char * restrict format, ...)
+void		rfc(t_client *spectator, const char * restrict format, ...)
 {
   va_list	va;
   va_list	va_cpy;

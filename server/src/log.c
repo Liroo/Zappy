@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Fri Jun 23 23:09:22 2017 Pierre Monge
-** Last update Sun Jul  2 05:52:44 2017 guicha_t
+** Last update Sun Jul  2 22:34:31 2017 Pierre Monge
 */
 
 #include <stdio.h>
@@ -39,7 +39,7 @@ static void	print_log_list(t_list_head *head,
     }
 }
 
-void	print_log(const char * restrict format, ...)
+void		print_log(const char * restrict format, ...)
 {
   va_list	va;
   va_list	va_cpy;

@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sat Jun 17 04:55:41 2017 Pierre Monge
-** Last update Sun Jul  2 18:08:48 2017 Pierre Monge
+** Last update Sun Jul  2 22:31:43 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -70,7 +70,7 @@ void	queue_command_spectator(t_packet packet, t_client *client)
   queue_packet(client, SIMPLE_PACKET, RPL_KO);
 }
 
-void	queue_command_admin(t_packet packet, t_client *client)
+void		queue_command_admin(t_packet packet, t_client *client)
 {
   t_command	*command_list;
   t_admin	*admin;

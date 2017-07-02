@@ -1,11 +1,11 @@
 /*
 ** command_mvplayer.c for Project-Master in /home/guicha/tek2/Zappy/server/src/command/command_admin
-** 
+**
 ** Made by guicha_t
 ** Login   <thomas.guichard@epitech.eu>
-** 
+**
 ** Started on  Sat Jul  1 17:47:57 2017 guicha_t
-** Last update Sun Jul  2 22:03:23 2017 guicha_t
+** Last update Sun Jul  2 22:37:10 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -16,7 +16,7 @@
 #include "struct.h"
 #include "h.h"
 
-void	catch_each_param(char *token, char *src)
+void		catch_each_param(char *token, char *src)
 {
   static int	i = 9;
   int		is;
@@ -57,7 +57,7 @@ int		get_player_mvplayer(t_team *team, int fd,
   return (0);
 }
 
-void	convert_param_id(t_client *c, char *sfd,
+void		convert_param_id(t_client *c, char *sfd,
 			       char *sx, char *sy)
 {
   t_list_head	*head;

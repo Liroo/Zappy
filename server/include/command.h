@@ -5,11 +5,11 @@
 ** Login   <thomas.guichard@epitech.eu>
 **
 ** Started on  Thu Jun 15 23:05:33 2017 guicha_t
-** Last update Sun Jul  2 21:35:23 2017 guicha_t
+** Last update Sun Jul  2 22:23:16 2017 Pierre Monge
 */
 
-#ifndef _COMMAND_H
-# define _COMMAND_H
+#ifndef COMMAND_H
+# define COMMAND_H
 
 # define MAX_COMMAND_SIZE_PLAYER 12
 # define MAX_COMMAND_SIZE_ADMIN 6
@@ -40,4 +40,4 @@ struct			s_command_queue
   t_command_func	pre_exec;
 };
 
-#endif /* _COMMAND_H */
+#endif /* !COMMAND_H */

@@ -5,13 +5,13 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 22:17:36 2017 Pierre Monge
-** Last update Fri Jun 30 19:23:57 2017 Pierre Monge
+** Last update Sun Jul  2 22:30:55 2017 Pierre Monge
 */
 
 #ifndef PACKET_H
 # define PACKET_H
 
-#include "list.h"
+# include "list.h"
 
 # define PACKET_SIZE_DFL 4096
 

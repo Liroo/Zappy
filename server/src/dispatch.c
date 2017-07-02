@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 04:14:35 2017 Pierre Monge
-** Last update Wed Jun 21 04:34:57 2017 Pierre Monge
+** Last update Sun Jul  2 22:32:20 2017 Pierre Monge
 */
 
 #include <sys/select.h>
@@ -34,7 +34,7 @@ void		fd_set_select(int fd, int flags, void *data)
 
 t_fdset	fdset;
 
-void	fd_refresh(int fd)
+void		fd_refresh(int fd)
 {
   t_fd_entry	*fde;
 

@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sun Jun 25 00:22:07 2017 Pierre Monge
-** Last update Sun Jul  2 07:41:30 2017 Pierre Monge
+** Last update Sun Jul  2 22:31:55 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -42,7 +42,7 @@ static void	delete_teams()
     }
 }
 
-void		delete_chronos()
+void			delete_chronos()
 {
   t_list_head		*pos;
   t_list_head		*next;
@@ -60,7 +60,7 @@ void		delete_chronos()
     }
 }
 
-void	delete_game()
+void		delete_game()
 {
   int		i;
 

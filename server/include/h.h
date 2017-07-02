@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Sun Jul  2 21:55:57 2017 guicha_t
+** Last update Sun Jul  2 22:25:24 2017 Pierre Monge
 */
 
 #ifndef H_H
@@ -14,8 +14,8 @@
 # include <stdarg.h>
 # include <time.h>
 
-#include "struct.h"
-#include "event.h"
+# include "struct.h"
+# include "event.h"
 
 # define MAX_CONNECTIONS 10240
 

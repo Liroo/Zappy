@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Tue Jun 20 22:09:29 2017 Pierre Monge
-** Last update Sat Jul  1 07:44:01 2017 Pierre Monge
+** Last update Sun Jul  2 22:34:41 2017 Pierre Monge
 */
 
 #include <time.h>
@@ -34,7 +34,7 @@ void	insert_objects_in_map(int offset, int nb)
     }
 }
 
-static void		spawn_objects()
+static void    	spawn_objects()
 {
   t_list_head	*pos;
   int		team_nb;

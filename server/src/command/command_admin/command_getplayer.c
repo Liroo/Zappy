@@ -1,11 +1,11 @@
 /*
 ** getplayer.c for Project-Master in /home/guicha/tek2/Zappy/server/src/command/command_admin
-** 
+**
 ** Made by guicha_t
 ** Login   <thomas.guichard@epitech.eu>
-** 
+**
 ** Started on  Thu Jun 29 10:02:43 2017 guicha_t
-** Last update Sun Jul  2 07:38:13 2017 guicha_t
+** Last update Sun Jul  2 22:39:03 2017 Pierre Monge
 */
 
 #include "debug.h"
@@ -34,7 +34,7 @@ void	display_informations(t_client *client, t_client *tmp_p,
 	       dir, player->elevation);
 }
 
-void	find_player_in_team(t_client *client, t_team *team)
+void		find_player_in_team(t_client *client, t_team *team)
 {
   t_list_head	*head_p;
   t_list_head	*pos_p;
@@ -52,7 +52,7 @@ void	find_player_in_team(t_client *client, t_team *team)
     }
 }
 
-int	cmd_getplayer(t_client *client, char *token)
+int		cmd_getplayer(t_client *client, char *token)
 {
   t_list_head	*head;
   t_list_head	*pos;

@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Wed Jun 21 00:04:42 2017 Pierre Monge
-** Last update Sat Jul  1 06:12:07 2017 Pierre Monge
+** Last update Sun Jul  2 22:24:33 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -49,7 +49,7 @@ void		insert_chrono_queue(t_chrono_queue *chrono)
   while (pos != head)
     {
       if (compare_time(((t_chrono_queue *)list_entry(pos, t_chrono_queue,
-						   list))->end,
+						     list))->end,
 		       chrono->end) == 1)
 	break;
       pos = pos->next;

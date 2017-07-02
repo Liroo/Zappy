@@ -29,7 +29,6 @@ SRC_GEN = \
 	fdevent.c \
 	auth.c \
 	pipe.c \
-	init_log_admin.c \
 	\
 	list.c \
 	fdlist.c \
