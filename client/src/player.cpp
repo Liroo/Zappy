@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 13:54:32 2017 Thomas
-// Last update Sun Jul  2 01:35:14 2017 Thomas
+// Last update Sun Jul  2 03:57:15 2017 Thomas
 //
 
 #include "player.hpp"
@@ -65,6 +65,32 @@ void    Player::updateInventory(std::string &inv)
   _inventory[(InvType)i] = std::stoi(inv, nullptr, 10);
 }
 
+void	Player::setBuf(const std::string &text)
+{
+  _buf = text;
+}
+
+void	Player::setIsPrint(const bool &print)
+{
+  _print_buf = print;
+}
+
+void	Player::setOneItem(const InvType &type)
+{
+  _inventory[type] += 1;
+}
+
+int	Player::removeOneItem(const InvType &type)
+{
+  if (_inventory[type] > 0)
+    {
+      _inventory[type] -= 1;
+      return (0);
+    }
+  else
+    return (1);
+}
+
 int	Player::getFd() const
 {
   return (_fd);
@@ -95,6 +121,21 @@ std::map<InvType, int>	Player::getInventory() const
   return (_inventory);
 }
 
+std::string	Player::getBuf() const
+{
+  return (_buf);
+}
+
+bool	Player::getIsPrint() const
+{
+  return (_print_buf);
+}
+
+// int	Player::getOneItem(const InvType &type) const
+// {
+//   return (_inventory[type]);
+// }
+
 Player::Player(int fd)
 {
   _fd = fd;
@@ -110,6 +151,7 @@ Player::Player(int fd)
   _inventory[PHIRAS] = 0;
   _inventory[THYSTAME] = 0;
   _inventory[FOOD] = 0;
+  _print_buf = false;
 }
 
 Player::Player(const Player &p)
@@ -121,6 +163,8 @@ Player::Player(const Player &p)
   _level = p.getLevel();
   _is_alive = true;
   _inventory = p.getInventory();
+  _buf = p.getBuf();
+  _print_buf = p.getIsPrint();
 }
 
 Player::~Player() {}

@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 01:23:13 2017 Thomas
-// Last update Sun Jul  2 00:42:26 2017 Lucas
+// Last update Sun Jul  2 04:51:47 2017 Thomas
 //
 
 #ifndef GAME_HPP
@@ -17,6 +17,7 @@
 # include <map>
 # include <vector>
 # include <string>
+# include <algorithm>
 
 # include "team.hpp"
 # include "zappy.hpp"
@@ -39,20 +40,22 @@ public:
 
   typedef int   (Game::*pfunc)(std::string &);
 
-  int	getMapX() const;
-  int	getMapY() const;
-  int	getFreq() const;
-  bool	getMapInit() const;
-  void	setMapInit(bool update);
-  int	createMap();
-  void	makeGround(int x, int y);
+  int					getMapX() const;
+  int					getMapY() const;
+  int					getFreq() const;
+  bool					getMapInit() const;
+  std::vector< std::vector< t_tiles > >	getMap() const;
+  void					setMapInit(bool update);
+  int					createMap();
+  void					makeGround(int x, int y);
+  std::map<std::string, InvType>	initConvert() const;
 
 private:
   irr::video::IVideoDriver		*driver;
   irr::scene::ISceneManager		*sm;
   irr::IrrlichtDevice			*device;
   irr::gui::IGUIEnvironment		*gameGUI;
-  
+
 
   int					nbGround;
   int					_freq;
@@ -70,8 +73,7 @@ private:
   int	playerDetails(std::string &);
   int	initMap(std::string &);
   int	forward(std::string &);
-  int	right(std::string &);
-  int	left(std::string &);
+  int	direction(std::string &);
   int	see(std::string &);
   int	inventoryPlayer(std::string &);
   int	broadcast(std::string &);
@@ -79,6 +81,11 @@ private:
   int	dead(std::string &);
   int	takeObject(std::string &);
   int	setObject(std::string &);
+  int   forkPlayer(std::string &);
+  int   egg(std::string &);
+  int   elevationAll(std::string &);
+  int   elevationPlayer(std::string &);
+  int   cast(std::string &);
 };
 
 #endif
