@@ -42,7 +42,7 @@ private:
   std::map<std::string, add_pointer> _TabAdd;
   typedef  const int &(Inventory::*material_pointer)() const;
   std::map<std::string, material_pointer> _TabMaterial;
-  typedef  void (Ai::*action_pointer)(const std::string &);
+  typedef  int (Ai::*action_pointer)(const std::string &);
   std::map<ActionType, action_pointer> _TabAction;
   std::vector<std::vector<ActionType>> _closeAction;
   int _level;
@@ -61,6 +61,7 @@ private:
   bool  _isCalled;
   bool  _CalledSomeone;
   int		_goToPlayer;
+  bool  _isDead;
 
 public:
   ConnectClient connect;
@@ -82,17 +83,17 @@ public:
   const int &getFd() const;
   void setFd(const int &);
 
-  void forward(const std::string &);
-  void right(const std::string &);
-  void left(const std::string &);
-  void look(const std::string &);
-  void inventory(const std::string &);
-  void broadcast(const std::string &);
-  void fork(const std::string &);
-  void eject(const std::string &);
-  void take(const std::string &);
-  void set(const std::string &);
-  void incantation(const std::string &);
+  int	forward(const std::string &);
+  int right(const std::string &);
+  int left(const std::string &);
+  int look(const std::string &);
+  int inventory(const std::string &);
+  int broadcast(const std::string &);
+  int fork(const std::string &);
+  int eject(const std::string &);
+  int take(const std::string &);
+  int set(const std::string &);
+  int incantation(const std::string &);
 
   int aiBrain();
   void fillBag();
@@ -100,7 +101,7 @@ public:
   void fillView();
   void fillPath(const std::string &);
   void goToPlayer();
-  void checkServerMessage(const std::string &);
+  int checkServerMessage(const std::string &);
   void ReplaceStringInPlace(std::string& subject, const std::string& search, const std::string& replace);
   void randInventory();
   bool  checkElevation();

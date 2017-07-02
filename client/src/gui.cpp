@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Fri Jun 30 05:14:07 2017 Lucas
-// Last update Sun Jul  2 17:15:16 2017 Lucas
+// Last update Sun Jul  2 19:02:26 2017 Thomas
 //
 
 #include "gui.hpp"
@@ -43,7 +43,7 @@ int		Gui::initGui(const int &port, const std::string &host)
     return (GUI_ERR);
   makeCamera(STATIC);
   makeGuiSkybox();
-  coClient = new ConnectClient(port, host, false);
+  coClient = new ConnectClient(port, host, false, smgr, driver, game->getDevice());
   if (coClient->myConnect() == GUI_ERR)
     return (GUI_ERR);
   device->setEventReceiver(&event);

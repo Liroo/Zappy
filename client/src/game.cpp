@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 02:42:24 2017 Thomas
-// Last update Sun Jul  2 17:45:08 2017 Lucas
+// Last update Sun Jul  2 19:11:57 2017 Lucas
 //
 
 #include <iostream>
@@ -14,9 +14,9 @@
 Game::Game(irr::scene::ISceneManager *smgr, irr::video::IVideoDriver *driver,
 	   irr::IrrlichtDevice *device)
 {
-  sm = smgr;
-  driver = driver;
-  device = device;
+  _sm = smgr;
+  _driver = driver;
+  _device = device;
   gameGUI = device->getGUIEnvironment();
   nbGround = 0;
   _mapInit = false;
@@ -41,6 +41,11 @@ Game::Game(irr::scene::ISceneManager *smgr, irr::video::IVideoDriver *driver,
   _allResp["17"] = &Game::elevationAll;
   _allResp["18"] = &Game::elevationPlayer;
   _allResp["19"] = &Game::cast;
+}
+
+irr::IrrlichtDevice	*Game::getDevice() const
+{
+  return (_device);
 }
 
 void	Game::setMapInit(bool update)
@@ -191,7 +196,15 @@ int	Game::teamsDetails(std::string &resp)
     params = resp.substr(0, pos);
     resp.erase(0, pos + delim.length());
   }
-  tmp = new Player(std::stoi(resp, nullptr, 10), sm, driver, device);
+
+  std::cout << "BEFORE" << std::endl;
+
+  tmp = new Player(std::stoi(resp, nullptr, 10), _sm, _driver, _device);
+  if (tmp->setTexture(_sm, _driver, gameGUI) == GUI_ERR)
+    return (GUI_ERR);
+
+  std::cout << "MDRRRRRRRR" << std::endl;
+
   std::vector<Team>::iterator it_team = _teams.begin();
   while (it_team != _teams.end() && (*it_team).getName() != team_name)
     it_team++;

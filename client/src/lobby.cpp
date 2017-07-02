@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Wed Jun 28 00:39:03 2017 Lucas
-// Last update Sun Jul  2 16:59:21 2017 Lucas
+// Last update Sun Jul  2 18:37:21 2017 Lucas
 //
 
 #include "lobby.hpp"
@@ -84,7 +84,8 @@ int	Lobby::initLobby(t_sett *sett, int status)
 	    lobbyGUI->addMessageBox(L"Syntax error", L"Wrong connection informations !", true);
 	  else
 	    {
-	      connect = new ConnectClient(std::stoi(check_port, nullptr, 10), check_host, true);
+	      connect = new ConnectClient(std::stoi(check_port, nullptr, 10), check_host, true,
+					  sm, driver, device);
 	      if (connect->myConnect() == 0) {
 		status = GUI;
 		save_port = std::stoi(check_port, nullptr, 10);

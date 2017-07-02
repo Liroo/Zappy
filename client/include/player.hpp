@@ -5,11 +5,17 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 13:54:26 2017 Thomas
-// Last update Sun Jul  2 16:56:20 2017 Lucas
+// Last update Sun Jul  2 19:19:00 2017 Lucas
 //
 
 #ifndef PLAYER_HPP
 # define PLAYER_HPP
+
+# define RED            "\033[1;31m"
+# define GREEN           "\033[1;32m"
+# define BLUE            "\033[1;34m"
+# define YELLOW          "\033[1;33m"
+# define BLANK          "\033[0m"
 
 /*
 ** Standard header inclusions.

@@ -5,7 +5,7 @@
 // Login   <andre@epitech.net>
 //
 // Started on  Tue Jun 27 03:02:21 2017 andre
-// Last update Sat Jul  1 18:57:22 2017 Thomas
+// Last update Sun Jul  2 18:35:14 2017 Lucas
 //
 
 # include <stdio.h>
@@ -140,7 +140,14 @@ int			ConnectClient::myConnect()
   return (0);
 }
 
-ConnectClient::ConnectClient(int port, std::string host, bool param) {
+ConnectClient::ConnectClient(int port, std::string host, bool param,
+			     irr::scene::ISceneManager *smgr_, irr::video::IVideoDriver *driver_,
+			     irr::IrrlichtDevice *device_)
+{
+  driver = driver_;
+  smgr = smgr_;
+  device = device_;
+  coGUI = device->getGUIEnvironment();
   _port = port;
   _host = host;
   _tv.tv_sec = 5;
