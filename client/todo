@@ -4,9 +4,9 @@
       - makeInputs(); (port/host)			[LUCAS] DONE
 
 ----> Connect:
-      - Créer classe Thomas avec Param du lobby.	[THOMAS]
-      - Incorporer boucle select dans boucle Game.	[LUCAS]
-      - Parser input (RFC Pierre).			[THOMAS]
+      - Créer classe Thomas avec Param du lobby.	[THOMAS] DONE
+      - Incorporer boucle select dans boucle Game.	[THOMAS] DONE 
+      - Parser input (RFC Pierre).			[THOMAS] DONE
       - Créer cmds et transformations en conséquence.	[THOMAS + LUCAS]
       - Créer map + items + joueurs.			[LUCAS]
 
