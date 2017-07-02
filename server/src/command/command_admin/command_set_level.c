@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 **
 ** Started on  Sun Jul  2 07:19:35 2017 guicha_t
-** Last update Sun Jul  2 18:17:26 2017 Pierre Monge
+** Last update Sun Jul  2 22:07:08 2017 guicha_t
 */
 
 #include <stdlib.h>
@@ -92,13 +92,13 @@ int	cmd_set_level(t_client *client, char *token)
   epured_token = strepur(token);
   nb_word = my_count_word(epured_token, ' ');
   if (nb_word != 3)
+    queue_packet(client, SIMPLE_PACKET,
+		 "ko: setlevel <fd player> <new level>\n");
+  else
     {
-      queue_packet(client, SIMPLE_PACKET,
-		   "ko: setlevel <fd player> <new level>\n");
-      return (0);
+      get_param_setlevel(client, epured_token);
+      check_winning_condition();
     }
-  get_param_setlevel(client, epured_token);
-  check_winning_condition();
   free(epured_token);
   return (0);
 }

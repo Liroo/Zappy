@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Sun Jul  2 20:31:05 2017 guicha_t
-** Last update Sun Jul  2 21:53:45 2017 guicha_t
+** Last update Sun Jul  2 22:06:36 2017 guicha_t
 */
 
 #include <stdlib.h>
@@ -97,11 +97,10 @@ void	get_param_getinventory(t_client *client, char *token)
   epured_token = strepur(token);
   nb_word = my_count_word(epured_token, ' ');
   if (nb_word != 2)
-    {
-      queue_packet(client, SIMPLE_PACKET,
-		   "ko: getinventory <fd player>\n");
-      return (0);
-    }
-  get_param_getinventory(client, epured_token);
+    queue_packet(client, SIMPLE_PACKET,
+		 "ko: getinventory <fd player>\n");
+  else
+    get_param_getinventory(client, epured_token);
+  free(epured_token);
   return (0);
 }

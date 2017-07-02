@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Sat Jul  1 17:47:57 2017 guicha_t
-** Last update Sun Jul  2 00:07:31 2017 guicha_t
+** Last update Sun Jul  2 22:03:23 2017 guicha_t
 */
 
 #include <stdlib.h>
@@ -116,12 +116,10 @@ int	cmd_mvplayer(t_client *client, char *token)
   epured_token = strepur(token);
   nb_word = my_count_word(epured_token, ' ');
   if (nb_word != 4)
-    {
-      queue_packet(client, SIMPLE_PACKET,
-		   "ko: mvplayer <fd player> <new x> <new y>\n");
-      return (0);
-    }
-  get_param_mvplayer(client, epured_token);
+    queue_packet(client, SIMPLE_PACKET,
+		 "ko: mvplayer <fd player> <new x> <new y>\n");
+  else
+    get_param_mvplayer(client, epured_token);
   free(epured_token);
   return (0);
 }
