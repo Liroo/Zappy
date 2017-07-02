@@ -1,11 +1,11 @@
 /*
 ** command_set_level.c for Project-Master in /home/guicha/tek2/Zappy/server/src/command/command_admin
-** 
+**
 ** Made by guicha_t
 ** Login   <thomas.guichard@epitech.eu>
-** 
+**
 ** Started on  Sun Jul  2 07:19:35 2017 guicha_t
-** Last update Sun Jul  2 07:55:35 2017 guicha_t
+** Last update Sun Jul  2 18:17:26 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -15,7 +15,7 @@
 #include "struct.h"
 #include "h.h"
 
-int             get_player_setlvl(t_team *team, int fd, int lvl)
+int		get_player_setlvl(t_team *team, int fd, int lvl)
 {
   t_list_head   *head_p;
   t_list_head   *pos_p;
@@ -67,7 +67,7 @@ void	convert_param_setlvl(t_client *c, char *sfd,
     queue_packet(c, SIMPLE_PACKET, "ok\n");
 }
 
-void    get_param_setlevel(t_client *client, char *token)
+void	get_param_setlevel(t_client *client, char *token)
 {
   char  *sfd;
   char  *slvl;
@@ -82,7 +82,7 @@ void    get_param_setlevel(t_client *client, char *token)
   convert_param_setlvl(client, sfd, slvl);
   free(sfd);
   free(slvl);
-}  
+}
 
 int	cmd_set_level(t_client *client, char *token)
 {
