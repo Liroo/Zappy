@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 // 
 // Started on  Mon Jun 26 00:47:57 2017 Lucas
-// Last update Sat Jul  1 17:51:10 2017 Lucas
+// Last update Sun Jul  2 16:49:08 2017 Lucas
 //
 
 #ifndef SPLASH_SCREEN_HPP_
@@ -36,7 +36,7 @@ private:
   irr::video::IVideoDriver		*driver;
   irr::IrrlichtDevice			*device;
 
-  void  makeCamera(int type);
+  void  makeCamera();
   void  makeBodies(int x, int y, int z,
 		       int rx, int ry, int rz,
 		       int ex, int ey, int ez);

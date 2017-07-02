@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Fri Jun 30 05:14:07 2017 Lucas
-// Last update Sun Jul  2 08:14:07 2017 Lucas
+// Last update Sun Jul  2 17:15:16 2017 Lucas
 //
 
 #include "gui.hpp"
@@ -39,6 +39,8 @@ int		Gui::initGui(const int &port, const std::string &host)
   Event		event;
 
   game = new Game(smgr, driver, device);
+  if (game->setTexture(smgr, driver, envGUI) == GUI_ERR)
+    return (GUI_ERR);
   makeCamera(STATIC);
   makeGuiSkybox();
   coClient = new ConnectClient(port, host, false);
@@ -60,6 +62,8 @@ int		Gui::initGui(const int &port, const std::string &host)
       coClient->my_select();
       if (coClient->getResponse().size() > 0) {
 	game->updateGame(coClient->getResponse());
+	if (game->getMapInit() == true)
+	  game->updateDisplay();
 	coClient->clearResponse();
       }
     }
