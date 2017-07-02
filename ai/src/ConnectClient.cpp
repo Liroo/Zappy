@@ -131,10 +131,12 @@ int			ConnectClient::myConnect(int ac, char **av)
   sendToServ(strcat(_name, "\n"));
   resp = getResponse();
   found_ko = resp.find("ko");
+  std::size_t found_enter = resp.find("\n");
   std::cout << resp;
   if (found_ko != std::string::npos)
     return (1);
-  std::cout << getResponse();
+  if (found_enter == std::string::npos)
+    std::cout << getResponse();
   return (0);
 }
 
