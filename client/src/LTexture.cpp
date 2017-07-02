@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Mon Jun 26 00:55:18 2017 Lucas
-// Last update Sun Jul  2 16:27:05 2017 Thomas
+// Last update Sun Jul  2 16:42:06 2017 Lucas
 //
 
 #include "LTexture.hpp"
@@ -32,10 +32,15 @@ int	LTexture::setTexture(irr::scene::ISceneManager* smgr, irr::video::IVideoDriv
       || (GROUND_PNG = driver->getTexture("./media/img/materials/floor.png")) == 0
       || (BRICKS_MENU_OBJ = smgr->getMesh("./media/models/brick_menu.dae")) == NULL
       || (BRICKS_MENU_PNG = driver->getTexture("./media/Texture/brick_menu.png")) == 0
-      || (PLAYER_OBJ = smgr->getMesh("./media/models/sprites/trantorian.png")) == 0
+      || (PLAYER_PNG = driver->getTexture("./media/models/sprites/trantorian.png")) == 0
       )
     return (GUI_ERR);
   return (GUI_OK);
+}
+
+irr::video::ITexture*  LTexture::getPlayerPng() const
+{
+  return (this->PLAYER_PNG);
 }
 
 irr::video::ITexture*       LTexture::getGroundPng() const
@@ -46,11 +51,6 @@ irr::video::ITexture*       LTexture::getGroundPng() const
 irr::scene::IAnimatedMesh*  LTexture::getBricksObj() const
 {
   return (this->BRICKS_MENU_OBJ);
-}
-
-irr::video::ITexture*	    LTexture::getPlayerObj() const
-{
-  return (this->PLAYER_OBJ);
 }
 
 irr::video::ITexture*       LTexture::getConnectL() const

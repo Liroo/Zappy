@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Wed Jun 28 00:16:38 2017 Lucas
-// Last update Sat Jul  1 17:03:34 2017 Thomas
+// Last update Sun Jul  2 16:58:52 2017 Lucas
 //
 
 #ifndef LOBBY_HPP_

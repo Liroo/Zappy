@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 // 
 // Started on  Mon Jun 26 01:23:51 2017 Lucas
-// Last update Thu Jun 29 04:01:41 2017 Lucas
+// Last update Sun Jul  2 16:49:14 2017 Lucas
 //
 
 #include "splashScreen.hpp"
@@ -22,23 +22,11 @@ Ss::Ss(irr::scene::ISceneManager* sm_, irr::video::IVideoDriver* driver_,
 Ss::~Ss()
 {}
 
-void    Ss::makeCamera(int type)
+void    Ss::makeCamera()
 {
-  if (type == FPS)
-    {
-      ssCamera =
-	sm->addCameraSceneNodeFPS(0, 100.0f, //speed rotation
-				  10.0f, -1, keyMap, 6); // speed deplacement
-      ssCamera->setPosition(irr::core::vector3df(1000,30,100));
-      // camera->setTarget(vector3df(-100,-300,-60));
-      device->getCursorControl()->setVisible(false);
-    }
-  else
-    {
-      ssCamera = sm->addCameraSceneNode(0, irr::core::vector3df(0,30,100),
-					irr::core::vector3df(0,60,0));
-      device->getCursorControl()->setVisible(true);
-    }
+  ssCamera = sm->addCameraSceneNode(0, irr::core::vector3df(0,30,100),
+				    irr::core::vector3df(0,60,0));
+  device->getCursorControl()->setVisible(true);
 }
 
 void    Ss::makeSkybox()
@@ -69,7 +57,7 @@ int		Ss::splashScreen()
   std::chrono::time_point<std::chrono::system_clock> end;
 
   makeLogo();
-  makeCamera(STATIC);
+  makeCamera();
   makeSkybox();
   start = std::chrono::system_clock::now();
   while (device->run())

@@ -5,18 +5,10 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Sun Jul  2 05:30:31 2017 Lucas
-// Last update Sun Jul  2 15:57:16 2017 Thomas
+// Last update Sun Jul  2 17:48:24 2017 Lucas
 //
 
 #include "game.hpp"
-
-void		Game::makePlayer(int x, int y)
-{
-  x = convertX(x);
-  y = convertY(y);
-  std::cout << x << " MakePlayer " << y << std::endl;
-  gameGUI->addImage(getPlayerPng(), irr::core::vector2d<irr::s32>(x, y));
-}
 
 void		Game::updateDisplay()
 {

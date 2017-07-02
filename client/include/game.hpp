@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 01:23:13 2017 Thomas
-// Last update Sun Jul  2 15:26:06 2017 Thomas
+// Last update Sun Jul  2 17:43:05 2017 Lucas
 //
 
 #ifndef GAME_HPP
@@ -58,11 +58,11 @@ public:
   void					makeGround(int x, int y);
   std::map<std::string, InvType>	initConvert() const;
   // int					spawnPlayers();
+  irr::IrrlichtDevice			*device;
 
 private:
   irr::video::IVideoDriver		*driver;
   irr::scene::ISceneManager		*sm;
-  irr::IrrlichtDevice			*device;
   irr::gui::IGUIEnvironment		*gameGUI;
   irr::scene::ISceneNode                *gameBrick[1024];
 

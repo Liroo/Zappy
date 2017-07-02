@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Sun Jun 25 22:01:46 2017 Lucas
-// Last update Sat Jul  1 18:56:12 2017 Thomas
+// Last update Sun Jul  2 17:14:27 2017 Lucas
 //
 
 #include "zappy.hpp"
@@ -73,6 +73,8 @@ int		Core::launchGUI(t_sett *s)
 	case (GUI):
 	  winTmp = (WinType)gui->initGui(port, host);
 	  break;
+	case (GUI_ERR):
+	  return (GUI_ERR);
 	default:
 	  break;
 	}

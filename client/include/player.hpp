@@ -5,14 +5,35 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 13:54:26 2017 Thomas
-// Last update Sun Jul  2 16:27:50 2017 Thomas
+// Last update Sun Jul  2 16:56:20 2017 Lucas
 //
 
 #ifndef PLAYER_HPP
 # define PLAYER_HPP
 
+/*
+** Standard header inclusions.
+*/
+# include <irrlicht.h>
+# include <iostream>
+# include <fstream>
+# include <chrono>
+# include <ctime>
+# include <vector>
+# include <thread>
+# include <string>
+# include <mutex>
+# include <limits>
+# include <time.h>
+# include <irrKlang.h>
+# include <sstream>
 # include <map>
 # include <iostream>
+
+/*
+** Personnal header inclusions.
+*/
+# include "LTexture.hpp"
 
 enum    Inv
   {
@@ -30,13 +51,18 @@ class Player : public LTexture
 {
 
 public:
-  Player(int);
+  Player(int, irr::scene::ISceneManager *, irr::video::IVideoDriver*, irr::IrrlichtDevice*);
   Player(const Player &);
   ~Player();
 
   Player	operator=(const Player &);
 
 private:
+  irr::scene::ISceneManager     *sm;
+  irr::video::IVideoDriver      *driver;
+  irr::IrrlichtDevice           *device;
+
+  irr::gui::IGUIEnvironment		*playerGUI;
   int					_fd;
   int					_x;
   int					_y;

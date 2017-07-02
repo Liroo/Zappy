@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 02:42:24 2017 Thomas
-// Last update Sun Jul  2 16:28:39 2017 Thomas
+// Last update Sun Jul  2 17:45:08 2017 Lucas
 //
 
 #include <iostream>
@@ -18,7 +18,6 @@ Game::Game(irr::scene::ISceneManager *smgr, irr::video::IVideoDriver *driver,
   driver = driver;
   device = device;
   gameGUI = device->getGUIEnvironment();
-  setTexture(sm, driver, gameGUI);
   nbGround = 0;
   _mapInit = false;
   _map_x = DEFAULT;
@@ -192,8 +191,7 @@ int	Game::teamsDetails(std::string &resp)
     params = resp.substr(0, pos);
     resp.erase(0, pos + delim.length());
   }
-  tmp = new Player(std::stoi(resp, nullptr, 10));
-
+  tmp = new Player(std::stoi(resp, nullptr, 10), sm, driver, device);
   std::vector<Team>::iterator it_team = _teams.begin();
   while (it_team != _teams.end() && (*it_team).getName() != team_name)
     it_team++;

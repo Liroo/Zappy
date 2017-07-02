@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 13:54:32 2017 Thomas
-// Last update Sun Jul  2 16:31:21 2017 Thomas
+// Last update Sun Jul  2 17:52:44 2017 Lucas
 //
 
 #include "player.hpp"
@@ -158,17 +158,21 @@ bool	Player::getIsPrint() const
 
 void	Player::makePlayer()
 {
-  playerMesh = sm->addAnimatedMeshSceneNode(getPlayerObj(),
+  playerMesh = sm->addAnimatedMeshSceneNode(getBricksObj(),
 					  0, -1,
 					  position,
 					  rotation,
 					  echelle);
   playerMesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-  playerMesh->setMaterialTexture(0, getPlayerTexture());
+  playerMesh->setMaterialTexture(0, getPlayerPng());
 }
 
-Player::Player(int fd)
+Player::Player(int fd, irr::scene::ISceneManager *smgr, irr::video::IVideoDriver *driver_,
+	       irr::IrrlichtDevice *device)
 {
+  sm = smgr;
+  driver = driver_;
+  device = device;
   _fd = fd;
   _x = 0;
   _y = 0;
@@ -185,10 +189,21 @@ Player::Player(int fd)
   _inventory[THYSTAME] = 0;
   _inventory[FOOD] = 0;
   _print_buf = false;
+  position.X = 0;
+  position.Y = 0;
+  position.Z = -1740.0f;
+  rotation.X = 0;
+  rotation.Y = 0;
+  rotation.Z = 0;
+  echelle.X = echelle.Y = echelle.Z = 0;
 }
 
 Player::Player(const Player &p)
 {
+  sm = p.sm;
+  driver = p.driver;
+  device = p.device;
+  playerGUI = p.playerGUI;
   _fd = p._fd;
   _x = p._x;
   _y = p._y;

@@ -5,16 +5,36 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Mon Jun 26 00:57:46 2017 Lucas
-// Last update Sun Jul  2 16:26:58 2017 Thomas
+// Last update Sun Jul  2 16:48:18 2017 Lucas
 //
 
 #ifndef LTexture_HPP
 # define LTexture_HPP
 
 /*
-** Personnal header inclusions.
+** Standard header inclusions.
 */
-# include "zappy.hpp"
+# include <irrlicht.h>
+# include <iostream>
+# include <fstream>
+# include <chrono>
+# include <ctime>
+# include <vector>
+# include <thread>
+# include <string>
+# include <mutex>
+# include <limits>
+# include <time.h>
+# include <irrKlang.h>
+# include <sstream>
+# include <map>
+# include <iostream>
+
+/*
+** Macro definitions.
+*/
+# define	GUI_OK	(0)
+# define	GUI_ERR	(-1)
 
 /*
 ** Class that will be used to handle the texture loading process.
@@ -52,9 +72,7 @@ private:
   irr::video::ITexture*                     BRICKS_MENU_PNG;
   irr::scene::IAnimatedMesh*                BRICKS_MENU_OBJ;
   irr::video::ITexture*                     GROUND_PNG;
-  irr::video::IAnimatedMesh*			    PLAYER_OBJ;
-
-
+  irr::video::ITexture*			    PLAYER_PNG;
 
   // LOBBY //
   irr::video::ITexture		*LogoPNG;
