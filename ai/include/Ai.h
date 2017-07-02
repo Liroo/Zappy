@@ -59,6 +59,7 @@ private:
   std::vector<Inventory*>  _invToInc;
   std::string _materialObj;
   bool  _isCalled;
+  bool  _CalledSomeone;
   int		_goToPlayer;
 
 public:
@@ -108,6 +109,7 @@ public:
   std::map<std::string, int>  returnTabInv(const Inventory &) const;
   void  setMaterials(const Inventory &);
   void  getCaseIncantation();
+  bool  checkIfPerson(const Inventory &);
 };
 
 #endif

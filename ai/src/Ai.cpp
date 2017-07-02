@@ -15,7 +15,7 @@
 # include <string.h>
 # include "Ai.h"
 
-Ai::Ai() : _level(1), _life(1260), _action({Ai::ActionType::UNKNOWN, ""}), _dir(Ai::Direction::UNKNOWN), _nbResponse(0), _isRunning(true), _materialObj("food"), _isCalled(false) {
+Ai::Ai() : _level(1), _life(1260), _action({Ai::ActionType::UNKNOWN, ""}), _dir(Ai::Direction::UNKNOWN), _nbResponse(0), _isRunning(true), _materialObj("food"), _isCalled(false), _CalledSomeone(false) {
   _TabAdd["food"] = &Inventory::addFood;
   _TabAdd["linemate"] = &Inventory::addLinemate;
   _TabAdd["deraumere"] = &Inventory::addDeraumere;
@@ -606,6 +606,7 @@ void  Ai::checkServerMessage(const std::string &response) {
   std::size_t found_msg = _response.find("message");
   std::size_t found_start = save.find("start");
   std::size_t found_stop = save.find("stop");
+  std::size_t found_level = save.find("level");
 
   if (found_msg != std::string::npos)
     {
@@ -627,7 +628,8 @@ void  Ai::checkServerMessage(const std::string &response) {
                             _goToPlayer = _goToPlayer;
                           }
                         else if (std::stoi(save.substr(0, 1)) == _level && found_stop != std::string::npos) {
-                          _isCalled = false;
+                          if (!checkIfPerson(*_invToInc[_level - 1]))
+                            _isCalled = false;
                           _goToPlayer = -1;
                         }
                         else
@@ -644,6 +646,11 @@ void  Ai::checkServerMessage(const std::string &response) {
         }
       else
         _goToPlayer = -1;
+    }
+  if (found_level != std::string::npos)
+    {
+      _isCalled = false;
+      _level++;
     }
 }
 
@@ -698,6 +705,19 @@ std::map<std::string, int>  Ai::returnTabInv(const Inventory &inv) const{
   return tabInv;
 }
 
+bool   Ai::checkIfPerson(const Inventory &inv) {
+  // std::map<std::string, int>  usTab;
+  // std::map<std::string, int>  objTab;
+  //
+  // usTab = returnTabInv(_bag);
+  // objTab = returnTabInv(*_invToInc[_level - 1]);
+  //
+  if (_bag.getPlayer() <= inv.getPlayer())
+    return true;
+  return false;
+}
+
+
 void  Ai::whatMaterialToFind(const Inventory &obj) {
   std::map<std::string, int>  usTab;
   std::map<std::string, int>  objTab;
@@ -728,7 +748,6 @@ void  Ai::getCaseIncantation() {
 bool  Ai::checkElevation() { // ne pas oublier de monter de level si ok
   look("checkElevation");
   if (inventoryCompare(_bag, *_invToInc[_level - 1])) {
-    std::cout << "mylevel : " << _level << std::endl;
     setMaterials(*_invToInc[_level - 1]);
     getCaseIncantation();
     incantation("incantation");
@@ -741,37 +760,37 @@ bool  Ai::checkElevation() { // ne pas oublier de monter de level si ok
 
 int   Ai::aiBrain() {
   srand(time(NULL));
-    while (_isRunning) {
-      randInventory();
-      if (_bag.getFood() < 15) {
-        while (_bag.getFood() < 30) {
-          look("food");
-          fillPath("food");
-          for (int i = 0; i < static_cast<int>(_path.size()); i++)
-            {
-              std::map<Ai::ActionType, action_pointer>::iterator it;
-              it = _TabAction.find(_path[i]);
-              if (it != _TabAction.end())
-                ((*this).*(*it).second)("food");
-            }
-          }
-      }
-      // else if (checkElevationPartenaire)
-      //   golerejoindre
-      else if (checkElevation())
-        continue;
-      else {
-        look(_materialObj);
-        fillPath(_materialObj);
+  while (_isRunning) {
+    randInventory();
+    if (_bag.getFood() < 15) {
+      while (_bag.getFood() < 30) {
+        look("food");
+        fillPath("food");
         for (int i = 0; i < static_cast<int>(_path.size()); i++)
           {
             std::map<Ai::ActionType, action_pointer>::iterator it;
             it = _TabAction.find(_path[i]);
             if (it != _TabAction.end())
-              ((*this).*(*it).second)(_materialObj);
+              ((*this).*(*it).second)("food");
           }
         }
-      _nbResponse++;
     }
+    else if (checkElevation())
+      continue;
+    else if (_CalledSomeone)
+      continue;
+    else {
+      look(_materialObj);
+      fillPath(_materialObj);
+      for (int i = 0; i < static_cast<int>(_path.size()); i++)
+        {
+          std::map<Ai::ActionType, action_pointer>::iterator it;
+          it = _TabAction.find(_path[i]);
+          if (it != _TabAction.end())
+            ((*this).*(*it).second)(_materialObj);
+        }
+      }
+    _nbResponse++;
+  }
   return (0);
 }
