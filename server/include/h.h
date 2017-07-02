@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Sun Jul  2 08:04:41 2017 guicha_t
+** Last update Sun Jul  2 18:11:59 2017 guicha_t
 */
 
 #ifndef H_H
@@ -196,10 +196,10 @@ extern void	process_command();
 /*
 ** Event
 */
-extern void	event_command(void *data);
-extern void	event_lifetime(void *data);
-extern void	event_timeout(void *data);
-extern void	event_fork(void *data);
+extern int	event_command(void *data);
+extern int	event_lifetime(void *data);
+extern int	event_timeout(void *data);
+extern int	event_fork(void *data);
 
 /*
 ** Exit

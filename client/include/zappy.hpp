@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Sun Jun 25 22:00:45 2017 Lucas
-// Last update Sun Jul  2 00:42:04 2017 Lucas
+// Last update Sun Jul  2 14:46:08 2017 Lucas
 //
 
 #ifndef ZAPPY_HPP_
@@ -75,6 +75,13 @@ typedef struct                  s_sett
 /*
 ** Enum type definitions.
 */
+enum		NodeSelector
+  {
+    ID_IsNotPickable = 0,
+    IDFlag_IsPickable = 1 << 0,
+    IDFlag_IsHighlightable = 1 << 1
+  };
+
 enum	Anim
   {
     NO_ANIM = 0,

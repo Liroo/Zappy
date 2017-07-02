@@ -5,14 +5,35 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 13:54:26 2017 Thomas
-// Last update Sun Jul  2 03:57:48 2017 Thomas
+// Last update Sun Jul  2 16:56:20 2017 Lucas
 //
 
 #ifndef PLAYER_HPP
 # define PLAYER_HPP
 
+/*
+** Standard header inclusions.
+*/
+# include <irrlicht.h>
+# include <iostream>
+# include <fstream>
+# include <chrono>
+# include <ctime>
+# include <vector>
+# include <thread>
+# include <string>
+# include <mutex>
+# include <limits>
+# include <time.h>
+# include <irrKlang.h>
+# include <sstream>
 # include <map>
 # include <iostream>
+
+/*
+** Personnal header inclusions.
+*/
+# include "LTexture.hpp"
 
 enum    Inv
   {
@@ -26,39 +47,58 @@ enum    Inv
   };
 typedef Inv InvType;
 
-class Player {
+class Player : public LTexture
+{
 
 public:
-  Player(int);
+  Player(int, irr::scene::ISceneManager *, irr::video::IVideoDriver*, irr::IrrlichtDevice*);
   Player(const Player &);
   ~Player();
 
+  Player	operator=(const Player &);
+
 private:
-  int				_fd;
-  int				_x;
-  int				_y;
-  int				_direction;
-  int				_level;
-  bool				_is_alive;
-  std::map<InvType, int>	_inventory;
-  std::string			_buf;
-  bool				_print_buf;
+  irr::scene::ISceneManager     *sm;
+  irr::video::IVideoDriver      *driver;
+  irr::IrrlichtDevice           *device;
+
+  irr::gui::IGUIEnvironment		*playerGUI;
+  int					_fd;
+  int					_x;
+  int					_y;
+  int					_rendX;
+  int					_rendY;
+  int					_direction;
+  int					_level;
+  bool					_is_alive;
+  std::map<InvType, int>		_inventory;
+  std::string				_buf;
+  bool					_print_buf;
+  irr::scene::IAnimatedMeshSceneNode*	playerMesh;
+  irr::core::vector3df			position;
+  irr::core::vector3df			rotation;
+  irr::core::vector3df			echelle;
 
 public:
   void	setFd(const int &);
   void	setX(const int &);
   void	setY(const int &);
+  void	setRendX(const int &);
+  void	setRendY(const int &);
   void	setDirection(const int &);
   void	setLevel(const int &);
   void	updateInventory(std::string &);
   void	setBuf(const std::string &);
   void	setIsPrint(const bool &);
   void	setOneItem(const InvType &);
+  void	makePlayer();
   int	removeOneItem(const InvType &);
 
   int				getFd() const;
   int				getX() const;
   int				getY() const;
+  int				getRendX() const;
+  int				getRendY() const;
   int				getDirection() const;
   int				getLevel() const;
   std::map<InvType, int>	getInventory() const;

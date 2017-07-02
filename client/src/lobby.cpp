@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Wed Jun 28 00:39:03 2017 Lucas
-// Last update Sat Jul  1 18:49:50 2017 Thomas
+// Last update Sun Jul  2 16:59:21 2017 Lucas
 //
 
 #include "lobby.hpp"
@@ -63,11 +63,11 @@ int	Lobby::initLobby(t_sett *sett, int status)
   std::wstring	ws;
 
   makeLobbySkybox();
-  makeTextfields();
   device->setEventReceiver(&event);
+  makeTextfields();
   while (device->run() && status == LOBBY && quit == false)
     {
-      driver->beginScene(true, true, irr::video::SColor(255, 38, 196, 236));
+      driver->beginScene(true, true, irr::video::SColor(255, 0, 0, 0));
       quit = event.getQuit();
       sm->drawAll();
       lobbyGUI->drawAll();

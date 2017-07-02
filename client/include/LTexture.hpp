@@ -1,20 +1,40 @@
 //
 // LTexture.hpp for ltexture in /home/lucas/rendu/reseau_psu/Zappy/client/zappy_client
-// 
+//
 // Made by Lucas
 // Login   <lucas.onillon@epitech.eu>
-// 
+//
 // Started on  Mon Jun 26 00:57:46 2017 Lucas
-// Last update Sun Jul  2 05:48:16 2017 Lucas
+// Last update Sun Jul  2 16:48:18 2017 Lucas
 //
 
 #ifndef LTexture_HPP
 # define LTexture_HPP
 
 /*
-** Personnal header inclusions.
+** Standard header inclusions.
 */
-# include "zappy.hpp"
+# include <irrlicht.h>
+# include <iostream>
+# include <fstream>
+# include <chrono>
+# include <ctime>
+# include <vector>
+# include <thread>
+# include <string>
+# include <mutex>
+# include <limits>
+# include <time.h>
+# include <irrKlang.h>
+# include <sstream>
+# include <map>
+# include <iostream>
+
+/*
+** Macro definitions.
+*/
+# define	GUI_OK	(0)
+# define	GUI_ERR	(-1)
 
 /*
 ** Class that will be used to handle the texture loading process.
@@ -44,16 +64,16 @@ public:
   // MAP OBJECTS //
   irr::video::ITexture		*getGroundPng() const;
   irr::scene::IAnimatedMesh     *getBricksObj() const;
-  
+  irr::video::ITexture		*getPlayerPng() const;
+
 
 private:
   // MAP OBJECTS //
   irr::video::ITexture*                     BRICKS_MENU_PNG;
   irr::scene::IAnimatedMesh*                BRICKS_MENU_OBJ;
   irr::video::ITexture*                     GROUND_PNG;
-  
-  
-  
+  irr::video::ITexture*			    PLAYER_PNG;
+
   // LOBBY //
   irr::video::ITexture		*LogoPNG;
   irr::video::ITexture		*hostLogo;
@@ -67,7 +87,7 @@ private:
   irr::video::ITexture         *SKYBOX_MOUNT_RIGHT;
   irr::video::ITexture         *SKYBOX_MOUNT_FRONT;
   irr::video::ITexture         *SKYBOX_MOUNT_BACK;
-  
+
 };
 
 #endif	/* !LTexture_HPP */

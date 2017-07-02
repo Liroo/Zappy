@@ -88,21 +88,28 @@ int	ConnectClient::check_param(int ac, char **av)
     if (strcmp(av[5], "-h") != 0)
       return(usagedisp(), 1);
   _port = atoi(av[2]);
-  if ((_name = (char*)malloc(strlen(av[4]))) == NULL)
+  if ((_name = (char *)malloc(strlen(av[4]))) == NULL)
     return (1);
-  strcpy(_name, av[4]);
-  if ((_machine = (char*)malloc(10 + strlen(av[6]))) == NULL)
+  _name = av[4];
+  if ((_machine = (char *)malloc(10 + strlen(av[6]))) == NULL)
     return (1);
   if (ac == 5)
-    strcpy(_machine, "127.0.0.1");
+    {
+      if ((_machine = (char *)malloc(10)) == NULL)
+        return (1);
+      _machine = (char *)"127.0.0.1";
+    }
   else
-    strcpy(_machine, av[6]);
+    {
+      if ((_machine = (char *)malloc(strlen(av[6]))) == NULL)
+        return (1);
+      _machine = av[6];
+    }
   return (0);
 }
 
 int     ConnectClient::sendToServ(char *message)
 {
-  sprintf(message, "%s\r\n", message);
   if (send(_fd, message, strlen(message), 0) < 0) {
     std::cout << "Message sending error" << std::endl;
     return (1);
@@ -119,7 +126,7 @@ int			ConnectClient::myConnect(int ac, char **av)
   _tv.tv_sec = 1;
   _tv.tv_usec = 0;
   std::cout << getResponse();
-  sendToServ(_name);
+  sendToServ(strcat(_name, "\n"));
   std::cout << getResponse();
   std::cout << getResponse();
   return (0);

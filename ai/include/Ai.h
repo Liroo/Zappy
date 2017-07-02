@@ -59,6 +59,8 @@ private:
   std::vector<Inventory*>  _invToInc;
   std::string _materialObj;
   bool  _isCalled;
+  bool  _CalledSomeone;
+  int		_goToPlayer;
 
 public:
   ConnectClient connect;
@@ -98,7 +100,7 @@ public:
   void fillView();
   void fillPath(const std::string &);
   void goToPlayer();
-  bool checkServerMessage(const std::string &);
+  void checkServerMessage(const std::string &);
   void ReplaceStringInPlace(std::string& subject, const std::string& search, const std::string& replace);
   void randInventory();
   bool  checkElevation();
@@ -107,6 +109,7 @@ public:
   std::map<std::string, int>  returnTabInv(const Inventory &) const;
   void  setMaterials(const Inventory &);
   void  getCaseIncantation();
+  bool  checkIfPerson(const Inventory &);
 };
 
 #endif

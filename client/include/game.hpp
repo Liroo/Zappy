@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 01:23:13 2017 Thomas
-// Last update Sun Jul  2 06:16:24 2017 Lucas
+// Last update Sun Jul  2 17:43:05 2017 Lucas
 //
 
 #ifndef GAME_HPP
@@ -48,19 +48,24 @@ public:
   int					getMapY() const;
   int					getFreq() const;
   bool					getMapInit() const;
+  int					convertX(int x);
+  int					convertY(int y);
   std::vector< std::vector< t_tiles > >	getMap() const;
   void					setMapInit(bool update);
+  void					makePlayer(int x, int y);
+  void					updateDisplay();
   void					makeMap();
   void					makeGround(int x, int y);
   std::map<std::string, InvType>	initConvert() const;
+  // int					spawnPlayers();
+  irr::IrrlichtDevice			*device;
 
 private:
   irr::video::IVideoDriver		*driver;
   irr::scene::ISceneManager		*sm;
-  irr::IrrlichtDevice			*device;
   irr::gui::IGUIEnvironment		*gameGUI;
   irr::scene::ISceneNode                *gameBrick[1024];
-  
+
 
   int					nbGround;
   int					_freq;

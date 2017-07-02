@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 13:54:32 2017 Thomas
-// Last update Sun Jul  2 03:57:15 2017 Thomas
+// Last update Sun Jul  2 17:52:44 2017 Lucas
 //
 
 #include "player.hpp"
@@ -23,6 +23,16 @@ void	Player::setX(const int &x)
 void    Player::setY(const int &y)
 {
   _y = y;
+}
+
+void	Player::setRendX(const int &x)
+{
+  _rendX = x;
+}
+
+void	Player::setRendY(const int &y)
+{
+  _rendY = y;
 }
 
 void    Player::setDirection(const int &direction)
@@ -61,7 +71,7 @@ void    Player::updateInventory(std::string &inv)
     params = inv.substr(0, pos);
     inv.erase(0, pos + delim_before.length());
   }
-  inv.substr(0, inv.size() - 1);
+  inv = inv.substr(0, inv.size() - 1);
   _inventory[(InvType)i] = std::stoi(inv, nullptr, 10);
 }
 
@@ -106,6 +116,16 @@ int	Player::getY() const
   return (_y);
 }
 
+int	Player::getRendX() const
+{
+  return (_rendX);
+}
+
+int	Player::getRendY() const
+{
+  return (_rendY);
+}
+
 int	Player::getDirection() const
 {
   return (_direction);
@@ -136,11 +156,28 @@ bool	Player::getIsPrint() const
 //   return (_inventory[type]);
 // }
 
-Player::Player(int fd)
+void	Player::makePlayer()
 {
+  playerMesh = sm->addAnimatedMeshSceneNode(getBricksObj(),
+					  0, -1,
+					  position,
+					  rotation,
+					  echelle);
+  playerMesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+  playerMesh->setMaterialTexture(0, getPlayerPng());
+}
+
+Player::Player(int fd, irr::scene::ISceneManager *smgr, irr::video::IVideoDriver *driver_,
+	       irr::IrrlichtDevice *device)
+{
+  sm = smgr;
+  driver = driver_;
+  device = device;
   _fd = fd;
   _x = 0;
   _y = 0;
+  _rendX = 0;
+  _rendY = 0;
   _direction = 0;
   _level = 1;
   _is_alive = true;
@@ -152,19 +189,39 @@ Player::Player(int fd)
   _inventory[THYSTAME] = 0;
   _inventory[FOOD] = 0;
   _print_buf = false;
+  position.X = 0;
+  position.Y = 0;
+  position.Z = -1740.0f;
+  rotation.X = 0;
+  rotation.Y = 0;
+  rotation.Z = 0;
+  echelle.X = echelle.Y = echelle.Z = 0;
 }
 
 Player::Player(const Player &p)
 {
-  _fd = p.getFd();
-  _x = p.getX();
-  _y = p.getY();
-  _direction = p.getDirection();
-  _level = p.getLevel();
-  _is_alive = true;
-  _inventory = p.getInventory();
-  _buf = p.getBuf();
-  _print_buf = p.getIsPrint();
+  sm = p.sm;
+  driver = p.driver;
+  device = p.device;
+  playerGUI = p.playerGUI;
+  _fd = p._fd;
+  _x = p._x;
+  _y = p._y;
+  _rendX = p._rendX;
+  _rendY = p._rendY;
+  _direction = p._direction;
+  _level = p._level;
+  _is_alive = p._is_alive;
+  _inventory = p._inventory;
+  _buf = p._buf;
+  _print_buf = p._print_buf;
+}
+
+Player	Player::operator=(const Player &p)
+{
+  Player	tmp(p);
+
+  return (tmp);
 }
 
 Player::~Player() {}
