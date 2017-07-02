@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 02:42:24 2017 Thomas
-// Last update Sun Jul  2 17:45:08 2017 Lucas
+// Last update Sun Jul  2 18:21:30 2017 Thomas
 //
 
 #include <iostream>
@@ -191,7 +191,13 @@ int	Game::teamsDetails(std::string &resp)
     params = resp.substr(0, pos);
     resp.erase(0, pos + delim.length());
   }
+
+  std::cout << "BEFORE" << std::endl;
+
   tmp = new Player(std::stoi(resp, nullptr, 10), sm, driver, device);
+
+  std::cout << "MDRRRRRRRR" << std::endl;
+
   std::vector<Team>::iterator it_team = _teams.begin();
   while (it_team != _teams.end() && (*it_team).getName() != team_name)
     it_team++;

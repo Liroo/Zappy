@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 13:54:32 2017 Thomas
-// Last update Sun Jul  2 17:52:44 2017 Lucas
+// Last update Sun Jul  2 18:20:55 2017 Thomas
 //
 
 #include "player.hpp"
@@ -173,6 +173,7 @@ Player::Player(int fd, irr::scene::ISceneManager *smgr, irr::video::IVideoDriver
   sm = smgr;
   driver = driver_;
   device = device;
+  playerGUI = device->getGUIEnvironment();
   _fd = fd;
   _x = 0;
   _y = 0;
@@ -215,6 +216,13 @@ Player::Player(const Player &p)
   _inventory = p._inventory;
   _buf = p._buf;
   _print_buf = p._print_buf;
+  position.X = 0;
+  position.Y = 0;
+  position.Z = -1740.0f;
+  rotation.X = 0;
+  rotation.Y = 0;
+  rotation.Z = 0;
+  echelle.X = echelle.Y = echelle.Z = 0;
 }
 
 Player	Player::operator=(const Player &p)

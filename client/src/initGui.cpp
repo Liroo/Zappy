@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Sun Jul  2 05:30:31 2017 Lucas
-// Last update Sun Jul  2 17:48:24 2017 Lucas
+// Last update Sun Jul  2 18:10:09 2017 Thomas
 //
 
 #include "game.hpp"
@@ -16,13 +16,22 @@ void		Game::updateDisplay()
   int	y;
 
   x = 0;
-  y = 0;
   while (x < _map_x)
     {
+      y = 0;
       while (y < _map_y)
 	{
 	  if (_map[x][y].players.size() > 0)
-	    makePlayer(x, y);
+	    {
+	      std::vector<Player>::iterator it_player = _map[x][y].players.begin();
+	      while (it_player != _map[x][y].players.end() &&
+		     (*it_player).getX() != x && (*it_player).getY() != y)
+		{
+		  if (it_player != _map[x][y].players.end())
+		    (*it_player).makePlayer();
+		  it_player++;
+		}
+	    }
 	  y++;
 	}
       x++;
