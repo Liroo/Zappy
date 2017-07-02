@@ -5,7 +5,7 @@
 // Login   <thomas.guichard@epitech.eu>
 // 
 // Started on  Fri Jun 30 19:47:54 2017 guicha_t
-// Last update Sun Jul  2 05:07:57 2017 guicha_t
+// Last update Sun Jul  2 07:14:33 2017 guicha_t
 //
 
 #include <stdio.h>
@@ -15,6 +15,7 @@
 #include <arpa/inet.h>
 #include <string.h>
 #include <iostream>
+#include <time.h>
 
 #include "Connect.h"
 
@@ -44,7 +45,13 @@ int	Connect::servtoclient(int fd)
 {
   char		repserv[2000];
   int		ret;
+  time_t	now;
+  char		f_time[32];
+  struct tm	*tm_info;
 
+  time(&now);
+  tm_info = localtime(&now);
+  strftime(f_time, 26, LOG_GREEN "%H:%M.%S" LOG_CLEAR, tm_info);
   bzero(repserv, 2000);
   ret = recv(fd, repserv, 2000, 0);
   if (ret < 0)
@@ -55,7 +62,7 @@ int	Connect::servtoclient(int fd)
   else if (ret == 0)
     exit(EXIT_SUCCESS);
   std::string	response(repserv);
-  printf("%s", repserv);
+  printf("[%s]: %s", f_time, repserv);
   return (0);
 }
 
