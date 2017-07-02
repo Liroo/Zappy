@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Fri Jun 30 19:39:29 2017 Pierre Monge
-** Last update Sat Jul  1 16:16:42 2017 Pierre Monge
+** Last update Sun Jul  2 06:52:03 2017 Pierre Monge
 */
 
 #ifndef RFC_H
@@ -36,6 +36,7 @@
 # define RPL_RFC_17 "17 %d %d %d\n"
 # define RPL_RFC_18 "18 %d %d\n"
 # define RPL_RFC_19 "19 %d %d\n"
+# define RPL_RFC_20 "20 %s\n"
 
 extern void	rfc(t_client *spectator, const char * restrict format, ...);
 extern void	rfc_map(t_client *spectator);
@@ -61,5 +62,6 @@ extern void	rfc_16(t_client *spectator, t_team *team, t_egg *egg);
 extern void	rfc_17(t_client *spectator, t_client *client);
 extern void	rfc_18(t_client *spectator, t_client *client);
 extern void	rfc_19(t_client *spectator, t_client *client, int duration);
+extern void	rfc_20(t_client *spectator, t_team *team);
 
 #endif /* !RFC_H */

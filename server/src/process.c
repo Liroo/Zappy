@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Wed Jun 21 04:30:29 2017 Pierre Monge
-** Last update Sat Jul  1 16:21:54 2017 Pierre Monge
+** Last update Sun Jul  2 08:13:55 2017 Pierre Monge
 */
 
 #include <time.h>
@@ -39,7 +39,8 @@ void			process_chrono_event()
       container = list_entry(pos, t_chrono_queue, list);
       if (compare_time(container->end, now.end) <= 0)
 	{
-	  chrono_event_func_list[container->event_type](container->data);
+	  if (chrono_event_func_list[container->event_type](container->data))
+	    break ;
 	  delete_chrono(container);
 	}
       else

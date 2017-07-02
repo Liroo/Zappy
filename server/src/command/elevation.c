@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sun Jul  2 02:53:23 2017 Pierre Monge
-** Last update Sun Jul  2 03:04:25 2017 Pierre Monge
+** Last update Sun Jul  2 07:59:38 2017 Pierre Monge
 */
 
 #include "packet.h"
@@ -49,4 +49,36 @@ void		elevate_players(int x, int y)
 	}
       team = team->next;
     }
+}
+
+static int	check_winning_team(t_team *team)
+{
+  t_list_head	*client;
+  t_client	*client_ptr;
+  int		players_elevated;
+
+  players_elevated = 0;
+  client = list_get_first(&team->players);
+  while (client != &team->players)
+    {
+      client_ptr = list_entry(client, t_client, list);
+      if (((t_player *)client_ptr->data)->elevation >= 8)
+	players_elevated += 1;
+      client = client->next;
+    }
+  return (players_elevated >= DFL_PLAYERS_ELEVATED_WIN);
+}
+
+int		check_winning_condition()
+{
+  t_list_head	*team;
+
+  team = list_get_first(&game.teams);
+  while (team != &game.teams)
+    {
+      if (check_winning_team(list_entry(team, t_team, list)))
+	return ((void)end_server(list_entry(team, t_team, list)), 1);
+      team = team->next;
+    }
+  return (0);
 }

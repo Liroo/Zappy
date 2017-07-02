@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Wed Jun 21 00:47:44 2017 Pierre Monge
-** Last update Sat Jul  1 06:39:01 2017 Pierre Monge
+** Last update Sun Jul  2 08:13:34 2017 Pierre Monge
 */
 
 #ifndef CHRONO_H
@@ -28,7 +28,7 @@ typedef struct		s_chono_queue
 }			t_chrono_queue;
 
 # include "struct.h"
-typedef void	(*t_chrono_event_func)(void *data);
+typedef int	(*t_chrono_event_func)(void *data);
 
 # define C_EVENT_TIMEOUT 0x0
 # define C_EVENT_LIFETIME 0x1

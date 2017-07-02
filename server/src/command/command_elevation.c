@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sat Jul  1 15:53:48 2017 Pierre Monge
-** Last update Sun Jul  2 03:01:23 2017 Pierre Monge
+** Last update Sun Jul  2 07:58:28 2017 Pierre Monge
 */
 
 #include "struct.h"
@@ -73,7 +73,12 @@ int		cmd_pre_elevation(t_client *client,
   print_log("Player %d from %s: start an incantation to reach elevation %d\n",
 	    client->net_info.fd, player->team->name, player->elevation + 1);
   rfc_17(NULL, client);
-  if (check_object_on_tile(player->elevation, player->pos_x, player->pos_y) &&
+  if (player->elevation >= 8)
+    {
+      queue_packet(client, SIMPLE_PACKET, RPL_KO);
+      player->incantation_status = INCANTATION_FAILED;
+    }
+  else if (check_object_on_tile(player->elevation, player->pos_x, player->pos_y) &&
       check_player_on_tile(player->elevation, player->pos_x, player->pos_y))
     {
       queue_packet(client, SIMPLE_PACKET, RPL_UNDER_ELEVATION);
@@ -93,15 +98,23 @@ int		cmd_elevation(t_client *client,
   t_player	*player;
 
   player = client->data;
+  if (player->elevation >= 8)
+    {
+      player->incantation_status = INCANTATION_NONE;
+      queue_packet(client, SIMPLE_PACKET, RPL_KO);
+    }
   if (check_object_on_tile(player->elevation, player->pos_x, player->pos_y) &&
       check_player_on_tile(player->elevation, player->pos_x, player->pos_y))
-    elevate_players(player->pos_x, player->pos_y);
+    {
+      elevate_players(player->pos_x, player->pos_y);
+      if (player->elevation == 8 && check_winning_condition())
+	return (1);
+    }
   else
     {
       player->incantation_status = INCANTATION_NONE;
       queue_packet(client, SIMPLE_PACKET, RPL_KO);
     }
   rfc_18(NULL, client);
-  (void)client;
   return (0);
 }
