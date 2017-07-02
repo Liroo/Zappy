@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Mon Jun 19 22:15:36 2017 Pierre Monge
-** Last update Sun Jul  2 06:15:45 2017 guicha_t
+** Last update Sun Jul  2 18:08:28 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -81,7 +81,6 @@ static void	register_admin(t_packet packet, t_client *client)
 {
   if (client->auth_status == NO_AUTH)
     {
-      PRINT_DEBUG("Client %d asking to become an admin\n", client->net_info.fd);
       client->auth_status = REQUIRE_PASSWORD_ADMIN;
       queue_packet(client, SIMPLE_PACKET, RPL_PASSWD);
     }
@@ -95,7 +94,6 @@ static void	register_admin(t_packet packet, t_client *client)
 	}
       memset(client->data, 0, sizeof(t_admin));
       print_log("Client %d has joined as admin\n", client->net_info.fd);
-      PRINT_DEBUG("Client %d joining admin team\n", client->net_info.fd);
       client->auth_status = AUTH;
       client->client_type = ADMIN;
       init_disable_log(client);
@@ -112,7 +110,8 @@ static void	register_spectator(t_packet packet, t_client *client)
 {
   if (client->auth_status == NO_AUTH)
     {
-      PRINT_DEBUG("Client %d asking to become a spectator\n", client->net_info.fd);
+      PRINT_DEBUG("Client %d asking to become a spectator\n",
+		  client->net_info.fd);
       client->auth_status = REQUIRE_PASSWORD_SPECTATOR;
       queue_packet(client, SIMPLE_PACKET, RPL_PASSWD);
     }
