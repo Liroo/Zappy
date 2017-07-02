@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 01:23:13 2017 Thomas
-// Last update Sun Jul  2 04:51:47 2017 Thomas
+// Last update Sun Jul  2 06:16:24 2017 Lucas
 //
 
 #ifndef GAME_HPP
@@ -19,8 +19,12 @@
 # include <string>
 # include <algorithm>
 
+/*
+** Personnal header inclusions.
+*/
 # include "team.hpp"
 # include "zappy.hpp"
+# include "LTexture.hpp"
 
 /*
 ** Macro definitions.
@@ -31,8 +35,8 @@
 ** Game class definitions.
 ** Handle the map process.
 */
-class Game {
-
+class Game : public LTexture
+{
 public:
   Game(irr::scene::ISceneManager *, irr::video::IVideoDriver*, irr::IrrlichtDevice*);
   ~Game();
@@ -46,7 +50,7 @@ public:
   bool					getMapInit() const;
   std::vector< std::vector< t_tiles > >	getMap() const;
   void					setMapInit(bool update);
-  int					createMap();
+  void					makeMap();
   void					makeGround(int x, int y);
   std::map<std::string, InvType>	initConvert() const;
 
@@ -55,7 +59,8 @@ private:
   irr::scene::ISceneManager		*sm;
   irr::IrrlichtDevice			*device;
   irr::gui::IGUIEnvironment		*gameGUI;
-
+  irr::scene::ISceneNode                *gameBrick[1024];
+  
 
   int					nbGround;
   int					_freq;

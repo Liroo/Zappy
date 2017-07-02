@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Fri Jun 30 05:14:07 2017 Lucas
-// Last update Sun Jul  2 01:12:33 2017 Thomas
+// Last update Sun Jul  2 06:19:32 2017 Lucas
 //
 
 #include "gui.hpp"
@@ -27,22 +27,11 @@ void		Gui::guiRemove()
   envGUI->clear();
 }
 
-void		Gui::initChatBox()
+void		Gui::makeCamera(int type)
 {
-  wchar_t	data[100];
-
-  swprintf(data, 100, L"Za'piqueBox", 244);
-  device->setWindowCaption(data);
-
-  chatBox = envGUI->addComboBox(irr::core::rect
-		     <irr::s32>(20,525,320,575));
-
-  chatBox->addItem(L"Ultra hardcore programming");
-  swprintf(data, 100, L"Compliqu%c", 233);
-  chatBox->addItem(data);
-  swprintf(data, 100, L"Ca va %c peu pr%cs", 224, 232);
-  chatBox->addItem(data);
-  chatBox->addItem(L"Facile");
+  guiCamera = smgr->addCameraSceneNode(0, irr::core::vector3df(0,30,1200),
+				       irr::core::vector3df(0,0,0));
+  device->getCursorControl()->setVisible(true);
 }
 
 int		Gui::initGui(const int &port, const std::string &host)
@@ -50,18 +39,17 @@ int		Gui::initGui(const int &port, const std::string &host)
   Event		event;
 
   game = new Game(smgr, driver, device);
+  makeCamera(STATIC);
   makeGuiSkybox();
   coClient = new ConnectClient(port, host, false);
   if (coClient->myConnect() == GUI_ERR)
     return (GUI_ERR);
-  //  initChatBox();
   device->setEventReceiver(&event);
   while (device->run() && win == GUI && quit == false)
     {
       if (game->getMapInit() == false && game->getMapX() != DEFAULT && game->getMapY() != DEFAULT)
 	{
-	  // if (game->createMap() == GUI_ERR)
-	  //   return (GUI_ERR);
+	  game->makeMap();
 	  game->setMapInit(true);
 	}
       driver->beginScene(true, true, irr::video::SColor(255, 38, 196, 236));

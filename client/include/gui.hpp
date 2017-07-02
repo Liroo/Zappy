@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Fri Jun 30 05:00:17 2017 Lucas
-// Last update Sat Jul  1 17:01:53 2017 Thomas
+// Last update Sun Jul  2 05:25:53 2017 Lucas
 //
 
 #ifndef GUI_HPP_
@@ -36,8 +36,10 @@ public:
   void				initChatBox();
   int				getPort() const;
   std::string			getHost() const;
+  void				makeCamera(int);
 
 private:
+  irr::scene::ICameraSceneNode	*guiCamera;
   irr::video::IVideoDriver	*driver;
   irr::scene::ISceneManager	*smgr;
   irr::IrrlichtDevice		*device;

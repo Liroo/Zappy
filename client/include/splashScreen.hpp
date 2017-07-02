@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 // 
 // Started on  Mon Jun 26 00:47:57 2017 Lucas
-// Last update Thu Jun 29 20:13:41 2017 Lucas
+// Last update Sat Jul  1 17:51:10 2017 Lucas
 //
 
 #ifndef SPLASH_SCREEN_HPP_
