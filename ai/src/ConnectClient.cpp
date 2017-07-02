@@ -119,6 +119,8 @@ int     ConnectClient::sendToServ(char *message)
 
 int			ConnectClient::myConnect(int ac, char **av)
 {
+  std::size_t found_ko;
+  std::string resp;
   if (check_param(ac, av) == 1)
     return (0);
   if ((_fd = add_server_to_client()) == 1)
@@ -127,7 +129,11 @@ int			ConnectClient::myConnect(int ac, char **av)
   _tv.tv_usec = 0;
   std::cout << getResponse();
   sendToServ(strcat(_name, "\n"));
-  std::cout << getResponse();
+  resp = getResponse();
+  found_ko = resp.find("ko");
+  std::cout << resp;
+  if (found_ko != std::string::npos)
+    return (1);
   std::cout << getResponse();
   return (0);
 }
