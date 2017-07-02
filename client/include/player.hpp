@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 13:54:26 2017 Thomas
-// Last update Sun Jul  2 19:19:00 2017 Lucas
+// Last update Sun Jul  2 20:15:19 2017 Thomas
 //
 
 #ifndef PLAYER_HPP
@@ -64,9 +64,9 @@ public:
   Player	operator=(const Player &);
 
 private:
-  irr::scene::ISceneManager     *sm;
-  irr::video::IVideoDriver      *driver;
-  irr::IrrlichtDevice           *device;
+  irr::scene::ISceneManager     *_sm;
+  irr::video::IVideoDriver      *_driver;
+  irr::IrrlichtDevice           *_device;
 
   irr::gui::IGUIEnvironment		*playerGUI;
   int					_fd;
@@ -80,10 +80,12 @@ private:
   std::map<InvType, int>		_inventory;
   std::string				_buf;
   bool					_print_buf;
+  irr::scene::ISceneNodeAnimator*	anim;
   irr::scene::IAnimatedMeshSceneNode*	playerMesh;
   irr::core::vector3df			position;
   irr::core::vector3df			rotation;
   irr::core::vector3df			echelle;
+  irr::scene::IAnimatedMesh*            BRICKS_MENU_OBJ;
 
 public:
   void	setFd(const int &);
@@ -110,6 +112,7 @@ public:
   std::map<InvType, int>	getInventory() const;
   std::string			getBuf() const;
   bool				getIsPrint() const;
+  irr::scene::IAnimatedMesh*	getBricksObj() const;
   // int				getOneItem(const InvType &type) const;
 };
 

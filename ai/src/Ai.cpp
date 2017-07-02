@@ -139,7 +139,7 @@ int Ai::forward(const std::string &var) {
   while (found_ok == std::string::npos && found_ko == std::string::npos)
     {
       if (checkServerMessage(_response) == -1) {
-        std::cout << "C EST PASSE" << std::endl;
+        std::cout << "dead" << std::endl;
         return (-1);
       }
       _response = connect.getResponse();
@@ -180,7 +180,7 @@ int Ai::right(const std::string &var) {
   while (found_ok == std::string::npos && found_ko == std::string::npos)
     {
       if (checkServerMessage(_response) == -1) {
-        std::cout << "C EST PASSE" << std::endl;
+        std::cout << "dead" << std::endl;
         return (-1);
       }
       _response = connect.getResponse();
@@ -221,7 +221,7 @@ int Ai::left(const std::string &var) {
   while (found_ok == std::string::npos && found_ko == std::string::npos)
     {
       if (checkServerMessage(_response) == -1) {
-        std::cout << "C EST PASSE" << std::endl;
+        std::cout << "dead" << std::endl;
         return (-1);
       }
       _response = connect.getResponse();
@@ -265,7 +265,7 @@ int Ai::look(const std::string &var)
       if (_isDead == true)
         return (-1);
       if (checkServerMessage(_response) == -1) {
-        std::cout << "C EST PASSE" << std::endl;
+        std::cout << "dead" << std::endl;
         return (-1);
       }
       _response = connect.getResponse();
@@ -326,7 +326,7 @@ int Ai::inventory(const std::string &var)
   while (found_hook == std::string::npos)
     {
       if (checkServerMessage(_response) == -1) {
-        std::cout << "C EST PASSE" << std::endl;
+        std::cout << "dead" << std::endl;
         return (-1);
       }
       _response = connect.getResponse();
@@ -369,7 +369,7 @@ int Ai::broadcast(const std::string &var)
   while (found_ok == std::string::npos && found_ko == std::string::npos)
     {
       if (checkServerMessage(_response) == -1) {
-        std::cout << "C EST PASSE" << std::endl;
+        std::cout << "dead" << std::endl;
         return (-1);
       }
       _response = connect.getResponse();
@@ -411,7 +411,7 @@ int Ai::fork(const std::string &var)
   while (found_ok == std::string::npos && found_ko == std::string::npos)
     {
       if (checkServerMessage(_response) == -1) {
-        std::cout << "C EST PASSE" << std::endl;
+        std::cout << "dead" << std::endl;
         return (-1);
       }
       _response = connect.getResponse();
@@ -453,7 +453,7 @@ int Ai::eject(const std::string &var)
   while (found_ok == std::string::npos && found_ko == std::string::npos)
     {
       if (checkServerMessage(_response) == -1) {
-        std::cout << "C EST PASSE" << std::endl;
+        std::cout << "dead" << std::endl;
         return (-1);
       }
       _response = connect.getResponse();
@@ -496,7 +496,7 @@ int Ai::take(const std::string &var)
   while (found_ok == std::string::npos && found_ko == std::string::npos)
     {
       if (checkServerMessage(_response) == -1) {
-        std::cout << "C EST PASSE" << std::endl;
+        std::cout << "dead" << std::endl;
         return (-1);
       }
       _response = connect.getResponse();
@@ -539,7 +539,7 @@ int Ai::set(std::string const &var)
   while (found_ok == std::string::npos && found_ko == std::string::npos)
     {
         if (checkServerMessage(_response) == -1) {
-          std::cout << "C EST PASSE" << std::endl;
+          std::cout << "dead" << std::endl;
           return (-1);
         }
         _response = connect.getResponse();
@@ -582,7 +582,7 @@ int Ai::incantation(std::string const &var)
           && found_ko == std::string::npos)
     {
       if (checkServerMessage(_response) == -1) {
-        std::cout << "C EST PASSE" << std::endl;
+        std::cout << "dead" << std::endl;
         return (-1);
       }
       _response = connect.getResponse();
@@ -625,10 +625,21 @@ void Ai::fillBag() {
   std::vector<std::pair<std::string, int>> inv;
   std::pair<std::string, int> temp;
   std::vector<std::string>::const_iterator it;
+  size_t  found = _response.find('[');
+  size_t  found2 = _response.find(']');
   int inc = 0;
 
+  if (found >= 1)
+    _response.erase(0, found);
+  std::cout << "ERASE : " << _response << std::endl;
+  if (found2 < _response.size())
+    _response.erase((found2 + 1), _response.size());
+  if (_response[_response.size()] == '\n')
+    _response[_response.size()] = '\0';
+  std::cout << "REPONSE : " << _response << std::endl;
   if (checkHook(_response) == false)
     return ;
+  std::cout << "AA" << _response << "BB" << std::endl;
   while (ss >> tmp) {
     for(unsigned int i=0; i< tmp.size(); ++i) {
       if(tmp[i] == ',' || tmp[i] == '[' || tmp[i] == ']')
@@ -636,15 +647,28 @@ void Ai::fillBag() {
       }
     sepFirst.push_back(tmp);
   }
+  std::cout << "BONJOUR" << std::endl;
   for (it = sepFirst.begin();it!=sepFirst.end();it++){
-    if ((inc % 2) == 0)
+    if ((inc % 2) == 0) {
+      std::cout << "T";
       temp.first = sepFirst[inc];
+      std::cout << "U";
+    }
     else {
-      temp.second = std::stoi(sepFirst[inc]);
-       inv.push_back(temp);
+      std::cout << "J" << sepFirst[inc] << "M";
+      try {
+        temp.second = std::stoi(sepFirst[inc]);
+      }
+      catch (...) {
+
+      }
+      std::cout << "K";
+      inv.push_back(temp);
+      std::cout << "L";
     }
     inc++;
   }
+  std::cout << "COUCOU" << std::endl;
   _bag.setFood(inv[0].second);
   _bag.setLinemate(inv[1].second);
   _bag.setDeraumere(inv[2].second);
@@ -653,6 +677,7 @@ void Ai::fillBag() {
   _bag.setPhiras(inv[5].second);
   _bag.setThystame(inv[6].second);
   _response = "";
+  std::cout << "SALUT" << std::endl;
 }
 
 void Ai::ReplaceStringInPlace(std::string& subject, const std::string& search,
@@ -671,8 +696,11 @@ void Ai::fillView() {
   std::string word_string;
   size_t case_pos = 0;
   size_t word_pos = 0;
+  size_t  found = _response.find('[');
 
   _viewMaterial.clear();
+  if (found >= 1)
+    _response.erase(0, found);
   _response.erase(0, 1);
   _response.erase(_response.size() - 1, _response.size());
   _response.push_back(',');
@@ -955,8 +983,9 @@ int   Ai::aiBrain() {
     if (_isDead == true)
       return (0);
     randInventory();
-    if (_bag.getFood() < 15) {
-      while (_bag.getFood() < 30) {
+    inventory("remake");
+    if (_bag.getFood() < 10) {
+      while (_bag.getFood() < 40) {
         if (look("food") == -1)
           return (0);
         fillPath("food");

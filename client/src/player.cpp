@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 13:54:32 2017 Thomas
-// Last update Sun Jul  2 19:16:05 2017 Lucas
+// Last update Sun Jul  2 20:23:43 2017 Thomas
 //
 
 #include "player.hpp"
@@ -156,14 +156,25 @@ bool	Player::getIsPrint() const
 //   return (_inventory[type]);
 // }
 
+irr::scene::IAnimatedMesh*  Player::getBricksObj() const
+{
+  return (this->BRICKS_MENU_OBJ);
+}
+
 void	Player::makePlayer()
 {
   std::cout << RED << position.X << position.Y << position.Z << BLANK << std::endl;
-  playerMesh = sm->addAnimatedMeshSceneNode(getBricksObj(),
-					  0, -1,
-					  position,
-					  rotation,
-					  echelle);
+  std::cout << "player: " << _fd << " " << _x << " " << _y << std::endl;
+  playerMesh = _sm->addAnimatedMeshSceneNode(_sm->getMesh("./media/models/brick_menu.dae"));
+  if (playerMesh)
+    {
+      anim =_sm->createFlyStraightAnimator(irr::core::vector3df(100,0,60), irr::core::vector3df(-100,0,60), 3500, true);
+      if (anim)
+	{
+	  playerMesh->addAnimator(anim);
+	  anim->drop();
+	}
+    }
   playerMesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
   playerMesh->setMaterialTexture(0, getPlayerPng());
 }
@@ -171,9 +182,9 @@ void	Player::makePlayer()
 Player::Player(int fd, irr::scene::ISceneManager *smgr, irr::video::IVideoDriver *driver_,
 	       irr::IrrlichtDevice *device)
 {
-  sm = smgr;
-  driver = driver_;
-  device = device;
+  _sm = smgr;
+  _driver = driver_;
+  _device = device;
   playerGUI = device->getGUIEnvironment();
   _fd = fd;
   _x = 0;
@@ -197,14 +208,17 @@ Player::Player(int fd, irr::scene::ISceneManager *smgr, irr::video::IVideoDriver
   rotation.X = 0;
   rotation.Y = 0;
   rotation.Z = 0;
-  echelle.X = echelle.Y = echelle.Z = 0;
+  echelle.X = 0;
+  echelle.Y = 0;
+  echelle.Z = 0;
+  BRICKS_MENU_OBJ = _sm->getMesh("./media/models/brick_menu.dae");
 }
 
 Player::Player(const Player &p)
 {
-  sm = p.sm;
-  driver = p.driver;
-  device = p.device;
+  _sm = p._sm;
+  _driver = p._driver;
+  _device = p._device;
   playerGUI = p.playerGUI;
   _fd = p._fd;
   _x = p._x;
@@ -223,7 +237,11 @@ Player::Player(const Player &p)
   rotation.X = 0;
   rotation.Y = 0;
   rotation.Z = 0;
-  echelle.X = echelle.Y = echelle.Z = 0;
+  echelle.X = 0;
+  echelle.Y = 0;
+  echelle.Z = 0;
+  playerMesh = p.playerMesh;
+  anim = p.anim;
 }
 
 Player	Player::operator=(const Player &p)

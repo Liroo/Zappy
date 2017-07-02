@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 02:42:24 2017 Thomas
-// Last update Sun Jul  2 19:11:57 2017 Lucas
+// Last update Sun Jul  2 20:25:39 2017 Thomas
 //
 
 #include <iostream>
@@ -184,6 +184,7 @@ int	Game::teamsDetails(std::string &resp)
   size_t	pos = 0;
   Player	*tmp;
   Team		*tmp_t;
+  bool		is_already;
 
   if ((pos = resp.find(delim)) != std::string::npos) {
     team_name = resp.substr(0, pos);
@@ -197,13 +198,24 @@ int	Game::teamsDetails(std::string &resp)
     resp.erase(0, pos + delim.length());
   }
 
-  std::cout << "BEFORE" << std::endl;
 
   tmp = new Player(std::stoi(resp, nullptr, 10), _sm, _driver, _device);
   if (tmp->setTexture(_sm, _driver, gameGUI) == GUI_ERR)
     return (GUI_ERR);
 
-  std::cout << "MDRRRRRRRR" << std::endl;
+
+  is_already = false;
+  std::vector<Player>::iterator check = _map[tmp->getX()][tmp->getY()].players.begin();
+  while (check != _map[tmp->getX()][tmp->getY()].players.end())
+    {
+      if ((*check).getFd() == tmp->getFd())
+  	is_already = true;
+      check++;
+    }
+  if (is_already == false)
+    _map[tmp->getX()][tmp->getY()].players.push_back(*tmp);
+  else
+    (*check) = *tmp;
 
   std::vector<Team>::iterator it_team = _teams.begin();
   while (it_team != _teams.end() && (*it_team).getName() != team_name)
@@ -220,6 +232,7 @@ int	Game::teamsDetails(std::string &resp)
       (*it_team).setNbPlayer((*it_team).getNbPlayer() + 1);
       (*it_team).addPlayer(*tmp);
     }
+
   return (0);
 }
 
@@ -291,8 +304,6 @@ int	Game::playerDetails(std::string &resp)
 
 	  (*it_player).updateInventory(resp);
 
-	  (*it_player).makePlayer();
-
 	  is_already = false;
 	  std::vector<Player>::iterator check = _map[(*it_player).getX()][(*it_player).getY()].players.begin();
 	  while (check != _map[(*it_player).getX()][(*it_player).getY()].players.end())
@@ -302,9 +313,14 @@ int	Game::playerDetails(std::string &resp)
 	      check++;
 	    }
 	  if (is_already == false)
-	    _map[(*it_player).getX()][(*it_player).getY()].players.push_back((*it_player));
+	    {
+	      std::cout << "LOOOOOOOOOOOL" << std::endl;
+	      _map[(*it_player).getX()][(*it_player).getY()].players.push_back((*it_player));
+	    }
 	  else
 	    (*check) = (*it_player);
+
+	  (*it_player).makePlayer();
 
 	}
     }

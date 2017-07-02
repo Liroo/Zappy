@@ -5,7 +5,7 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Fri Jun 23 01:28:13 2017 Thomas
-** Last update Sun Jul  2 20:10:23 2017 guicha_t
+** Last update Sun Jul  2 20:59:13 2017 Pierre Monge
 */
 
 #include "debug.h"
@@ -44,11 +44,11 @@ static void	eject_player(t_client *client, t_player *p)
   target_p->pos_x += x;
   target_p->pos_y += y;
   if (target_p->pos_x < 0)
-    target_p->pos_x = game.map_size_x;
+    target_p->pos_x = game.map_size_x - 1;
   else if (target_p->pos_x >= (int)game.map_size_x)
     target_p->pos_x = 0;
   if (target_p->pos_y < 0)
-    target_p->pos_y = game.map_size_y;
+    target_p->pos_y = game.map_size_y - 1;
   else if (target_p->pos_y >= (int)game.map_size_y)
     target_p->pos_y = 0;
   game.map[target_p->pos_x][target_p->pos_y].player++;
