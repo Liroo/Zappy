@@ -5,16 +5,11 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 02:42:24 2017 Thomas
-// Last update Sun Jul  2 23:09:07 2017 Lucas
+// Last update Sun Jul  2 23:12:53 2017 Thomas
 //
 
 #include <iostream>
 #include "game.hpp"
-
-const wchar_t	*Game::getChatData() const
-{
-  return (this->_guiResp);
-}
 
 Game::Game(irr::scene::ISceneManager *smgr, irr::video::IVideoDriver *driver,
 	   irr::IrrlichtDevice *device)
@@ -150,6 +145,7 @@ int	Game::teamsDetails(std::string &resp)
   size_t	pos = 0;
   Player	*tmp;
   Team		*tmp_t;
+  std::string	gui;
 
   if ((pos = resp.find(delim)) != std::string::npos) {
     team_name = resp.substr(0, pos);
@@ -157,6 +153,8 @@ int	Game::teamsDetails(std::string &resp)
   }
   else
     return (1);
+
+  gui = team_name + " add a new player";
 
   while ((pos = resp.find(delim)) != std::string::npos) {
     params = resp.substr(0, pos);
@@ -179,6 +177,8 @@ int	Game::teamsDetails(std::string &resp)
       (*it_team).setNbPlayer((*it_team).getNbPlayer() + 1);
       (*it_team).addPlayer(*tmp);
     }
+  std::wstring ws(gui.begin(), gui.end());
+  _guiResp = ws.c_str();
   return (0);
 }
 
@@ -189,6 +189,7 @@ int	Game::playerDetails(std::string &resp)
   size_t	pos = 0;
   int		find;
   bool		is_already;
+  std::string	gui;
 
   if ((pos = resp.find(delim)) != std::string::npos) {
     params = resp.substr(0, pos);
@@ -244,6 +245,8 @@ int	Game::playerDetails(std::string &resp)
 
 	  (*it_player).updateInventory(resp);
 
+	  gui = "New player at " + std::to_string((*it_player).getX()) + " " + std::to_string((*it_player).getY());
+
 	  is_already = false;
 	  std::vector<Player>::iterator check = _map[(*it_player).getX()][(*it_player).getY()].players.begin();
 	  while (check != _map[(*it_player).getX()][(*it_player).getY()].players.end())
@@ -259,7 +262,8 @@ int	Game::playerDetails(std::string &resp)
 
 	}
     }
-
+  std::wstring ws(gui.begin(), gui.end());
+  _guiResp = ws.c_str();
   return (0);
 }
 
@@ -268,6 +272,7 @@ int	Game::size(std::string &resp)
   std::string	delim = " ";
   std::string	params;
   size_t	pos = 0;
+  std::string	gui;
 
   if ((pos = resp.find(delim)) != std::string::npos) {
     params = resp.substr(0, pos);
@@ -284,6 +289,9 @@ int	Game::size(std::string &resp)
     return (1);
   _map_y = std::stoi(params, nullptr, 10);
   _freq = std::stoi(resp, nullptr, 10);
+  gui = "Map " + std::to_string(_map_x) + "x" + std::to_string(_map_y);
+  std::wstring ws(gui.begin(), gui.end());
+  _guiResp = ws.c_str();
   return (0);
 }
 
@@ -296,6 +304,7 @@ int	Game::forward(std::string &resp)
   int		x;
   int		y;
   int		del_check;
+  std::string	gui;
 
   if ((pos = resp.find(delim)) != std::string::npos) {
     params = resp.substr(0, pos);
@@ -324,6 +333,7 @@ int	Game::forward(std::string &resp)
 	  }
 	  else
 	    return (1);
+
 	  x = std::stoi(params, nullptr, 10);
 	  y = std::stoi(resp, nullptr, 10);
 	  (*it_player).setX(x);
@@ -340,7 +350,8 @@ int	Game::forward(std::string &resp)
 	  _map[x][y].players.push_back((*it_player));
 	}
     }
-
+  std::wstring ws(gui.begin(), gui.end());
+  _guiResp = ws.c_str();
   return (0);
 }
 

@@ -5,7 +5,7 @@
 ## Login   <pierre@epitech.net>
 ## 
 ## Started on  Sat May 27 06:30:42 2017 Pierre Monge
-## Last update Sat Jul  1 00:53:53 2017 Pierre Monge
+## Last update Sun Jul  2 23:28:16 2017 Thomas
 ##
 
 PROJECT := IRC
@@ -51,7 +51,7 @@ debug:
 	@make --no-print-directory -C $(CLIENT) debug
 	@$(CP) $(SERVER)/$(SERVER_BIN) .
 	@$(CP) $(AI)/$(AI_BIN) .
-	@$(CP) $(AMIN)/$(ADMIN_BIN) .
+	@$(CP) $(ADMIN)/$(ADMIN_BIN) .
 	@$(CP) $(CLIENT)/$(CLIENT_BIN) .
 
 clean:
