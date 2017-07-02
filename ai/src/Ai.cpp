@@ -15,7 +15,7 @@
 # include <string.h>
 # include "Ai.h"
 
-Ai::Ai() : _level(1), _life(1260), _action({Ai::ActionType::UNKNOWN, ""}), _dir(Ai::Direction::UNKNOWN), _nbResponse(0), _isRunning(true), _materialObj("food") {
+Ai::Ai() : _level(1), _life(1260), _action({Ai::ActionType::UNKNOWN, ""}), _dir(Ai::Direction::UNKNOWN), _nbResponse(0), _isRunning(true), _materialObj("food"), _isCalled(false) {
   _TabAdd["food"] = &Inventory::addFood;
   _TabAdd["linemate"] = &Inventory::addLinemate;
   _TabAdd["deraumere"] = &Inventory::addDeraumere;
@@ -189,6 +189,8 @@ void Ai::broadcast(const std::string &var) {
   _response = connect.getResponse();
   _action.first = Ai::ActionType::BROADCAST;
   _life--;
+  if (checkServerMessage(_response) == false)
+    printResponse();
 }
 
 void Ai::fork(const std::string &var) {
@@ -257,6 +259,8 @@ void Ai::fillBag() {
   std::vector<std::string>::const_iterator it;
   int inc = 0;
 
+  if (_response == "ok" || _response == "ko")
+    return ;
   while (ss >> tmp) {
     for(unsigned int i=0; i< tmp.size(); ++i) {
       if(tmp[i] == ',' || tmp[i] == '[' || tmp[i] == ']')
@@ -402,12 +406,17 @@ bool  Ai::checkHook(const std::string &response) {
 bool  Ai::checkServerMessage(const std::string &response) {
   std::string a = response;
   std::size_t found = a.find("message");
-  std::size_t found_elevation = a.find("Current level");
+  std::size_t found_elevation = a.find("level");
+  std::size_t found_start = a.find("start");
+  std::size_t found_stop = a.find("stop");
   int pos = 0;
 
-  if (found_elevation != std::string::npos)
+  //std::cout << "abc";
+  std::cout << "-----------------" << a << std::endl;
+  if (found_elevation != std::string::npos) {
     _level++;
-  if (found != std::string::npos)
+  }
+  else if (found != std::string::npos)
     {
       a.erase(0, 8);
       pos = std::stoi(a.substr(0, 1));
@@ -420,12 +429,17 @@ bool  Ai::checkServerMessage(const std::string &response) {
             {
               try
                 {
-                    if (std::stoi(a.substr(0, 1)) == _level)
+                    if (std::stoi(a.substr(0, 1)) == _level && found_start != std::string::npos)
                       {
+                        _isCalled = true;
                         if (_action.first == ActionType::LOOK)
                           {
                             while (checkHook(_response) == false)
                               _response += connect.getResponse();
+                            found_elevation = _response.find("level");
+                            if (found_elevation != std::string::npos) {
+                              _level++;
+                            }
                             printResponse();
                             fillView();
                           }
@@ -449,6 +463,32 @@ bool  Ai::checkServerMessage(const std::string &response) {
                           }
                         return true;
                       }
+                    else if (std::stoi(a.substr(0, 1)) == _level && found_stop != std::string::npos) {
+                      _isCalled = false;
+                      if (_action.first == ActionType::LOOK)
+                        {
+                          while (checkHook(_response) == false)
+                            _response += connect.getResponse();
+                          found_elevation = _response.find("level");
+                          if (found_elevation != std::string::npos) {
+                            _level++;
+                          }
+                          printResponse();
+                          fillView();
+                        }
+                      else if (_action.first == ActionType::INVENTORY)
+                        {
+                          _response = connect.getResponse();
+                          printResponse();
+                          fillBag();
+                        }
+                      else
+                        {
+                          _response = connect.getResponse();
+                          printResponse();
+                        }
+                      return true;
+                    }
                 }
               catch (std::invalid_argument&)
                 {
@@ -468,10 +508,20 @@ void  Ai::randInventory() {
 }
 
 bool  Ai::inventoryCompare(const Inventory &us, const Inventory &obj) {
-  if (us.getPlayer() == obj.getPlayer() && us.getLinemate() >= obj.getLinemate() && us.getDeraumere() >= obj.getDeraumere() &&
+  if (us.getLinemate() >= obj.getLinemate() && us.getDeraumere() >= obj.getDeraumere() &&
       us.getSibur() >= obj.getSibur() && us.getMendiane() >= obj.getMendiane() && us.getPhiras() >= obj.getPhiras() &&
-      us.getThystame() >= obj.getThystame())
-    return true;
+      us.getThystame() >= obj.getThystame() && _isCalled == false)
+    {
+      if (us.getPlayer() < obj.getPlayer())
+        broadcast(std::to_string(_level) + "start");
+      else if (us.getPlayer() == obj.getPlayer())
+          {
+            broadcast(std::to_string(_level) + "stop");
+            return (true);
+          }
+      else
+        eject("incantation");
+    }
   return false;
 }
 
@@ -509,7 +559,7 @@ void  Ai::whatMaterialToFind(const Inventory &obj) {
   objTab = returnTabInv(obj);
 
   for(std::map<std::string, int>::iterator i = usTab.begin(); i != usTab.end(); i++) {
-    if (usTab[i->first] != objTab[i->first])
+    if (usTab[i->first] < objTab[i->first])
       _materialObj = i->first;
   }
 }
@@ -531,6 +581,7 @@ void  Ai::getCaseIncantation() {
 bool  Ai::checkElevation() { // ne pas oublier de monter de level si ok
   look("checkElevation");
   if (inventoryCompare(_bag, *_invToInc[_level - 1])) {
+    std::cout << "mylevel : " << _level << std::endl;
     setMaterials(*_invToInc[_level - 1]);
     getCaseIncantation();
     incantation("incantation");

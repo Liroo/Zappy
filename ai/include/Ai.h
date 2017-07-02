@@ -58,6 +58,7 @@ private:
   bool  _isRunning;
   std::vector<Inventory*>  _invToInc;
   std::string _materialObj;
+  bool  _isCalled;
 
 public:
   ConnectClient connect;

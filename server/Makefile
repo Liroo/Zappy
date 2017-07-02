@@ -29,6 +29,7 @@ SRC_GEN = \
 	fdevent.c \
 	auth.c \
 	pipe.c \
+	init_log_admin.c \
 	\
 	list.c \
 	fdlist.c \
@@ -64,6 +65,8 @@ SRC_GEN = \
 	command/command_admin/command_getplayer.c \
 	command/command_admin/command_mvplayer.c \
 	command/command_admin/countword.c \
+	command/command_admin/command_disable_log.c \
+	command/command_admin/command_able_log.c \
 	command/command_forward.c \
 	command/command_left.c \
 	command/command_right.c \

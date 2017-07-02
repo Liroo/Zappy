@@ -5,7 +5,7 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Fri Jun 23 01:28:13 2017 Thomas
-** Last update Sun Jul  2 05:38:30 2017 Pierre Monge
+** Last update Sun Jul  2 06:15:30 2017 guicha_t
 */
 
 #include "debug.h"
@@ -49,6 +49,7 @@ static void	eject_player(t_client *client, t_player *p)
     target_p->pos_y = game.map_size_y;
   else if (target_p->pos_y >= (int)game.map_size_y)
     target_p->pos_y = 0;
+  game.map[target_p->pos_x][target_p->pos_y].player++;
   send_eject(client, target_p, p);
 }
 

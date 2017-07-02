@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Sun Jul  2 07:30:57 2017 Pierre Monge
+** Last update Sun Jul  2 07:45:51 2017 Pierre Monge
 */
 
 #ifndef H_H
@@ -25,6 +25,11 @@
 extern int	inetport(int port);
 extern void	accept_connection(int sock_fd);
 extern void	add_connection(int fd);
+
+/*
+** auth
+*/
+extern void	init_disable_log(t_client *client);
 
 /*
 ** socket
@@ -123,6 +128,8 @@ extern int	get_diff_max_x(t_player *send, t_player *dest);
 extern int	cmd_getplayer(t_client *client, char *token);
 extern int	cmd_mvplayer(t_client *client, char *token);
 extern int	my_count_word(char *str, char d);
+extern int	cmd_disable_log(t_client *client, char *token);
+extern int	cmd_able_log(t_client *client, char *token);
 
 /*
 ** Free class
