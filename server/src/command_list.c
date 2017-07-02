@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sun Jun 25 00:41:14 2017 Pierre Monge
-** Last update Sun Jul  2 07:18:36 2017 guicha_t
+** Last update Sun Jul  2 20:37:49 2017 guicha_t
 */
 
 #include "debug.h"
@@ -44,6 +44,7 @@ t_command	*get_command_list_admin()
       { "logoff", 6, 0, cmd_disable_log, 0 },
       { "logon", 5, 0, cmd_able_log, 0 },
       { "setlevel", 8, 0, cmd_set_level, 0 },
+      { "getinventory", 12, 0, cmd_get_inventory, 0 },
       { NULL, -1, 0, NULL, 0 }
     };
 
