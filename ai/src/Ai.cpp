@@ -631,15 +631,12 @@ void Ai::fillBag() {
 
   if (found >= 1)
     _response.erase(0, found);
-  std::cout << "ERASE : " << _response << std::endl;
   if (found2 < _response.size())
     _response.erase((found2 + 1), _response.size());
   if (_response[_response.size()] == '\n')
     _response[_response.size()] = '\0';
-  std::cout << "REPONSE : " << _response << std::endl;
   if (checkHook(_response) == false)
     return ;
-  std::cout << "AA" << _response << "BB" << std::endl;
   while (ss >> tmp) {
     for(unsigned int i=0; i< tmp.size(); ++i) {
       if(tmp[i] == ',' || tmp[i] == '[' || tmp[i] == ']')
@@ -647,28 +644,20 @@ void Ai::fillBag() {
       }
     sepFirst.push_back(tmp);
   }
-  std::cout << "BONJOUR" << std::endl;
   for (it = sepFirst.begin();it!=sepFirst.end();it++){
     if ((inc % 2) == 0) {
-      std::cout << "T";
       temp.first = sepFirst[inc];
-      std::cout << "U";
     }
     else {
-      std::cout << "J" << sepFirst[inc] << "M";
       try {
         temp.second = std::stoi(sepFirst[inc]);
       }
       catch (...) {
-
       }
-      std::cout << "K";
       inv.push_back(temp);
-      std::cout << "L";
     }
     inc++;
   }
-  std::cout << "COUCOU" << std::endl;
   _bag.setFood(inv[0].second);
   _bag.setLinemate(inv[1].second);
   _bag.setDeraumere(inv[2].second);
@@ -677,7 +666,6 @@ void Ai::fillBag() {
   _bag.setPhiras(inv[5].second);
   _bag.setThystame(inv[6].second);
   _response = "";
-  std::cout << "SALUT" << std::endl;
 }
 
 void Ai::ReplaceStringInPlace(std::string& subject, const std::string& search,
@@ -985,7 +973,7 @@ int   Ai::aiBrain() {
     randInventory();
     inventory("remake");
     if (_bag.getFood() < 10) {
-      while (_bag.getFood() < 40) {
+      while (_bag.getFood() < 80) {
         if (look("food") == -1)
           return (0);
         fillPath("food");
