@@ -15,7 +15,7 @@
 # include <string.h>
 # include "Ai.h"
 
-Ai::Ai() : _level(1), _life(1260), _action({Ai::ActionType::UNKNOWN, ""}), _dir(Ai::Direction::UNKNOWN), _nbResponse(0), _isRunning(true) {
+Ai::Ai() : _level(1), _life(1260), _action({Ai::ActionType::UNKNOWN, ""}), _dir(Ai::Direction::UNKNOWN), _nbResponse(0), _isRunning(true), _materialObj("food") {
   _TabAdd["food"] = &Inventory::addFood;
   _TabAdd["linemate"] = &Inventory::addLinemate;
   _TabAdd["deraumere"] = &Inventory::addDeraumere;
@@ -37,6 +37,24 @@ Ai::Ai() : _level(1), _life(1260), _action({Ai::ActionType::UNKNOWN, ""}), _dir(
   _TabAction[ActionType::LEFT] = &Ai::left;
   _TabAction[ActionType::TAKE] = &Ai::take;
   _TabAction[ActionType::INVENTORY] = &Ai::inventory;
+
+  _closeAction.push_back({ActionType::LOOK});
+  _closeAction.push_back({ActionType::FORWARD});
+  _closeAction.push_back({ActionType::FORWARD, ActionType::LEFT, ActionType::FORWARD, ActionType::RIGHT});
+  _closeAction.push_back({ActionType::LEFT, ActionType::FORWARD});
+  _closeAction.push_back({ActionType::LEFT, ActionType::LEFT, ActionType::FORWARD, ActionType::RIGHT, ActionType::FORWARD, ActionType::LEFT});
+  _closeAction.push_back({ActionType::LEFT, ActionType::LEFT, ActionType::FORWARD});
+  _closeAction.push_back({{ActionType::RIGHT, ActionType::FORWARD, ActionType::RIGHT, ActionType::FORWARD}});
+  _closeAction.push_back({ActionType::RIGHT, ActionType::FORWARD});
+  _closeAction.push_back({{ActionType::RIGHT, ActionType::FORWARD, ActionType::LEFT, ActionType::FORWARD}});
+
+  _invToInc.push_back(new Inventory(1, 1, 0, 0, 0, 0, 0));
+  _invToInc.push_back(new Inventory(2, 1, 1, 1, 0, 0, 0));
+  _invToInc.push_back(new Inventory(2, 2, 0, 1, 0, 2, 0));
+  _invToInc.push_back(new Inventory(4, 1, 1, 2, 0, 1, 0));
+  _invToInc.push_back(new Inventory(4, 1, 2, 1, 3, 0, 0));
+  _invToInc.push_back(new Inventory(6, 1, 2, 3, 0, 1, 0));
+  _invToInc.push_back(new Inventory(6, 2, 2, 2, 2, 2, 1));
 }
 
 Ai::~Ai() {}
@@ -107,9 +125,10 @@ void Ai::forward(const std::string &var) {
   connect.sendToServ(strdup("forward"));
   std::cout << "forward" << std::endl;
   _response = connect.getResponse();
-  printResponse();
   _action.first = Ai::ActionType::FORWARD;
   _life--;
+  if (checkServerMessage(_response) == false)
+    printResponse();
 }
 
 void Ai::right(const std::string &var) {
@@ -117,9 +136,10 @@ void Ai::right(const std::string &var) {
   connect.sendToServ(strdup("right"));
   std::cout << "right" << std::endl;
   _response = connect.getResponse();
-  printResponse();
   _action.first = Ai::ActionType::RIGHT;
   _life--;
+  if (checkServerMessage(_response) == false)
+    printResponse();
 }
 
 void Ai::left(const std::string &var) {
@@ -127,9 +147,10 @@ void Ai::left(const std::string &var) {
   connect.sendToServ(strdup("left"));
   std::cout << "left" << std::endl;
   _response = connect.getResponse();
-  printResponse();
   _action.first = Ai::ActionType::LEFT;
   _life--;
+  if (checkServerMessage(_response) == false)
+    printResponse();
 }
 
 void Ai::look(const std::string &var) {
@@ -137,12 +158,15 @@ void Ai::look(const std::string &var) {
   connect.sendToServ(strdup("look"));
   std::cout << "look" << std::endl;
   _response = connect.getResponse();
-  while (checkHook(_response) == false)
-    _response += connect.getResponse();
-  printResponse();
-  fillView();
   _action.first = Ai::ActionType::LOOK;
   _life--;
+  if (checkServerMessage(_response) == false)
+    {
+      while (checkHook(_response) == false)
+        _response += connect.getResponse();
+      printResponse();
+      fillView();
+    }
 }
 
 void Ai::inventory(const std::string &var) {
@@ -150,17 +174,19 @@ void Ai::inventory(const std::string &var) {
   connect.sendToServ(strdup("inventory"));
   std::cout << "inventory" << std::endl;
   _response = connect.getResponse();
-  printResponse();
   _action.first = Ai::ActionType::INVENTORY;
-  fillBag();
   _life--;
+  if (checkServerMessage(_response) == false)
+    {
+      printResponse();
+      fillBag();
+    }
 }
 
 void Ai::broadcast(const std::string &var) {
   connect.sendToServ(strcat(strdup("broadcast "), var.c_str()));
-  std::cout << "broadcast" << var << std::endl;
+  std::cout << "broadcast " << var << std::endl;
   _response = connect.getResponse();
-  printResponse();
   _action.first = Ai::ActionType::BROADCAST;
   _life--;
 }
@@ -170,9 +196,10 @@ void Ai::fork(const std::string &var) {
   connect.sendToServ(strdup("fork"));
   std::cout << "fork" << std::endl;
   _response = connect.getResponse();
-  printResponse();
   _action.first = Ai::ActionType::FORK;
   _life--;
+  if (checkServerMessage(_response) == false)
+    printResponse();
 }
 
 void Ai::eject(const std::string &var) {
@@ -180,27 +207,32 @@ void Ai::eject(const std::string &var) {
   connect.sendToServ(strdup("eject"));
   std::cout << "eject" << std::endl;
   _response = connect.getResponse();
-  printResponse();
   _action.first = Ai::ActionType::EJECT;
   _life--;
+  if (checkServerMessage(_response) == false)
+    printResponse();
 }
 
 void Ai::take(const std::string &var) {
   connect.sendToServ(strcat(strdup("take "), var.c_str()));
   std::cout << "take " << var << std::endl;
   _response = connect.getResponse();
-  printResponse();
   _action.first = Ai::ActionType::TAKE;
   _life--;
+  if (checkServerMessage(_response) == false)
+      printResponse();
 }
 
 void Ai::set(std::string const &var) {
   connect.sendToServ(strcat(strdup("set "), var.c_str()));
   std::cout << "set " << var << std::endl;
   _response = connect.getResponse();
-  printResponse();
-  _action.first = Ai::ActionType::SET;
-  _life--;
+  if (checkServerMessage(_response) == false)
+    {
+      printResponse();
+      _action.first = Ai::ActionType::SET;
+      _life--;
+    }
 }
 
 void Ai::incantation(std::string const &var) {
@@ -208,9 +240,12 @@ void Ai::incantation(std::string const &var) {
   connect.sendToServ(strdup("incantation"));
   std::cout << "incantation" << std::endl;
   _response = connect.getResponse();
-  printResponse();
-  _action.first = Ai::ActionType::INCANTATION;
-  _life--;
+  if (checkServerMessage(_response) == false)
+    {
+      printResponse();
+      _action.first = Ai::ActionType::INCANTATION;
+      _life--;
+    }
 }
 
 void Ai::fillBag() {
@@ -288,6 +323,7 @@ void Ai::fillView() {
       _viewMaterial.push_back(fill);
       _response.erase(0, case_pos + 1);
     }
+  _bag.setPlayer(_viewMaterial[0].getPlayer());
   _response = "";
 }
 
@@ -350,7 +386,7 @@ void Ai::fillPath(const std::string &material) {
     }
   else
     {
-      // random
+      _path.push_back((rand()%2 == 1) ? ActionType::RIGHT : ActionType::LEFT);
       _path.push_back(ActionType::FORWARD);
     }
 }
@@ -363,29 +399,179 @@ bool  Ai::checkHook(const std::string &response) {
   return false;
 }
 
-int   Ai::aiBrain() {
+bool  Ai::checkServerMessage(const std::string &response) {
+  std::string a = response;
+  std::size_t found = a.find("message");
+  std::size_t found_elevation = a.find("Current level");
+  int pos = 0;
 
-  while (_isRunning) {
-    inventory("zaza");
-    if (_bag.getFood() < 10) {
-      look("food");
-      fillPath("food");
-      for (int i = 0; i < static_cast<int>(_path.size()); i++)
+  if (found_elevation != std::string::npos)
+    _level++;
+  if (found != std::string::npos)
+    {
+      a.erase(0, 8);
+      pos = std::stoi(a.substr(0, 1));
+      std::size_t comma = a.find(", ");
+      if (comma != std::string::npos)
         {
-          std::map<Ai::ActionType, action_pointer>::iterator it;
-          it = _TabAction.find(_path[i]);
-          if (it != _TabAction.end())
-            ((*this).*(*it).second)("food");
+          if (a.size() >= 4)
+            a.erase(0, 3);
+          if (a.size() >= 1)
+            {
+              try
+                {
+                    if (std::stoi(a.substr(0, 1)) == _level)
+                      {
+                        if (_action.first == ActionType::LOOK)
+                          {
+                            while (checkHook(_response) == false)
+                              _response += connect.getResponse();
+                            printResponse();
+                            fillView();
+                          }
+                        else if (_action.first == ActionType::INVENTORY)
+                          {
+                            _response = connect.getResponse();
+                            printResponse();
+                            fillBag();
+                          }
+                        else
+                          {
+                            _response = connect.getResponse();
+                            printResponse();
+                          }
+                        for (int i = 0; i < static_cast<int>(_closeAction[pos].size()); i++)
+                          {
+                            std::map<Ai::ActionType, action_pointer>::iterator it;
+                            it = _TabAction.find(_closeAction[pos][i]);
+                            if (it != _TabAction.end())
+                              ((*this).*(*it).second)("food");
+                          }
+                        return true;
+                      }
+                }
+              catch (std::invalid_argument&)
+                {
+                  return false;
+                }
+            }
         }
-      // while (y a des trucs dans le vector, on les fait)
     }
-    // else if (checkElevationPartenaire)
-    //   golerejoindre
-    // else if (checkElevation)
-    //   elevation
-    else
-      look("food"); // material
-      // while (y a des trucs dans le vector, on les fait)
+  return false;
+}
+
+void  Ai::randInventory() {
+  if ((_nbResponse % 5) == 0) {
+    inventory("rand");
+    _nbResponse = 0;
   }
+}
+
+bool  Ai::inventoryCompare(const Inventory &us, const Inventory &obj) {
+  if (us.getPlayer() == obj.getPlayer() && us.getLinemate() >= obj.getLinemate() && us.getDeraumere() >= obj.getDeraumere() &&
+      us.getSibur() >= obj.getSibur() && us.getMendiane() >= obj.getMendiane() && us.getPhiras() >= obj.getPhiras() &&
+      us.getThystame() >= obj.getThystame())
+    return true;
+  return false;
+}
+
+void  Ai::setMaterials(const Inventory &inv) {
+  int inc = 0;
+  std::map<std::string, int>  tabInv;
+
+  tabInv = returnTabInv(inv);
+  for(std::map<std::string, int>::iterator i = tabInv.begin(); i != tabInv.end(); i++){
+    while (inc < i->second) {
+      set(i->first);
+      inc++;
+    }
+    inc = 0;
+  }
+}
+
+std::map<std::string, int>  Ai::returnTabInv(const Inventory &inv) const{
+  std::map<std::string, int>  tabInv;
+
+  tabInv["linemate"] = inv.getLinemate();
+  tabInv["deraumere"] = inv.getDeraumere();
+  tabInv["sibur"] = inv.getSibur();
+  tabInv["mendiane"] = inv.getMendiane();
+  tabInv["phiras"] = inv.getPhiras();
+  tabInv["thystame"] = inv.getThystame();
+  return tabInv;
+}
+
+void  Ai::whatMaterialToFind(const Inventory &obj) {
+  std::map<std::string, int>  usTab;
+  std::map<std::string, int>  objTab;
+
+  usTab = returnTabInv(_bag);
+  objTab = returnTabInv(obj);
+
+  for(std::map<std::string, int>::iterator i = usTab.begin(); i != usTab.end(); i++) {
+    if (usTab[i->first] != objTab[i->first])
+      _materialObj = i->first;
+  }
+}
+
+void  Ai::getCaseIncantation() {
+  std::map<std::string, int> tab = returnTabInv(_viewMaterial[0]);
+  int inc = 0;
+
+  for(std::map<std::string, int>::iterator i = tab.begin(); i != tab.end(); i++) {
+    if (i->first != "player")
+      while (inc < i->second) {
+        take(i->first);
+        inc++;
+      }
+    inc = 0;
+  }
+}
+
+bool  Ai::checkElevation() { // ne pas oublier de monter de level si ok
+  look("checkElevation");
+  if (inventoryCompare(_bag, *_invToInc[_level - 1])) {
+    setMaterials(*_invToInc[_level - 1]);
+    getCaseIncantation();
+    incantation("incantation");
+    return true;
+  }
+  else
+    whatMaterialToFind(*_invToInc[_level - 1]);
+  return false;
+}
+
+int   Ai::aiBrain() {
+  srand(time(NULL));
+    while (_isRunning) {
+      randInventory();
+      if (_bag.getFood() < 2) {
+        look("food");
+        fillPath("food");
+        for (int i = 0; i < static_cast<int>(_path.size()); i++)
+          {
+            std::map<Ai::ActionType, action_pointer>::iterator it;
+            it = _TabAction.find(_path[i]);
+            if (it != _TabAction.end())
+              ((*this).*(*it).second)("food");
+          }
+      }
+      // else if (checkElevationPartenaire)
+      //   golerejoindre
+      else if (checkElevation())
+        continue;
+      else {
+        look(_materialObj);
+        fillPath(_materialObj);
+        for (int i = 0; i < static_cast<int>(_path.size()); i++)
+          {
+            std::map<Ai::ActionType, action_pointer>::iterator it;
+            it = _TabAction.find(_path[i]);
+            if (it != _TabAction.end())
+              ((*this).*(*it).second)(_materialObj);
+          }
+        }
+      _nbResponse++;
+    }
   return (0);
 }

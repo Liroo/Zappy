@@ -4,7 +4,6 @@
 # include <iostream>
 # include <vector>
 # include <map>
-# include <functional>
 # include "Inventory.h"
 # include "ConnectClient.h"
 
@@ -45,6 +44,7 @@ private:
   std::map<std::string, material_pointer> _TabMaterial;
   typedef  void (Ai::*action_pointer)(const std::string &);
   std::map<ActionType, action_pointer> _TabAction;
+  std::vector<std::vector<ActionType>> _closeAction;
   int _level;
   Inventory _bag;
   std::vector<Inventory> _viewMaterial;
@@ -56,6 +56,8 @@ private:
   int _fd;
   int _nbResponse;
   bool  _isRunning;
+  std::vector<Inventory*>  _invToInc;
+  std::string _materialObj;
 
 public:
   ConnectClient connect;
@@ -91,10 +93,19 @@ public:
 
   int aiBrain();
   void fillBag();
-  bool  checkHook(const std::string &);
+  bool checkHook(const std::string &);
   void fillView();
   void fillPath(const std::string &);
+  void goToPlayer();
+  bool checkServerMessage(const std::string &);
   void ReplaceStringInPlace(std::string& subject, const std::string& search, const std::string& replace);
+  void randInventory();
+  bool  checkElevation();
+  bool  inventoryCompare(const Inventory &, const Inventory &);
+  void  whatMaterialToFind(const Inventory &);
+  std::map<std::string, int>  returnTabInv(const Inventory &) const;
+  void  setMaterials(const Inventory &);
+  void  getCaseIncantation();
 };
 
 #endif

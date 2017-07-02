@@ -14,6 +14,7 @@ int	main(int ac, char **av)
 {
   Ai ai;
 
-  ai.connect.myConnect(ac, av);
+  if (ai.connect.myConnect(ac, av) == 1)
+    return (1);
   ai.aiBrain();
 }
