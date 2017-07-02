@@ -634,6 +634,8 @@ void Ai::fillBag() {
   std::cout << "ERASE : " << _response << std::endl;
   if (found2 < _response.size())
     _response.erase((found2 + 1), _response.size());
+  if (_response[_response.size()] == '\n')
+    _response[_response.size()] = '\0';
   std::cout << "REPONSE : " << _response << std::endl;
   if (checkHook(_response) == false)
     return ;
@@ -647,14 +649,19 @@ void Ai::fillBag() {
   }
   std::cout << "BONJOUR" << std::endl;
   for (it = sepFirst.begin();it!=sepFirst.end();it++){
-    if ((inc % 2) != 0) {
+    if ((inc % 2) == 0) {
       std::cout << "T";
       temp.first = sepFirst[inc];
       std::cout << "U";
     }
     else {
       std::cout << "J" << sepFirst[inc] << "M";
-      temp.second = std::stoi(sepFirst[inc]);
+      try {
+        temp.second = std::stoi(sepFirst[inc]);
+      }
+      catch (...) {
+
+      }
       std::cout << "K";
       inv.push_back(temp);
       std::cout << "L";
