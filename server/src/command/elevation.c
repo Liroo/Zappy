@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sun Jul  2 02:53:23 2017 Pierre Monge
-** Last update Sun Jul  2 07:29:10 2017 Pierre Monge
+** Last update Sun Jul  2 07:59:38 2017 Pierre Monge
 */
 
 #include "packet.h"
@@ -69,7 +69,7 @@ static int	check_winning_team(t_team *team)
   return (players_elevated >= DFL_PLAYERS_ELEVATED_WIN);
 }
 
-void		check_winning_condition()
+int		check_winning_condition()
 {
   t_list_head	*team;
 
@@ -77,7 +77,8 @@ void		check_winning_condition()
   while (team != &game.teams)
     {
       if (check_winning_team(list_entry(team, t_team, list)))
-	return ((void)end_server(list_entry(team, t_team, list)));
+	return ((void)end_server(list_entry(team, t_team, list)), 1);
       team = team->next;
     }
+  return (0);
 }

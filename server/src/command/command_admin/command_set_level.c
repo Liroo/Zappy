@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Sun Jul  2 07:19:35 2017 guicha_t
-** Last update Sun Jul  2 07:44:43 2017 guicha_t
+** Last update Sun Jul  2 07:55:35 2017 guicha_t
 */
 
 #include <stdlib.h>
@@ -98,6 +98,7 @@ int	cmd_set_level(t_client *client, char *token)
       return (0);
     }
   get_param_setlevel(client, epured_token);
+  check_winning_condition();
   free(epured_token);
   return (0);
 }

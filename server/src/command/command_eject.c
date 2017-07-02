@@ -5,7 +5,7 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Fri Jun 23 01:28:13 2017 Thomas
-** Last update Sun Jul  2 06:15:30 2017 guicha_t
+** Last update Sun Jul  2 07:59:01 2017 guicha_t
 */
 
 #include "debug.h"
@@ -86,7 +86,7 @@ int	cmd_eject(t_client *client, char *token)
   if (game.map[p->pos_x][p->pos_y].player <= 1)
     {
       queue_packet(client, SIMPLE_PACKET, RPL_KO);
-      return (1);
+      return (0);
     }
   print_log("Player %d from %s: EJECT\n", client->net_info.fd,
 	    p->team->name);

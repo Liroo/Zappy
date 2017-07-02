@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Wed Jun 21 04:30:29 2017 Pierre Monge
-** Last update Sat Jul  1 16:21:54 2017 Pierre Monge
+** Last update Sun Jul  2 08:02:36 2017 Pierre Monge
 */
 
 #include <time.h>
@@ -48,24 +48,26 @@ void			process_chrono_event()
     }
 }
 
-static void	process_player(t_client *client)
+static int	process_player(t_client *client)
 {
    int		i;
    t_player	*player;
 
    player = client->data;
    if (player->command_is_running || player->command_in_queue <= 0)
-     return ;
+     return (0);
    if ((*player->command_queue).duration > 0)
      {
        if ((*player->command_queue).pre_exec)
 	 (*player->command_queue).pre_exec(client, (*player->command_queue).command);
        player->command_is_running = 1;
        queue_chrono((*player->command_queue).duration, client, C_EVENT_COMMAND);
-       return ((void)rfc_19(NULL, client, (*player->command_queue).duration));
+       return ((void)rfc_19(NULL, client,
+			    (*player->command_queue).duration), 1);
      }
-   if ((*player->command_queue).exec)
-     (*player->command_queue).exec(client, (*player->command_queue).command);
+   if ((*player->command_queue).exec &&
+       (*player->command_queue).exec(client, (*player->command_queue).command))
+     return (1);
    free((*player->command_queue).command);
    (*player->command_queue).command = NULL;
    i = 0;
@@ -75,6 +77,8 @@ static void	process_player(t_client *client)
        i++;
      }
    player->command_in_queue -= 1;
+   return (0);
+   // func more than 25 lines...
 }
 
 static void	process_admin(t_client *client)
@@ -111,8 +115,9 @@ static void	process_client_list(t_list_head *head)
       client = list_entry(pos, t_client, list);
       if (client->client_type == ADMIN)
 	process_admin(client);
-      else if (client->client_type == PLAYER)
-	process_player(client);
+      else if (client->client_type == PLAYER
+	       && process_player(client))
+	break;
       pos = next;
     }
 }

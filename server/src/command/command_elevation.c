@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sat Jul  1 15:53:48 2017 Pierre Monge
-** Last update Sun Jul  2 06:40:40 2017 Pierre Monge
+** Last update Sun Jul  2 07:58:28 2017 Pierre Monge
 */
 
 #include "struct.h"
@@ -107,8 +107,8 @@ int		cmd_elevation(t_client *client,
       check_player_on_tile(player->elevation, player->pos_x, player->pos_y))
     {
       elevate_players(player->pos_x, player->pos_y);
-      if (player->elevation == 8)
-	check_winning_condition();
+      if (player->elevation == 8 && check_winning_condition())
+	return (1);
     }
   else
     {
@@ -116,6 +116,5 @@ int		cmd_elevation(t_client *client,
       queue_packet(client, SIMPLE_PACKET, RPL_KO);
     }
   rfc_18(NULL, client);
-  (void)client;
   return (0);
 }
