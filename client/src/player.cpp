@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 13:54:32 2017 Thomas
-// Last update Sun Jul  2 18:20:55 2017 Thomas
+// Last update Sun Jul  2 19:16:05 2017 Lucas
 //
 
 #include "player.hpp"
@@ -158,6 +158,7 @@ bool	Player::getIsPrint() const
 
 void	Player::makePlayer()
 {
+  std::cout << RED << position.X << position.Y << position.Z << BLANK << std::endl;
   playerMesh = sm->addAnimatedMeshSceneNode(getBricksObj(),
 					  0, -1,
 					  position,

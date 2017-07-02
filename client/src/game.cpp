@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 02:42:24 2017 Thomas
-// Last update Sun Jul  2 19:03:52 2017 Thomas
+// Last update Sun Jul  2 19:11:57 2017 Lucas
 //
 
 #include <iostream>
@@ -200,6 +200,8 @@ int	Game::teamsDetails(std::string &resp)
   std::cout << "BEFORE" << std::endl;
 
   tmp = new Player(std::stoi(resp, nullptr, 10), _sm, _driver, _device);
+  if (tmp->setTexture(_sm, _driver, gameGUI) == GUI_ERR)
+    return (GUI_ERR);
 
   std::cout << "MDRRRRRRRR" << std::endl;
 
