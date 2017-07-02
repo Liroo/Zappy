@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Sat Jun 25 22:00:09 2017 Lucas
-// Last update Sat Jul  1 18:54:56 2017 Thomas
+// Last update Sun Jul  2 23:14:53 2017 Lucas
 //
 
 #ifndef CORE_HPP_
@@ -34,7 +34,6 @@ public:
   int				initConnectClient(int port, std::string host);
   int                           launchLobby(t_sett *settings, int status);
   int                           loopGui();
-  int                           initSound(t_sett *);
   int				launchGUI(t_sett *);
 
   irr::video::IVideoDriver*	getDriver() const;

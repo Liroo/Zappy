@@ -5,10 +5,11 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Fri Jun 30 05:14:07 2017 Lucas
-// Last update Sun Jul  2 19:02:26 2017 Thomas
+// Last update Sun Jul  2 23:23:16 2017 Lucas
 //
 
 #include "gui.hpp"
+#include "wchar.h"
 
 void		Gui::makeGuiSkybox()
 {
@@ -43,7 +44,7 @@ int		Gui::initGui(const int &port, const std::string &host)
     return (GUI_ERR);
   makeCamera(STATIC);
   makeGuiSkybox();
-  coClient = new ConnectClient(port, host, false, smgr, driver, game->getDevice());
+  coClient = new ConnectClient(port, host, false, smgr, driver, device);
   if (coClient->myConnect() == GUI_ERR)
     return (GUI_ERR);
   device->setEventReceiver(&event);
@@ -54,7 +55,7 @@ int		Gui::initGui(const int &port, const std::string &host)
 	  game->makeMap();
 	  game->setMapInit(true);
 	}
-      driver->beginScene(true, true, irr::video::SColor(255, 38, 196, 236));
+      driver->beginScene(true, true, irr::video::SColor(0, 0, 0, 0));
       quit = event.getQuit();
       smgr->drawAll();
       envGUI->drawAll();
@@ -62,8 +63,6 @@ int		Gui::initGui(const int &port, const std::string &host)
       coClient->my_select();
       if (coClient->getResponse().size() > 0) {
 	game->updateGame(coClient->getResponse());
-	if (game->getMapInit() == true)
-	  game->updateDisplay();
 	coClient->clearResponse();
       }
     }
