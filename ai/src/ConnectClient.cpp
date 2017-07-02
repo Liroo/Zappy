@@ -122,7 +122,7 @@ int			ConnectClient::myConnect(int ac, char **av)
   std::size_t found_ko;
   std::string resp;
   if (check_param(ac, av) == 1)
-    return (0);
+    return (1);
   if ((_fd = add_server_to_client()) == 1)
     return (1);
   _tv.tv_sec = 1;
