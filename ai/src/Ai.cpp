@@ -605,7 +605,7 @@ void Ai::fillBag() {
   std::vector<std::string>::const_iterator it;
   int inc = 0;
 
-  if (_response == "ok" || _response == "ko")
+  if (checkHook(_response) == false)
     return ;
   while (ss >> tmp) {
     for(unsigned int i=0; i< tmp.size(); ++i) {
@@ -928,6 +928,7 @@ bool  Ai::checkElevation() {
 
 int   Ai::aiBrain() {
   srand(time(NULL));
+  fork("beginning");
   while (_isRunning) {
     if (_isDead == true)
       return (0);
