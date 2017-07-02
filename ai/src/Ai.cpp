@@ -662,12 +662,27 @@ void  Ai::randInventory() {
 }
 
 bool  Ai::inventoryCompare(const Inventory &us, const Inventory &obj) {
+
+
+  // std::cout << us.getLinemate() << "   " << obj.getLinemate() << std::endl;
+  // std::cout << us.getDeraumere() << "   " << obj.getDeraumere() << std::endl;
+  // std::cout << us.getSibur() << "   " << obj.getSibur() << std::endl;
+  // std::cout << us.getMendiane() << "   " << obj.getMendiane() << std::endl;
+  // std::cout << us.getPhiras() << "   " << obj.getPhiras() << std::endl;
+  // std::cout << us.getThystame() << "   " << obj.getThystame() << std::endl;
+  // std::cout << us.getPlayer() << "   " << obj.getPlayer() << std::endl;
+  //
+  //
+
   if (us.getLinemate() >= obj.getLinemate() && us.getDeraumere() >= obj.getDeraumere() &&
       us.getSibur() >= obj.getSibur() && us.getMendiane() >= obj.getMendiane() && us.getPhiras() >= obj.getPhiras() &&
       us.getThystame() >= obj.getThystame() && _isCalled == false)
     {
-      if (us.getPlayer() < obj.getPlayer())
+      // std::cout << "IN" << std::endl;
+      if (us.getPlayer() < obj.getPlayer()) {
         broadcast(std::to_string(_level) + "start");
+        return true;
+      }
       else if (us.getPlayer() == obj.getPlayer())
           {
             broadcast(std::to_string(_level) + "stop");
@@ -746,8 +761,11 @@ void  Ai::getCaseIncantation() {
 }
 
 bool  Ai::checkElevation() { // ne pas oublier de monter de level si ok
+  Inventory obj = *_invToInc[_level - 1];
   look("checkElevation");
   if (inventoryCompare(_bag, *_invToInc[_level - 1])) {
+    if (_bag.getPlayer() != obj.getPlayer())
+      return true;
     setMaterials(*_invToInc[_level - 1]);
     getCaseIncantation();
     incantation("incantation");
