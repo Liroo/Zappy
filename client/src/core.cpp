@@ -5,36 +5,21 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Sun Jun 25 22:01:46 2017 Lucas
-// Last update Sun Jul  2 17:14:27 2017 Lucas
+// Last update Sun Jul  2 23:11:51 2017 Lucas
 //
 
 #include "zappy.hpp"
 #include "core.hpp"
 
-int             Core::initSound(t_sett *sett)
-{
-  /*  if (!(sett->engine = irrklang::ISoundDevice::createIrrKlangDevice()))
-    {
-      std::cerr << ENGINE_ERR << std::endl;
-      return (GUI_ERR);
-      }
-  if ((sett->lobbySound = sett->engine->play2D("media/music/veridisquo.ogg", true, false, true)))
-    sett->lobbySound->setIsPaused(true);
-  sett->on_off = true;
-*/
-  return (GUI_OK);
-}
-
 int     Core::launchLobby(t_sett *sett, int status)
 {
+  (void)sett;
   lobby = new Lobby(smgr, driver, device);
   if (lobby->setTexture(smgr, driver, lobbyGUI) == GUI_ERR)
     return (GUI_ERR);
   inLobby = true;
   while (device->run() && inLobby == true && quit == false)
     {
-      //if (sett->lobbySound)
-      //sett->lobbySound->setIsPaused(!sett->on_off);
       switch (status)
 	{
 	case (LOBBY):
@@ -51,7 +36,7 @@ int     Core::launchLobby(t_sett *sett, int status)
       quit = lobby->getQuit();
     }
   win = (WinType)status;
-  std::cout << RED << "WIN == " << win << BLANK << std::endl;
+  std::cout << RED << "Entering GUI..." << BLANK << std::endl;
   delete (lobby);
   return (GUI_OK);
 }
@@ -89,8 +74,6 @@ int             Core::loopGui()
 {
   t_sett        *sett = new t_sett;
 
-  if (initSound(sett) == GUI_ERR)
-    return (GUI_ERR);
   while (device->run() && quit == false)
     {
       switch (win)

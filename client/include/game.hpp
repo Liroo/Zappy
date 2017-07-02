@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 01:23:13 2017 Thomas
-// Last update Sun Jul  2 22:54:38 2017 Thomas
+// Last update Sun Jul  2 23:09:03 2017 Lucas
 //
 
 #ifndef GAME_HPP
@@ -54,6 +54,7 @@ public:
   void					makeGround(int x, int y);
   std::map<std::string, InvType>	initConvert() const;
   std::string				invToStr(int i) const;
+  const wchar_t *			getChatData() const;
 
 private:
   irr::video::IVideoDriver	*_driver;

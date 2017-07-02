@@ -5,11 +5,16 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 02:42:24 2017 Thomas
-// Last update Sun Jul  2 22:59:14 2017 Thomas
+// Last update Sun Jul  2 23:09:07 2017 Lucas
 //
 
 #include <iostream>
 #include "game.hpp"
+
+const wchar_t	*Game::getChatData() const
+{
+  return (this->_guiResp);
+}
 
 Game::Game(irr::scene::ISceneManager *smgr, irr::video::IVideoDriver *driver,
 	   irr::IrrlichtDevice *device)
