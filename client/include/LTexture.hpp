@@ -1,11 +1,11 @@
 //
 // LTexture.hpp for ltexture in /home/lucas/rendu/reseau_psu/Zappy/client/zappy_client
-// 
+//
 // Made by Lucas
 // Login   <lucas.onillon@epitech.eu>
-// 
+//
 // Started on  Mon Jun 26 00:57:46 2017 Lucas
-// Last update Sun Jul  2 05:48:16 2017 Lucas
+// Last update Sun Jul  2 16:26:58 2017 Thomas
 //
 
 #ifndef LTexture_HPP
@@ -44,16 +44,18 @@ public:
   // MAP OBJECTS //
   irr::video::ITexture		*getGroundPng() const;
   irr::scene::IAnimatedMesh     *getBricksObj() const;
-  
+  irr::video::ITexture		*getPlayerPng() const;
+
 
 private:
   // MAP OBJECTS //
   irr::video::ITexture*                     BRICKS_MENU_PNG;
   irr::scene::IAnimatedMesh*                BRICKS_MENU_OBJ;
   irr::video::ITexture*                     GROUND_PNG;
-  
-  
-  
+  irr::video::IAnimatedMesh*			    PLAYER_OBJ;
+
+
+
   // LOBBY //
   irr::video::ITexture		*LogoPNG;
   irr::video::ITexture		*hostLogo;
@@ -67,7 +69,7 @@ private:
   irr::video::ITexture         *SKYBOX_MOUNT_RIGHT;
   irr::video::ITexture         *SKYBOX_MOUNT_FRONT;
   irr::video::ITexture         *SKYBOX_MOUNT_BACK;
-  
+
 };
 
 #endif	/* !LTexture_HPP */

@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 01:23:13 2017 Thomas
-// Last update Sun Jul  2 08:59:39 2017 Thomas
+// Last update Sun Jul  2 15:26:06 2017 Thomas
 //
 
 #ifndef GAME_HPP
@@ -48,8 +48,12 @@ public:
   int					getMapY() const;
   int					getFreq() const;
   bool					getMapInit() const;
+  int					convertX(int x);
+  int					convertY(int y);
   std::vector< std::vector< t_tiles > >	getMap() const;
   void					setMapInit(bool update);
+  void					makePlayer(int x, int y);
+  void					updateDisplay();
   void					makeMap();
   void					makeGround(int x, int y);
   std::map<std::string, InvType>	initConvert() const;

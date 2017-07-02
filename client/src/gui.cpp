@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Fri Jun 30 05:14:07 2017 Lucas
-// Last update Sun Jul  2 08:14:07 2017 Lucas
+// Last update Sun Jul  2 14:59:47 2017 Thomas
 //
 
 #include "gui.hpp"
@@ -60,6 +60,8 @@ int		Gui::initGui(const int &port, const std::string &host)
       coClient->my_select();
       if (coClient->getResponse().size() > 0) {
 	game->updateGame(coClient->getResponse());
+	if (game->getMapInit() == true)
+	  game->updateDisplay();
 	coClient->clearResponse();
       }
     }
