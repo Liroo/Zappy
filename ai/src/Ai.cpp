@@ -138,8 +138,10 @@ int Ai::forward(const std::string &var) {
   std::size_t found_ko = _response.find("ko");
   while (found_ok == std::string::npos && found_ko == std::string::npos)
     {
-      if (checkServerMessage(_response) == -1)
+      if (checkServerMessage(_response) == -1) {
+        std::cout << "C EST PASSE" << std::endl;
         return (-1);
+      }
       _response = connect.getResponse();
       if (_response.size() == 0)
         return (-1);
@@ -177,8 +179,10 @@ int Ai::right(const std::string &var) {
   std::size_t found_ko = _response.find("ko");
   while (found_ok == std::string::npos && found_ko == std::string::npos)
     {
-      if (checkServerMessage(_response) == -1)
+      if (checkServerMessage(_response) == -1) {
+        std::cout << "C EST PASSE" << std::endl;
         return (-1);
+      }
       _response = connect.getResponse();
       if (_response.size() == 0)
         return (-1);
@@ -216,8 +220,10 @@ int Ai::left(const std::string &var) {
   std::size_t found_ko = _response.find("ko");
   while (found_ok == std::string::npos && found_ko == std::string::npos)
     {
-      if (checkServerMessage(_response) == -1)
+      if (checkServerMessage(_response) == -1) {
+        std::cout << "C EST PASSE" << std::endl;
         return (-1);
+      }
       _response = connect.getResponse();
       if (_response.size() == 0)
         return (-1);
@@ -258,8 +264,10 @@ int Ai::look(const std::string &var)
     {
       if (_isDead == true)
         return (-1);
-      if (checkServerMessage(_response) == -1)
+      if (checkServerMessage(_response) == -1) {
+        std::cout << "C EST PASSE" << std::endl;
         return (-1);
+      }
       _response = connect.getResponse();
       if (_response.size() == 0)
         return (-1);
@@ -317,8 +325,10 @@ int Ai::inventory(const std::string &var)
   std::size_t found_hook = _response.find("[");
   while (found_hook == std::string::npos)
     {
-      if (checkServerMessage(_response) == -1)
+      if (checkServerMessage(_response) == -1) {
+        std::cout << "C EST PASSE" << std::endl;
         return (-1);
+      }
       _response = connect.getResponse();
       if (_response.size() == 0)
         return (-1);
@@ -358,8 +368,10 @@ int Ai::broadcast(const std::string &var)
   std::size_t found_ko = _response.find("ko");
   while (found_ok == std::string::npos && found_ko == std::string::npos)
     {
-      if (checkServerMessage(_response) == -1)
+      if (checkServerMessage(_response) == -1) {
+        std::cout << "C EST PASSE" << std::endl;
         return (-1);
+      }
       _response = connect.getResponse();
       if (_response.size() == 0)
         return (-1);
@@ -398,8 +410,10 @@ int Ai::fork(const std::string &var)
   std::size_t found_ko = _response.find("ko");
   while (found_ok == std::string::npos && found_ko == std::string::npos)
     {
-      if (checkServerMessage(_response) == -1)
+      if (checkServerMessage(_response) == -1) {
+        std::cout << "C EST PASSE" << std::endl;
         return (-1);
+      }
       _response = connect.getResponse();
       if (_response.size() == 0)
         return (-1);
@@ -438,8 +452,10 @@ int Ai::eject(const std::string &var)
   std::size_t found_ko = _response.find("ko");
   while (found_ok == std::string::npos && found_ko == std::string::npos)
     {
-      if (checkServerMessage(_response) == -1)
+      if (checkServerMessage(_response) == -1) {
+        std::cout << "C EST PASSE" << std::endl;
         return (-1);
+      }
       _response = connect.getResponse();
       if (_response.size() == 0)
         return (-1);
@@ -479,8 +495,10 @@ int Ai::take(const std::string &var)
   std::size_t found_ko = _response.find("ko");
   while (found_ok == std::string::npos && found_ko == std::string::npos)
     {
-      if (checkServerMessage(_response) == -1)
+      if (checkServerMessage(_response) == -1) {
+        std::cout << "C EST PASSE" << std::endl;
         return (-1);
+      }
       _response = connect.getResponse();
       if (_response.size() == 0)
         return (-1);
@@ -520,8 +538,10 @@ int Ai::set(std::string const &var)
   std::size_t found_ko = _response.find("ko");
   while (found_ok == std::string::npos && found_ko == std::string::npos)
     {
-        if (checkServerMessage(_response) == -1)
+        if (checkServerMessage(_response) == -1) {
+          std::cout << "C EST PASSE" << std::endl;
           return (-1);
+        }
         _response = connect.getResponse();
         if (_response.size() == 0)
           return (-1);
@@ -561,8 +581,10 @@ int Ai::incantation(std::string const &var)
   while (found_level == std::string::npos
           && found_ko == std::string::npos)
     {
-      if (checkServerMessage(_response) == -1)
+      if (checkServerMessage(_response) == -1) {
+        std::cout << "C EST PASSE" << std::endl;
         return (-1);
+      }
       _response = connect.getResponse();
       if (_response.size() == 0)
         return (-1);
