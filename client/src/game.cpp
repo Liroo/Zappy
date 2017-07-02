@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 02:42:24 2017 Thomas
-// Last update Sun Jul  2 18:21:30 2017 Thomas
+// Last update Sun Jul  2 19:03:52 2017 Thomas
 //
 
 #include <iostream>
@@ -14,9 +14,9 @@
 Game::Game(irr::scene::ISceneManager *smgr, irr::video::IVideoDriver *driver,
 	   irr::IrrlichtDevice *device)
 {
-  sm = smgr;
-  driver = driver;
-  device = device;
+  _sm = smgr;
+  _driver = driver;
+  _device = device;
   gameGUI = device->getGUIEnvironment();
   nbGround = 0;
   _mapInit = false;
@@ -41,6 +41,11 @@ Game::Game(irr::scene::ISceneManager *smgr, irr::video::IVideoDriver *driver,
   _allResp["17"] = &Game::elevationAll;
   _allResp["18"] = &Game::elevationPlayer;
   _allResp["19"] = &Game::cast;
+}
+
+irr::IrrlichtDevice	*Game::getDevice() const
+{
+  return (_device);
 }
 
 void	Game::setMapInit(bool update)
@@ -194,7 +199,7 @@ int	Game::teamsDetails(std::string &resp)
 
   std::cout << "BEFORE" << std::endl;
 
-  tmp = new Player(std::stoi(resp, nullptr, 10), sm, driver, device);
+  tmp = new Player(std::stoi(resp, nullptr, 10), _sm, _driver, _device);
 
   std::cout << "MDRRRRRRRR" << std::endl;
 

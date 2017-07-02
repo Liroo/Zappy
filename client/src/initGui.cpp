@@ -5,7 +5,7 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Sun Jul  2 05:30:31 2017 Lucas
-// Last update Sun Jul  2 18:10:09 2017 Thomas
+// Last update Sun Jul  2 19:04:22 2017 Thomas
 //
 
 #include "game.hpp"
@@ -42,7 +42,7 @@ void		Game::makeGround(int x, int y)
 {
   if (getMapX() >= 20 || getMapY() >= 20)
     {
-      gameBrick[nbGround] = sm->addAnimatedMeshSceneNode(getBricksObj(),
+      gameBrick[nbGround] = _sm->addAnimatedMeshSceneNode(getBricksObj(),
 							 0, -1,
 							 irr::core::vector3df(x+600, y+1000, -1740.0f),
 							 irr::core::vector3df(0.0f, 0.0f, 0.0f),
@@ -50,7 +50,7 @@ void		Game::makeGround(int x, int y)
     }
   else
     {
-      gameBrick[nbGround] = sm->addAnimatedMeshSceneNode(getBricksObj(),
+      gameBrick[nbGround] = _sm->addAnimatedMeshSceneNode(getBricksObj(),
 							 0, -1,
 							 irr::core::vector3df(x-400, y, -1740.0f),
 							 irr::core::vector3df(0.0f, 0.0f, 0.0f),
