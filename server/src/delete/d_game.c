@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Sun Jun 25 00:22:07 2017 Pierre Monge
-** Last update Sun Jul  2 22:31:55 2017 Pierre Monge
+** Last update Tue Jul  4 02:47:44 2017 Pierre Monge
 */
 
 #include <stdlib.h>
@@ -71,7 +71,7 @@ void		delete_game()
   delete_client_list(&game.admins);
   delete_client_list(&game.spectators);
   delete_chronos();
-  while (i < (int)game.map_size_y)
+  while (i < (int)game.map_size_x)
     free(game.map[i++]);
   free(game.map);
 }
