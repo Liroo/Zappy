@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 13:54:26 2017 Thomas
-// Last update Sun Jul  2 20:15:19 2017 Thomas
+// Last update Sun Jul  2 22:07:00 2017 Thomas
 //
 
 #ifndef PLAYER_HPP
@@ -68,7 +68,7 @@ private:
   irr::video::IVideoDriver      *_driver;
   irr::IrrlichtDevice           *_device;
 
-  irr::gui::IGUIEnvironment		*playerGUI;
+  irr::gui::IGUIEnvironment		*_playerGUI;
   int					_fd;
   int					_x;
   int					_y;
@@ -80,12 +80,6 @@ private:
   std::map<InvType, int>		_inventory;
   std::string				_buf;
   bool					_print_buf;
-  irr::scene::ISceneNodeAnimator*	anim;
-  irr::scene::IAnimatedMeshSceneNode*	playerMesh;
-  irr::core::vector3df			position;
-  irr::core::vector3df			rotation;
-  irr::core::vector3df			echelle;
-  irr::scene::IAnimatedMesh*            BRICKS_MENU_OBJ;
 
 public:
   void	setFd(const int &);

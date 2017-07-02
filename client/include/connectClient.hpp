@@ -5,7 +5,7 @@
 ** Login   <thomas@epitech.net>
 **
 ** Started on  Wed Jun 28 00:50:35 2017 Thomas
-// Last update Sun Jul  2 18:36:19 2017 Lucas
+// Last update Sun Jul  2 22:19:32 2017 Thomas
 */
 
 #ifndef CONNECTCLIENT_H
@@ -60,6 +60,7 @@ private:
   int	servtoclient();
   int	add_server_to_client();
   int	firstConnect();
+  int	my_strlen(char *str) const;
 
 public:
   int		myConnect();

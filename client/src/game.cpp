@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 02:42:24 2017 Thomas
-// Last update Sun Jul  2 20:25:39 2017 Thomas
+// Last update Sun Jul  2 22:59:14 2017 Thomas
 //
 
 #include <iostream>
@@ -17,7 +17,8 @@ Game::Game(irr::scene::ISceneManager *smgr, irr::video::IVideoDriver *driver,
   _sm = smgr;
   _driver = driver;
   _device = device;
-  gameGUI = device->getGUIEnvironment();
+  _gameGUI = device->getGUIEnvironment();
+  setTexture(_sm, _driver, _gameGUI);
   nbGround = 0;
   _mapInit = false;
   _map_x = DEFAULT;
@@ -41,11 +42,6 @@ Game::Game(irr::scene::ISceneManager *smgr, irr::video::IVideoDriver *driver,
   _allResp["17"] = &Game::elevationAll;
   _allResp["18"] = &Game::elevationPlayer;
   _allResp["19"] = &Game::cast;
-}
-
-irr::IrrlichtDevice	*Game::getDevice() const
-{
-  return (_device);
 }
 
 void	Game::setMapInit(bool update)
@@ -73,42 +69,46 @@ int	Game::getFreq() const
   return (_freq);
 }
 
-int	Game::convertX(int x)
+std::string  Game::invToStr(int i) const
 {
-  x = 1150 - (127 * x);
-  return (x);
-}
+  std::map<InvType, std::string>        toStr;
 
-int	Game::convertY(int y)
-{
-  y = 1300 + (40 * y);
-  return (y);
+  toStr[LINEMATE] = "LINEMATE";
+  toStr[DERAUMERE] = "DERAUMERE";
+  toStr[SIBUR] = "SIBUR";
+  toStr[MENDIANE] = "MENDIANE";
+  toStr[PHIRAS] = "PHIRAS";
+  toStr[THYSTAME] = "THYSTAME";
+  toStr[FOOD] = "FOOD";
+  return (toStr[(InvType)i]);
 }
 
 int	Game::initMap(std::string &resp)
 {
-  std::string   delim_before = " ";
+  std::string	delim_before = " ";
   std::string	delim_after = ", ";
-  std::string   params;
-  size_t        pos = 0;
+  std::string	params;
+  size_t	pos = 0;
   int		i;
-  int		x;
-  int		y;
-
-
- if ((pos = resp.find(delim_before)) != std::string::npos)
-  {
-    params = resp.substr(0, pos);
-    resp.erase(0, pos + delim_before.length());
-  }
-  x = std::stoi(params, nullptr, 10);;
+  int		posx;
+  int		posy;
+  std::string	gui;
 
   if ((pos = resp.find(delim_before)) != std::string::npos)
     {
       params = resp.substr(0, pos);
       resp.erase(0, pos + delim_before.length());
     }
-  y = std::stoi(params, nullptr, 10);
+  posx = std::stoi(params, nullptr, 10);;
+
+  if ((pos = resp.find(delim_before)) != std::string::npos)
+    {
+      params = resp.substr(0, pos);
+      resp.erase(0, pos + delim_before.length());
+    }
+  posy = std::stoi(params, nullptr, 10);
+
+  gui = "Tiles " + std::to_string(posx) + " " + std::to_string(posy) + " contains: ";
 
   i = 0;
   while (i < 6)
@@ -121,7 +121,8 @@ int	Game::initMap(std::string &resp)
 	params = resp.substr(0, pos);
 	resp.erase(0, pos + delim_after.length());
       }
-      _map[x][y].items[(InvType)i] = std::stoi(params, nullptr, 10);
+      _map[posx][posy].items[(InvType)i] = std::stoi(params, nullptr, 10);
+      gui += invToStr(i) + " " + params;
       i++;
     }
   if ((pos = resp.find(delim_before)) != std::string::npos) {
@@ -129,52 +130,12 @@ int	Game::initMap(std::string &resp)
     resp.erase(0, pos + delim_before.length());
   }
   resp = resp.substr(0, resp.size() - 1);
-  _map[x][y].items[(InvType)i] = std::stoi(resp, nullptr, 10);
+  _map[posx][posy].items[(InvType)i] = std::stoi(resp, nullptr, 10);
+  gui += invToStr(i) + " " + params;
+  std::wstring ws(gui.begin(), gui.end());
+  _guiResp = ws.c_str();
   return (0);
 }
-
-// int	Game::spawnPlayers()
-// {
-//   int	x;
-//   int	y;
-//   int	c;
-
-//   x = 0;
-//   std::vector<Team>::iterator it_team = _teams.begin();
-//   while (it_team != _teams.end())
-//     {
-//       std::vector<Player> tmp = (*it_team).getAllPlayer();
-//       std::vector<Player>::iterator it_player = tmp.begin();
-//       while (it_player != tmp.end())
-// 	{
-// 	  while (x < _map_x)
-// 	    {
-// 	      y = 0;
-// 	      while (y < _map_y)
-// 		{
-// 		  if ((*it_player).getX() == x && (*it_player).getY() == y)
-// 		    {
-// 		      c = 0;
-// 		      std::vector<Player>::iterator check = _map[x][y].players.begin();
-// 		      while (check != _map[x][y].players.end() && c == 0)
-// 			{
-// 			  if ((*check).getFd() == (*it_player).getFd())
-// 			    c = 1;
-// 			  check++;
-// 			}
-// 		      if (c == 0)
-// 			_map[x][y].players.push_back((*it_player));
-// 		    }
-// 		  y++;
-// 		}
-// 	      x++;
-// 	    }
-// 	  it_player++;
-// 	}
-//       it_team++;
-//     }
-//   return (0);
-// }
 
 int	Game::teamsDetails(std::string &resp)
 {
@@ -184,7 +145,6 @@ int	Game::teamsDetails(std::string &resp)
   size_t	pos = 0;
   Player	*tmp;
   Team		*tmp_t;
-  bool		is_already;
 
   if ((pos = resp.find(delim)) != std::string::npos) {
     team_name = resp.substr(0, pos);
@@ -197,25 +157,7 @@ int	Game::teamsDetails(std::string &resp)
     params = resp.substr(0, pos);
     resp.erase(0, pos + delim.length());
   }
-
-
   tmp = new Player(std::stoi(resp, nullptr, 10), _sm, _driver, _device);
-  if (tmp->setTexture(_sm, _driver, gameGUI) == GUI_ERR)
-    return (GUI_ERR);
-
-
-  is_already = false;
-  std::vector<Player>::iterator check = _map[tmp->getX()][tmp->getY()].players.begin();
-  while (check != _map[tmp->getX()][tmp->getY()].players.end())
-    {
-      if ((*check).getFd() == tmp->getFd())
-  	is_already = true;
-      check++;
-    }
-  if (is_already == false)
-    _map[tmp->getX()][tmp->getY()].players.push_back(*tmp);
-  else
-    (*check) = *tmp;
 
   std::vector<Team>::iterator it_team = _teams.begin();
   while (it_team != _teams.end() && (*it_team).getName() != team_name)
@@ -232,19 +174,16 @@ int	Game::teamsDetails(std::string &resp)
       (*it_team).setNbPlayer((*it_team).getNbPlayer() + 1);
       (*it_team).addPlayer(*tmp);
     }
-
   return (0);
 }
 
 int	Game::playerDetails(std::string &resp)
 {
-  std::string   delim = " ";
-  std::string   params;
-  size_t        pos = 0;
+  std::string	delim = " ";
+  std::string	params;
+  size_t	pos = 0;
   int		find;
   bool		is_already;
-  int		x;
-  int		y;
 
   if ((pos = resp.find(delim)) != std::string::npos) {
     params = resp.substr(0, pos);
@@ -272,9 +211,7 @@ int	Game::playerDetails(std::string &resp)
 	  }
 	  else
 	    return (1);
-	  x = std::stoi(params, nullptr, 10);
-	  (*it_player).setX(x);
-	  (*it_player).setRendX(convertX(x));
+	  (*it_player).setX(std::stoi(params, nullptr, 10));
 
 	  if ((pos = resp.find(delim)) != std::string::npos) {
 	    params = resp.substr(0, pos);
@@ -282,9 +219,7 @@ int	Game::playerDetails(std::string &resp)
 	  }
 	  else
 	    return (1);
-	  y = std::stoi(params, nullptr, 10);
-	  (*it_player).setY(y);
-	  (*it_player).setRendY(convertY(y));
+	  (*it_player).setY(std::stoi(params, nullptr, 10));
 
 	  if ((pos = resp.find(delim)) != std::string::npos) {
 	    params = resp.substr(0, pos);
@@ -313,14 +248,9 @@ int	Game::playerDetails(std::string &resp)
 	      check++;
 	    }
 	  if (is_already == false)
-	    {
-	      std::cout << "LOOOOOOOOOOOL" << std::endl;
-	      _map[(*it_player).getX()][(*it_player).getY()].players.push_back((*it_player));
-	    }
+	    _map[(*it_player).getX()][(*it_player).getY()].players.push_back((*it_player));
 	  else
 	    (*check) = (*it_player);
-
-	  (*it_player).makePlayer();
 
 	}
     }
@@ -330,9 +260,9 @@ int	Game::playerDetails(std::string &resp)
 
 int	Game::size(std::string &resp)
 {
-  std::string   delim = " ";
-  std::string   params;
-  size_t        pos = 0;
+  std::string	delim = " ";
+  std::string	params;
+  size_t	pos = 0;
 
   if ((pos = resp.find(delim)) != std::string::npos) {
     params = resp.substr(0, pos);
@@ -390,9 +320,7 @@ int	Game::forward(std::string &resp)
 	  else
 	    return (1);
 	  x = std::stoi(params, nullptr, 10);
-	  x = convertX(x);
 	  y = std::stoi(resp, nullptr, 10);
-	  y = convertY(y);
 	  (*it_player).setX(x);
 	  (*it_player).setY(y);
 	  std::vector<Player>::iterator check = _map[x][y].players.begin();
@@ -413,9 +341,9 @@ int	Game::forward(std::string &resp)
 
 int	Game::direction(std::string &resp)
 {
-  std::string   delim = " ";
-  std::string   params;
-  size_t        pos = 0;
+  std::string	delim = " ";
+  std::string	params;
+  size_t	pos = 0;
   int		find;
   bool		is_already;
 
@@ -467,7 +395,6 @@ int	Game::see(std::string &resp)
   std::vector<Team>::iterator it_team = _teams.begin();
   while (it_team != _teams.end() && find == 0)
     {
-      std::cout << "Team Name: " << (*it_team).getName() << std::endl;
       std::vector<Player> tmp = (*it_team).getAllPlayer();
       std::vector<Player>::iterator it_player = tmp.begin();
       while (it_player != tmp.end() && (*it_player).getFd() != std::stoi(resp, nullptr, 10))
@@ -489,7 +416,6 @@ int	Game::inventoryPlayer(std::string &resp)
   std::vector<Team>::iterator it_team = _teams.begin();
   while (it_team != _teams.end() && find == 0)
     {
-      std::cout << "Team Name: " << (*it_team).getName() << std::endl;
       std::vector<Player> tmp = (*it_team).getAllPlayer();
       std::vector<Player>::iterator it_player = tmp.begin();
       while (it_player != tmp.end() && (*it_player).getFd() != std::stoi(resp, nullptr, 10))
@@ -505,9 +431,9 @@ int	Game::inventoryPlayer(std::string &resp)
 
 int	Game::broadcast(std::string &resp)
 {
-  std::string   delim = " ";
-  std::string   params;
-  size_t        pos = 0;
+  std::string	delim = " ";
+  std::string	params;
+  size_t	pos = 0;
   int		find;
   bool		is_already;
 
@@ -522,7 +448,6 @@ int	Game::broadcast(std::string &resp)
   std::vector<Team>::iterator it_team = _teams.begin();
   while (it_team != _teams.end() && find == 0)
     {
-      std::cout << "Team Name: " << (*it_team).getName() << std::endl;
       std::vector<Player> tmp = (*it_team).getAllPlayer();
       std::vector<Player>::iterator it_player = tmp.begin();
       while (it_player != tmp.end() && (*it_player).getFd() != std::stoi(params, nullptr, 10))
@@ -561,7 +486,6 @@ int	Game::eject(std::string &resp)
   std::vector<Team>::iterator it_team = _teams.begin();
   while (it_team != _teams.end() && find == 0)
     {
-      std::cout << "Team Name: " << (*it_team).getName() << std::endl;
       std::vector<Player> tmp = (*it_team).getAllPlayer();
       std::vector<Player>::iterator it_player = tmp.begin();
       while (it_player != tmp.end() && (*it_player).getFd() != std::stoi(resp, nullptr, 10))
@@ -623,7 +547,7 @@ int	Game::dead(std::string &resp)
   return (0);
 }
 
-std::map<std::string, InvType> Game::initConvert() const
+std::map<std::string, InvType>	Game::initConvert() const
 {
   std::map<std::string, InvType>	convertType;
 
@@ -695,11 +619,11 @@ int	Game::takeObject(std::string &resp)
 
 int	Game::setObject(std::string &resp)
 {
-  std::string                           delim = " ";
-  std::string                           params;
-  size_t                                pos = 0;
-  std::map<std::string, InvType>        convertType;
-  InvType                               type;
+  std::string				delim = " ";
+  std::string				params;
+  size_t				pos = 0;
+  std::map<std::string, InvType>	convertType;
+  InvType				type;
   int					find;
   bool					is_already;
 
@@ -818,7 +742,7 @@ int	Game::elevationAll(std::string &resp)
   std::string	delim = " ";
   std::string	params;
   size_t	pos = 0;
-  int		find;
+  int	find;
 
   if ((pos = resp.find(delim)) != std::string::npos) {
     params = resp.substr(0, pos);
@@ -885,9 +809,9 @@ int	Game::elevationPlayer(std::string &resp)
 
 int	Game::cast(std::string &resp)
 {
-  std::string   delim = " ";
-  std::string   params;
-  size_t        pos = 0;
+  std::string	delim = " ";
+  std::string	params;
+  size_t	pos = 0;
   int		find;
 
   if ((pos = resp.find(delim)) != std::string::npos) {
@@ -909,7 +833,7 @@ int	Game::cast(std::string &resp)
 	it_team++;
       else if ((*it_player).getFd() == std::stoi(params, nullptr, 10))
 	find = 1;
-   }
+    }
 
   return (0);
 }
@@ -922,8 +846,6 @@ int	Game::updateGame(const std::string &old)
   size_t	pos = 0;
 
   resp = old;
-  // std::cout << "&&&" << resp << std::endl;
-  // DEBUG
   if ((pos = resp.find(delim)) != std::string::npos) {
     id = resp.substr(0, pos);
     resp.erase(0, pos + delim.length());

@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 01:23:13 2017 Thomas
-// Last update Sun Jul  2 19:03:05 2017 Thomas
+// Last update Sun Jul  2 22:54:38 2017 Thomas
 //
 
 #ifndef GAME_HPP
@@ -29,7 +29,7 @@
 /*
 ** Macro definitions.
 */
-# define	DEFAULT	(0)
+# define	DEFAULT (0)
 
 /*
 ** Game class definitions.
@@ -48,26 +48,21 @@ public:
   int					getMapY() const;
   int					getFreq() const;
   bool					getMapInit() const;
-  int					convertX(int x);
-  int					convertY(int y);
   std::vector< std::vector< t_tiles > >	getMap() const;
   void					setMapInit(bool update);
-  void					makePlayer(int x, int y);
-  void					updateDisplay();
   void					makeMap();
   void					makeGround(int x, int y);
   std::map<std::string, InvType>	initConvert() const;
-  irr::IrrlichtDevice			*getDevice() const;
-  // int					spawnPlayers();
+  std::string				invToStr(int i) const;
 
 private:
-  irr::video::IVideoDriver		*_driver;
-  irr::scene::ISceneManager		*_sm;
-  irr::IrrlichtDevice                   *_device;
-  irr::gui::IGUIEnvironment		*gameGUI;
-  irr::scene::ISceneNode                *gameBrick[1024];
+  irr::video::IVideoDriver	*_driver;
+  irr::scene::ISceneManager	*_sm;
+  irr::IrrlichtDevice		*_device;
+  irr::gui::IGUIEnvironment	*_gameGUI;
+  irr::scene::ISceneNode	*gameBrick[1024];
 
-
+  const wchar_t				*_guiResp;
   int					nbGround;
   int					_freq;
   int					_map_x;
@@ -76,7 +71,7 @@ private:
   std::map<std::string, pfunc>		_allResp;
   bool					_mapInit;
   std::vector< std::vector< t_tiles > >	_map;
-  irr::scene::ISceneNode*               gameTiles[400];
+  irr::scene::ISceneNode*		gameTiles[400];
 
   // PTR FUNC //
   int	size(std::string &);
@@ -92,11 +87,11 @@ private:
   int	dead(std::string &);
   int	takeObject(std::string &);
   int	setObject(std::string &);
-  int   forkPlayer(std::string &);
-  int   egg(std::string &);
-  int   elevationAll(std::string &);
-  int   elevationPlayer(std::string &);
-  int   cast(std::string &);
+  int	forkPlayer(std::string &);
+  int	egg(std::string &);
+  int	elevationAll(std::string &);
+  int	elevationPlayer(std::string &);
+  int	cast(std::string &);
 };
 
 #endif

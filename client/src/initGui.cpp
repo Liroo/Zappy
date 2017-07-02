@@ -5,38 +5,10 @@
 // Login   <lucas.onillon@epitech.eu>
 //
 // Started on  Sun Jul  2 05:30:31 2017 Lucas
-// Last update Sun Jul  2 19:04:22 2017 Thomas
+// Last update Sun Jul  2 22:04:56 2017 Thomas
 //
 
 #include "game.hpp"
-
-void		Game::updateDisplay()
-{
-  int	x;
-  int	y;
-
-  x = 0;
-  while (x < _map_x)
-    {
-      y = 0;
-      while (y < _map_y)
-	{
-	  if (_map[x][y].players.size() > 0)
-	    {
-	      std::vector<Player>::iterator it_player = _map[x][y].players.begin();
-	      while (it_player != _map[x][y].players.end() &&
-		     (*it_player).getX() != x && (*it_player).getY() != y)
-		{
-		  if (it_player != _map[x][y].players.end())
-		    (*it_player).makePlayer();
-		  it_player++;
-		}
-	    }
-	  y++;
-	}
-      x++;
-    }
-}
 
 void		Game::makeGround(int x, int y)
 {
@@ -71,7 +43,6 @@ void		Game::makeMap()
   int   b = 0;
 
   nbGround = 0;
-  std::cout << "$ " << _map_x << " " << _map_y << std::endl;
   while (a <= _map_x)
     {
       std::vector< t_tiles > sub;

@@ -5,7 +5,7 @@
 // Login   <andre@epitech.net>
 //
 // Started on  Tue Jun 27 03:02:21 2017 andre
-// Last update Sun Jul  2 18:35:14 2017 Lucas
+// Last update Sun Jul  2 22:19:02 2017 Thomas
 //
 
 # include <stdio.h>
@@ -16,6 +16,16 @@
 # include <string.h>
 # include <iostream>
 # include "connectClient.hpp"
+
+int	ConnectClient::my_strlen(char *str) const
+{
+  int	i;
+
+  i = 0;
+  while (str && str[i])
+    i++;
+  return (i);
+}
 
 int	ConnectClient::add_server_to_client()
 {
@@ -73,14 +83,14 @@ int	ConnectClient::clienttoserv()
     return (1);
   if (message[0] == '\n')
     return (0);
-  message[strlen(message) - 1] = '\0';
+  message[my_strlen(message) - 1] = '\0';
   sprintf(message, "%s\r\n", message);
   if (message[0] == '/')
     i++;
   while (message[i] != '\0')
     final[y++] = message[i++];
   final[y] = message[i];
-  if (send(_fd, final, strlen(final), 0) < 0)
+  if (send(_fd, final, my_strlen(final), 0) < 0)
     return (std::cout << "Message sending error" << std::endl, 1);
   return (0);
 }

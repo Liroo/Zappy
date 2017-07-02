@@ -5,7 +5,7 @@
 // Login   <thomas@epitech.net>
 //
 // Started on  Fri Jun 30 13:54:32 2017 Thomas
-// Last update Sun Jul  2 20:23:43 2017 Thomas
+// Last update Sun Jul  2 22:11:45 2017 Thomas
 //
 
 #include "player.hpp"
@@ -151,41 +151,13 @@ bool	Player::getIsPrint() const
   return (_print_buf);
 }
 
-// int	Player::getOneItem(const InvType &type) const
-// {
-//   return (_inventory[type]);
-// }
-
-irr::scene::IAnimatedMesh*  Player::getBricksObj() const
-{
-  return (this->BRICKS_MENU_OBJ);
-}
-
-void	Player::makePlayer()
-{
-  std::cout << RED << position.X << position.Y << position.Z << BLANK << std::endl;
-  std::cout << "player: " << _fd << " " << _x << " " << _y << std::endl;
-  playerMesh = _sm->addAnimatedMeshSceneNode(_sm->getMesh("./media/models/brick_menu.dae"));
-  if (playerMesh)
-    {
-      anim =_sm->createFlyStraightAnimator(irr::core::vector3df(100,0,60), irr::core::vector3df(-100,0,60), 3500, true);
-      if (anim)
-	{
-	  playerMesh->addAnimator(anim);
-	  anim->drop();
-	}
-    }
-  playerMesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-  playerMesh->setMaterialTexture(0, getPlayerPng());
-}
-
 Player::Player(int fd, irr::scene::ISceneManager *smgr, irr::video::IVideoDriver *driver_,
 	       irr::IrrlichtDevice *device)
 {
   _sm = smgr;
   _driver = driver_;
   _device = device;
-  playerGUI = device->getGUIEnvironment();
+  _playerGUI = device->getGUIEnvironment();
   _fd = fd;
   _x = 0;
   _y = 0;
@@ -202,16 +174,6 @@ Player::Player(int fd, irr::scene::ISceneManager *smgr, irr::video::IVideoDriver
   _inventory[THYSTAME] = 0;
   _inventory[FOOD] = 0;
   _print_buf = false;
-  position.X = 0;
-  position.Y = 0;
-  position.Z = -1740.0f;
-  rotation.X = 0;
-  rotation.Y = 0;
-  rotation.Z = 0;
-  echelle.X = 0;
-  echelle.Y = 0;
-  echelle.Z = 0;
-  BRICKS_MENU_OBJ = _sm->getMesh("./media/models/brick_menu.dae");
 }
 
 Player::Player(const Player &p)
@@ -219,7 +181,7 @@ Player::Player(const Player &p)
   _sm = p._sm;
   _driver = p._driver;
   _device = p._device;
-  playerGUI = p.playerGUI;
+  _playerGUI = p._playerGUI;
   _fd = p._fd;
   _x = p._x;
   _y = p._y;
@@ -231,17 +193,6 @@ Player::Player(const Player &p)
   _inventory = p._inventory;
   _buf = p._buf;
   _print_buf = p._print_buf;
-  position.X = 0;
-  position.Y = 0;
-  position.Z = -1740.0f;
-  rotation.X = 0;
-  rotation.Y = 0;
-  rotation.Z = 0;
-  echelle.X = 0;
-  echelle.Y = 0;
-  echelle.Z = 0;
-  playerMesh = p.playerMesh;
-  anim = p.anim;
 }
 
 Player	Player::operator=(const Player &p)
