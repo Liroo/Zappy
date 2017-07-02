@@ -5,7 +5,7 @@
 ** Login   <thomas.guichard@epitech.eu>
 ** 
 ** Started on  Sun Jul  2 20:31:05 2017 guicha_t
-** Last update Sun Jul  2 21:36:14 2017 guicha_t
+** Last update Sun Jul  2 21:53:45 2017 guicha_t
 */
 
 #include <stdlib.h>
@@ -15,10 +15,10 @@
 #include "struct.h"
 #include "h.h"
 
-void    catch_each_param_inventory(char *token, char *src)
+void		catch_each_param_inventory(char *token, char *src)
 {
-  static int    i = 13;
-  int           is;
+  static int	i = 13;
+  int		is;
 
   is = 0;
   while (token[i] != ' ' && token[i] != '\0')
@@ -29,22 +29,7 @@ void    catch_each_param_inventory(char *token, char *src)
     i = 9;
 }
 
-void		print_getinventory(t_client *client, t_client *player,
-				   t_player *p)
-{
-  queue_packet(client, SIMPLE_PACKET,
-	       GET_INVENTORY,
-	       player->net_info.fd,
-	       p->inventory.food,
-	       p->inventory.linemate,
-	       p->inventory.deraumere,
-	       p->inventory.sibur,
-	       p->inventory.mendiane,
-	       p->inventory.phiras,
-	       p->inventory.thystame);
-}
-
-int             get_player_inventory(t_client *client,
+int		get_player_inventory(t_client *client,
 				     t_team *team, int fd)
 {
   t_list_head   *head_p;
@@ -108,7 +93,7 @@ void	get_param_getinventory(t_client *client, char *token)
   {
   char	*epured_token;
   int	nb_word;
-  
+
   epured_token = strepur(token);
   nb_word = my_count_word(epured_token, ' ');
   if (nb_word != 2)
@@ -118,5 +103,5 @@ void	get_param_getinventory(t_client *client, char *token)
       return (0);
     }
   get_param_getinventory(client, epured_token);
-  return (0);  
+  return (0);
 }

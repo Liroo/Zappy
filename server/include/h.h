@@ -5,7 +5,7 @@
 ** Login   <pierre@epitech.net>
 **
 ** Started on  Thu Jun 15 00:59:56 2017 Pierre Monge
-** Last update Sun Jul  2 18:11:59 2017 guicha_t
+** Last update Sun Jul  2 21:55:57 2017 guicha_t
 */
 
 #ifndef H_H
@@ -132,6 +132,9 @@ extern int	cmd_disable_log(t_client *client, char *token);
 extern int	cmd_able_log(t_client *client, char *token);
 extern void	catch_each_param(char *token, char *src);
 extern int	cmd_set_level(t_client *client, char *token);
+extern int	cmd_get_inventory(t_client *client, char *token);
+extern void	print_getinventory(t_client *client, t_client *player,
+				   t_player *p);
 
 /*
 ** Free class
