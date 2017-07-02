@@ -644,17 +644,21 @@ void Ai::fillBag() {
       }
     sepFirst.push_back(tmp);
   }
+  std::function<bool (std::string )> is_number = [](std::string s)
+  {
+    std::string::const_iterator it = s.begin();
+        while (it != s.end() && std::isdigit(*it)) ++it;
+        return (!s.empty() && it == s.end());
+  };
   for (it = sepFirst.begin();it!=sepFirst.end();it++){
     if ((inc % 2) == 0) {
       temp.first = sepFirst[inc];
     }
     else {
-      try {
+      if (is_number(sepFirst[inc]) == true)
         temp.second = std::stoi(sepFirst[inc]);
-      }
-      catch (std::invalid_argument&) {
+      else
         temp.second = -1;
-      }
       inv.push_back(temp);
     }
     inc++;
@@ -799,11 +803,20 @@ int  Ai::checkServerMessage(const std::string &response) {
   std::size_t found_level = save.find("level");
   std::size_t found_death = save.find("dead");
 
+  std::function<bool (std::string )> is_number = [](std::string s)
+  {
+    std::string::const_iterator it = s.begin();
+        while (it != s.end() && std::isdigit(*it)) ++it;
+        return (!s.empty() && it == s.end());
+  };
   if (found_msg != std::string::npos)
     {
       std::cout << save;
       save.erase(0, 8);
-      _goToPlayer = std::stoi(save.substr(0, 1));
+      if (is_number(save.substr(0, 1)) == true)
+        _goToPlayer = std::stoi(save.substr(0, 1));
+      else
+        _goToPlayer = -1;
       std::size_t comma = save.find(", ");
       if (comma != std::string::npos)
         {
@@ -812,13 +825,15 @@ int  Ai::checkServerMessage(const std::string &response) {
               save.erase(0, 3);
               if (save.size() >= 1)
                 {
-                  try
+                  if (is_number(save.substr(0, 1)) == true)
                     {
-                        if (std::stoi(save.substr(0, 1)) == _level && found_start != std::string::npos)
+                        if (std::stoi(save.substr(0, 1)) == _level && found_start != std::string::npos && _goToPlayer != -1)
                           _isCalled = true;
                         else if (std::stoi(save.substr(0, 1)) == _level && found_stop != std::string::npos) {
                           if (!checkIfPerson(*_invToInc[_level - 1]))
                             _isCalled = false;
+                          else
+                            _isCalled = true;
                           _goToPlayer = -1;
                         }
                         else
@@ -827,7 +842,7 @@ int  Ai::checkServerMessage(const std::string &response) {
                             _isCalled = false;
                           }
                     }
-                  catch (std::invalid_argument&)
+                  else
                     {
                       _goToPlayer = -1;
                       _isCalled = false;
@@ -977,7 +992,7 @@ int   Ai::aiBrain() {
     randInventory();
     inventory("remake");
     if (_bag.getFood() < 10) {
-      while (_bag.getFood() < 80) {
+      while (_bag.getFood() < 100) {
         if (look("food") == -1)
           return (0);
         fillPath("food");

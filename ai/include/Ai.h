@@ -4,6 +4,7 @@
 # include <iostream>
 # include <vector>
 # include <map>
+# include <functional>
 # include "Inventory.h"
 # include "ConnectClient.h"
 
